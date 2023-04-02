@@ -15,15 +15,15 @@ jobs:
       - name: Checkout Benchmark Repo
         uses: actions/checkout@v3
         with:
-          repository: django/django-asv
+          repository: hibee/hibee-asv
           path: "."
       - name: Install Requirements
         run: pip install -r requirements.txt
-      - name: Cache Django
+      - name: Cache Hibee
         uses: actions/cache@v3
         with:
-          path: Django/*
-          key: Django
+          path: Hibee/*
+          key: Hibee
       - name: Run Benchmarks
         shell: bash -l {0}
         run: |-

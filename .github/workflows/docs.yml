@@ -21,7 +21,7 @@ permissions:
 
 jobs:
   docs:
-    # OS must be the same as on djangoproject.com.
+    # OS must be the same as on hibeeproject.com.
     runs-on: ubuntu-20.04
     name: docs
     steps:

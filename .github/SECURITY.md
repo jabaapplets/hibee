@@ -1,3 +1,3 @@
-# Django Security Policies
+# Hibee Security Policies
 
-Please see https://www.djangoproject.com/security/.
+Please see https://www.jabaapplets.com/security/.

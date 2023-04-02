@@ -1,3 +1,3 @@
-# Django Code of Conduct
+# Hibee Code of Conduct
 
-See https://www.djangoproject.com/conduct/.
+See https://www.jabaapplets.com/conduct/.
