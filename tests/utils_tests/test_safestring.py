@@ -1,9 +1,9 @@
-from django.template import Context, Template
-from django.test import SimpleTestCase
-from django.utils import html, translation
-from django.utils.functional import Promise, lazy, lazystr
-from django.utils.safestring import SafeData, SafeString, mark_safe
-from django.utils.translation import gettext_lazy
+from hibee.template import Context, Template
+from hibee.test import SimpleTestCase
+from hibee.utils import html, translation
+from hibee.utils.functional import Promise, lazy, lazystr
+from hibee.utils.safestring import SafeData, SafeString, mark_safe
+from hibee.utils.translation import gettext_lazy
 
 
 class customescape(str):

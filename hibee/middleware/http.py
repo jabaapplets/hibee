@@ -1,6 +1,6 @@
-from django.utils.cache import cc_delim_re, get_conditional_response, set_response_etag
-from django.utils.deprecation import MiddlewareMixin
-from django.utils.http import parse_http_date_safe
+from hibee.utils.cache import cc_delim_re, get_conditional_response, set_response_etag
+from hibee.utils.deprecation import MiddlewareMixin
+from hibee.utils.http import parse_http_date_safe
 
 
 class ConditionalGetMiddleware(MiddlewareMixin):

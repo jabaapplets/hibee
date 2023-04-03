@@ -1,5 +1,5 @@
-from django.contrib import admin
-from django.urls import path
+from hibee.contrib import admin
+from hibee.urls import path
 
 urlpatterns = [
     # This is the same as in the default project template

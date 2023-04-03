@@ -1,12 +1,12 @@
 """
-Tests for stuff in django.utils.datastructures.
+Tests for stuff in hibee.utils.datastructures.
 """
 import collections.abc
 import copy
 import pickle
 
-from django.test import SimpleTestCase
-from django.utils.datastructures import (
+from hibee.test import SimpleTestCase
+from hibee.utils.datastructures import (
     CaseInsensitiveMapping,
     DictWrapper,
     ImmutableList,

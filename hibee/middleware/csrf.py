@@ -9,19 +9,19 @@ import string
 from collections import defaultdict
 from urllib.parse import urlparse
 
-from django.conf import settings
-from django.core.exceptions import DisallowedHost, ImproperlyConfigured
-from django.http import HttpHeaders, UnreadablePostError
-from django.urls import get_callable
-from django.utils.cache import patch_vary_headers
-from django.utils.crypto import constant_time_compare, get_random_string
-from django.utils.deprecation import MiddlewareMixin
-from django.utils.functional import cached_property
-from django.utils.http import is_same_domain
-from django.utils.log import log_response
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.conf import settings
+from hibee.core.exceptions import DisallowedHost, ImproperlyConfigured
+from hibee.http import HttpHeaders, UnreadablePostError
+from hibee.urls import get_callable
+from hibee.utils.cache import patch_vary_headers
+from hibee.utils.crypto import constant_time_compare, get_random_string
+from hibee.utils.deprecation import MiddlewareMixin
+from hibee.utils.functional import cached_property
+from hibee.utils.http import is_same_domain
+from hibee.utils.log import log_response
+from hibee.utils.regex_helper import _lazy_re_compile
 
-logger = logging.getLogger("django.security.csrf")
+logger = logging.getLogger("hibee.security.csrf")
 # This matches if any character is not in CSRF_ALLOWED_CHARS.
 invalid_token_chars_re = _lazy_re_compile("[^a-zA-Z0-9]")
 
@@ -244,7 +244,7 @@ class CsrfViewMiddleware(MiddlewareMixin):
                 _check_token_format(csrf_secret)
         if csrf_secret is None:
             return None
-        # Django versions before 4.0 masked the secret before storing.
+        # Hibee versions before 4.0 masked the secret before storing.
         if len(csrf_secret) == CSRF_TOKEN_LENGTH:
             csrf_secret = _unmask_cipher_token(csrf_secret)
         return csrf_secret

@@ -1,11 +1,11 @@
-from django.core.exceptions import ImproperlyConfigured
-from django.core.servers.basehttp import get_internal_wsgi_application
-from django.core.signals import request_started
-from django.core.wsgi import get_wsgi_application
-from django.db import close_old_connections
-from django.http import FileResponse
-from django.test import SimpleTestCase, override_settings
-from django.test.client import RequestFactory
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.core.servers.basehttp import get_internal_wsgi_application
+from hibee.core.signals import request_started
+from hibee.core.wsgi import get_wsgi_application
+from hibee.db import close_old_connections
+from hibee.http import FileResponse
+from hibee.test import SimpleTestCase, override_settings
+from hibee.test.client import RequestFactory
 
 
 @override_settings(ROOT_URLCONF="wsgi.urls")
@@ -104,7 +104,7 @@ class GetInternalWSGIApplicationTest(SimpleTestCase):
         def mock_get_wsgi_app():
             return fake_app
 
-        from django.core.servers import basehttp
+        from hibee.core.servers import basehttp
 
         _orig_get_wsgi_app = basehttp.get_wsgi_application
         basehttp.get_wsgi_application = mock_get_wsgi_app

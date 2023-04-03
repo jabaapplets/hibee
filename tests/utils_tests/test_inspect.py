@@ -1,6 +1,6 @@
 import unittest
 
-from django.utils import inspect
+from hibee.utils import inspect
 
 
 class Person:

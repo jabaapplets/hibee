@@ -4,9 +4,9 @@ Internationalization support.
 from contextlib import ContextDecorator
 from decimal import ROUND_UP, Decimal
 
-from django.utils.autoreload import autoreload_started, file_changed
-from django.utils.functional import lazy
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.utils.autoreload import autoreload_started, file_changed
+from hibee.utils.functional import lazy
+from hibee.utils.regex_helper import _lazy_re_compile
 
 __all__ = [
     "activate",
@@ -40,7 +40,7 @@ class TranslatorCommentWarning(SyntaxWarning):
 # Here be dragons, so a short explanation of the logic won't hurt:
 # We are trying to solve two problems: (1) access settings, in particular
 # settings.USE_I18N, as late as possible, so that modules can be imported
-# without having to first configure Django, and (2) if some other code creates
+# without having to first configure Hibee, and (2) if some other code creates
 # a reference to one of these functions, don't break that reference when we
 # replace the functions with their real counterparts (once we do access the
 # settings).
@@ -60,11 +60,11 @@ class Trans:
     """
 
     def __getattr__(self, real_name):
-        from django.conf import settings
+        from hibee.conf import settings
 
         if settings.USE_I18N:
-            from django.utils.translation import trans_real as trans
-            from django.utils.translation.reloader import (
+            from hibee.utils.translation import trans_real as trans
+            from hibee.utils.translation.reloader import (
                 translation_file_changed,
                 watch_for_translation_changes,
             )
@@ -76,7 +76,7 @@ class Trans:
                 translation_file_changed, dispatch_uid="translation_file_changed"
             )
         else:
-            from django.utils.translation import trans_null as trans
+            from hibee.utils.translation import trans_null as trans
         setattr(self, real_name, getattr(trans, real_name))
         return getattr(trans, real_name)
 
@@ -266,7 +266,7 @@ def deactivate_all():
 
 
 def get_language_info(lang_code):
-    from django.conf.locale import LANG_INFO
+    from hibee.conf.locale import LANG_INFO
 
     try:
         lang_info = LANG_INFO[lang_code]

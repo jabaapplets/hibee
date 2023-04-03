@@ -4,9 +4,9 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 from unittest import TestCase, mock
 
-from django.core.exceptions import ValidationError
-from django.core.files.base import ContentFile
-from django.core.validators import (
+from hibee.core.exceptions import ValidationError
+from hibee.core.files.base import ContentFile
+from hibee.core.validators import (
     BaseValidator,
     DecimalValidator,
     EmailValidator,
@@ -30,7 +30,7 @@ from django.core.validators import (
     validate_slug,
     validate_unicode_slug,
 )
-from django.test import SimpleTestCase
+from hibee.test import SimpleTestCase
 
 try:
     from PIL import Image  # noqa
@@ -43,8 +43,8 @@ NOW = datetime.now()
 EXTENDED_SCHEMES = ["http", "https", "ftp", "ftps", "git", "file", "git+ssh"]
 
 VALID_URLS = [
-    "http://www.djangoproject.com/",
-    "HTTP://WWW.DJANGOPROJECT.COM/",
+    "http://www.hibeeproject.com/",
+    "HTTP://WWW.HIBEEPROJECT.COM/",
     "http://localhost/",
     "http://example.com/",
     "http://example.com:0",
@@ -116,7 +116,7 @@ VALID_URLS = [
     "http://foo.com/unicode_(✪)_in_parens",
     "http://foo.com/(something)?after=parens",
     "http://☺.damowmow.com/",
-    "http://djangoproject.com/events/#&product=browser",
+    "http://hibeeproject.com/events/#&product=browser",
     "http://j.mp",
     "ftp://foo.bar/baz",
     "http://foo.bar/?q=Test%20URL-encoded%20stuff",
@@ -251,13 +251,13 @@ INVALID_URLS = [
     "http://foo:bar/baz@example.com",
     "http://invalid-.com/?m=foo@example.com",
     # Newlines and tabs are not accepted.
-    "http://www.djangoproject.com/\n",
+    "http://www.hibeeproject.com/\n",
     "http://[::ffff:192.9.5.5]\n",
-    "http://www.djangoproject.com/\r",
+    "http://www.hibeeproject.com/\r",
     "http://[::ffff:192.9.5.5]\r",
-    "http://www.django\rproject.com/",
+    "http://www.hibee\rproject.com/",
     "http://[::\rffff:192.9.5.5]",
-    "http://\twww.djangoproject.com/",
+    "http://\twww.hibeeproject.com/",
     "http://\t[::ffff:192.9.5.5]",
     # Trailing junk does not take forever to reject.
     "http://www.asdasdasdasdsadfm.com.br ",
@@ -373,7 +373,7 @@ TEST_DATA = [
     (validate_ipv4_address, "1.02.3.4", ValidationError),
     (validate_ipv4_address, "1.2.03.4", ValidationError),
     (validate_ipv4_address, "1.2.3.04", ValidationError),
-    # validate_ipv6_address uses django.utils.ipv6, which
+    # validate_ipv6_address uses hibee.utils.ipv6, which
     # is tested in much greater detail in its own testcase
     (validate_ipv6_address, "fe80::1", None),
     (validate_ipv6_address, "::1", None),
@@ -647,9 +647,9 @@ class TestValidators(SimpleTestCase):
             16, message='"%(value)s" has more than %(limit_value)d characters.'
         )
         with self.assertRaisesMessage(
-            ValidationError, '"djangoproject.com" has more than 16 characters.'
+            ValidationError, '"hibeeproject.com" has more than 16 characters.'
         ):
-            v("djangoproject.com")
+            v("hibeeproject.com")
 
 
 class TestValidatorEquality(TestCase):

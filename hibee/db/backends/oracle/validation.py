@@ -1,5 +1,5 @@
-from django.core import checks
-from django.db.backends.base.validation import BaseDatabaseValidation
+from hibee.core import checks
+from hibee.db.backends.base.validation import BaseDatabaseValidation
 
 
 class DatabaseValidation(BaseDatabaseValidation):

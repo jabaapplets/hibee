@@ -1,7 +1,7 @@
 from unittest import mock
 
-from django.test import SimpleTestCase
-from django.utils.functional import cached_property, classproperty, lazy
+from hibee.test import SimpleTestCase
+from hibee.utils.functional import cached_property, classproperty, lazy
 
 
 class FunctionalTests(SimpleTestCase):

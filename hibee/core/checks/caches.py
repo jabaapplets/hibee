@@ -1,8 +1,8 @@
 import pathlib
 
-from django.conf import settings
-from django.core.cache import DEFAULT_CACHE_ALIAS, caches
-from django.core.cache.backends.filebased import FileBasedCache
+from hibee.conf import settings
+from hibee.core.cache import DEFAULT_CACHE_ALIAS, caches
+from hibee.core.cache.backends.filebased import FileBasedCache
 
 from . import Error, Tags, Warning, register
 

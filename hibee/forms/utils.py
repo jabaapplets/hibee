@@ -1,13 +1,13 @@
 import json
 from collections import UserList
 
-from django.conf import settings
-from django.core.exceptions import ValidationError
-from django.forms.renderers import get_default_renderer
-from django.utils import timezone
-from django.utils.html import escape, format_html_join
-from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy as _
+from hibee.conf import settings
+from hibee.core.exceptions import ValidationError
+from hibee.forms.renderers import get_default_renderer
+from hibee.utils import timezone
+from hibee.utils.html import escape, format_html_join
+from hibee.utils.safestring import mark_safe
+from hibee.utils.translation import gettext_lazy as _
 
 
 def pretty_name(name):
@@ -94,9 +94,9 @@ class ErrorDict(dict, RenderableErrorMixin):
     The dictionary keys are the field names, and the values are the errors.
     """
 
-    template_name = "django/forms/errors/dict/default.html"
-    template_name_text = "django/forms/errors/dict/text.txt"
-    template_name_ul = "django/forms/errors/dict/ul.html"
+    template_name = "hibee/forms/errors/dict/default.html"
+    template_name_text = "hibee/forms/errors/dict/text.txt"
+    template_name_ul = "hibee/forms/errors/dict/ul.html"
 
     def __init__(self, *args, renderer=None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -120,9 +120,9 @@ class ErrorList(UserList, list, RenderableErrorMixin):
     A collection of errors that knows how to display itself in various formats.
     """
 
-    template_name = "django/forms/errors/list/default.html"
-    template_name_text = "django/forms/errors/list/text.txt"
-    template_name_ul = "django/forms/errors/list/ul.html"
+    template_name = "hibee/forms/errors/list/default.html"
+    template_name_text = "hibee/forms/errors/list/text.txt"
+    template_name_ul = "hibee/forms/errors/list/ul.html"
 
     def __init__(self, initlist=None, error_class=None, renderer=None):
         super().__init__(initlist)

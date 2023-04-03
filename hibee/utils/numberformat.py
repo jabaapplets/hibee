@@ -1,7 +1,7 @@
 from decimal import Decimal
 
-from django.conf import settings
-from django.utils.safestring import mark_safe
+from hibee.conf import settings
+from hibee.utils.safestring import mark_safe
 
 
 def format(

@@ -1,9 +1,9 @@
 from urllib.parse import quote, urljoin
 
-from django import template
-from django.apps import apps
-from django.utils.encoding import iri_to_uri
-from django.utils.html import conditional_escape
+from hibee import template
+from hibee.apps import apps
+from hibee.utils.encoding import iri_to_uri
+from hibee.utils.html import conditional_escape
 
 register = template.Library()
 
@@ -41,7 +41,7 @@ class PrefixNode(template.Node):
     @classmethod
     def handle_simple(cls, name):
         try:
-            from django.conf import settings
+            from hibee.conf import settings
         except ImportError:
             prefix = ""
         else:
@@ -123,8 +123,8 @@ class StaticNode(template.Node):
 
     @classmethod
     def handle_simple(cls, path):
-        if apps.is_installed("django.contrib.staticfiles"):
-            from django.contrib.staticfiles.storage import staticfiles_storage
+        if apps.is_installed("hibee.contrib.staticfiles"):
+            from hibee.contrib.staticfiles.storage import staticfiles_storage
 
             return staticfiles_storage.url(path)
         else:

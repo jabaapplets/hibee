@@ -1,7 +1,7 @@
 import posixpath
 from collections import defaultdict
 
-from django.utils.safestring import mark_safe
+from hibee.utils.safestring import mark_safe
 
 from .base import Node, Template, TemplateSyntaxError, TextNode, Variable, token_kwargs
 from .library import Library
@@ -121,10 +121,10 @@ class ExtendsNode(Node):
                 )
             raise TemplateSyntaxError(error_msg)
         if isinstance(parent, Template):
-            # parent is a django.template.Template
+            # parent is a hibee.template.Template
             return parent
         if isinstance(getattr(parent, "template", None), Template):
-            # parent is a django.template.backends.django.Template
+            # parent is a hibee.template.backends.hibee.Template
             return parent.template
         return self.find_template(parent, context)
 
@@ -196,7 +196,7 @@ class IncludeNode(Node):
             if template is None:
                 template = context.template.engine.select_template(template_name)
                 cache[template_name] = template
-        # Use the base.Template of a backends.django.Template.
+        # Use the base.Template of a backends.hibee.Template.
         elif hasattr(template, "template"):
             template = template.template
         values = {

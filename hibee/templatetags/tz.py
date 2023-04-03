@@ -3,8 +3,8 @@ from datetime import datetime
 from datetime import timezone as datetime_timezone
 from datetime import tzinfo
 
-from django.template import Library, Node, TemplateSyntaxError
-from django.utils import timezone
+from hibee.template import Library, Node, TemplateSyntaxError
+from hibee.utils import timezone
 
 register = Library()
 

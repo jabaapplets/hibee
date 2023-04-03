@@ -1,5 +1,5 @@
-from django.core.checks import Tags
-from django.core.management.base import BaseCommand
+from hibee.core.checks import Tags
+from hibee.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):

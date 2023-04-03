@@ -2,10 +2,10 @@ import sys
 import unittest
 from contextlib import contextmanager
 
-from django.test import LiveServerTestCase, tag
-from django.utils.functional import classproperty
-from django.utils.module_loading import import_string
-from django.utils.text import capfirst
+from hibee.test import LiveServerTestCase, tag
+from hibee.utils.functional import classproperty
+from hibee.utils.module_loading import import_string
+from hibee.utils.text import capfirst
 
 
 class SeleniumTestCaseBase(type(LiveServerTestCase)):

@@ -2,10 +2,10 @@ from pathlib import Path
 
 import jinja2
 
-from django.conf import settings
-from django.template import TemplateDoesNotExist, TemplateSyntaxError
-from django.utils.functional import cached_property
-from django.utils.module_loading import import_string
+from hibee.conf import settings
+from hibee.template import TemplateDoesNotExist, TemplateSyntaxError
+from hibee.utils.functional import cached_property
+from hibee.utils.module_loading import import_string
 
 from .base import BaseEngine
 from .utils import csrf_input_lazy, csrf_token_lazy

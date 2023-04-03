@@ -8,12 +8,12 @@ from collections.abc import Mapping
 from itertools import chain, tee
 from sqlite3 import dbapi2 as Database
 
-from django.core.exceptions import ImproperlyConfigured
-from django.db import IntegrityError
-from django.db.backends.base.base import BaseDatabaseWrapper
-from django.utils.asyncio import async_unsafe
-from django.utils.dateparse import parse_date, parse_datetime, parse_time
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.db import IntegrityError
+from hibee.db.backends.base.base import BaseDatabaseWrapper
+from hibee.utils.asyncio import async_unsafe
+from hibee.utils.dateparse import parse_date, parse_datetime, parse_time
+from hibee.utils.regex_helper import _lazy_re_compile
 
 from ._functions import register as register_functions
 from .client import DatabaseClient
@@ -308,7 +308,7 @@ FORMAT_QMARK_REGEX = _lazy_re_compile(r"(?<!%)%s")
 
 class SQLiteCursorWrapper(Database.Cursor):
     """
-    Django uses the "format" and "pyformat" styles, but Python's sqlite3 module
+    Hibee uses the "format" and "pyformat" styles, but Python's sqlite3 module
     supports neither of these styles.
 
     This wrapper performs the following conversions:

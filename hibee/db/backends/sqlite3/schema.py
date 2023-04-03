@@ -1,13 +1,13 @@
 import copy
 from decimal import Decimal
 
-from django.apps.registry import Apps
-from django.db import NotSupportedError
-from django.db.backends.base.schema import BaseDatabaseSchemaEditor
-from django.db.backends.ddl_references import Statement
-from django.db.backends.utils import strip_quotes
-from django.db.models import UniqueConstraint
-from django.db.transaction import atomic
+from hibee.apps.registry import Apps
+from hibee.db import NotSupportedError
+from hibee.db.backends.base.schema import BaseDatabaseSchemaEditor
+from hibee.db.backends.ddl_references import Statement
+from hibee.db.backends.utils import strip_quotes
+from hibee.db.models import UniqueConstraint
+from hibee.db.transaction import atomic
 
 
 class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):

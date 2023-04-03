@@ -1,5 +1,5 @@
-from django.core.management.base import BaseCommand
-from django.urls import reverse
+from hibee.core.management.base import BaseCommand
+from hibee.urls import reverse
 
 
 class Command(BaseCommand):

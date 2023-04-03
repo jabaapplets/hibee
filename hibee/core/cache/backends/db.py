@@ -3,21 +3,21 @@ import base64
 import pickle
 from datetime import datetime, timezone
 
-from django.conf import settings
-from django.core.cache.backends.base import DEFAULT_TIMEOUT, BaseCache
-from django.db import DatabaseError, connections, models, router, transaction
-from django.utils.timezone import now as tz_now
+from hibee.conf import settings
+from hibee.core.cache.backends.base import DEFAULT_TIMEOUT, BaseCache
+from hibee.db import DatabaseError, connections, models, router, transaction
+from hibee.utils.timezone import now as tz_now
 
 
 class Options:
-    """A class that will quack like a Django model _meta class.
+    """A class that will quack like a Hibee model _meta class.
 
     This allows cache operations to be controlled by the router
     """
 
     def __init__(self, table):
         self.db_table = table
-        self.app_label = "django_cache"
+        self.app_label = "hibee_cache"
         self.model_name = "cacheentry"
         self.verbose_name = "cache entry"
         self.verbose_name_plural = "cache entries"

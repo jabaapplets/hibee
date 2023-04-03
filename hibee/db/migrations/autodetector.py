@@ -4,14 +4,14 @@ from collections import defaultdict
 from graphlib import TopologicalSorter
 from itertools import chain
 
-from django.conf import settings
-from django.db import models
-from django.db.migrations import operations
-from django.db.migrations.migration import Migration
-from django.db.migrations.operations.models import AlterModelOptions
-from django.db.migrations.optimizer import MigrationOptimizer
-from django.db.migrations.questioner import MigrationQuestioner
-from django.db.migrations.utils import (
+from hibee.conf import settings
+from hibee.db import models
+from hibee.db.migrations import operations
+from hibee.db.migrations.migration import Migration
+from hibee.db.migrations.operations.models import AlterModelOptions
+from hibee.db.migrations.optimizer import MigrationOptimizer
+from hibee.db.migrations.questioner import MigrationQuestioner
+from hibee.db.migrations.utils import (
     COMPILED_REGEX_TYPE,
     RegexObject,
     resolve_relation,
@@ -190,14 +190,14 @@ class MigrationAutodetector:
         self.generate_renamed_indexes()
         # Generate removal of foo together.
         self.generate_removed_altered_unique_together()
-        self.generate_removed_altered_index_together()  # RemovedInDjango51Warning.
+        self.generate_removed_altered_index_together()  # RemovedInHibee51Warning.
         # Generate field operations.
         self.generate_removed_fields()
         self.generate_added_fields()
         self.generate_altered_fields()
         self.generate_altered_order_with_respect_to()
         self.generate_altered_unique_together()
-        self.generate_altered_index_together()  # RemovedInDjango51Warning.
+        self.generate_altered_index_together()  # RemovedInHibee51Warning.
         self.generate_added_indexes()
         self.generate_added_constraints()
         self.generate_altered_db_table()
@@ -612,7 +612,7 @@ class MigrationAutodetector:
             indexes = model_state.options.pop("indexes")
             constraints = model_state.options.pop("constraints")
             unique_together = model_state.options.pop("unique_together", None)
-            # RemovedInDjango51Warning.
+            # RemovedInHibee51Warning.
             index_together = model_state.options.pop("index_together", None)
             order_with_respect_to = model_state.options.pop(
                 "order_with_respect_to", None
@@ -742,7 +742,7 @@ class MigrationAutodetector:
                     ),
                     dependencies=related_dependencies,
                 )
-            # RemovedInDjango51Warning.
+            # RemovedInHibee51Warning.
             if index_together:
                 self.add_operation(
                     app_label,
@@ -832,7 +832,7 @@ class MigrationAutodetector:
                         related_fields[field_name] = field
             # Generate option removal first
             unique_together = model_state.options.pop("unique_together", None)
-            # RemovedInDjango51Warning.
+            # RemovedInHibee51Warning.
             index_together = model_state.options.pop("index_together", None)
             if unique_together:
                 self.add_operation(
@@ -842,7 +842,7 @@ class MigrationAutodetector:
                         unique_together=None,
                     ),
                 )
-            # RemovedInDjango51Warning.
+            # RemovedInHibee51Warning.
             if index_together:
                 self.add_operation(
                     app_label,
@@ -1500,7 +1500,7 @@ class MigrationAutodetector:
     def generate_removed_altered_unique_together(self):
         self._generate_removed_altered_foo_together(operations.AlterUniqueTogether)
 
-    # RemovedInDjango51Warning.
+    # RemovedInHibee51Warning.
     def generate_removed_altered_index_together(self):
         self._generate_removed_altered_foo_together(operations.AlterIndexTogether)
 
@@ -1523,7 +1523,7 @@ class MigrationAutodetector:
     def generate_altered_unique_together(self):
         self._generate_altered_foo_together(operations.AlterUniqueTogether)
 
-    # RemovedInDjango51Warning.
+    # RemovedInHibee51Warning.
     def generate_altered_index_together(self):
         self._generate_altered_foo_together(operations.AlterIndexTogether)
 

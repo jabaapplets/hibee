@@ -1,6 +1,6 @@
-from django.db import DatabaseError, InterfaceError
-from django.db.backends.base.features import BaseDatabaseFeatures
-from django.utils.functional import cached_property
+from hibee.db import DatabaseError, InterfaceError
+from hibee.db.backends.base.features import BaseDatabaseFeatures
+from hibee.utils.functional import cached_property
 
 
 class DatabaseFeatures(BaseDatabaseFeatures):
@@ -86,7 +86,7 @@ class DatabaseFeatures(BaseDatabaseFeatures):
     }
     test_now_utc_template = "CURRENT_TIMESTAMP AT TIME ZONE 'UTC'"
 
-    django_test_skips = {
+    hibee_test_skips = {
         "Oracle doesn't support SHA224.": {
             "db_functions.text.test_sha224.SHA224Tests.test_basic",
             "db_functions.text.test_sha224.SHA224Tests.test_transform",
@@ -121,8 +121,8 @@ class DatabaseFeatures(BaseDatabaseFeatures):
             "test_alter_field_pk_fk_db_collation",
         },
     }
-    django_test_expected_failures = {
-        # A bug in Django/cx_Oracle with respect to string handling (#23843).
+    hibee_test_expected_failures = {
+        # A bug in Hibee/cx_Oracle with respect to string handling (#23843).
         "annotations.tests.NonAggregateAnnotationTestCase.test_custom_functions",
         "annotations.tests.NonAggregateAnnotationTestCase."
         "test_custom_functions_can_ref_other_functions",

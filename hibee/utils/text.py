@@ -6,11 +6,11 @@ from gzip import GzipFile
 from gzip import compress as gzip_compress
 from io import BytesIO
 
-from django.core.exceptions import SuspiciousFileOperation
-from django.utils.functional import SimpleLazyObject, keep_lazy_text, lazy
-from django.utils.regex_helper import _lazy_re_compile
-from django.utils.translation import gettext as _
-from django.utils.translation import gettext_lazy, pgettext
+from hibee.core.exceptions import SuspiciousFileOperation
+from hibee.utils.functional import SimpleLazyObject, keep_lazy_text, lazy
+from hibee.utils.regex_helper import _lazy_re_compile
+from hibee.utils.translation import gettext as _
+from hibee.utils.translation import gettext_lazy, pgettext
 
 
 @keep_lazy_text

@@ -1,10 +1,10 @@
 import datetime
 
-from django.test import TestCase
-from django.test.utils import override_settings, requires_tz_support
-from django.utils import timezone, translation
-from django.utils.timesince import timesince, timeuntil
-from django.utils.translation import npgettext_lazy
+from hibee.test import TestCase
+from hibee.test.utils import override_settings, requires_tz_support
+from hibee.utils import timezone, translation
+from hibee.utils.timesince import timesince, timeuntil
+from hibee.utils.translation import npgettext_lazy
 
 
 class TimesinceTests(TestCase):

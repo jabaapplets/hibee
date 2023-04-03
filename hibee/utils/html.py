@@ -6,12 +6,12 @@ import re
 from html.parser import HTMLParser
 from urllib.parse import parse_qsl, quote, unquote, urlencode, urlsplit, urlunsplit
 
-from django.utils.encoding import punycode
-from django.utils.functional import Promise, keep_lazy, keep_lazy_text
-from django.utils.http import RFC3986_GENDELIMS, RFC3986_SUBDELIMS
-from django.utils.regex_helper import _lazy_re_compile
-from django.utils.safestring import SafeData, SafeString, mark_safe
-from django.utils.text import normalize_newlines
+from hibee.utils.encoding import punycode
+from hibee.utils.functional import Promise, keep_lazy, keep_lazy_text
+from hibee.utils.http import RFC3986_GENDELIMS, RFC3986_SUBDELIMS
+from hibee.utils.regex_helper import _lazy_re_compile
+from hibee.utils.safestring import SafeData, SafeString, mark_safe
+from hibee.utils.text import normalize_newlines
 
 
 @keep_lazy(SafeString)
@@ -65,9 +65,9 @@ def json_script(value, element_id=None, encoder=None):
     value is safe to be output anywhere except for inside a tag attribute. Wrap
     the escaped JSON in a script tag.
     """
-    from django.core.serializers.json import DjangoJSONEncoder
+    from hibee.core.serializers.json import HibeeJSONEncoder
 
-    json_str = json.dumps(value, cls=encoder or DjangoJSONEncoder).translate(
+    json_str = json.dumps(value, cls=encoder or HibeeJSONEncoder).translate(
         _json_script_escapes
     )
     if element_id:
@@ -83,7 +83,7 @@ def conditional_escape(text):
     """
     Similar to escape(), except that it doesn't operate on pre-escaped strings.
 
-    This function relies on the __html__ convention used both by Django's
+    This function relies on the __html__ convention used both by Hibee's
     SafeData class and by third-party libraries like markupsafe.
     """
     if isinstance(text, Promise):
@@ -403,7 +403,7 @@ def avoid_wrapping(value):
 
 def html_safe(klass):
     """
-    A decorator that defines the __html__ method. This helps non-Django
+    A decorator that defines the __html__ method. This helps non-Hibee
     templates to detect classes whose __str__ methods return SafeString.
     """
     if "__html__" in klass.__dict__:

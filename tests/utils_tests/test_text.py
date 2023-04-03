@@ -1,12 +1,12 @@
 import json
 import sys
 
-from django.core.exceptions import SuspiciousFileOperation
-from django.test import SimpleTestCase
-from django.utils import text
-from django.utils.functional import lazystr
-from django.utils.text import format_lazy
-from django.utils.translation import gettext_lazy, override
+from hibee.core.exceptions import SuspiciousFileOperation
+from hibee.test import SimpleTestCase
+from hibee.utils import text
+from hibee.utils.functional import lazystr
+from hibee.utils.text import format_lazy
+from hibee.utils.translation import gettext_lazy, override
 
 IS_WIDE_BUILD = len("\U0001F4A9") == 1
 
@@ -288,19 +288,19 @@ class TestUtilsText(SimpleTestCase):
         self.assertLess(compressed_length, actual_length)
 
     def test_format_lazy(self):
-        self.assertEqual("django/test", format_lazy("{}/{}", "django", lazystr("test")))
-        self.assertEqual("django/test", format_lazy("{0}/{1}", *("django", "test")))
+        self.assertEqual("hibee/test", format_lazy("{}/{}", "hibee", lazystr("test")))
+        self.assertEqual("hibee/test", format_lazy("{0}/{1}", *("hibee", "test")))
         self.assertEqual(
-            "django/test", format_lazy("{a}/{b}", **{"a": "django", "b": "test"})
+            "hibee/test", format_lazy("{a}/{b}", **{"a": "hibee", "b": "test"})
         )
         self.assertEqual(
-            "django/test", format_lazy("{a[0]}/{a[1]}", a=("django", "test"))
+            "hibee/test", format_lazy("{a[0]}/{a[1]}", a=("hibee", "test"))
         )
 
         t = {}
         s = format_lazy("{0[a]}-{p[a]}", t, p=t)
-        t["a"] = lazystr("django")
-        self.assertEqual("django-django", s)
+        t["a"] = lazystr("hibee")
+        self.assertEqual("hibee-hibee", s)
         t["a"] = "update"
         self.assertEqual("update-update", s)
 

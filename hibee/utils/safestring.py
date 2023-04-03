@@ -7,7 +7,7 @@ be interpreted by the HTML engine (e.g. '<') into the appropriate entities.
 
 from functools import wraps
 
-from django.utils.functional import keep_lazy
+from hibee.utils.functional import keep_lazy
 
 
 class SafeData:
@@ -17,7 +17,7 @@ class SafeData:
         """
         Return the html representation of a string for interoperability.
 
-        This allows other template engines to understand Django's SafeData.
+        This allows other template engines to understand Hibee's SafeData.
         """
         return self
 
@@ -44,7 +44,7 @@ class SafeString(str, SafeData):
         return self
 
 
-SafeText = SafeString  # For backwards compatibility since Django 2.0.
+SafeText = SafeString  # For backwards compatibility since Hibee 2.0.
 
 
 def _safety_decorator(safety_marker, func):

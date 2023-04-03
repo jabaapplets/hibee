@@ -1,7 +1,7 @@
-from django.core import signals
-from django.db.utils import (
+from hibee.core import signals
+from hibee.db.utils import (
     DEFAULT_DB_ALIAS,
-    DJANGO_VERSION_PICKLE_KEY,
+    HIBEE_VERSION_PICKLE_KEY,
     ConnectionHandler,
     ConnectionRouter,
     DatabaseError,
@@ -14,7 +14,7 @@ from django.db.utils import (
     OperationalError,
     ProgrammingError,
 )
-from django.utils.connection import ConnectionProxy
+from hibee.utils.connection import ConnectionProxy
 
 __all__ = [
     "connection",
@@ -30,7 +30,7 @@ __all__ = [
     "InterfaceError",
     "OperationalError",
     "DEFAULT_DB_ALIAS",
-    "DJANGO_VERSION_PICKLE_KEY",
+    "HIBEE_VERSION_PICKLE_KEY",
 ]
 
 connections = ConnectionHandler()
@@ -41,7 +41,7 @@ router = ConnectionRouter()
 connection = ConnectionProxy(connections, DEFAULT_DB_ALIAS)
 
 
-# Register an event to reset saved queries when a Django request is started.
+# Register an event to reset saved queries when a Hibee request is started.
 def reset_queries(**kwargs):
     for conn in connections.all(initialized_only=True):
         conn.queries_log.clear()

@@ -1,7 +1,7 @@
-from django.middleware.csrf import get_token
-from django.utils.functional import lazy
-from django.utils.html import format_html
-from django.utils.safestring import SafeString
+from hibee.middleware.csrf import get_token
+from hibee.utils.functional import lazy
+from hibee.utils.html import format_html
+from hibee.utils.safestring import SafeString
 
 
 def csrf_input(request):

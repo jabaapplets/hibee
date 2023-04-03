@@ -1,4 +1,4 @@
-from django.http import Http404
+from hibee.http import Http404
 
 
 class Resolver404(Http404):

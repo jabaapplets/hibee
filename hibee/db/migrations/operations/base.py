@@ -1,4 +1,4 @@
-from django.db import router
+from hibee.db import router
 
 
 class Operation:
@@ -42,7 +42,7 @@ class Operation:
     def deconstruct(self):
         """
         Return a 3-tuple of class import path (or just name if it lives
-        under django.db.migrations), positional arguments, and keyword
+        under hibee.db.migrations), positional arguments, and keyword
         arguments.
         """
         return (

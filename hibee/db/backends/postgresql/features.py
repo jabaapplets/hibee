@@ -1,9 +1,9 @@
 import operator
 
-from django.db import DataError, InterfaceError
-from django.db.backends.base.features import BaseDatabaseFeatures
-from django.db.backends.postgresql.psycopg_any import is_psycopg3
-from django.utils.functional import cached_property
+from hibee.db import DataError, InterfaceError
+from hibee.db.backends.base.features import BaseDatabaseFeatures
+from hibee.db.backends.postgresql.psycopg_any import is_psycopg3
+from hibee.utils.functional import cached_property
 
 
 class DatabaseFeatures(BaseDatabaseFeatures):
@@ -77,7 +77,7 @@ class DatabaseFeatures(BaseDatabaseFeatures):
     }
     test_now_utc_template = "STATEMENT_TIMESTAMP() AT TIME ZONE 'UTC'"
 
-    django_test_skips = {
+    hibee_test_skips = {
         "opclasses are PostgreSQL only.": {
             "indexes.tests.SchemaIndexesNotPostgreSQLTests."
             "test_create_index_ignores_opclasses",
@@ -85,7 +85,7 @@ class DatabaseFeatures(BaseDatabaseFeatures):
     }
 
     @cached_property
-    def django_test_expected_failures(self):
+    def hibee_test_expected_failures(self):
         expected_failures = set()
         if self.uses_server_side_binding:
             expected_failures.update(

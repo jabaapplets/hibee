@@ -1,13 +1,13 @@
 """
 Functions for reversing a regular expression (used in reverse URL resolving).
-Used internally by Django and not intended for external use.
+Used internally by Hibee and not intended for external use.
 
 This is not, and is not intended to be, a complete reg-exp decompiler. It
 should be good enough for a large class of URLS, however.
 """
 import re
 
-from django.utils.functional import SimpleLazyObject
+from hibee.utils.functional import SimpleLazyObject
 
 # Mapping of an escape character to a representative of that class. So, e.g.,
 # "\w" is replaced by "x" in a reverse URL. A value of None means to ignore
@@ -53,7 +53,7 @@ def normalize(pattern):
     (4) Ignore look-ahead and look-behind assertions.
     (5) Raise an error on any disjunctive ('|') constructs.
 
-    Django's URLs for forward resolving are either all positional arguments or
+    Hibee's URLs for forward resolving are either all positional arguments or
     all keyword arguments. That is assumed here, as well. Although reverse
     resolving can be done using positional args when keyword args are
     specified, the two cannot be mixed in the same reverse() call.

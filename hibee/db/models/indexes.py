@@ -1,11 +1,11 @@
 from types import NoneType
 
-from django.db.backends.utils import names_digest, split_identifier
-from django.db.models.expressions import Col, ExpressionList, F, Func, OrderBy
-from django.db.models.functions import Collate
-from django.db.models.query_utils import Q
-from django.db.models.sql import Query
-from django.utils.functional import partition
+from hibee.db.backends.utils import names_digest, split_identifier
+from hibee.db.models.expressions import Col, ExpressionList, F, Func, OrderBy
+from hibee.db.models.functions import Collate
+from hibee.db.models.query_utils import Q
+from hibee.db.models.sql import Query
+from hibee.utils.functional import partition
 
 __all__ = ["Index"]
 
@@ -49,7 +49,7 @@ class Index:
         if expressions and opclasses:
             raise ValueError(
                 "Index.opclasses cannot be used with expressions. Use "
-                "django.contrib.postgres.indexes.OpClass() instead."
+                "hibee.contrib.postgres.indexes.OpClass() instead."
             )
         if opclasses and len(fields) != len(opclasses):
             raise ValueError(
@@ -136,7 +136,7 @@ class Index:
 
     def deconstruct(self):
         path = "%s.%s" % (self.__class__.__module__, self.__class__.__name__)
-        path = path.replace("django.db.models.indexes", "django.db.models")
+        path = path.replace("hibee.db.models.indexes", "hibee.db.models")
         kwargs = {"name": self.name}
         if self.fields:
             kwargs["fields"] = self.fields

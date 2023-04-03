@@ -1,4 +1,4 @@
-from django.db.models.lookups import (
+from hibee.db.models.lookups import (
     Exact,
     GreaterThan,
     GreaterThanOrEqual,
@@ -38,7 +38,7 @@ class MultiColSource:
 
 
 def get_normalized_value(value, lhs):
-    from django.db.models import Model
+    from hibee.db.models import Model
 
     if isinstance(value, Model):
         if value.pk is None:
@@ -103,7 +103,7 @@ class RelatedIn(In):
             # This clause is either a SubqueryConstraint (for values that need
             # to be compiled to SQL) or an OR-combined list of
             # (col1 = val1 AND col2 = val2 AND ...) clauses.
-            from django.db.models.sql.where import (
+            from hibee.db.models.sql.where import (
                 AND,
                 OR,
                 SubqueryConstraint,
@@ -161,7 +161,7 @@ class RelatedLookupMixin:
         if isinstance(self.lhs, MultiColSource):
             assert self.rhs_is_direct_value()
             self.rhs = get_normalized_value(self.rhs, self.lhs)
-            from django.db.models.sql.where import AND, WhereNode
+            from hibee.db.models.sql.where import AND, WhereNode
 
             root_constraint = WhereNode()
             for target, source, val in zip(

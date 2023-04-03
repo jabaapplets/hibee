@@ -1,7 +1,7 @@
 from itertools import chain
 
-from django.utils.inspect import func_accepts_kwargs
-from django.utils.itercompat import is_iterable
+from hibee.utils.inspect import func_accepts_kwargs
+from hibee.utils.itercompat import is_iterable
 
 
 class Tags:

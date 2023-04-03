@@ -3,8 +3,8 @@ import inspect
 from functools import wraps
 from importlib import import_module
 
-from django.db import router
-from django.db.models.query import QuerySet
+from hibee.db import router
+from hibee.db.models.query import QuerySet
 
 
 class BaseManager:

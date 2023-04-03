@@ -7,14 +7,14 @@ from decimal import Decimal
 from types import NoneType
 from uuid import UUID
 
-from django.core.exceptions import EmptyResultSet, FieldError, FullResultSet
-from django.db import DatabaseError, NotSupportedError, connection
-from django.db.models import fields
-from django.db.models.constants import LOOKUP_SEP
-from django.db.models.query_utils import Q
-from django.utils.deconstruct import deconstructible
-from django.utils.functional import cached_property
-from django.utils.hashable import make_hashable
+from hibee.core.exceptions import EmptyResultSet, FieldError, FullResultSet
+from hibee.db import DatabaseError, NotSupportedError, connection
+from hibee.db.models import fields
+from hibee.db.models.constants import LOOKUP_SEP
+from hibee.db.models.query_utils import Q
+from hibee.utils.deconstruct import deconstructible
+from hibee.utils.functional import cached_property
+from hibee.utils.hashable import make_hashable
 
 
 class SQLiteNumericMixin:
@@ -506,7 +506,7 @@ class Expression(BaseExpression, Combinable):
 #
 # The current approach for NULL is based on lowest common denominator behavior
 # i.e. if one of the supported databases is raising an error (rather than
-# return NULL) for `val <op> NULL`, then Django raises FieldError.
+# return NULL) for `val <op> NULL`, then Hibee raises FieldError.
 
 _connector_combinations = [
     # Numeric operations - operands of same type.
@@ -800,7 +800,7 @@ class TemporalSubtraction(CombinedExpression):
         )
 
 
-@deconstructible(path="django.db.models.F")
+@deconstructible(path="hibee.db.models.F")
 class F(Combinable):
     """An object capable of resolving references to existing query objects."""
 
@@ -882,7 +882,7 @@ class OuterRef(F):
         return self
 
 
-@deconstructible(path="django.db.models.Func")
+@deconstructible(path="hibee.db.models.Func")
 class Func(SQLiteNumericMixin, Expression):
     """An SQL function call."""
 
@@ -983,7 +983,7 @@ class Func(SQLiteNumericMixin, Expression):
         return copy
 
 
-@deconstructible(path="django.db.models.Value")
+@deconstructible(path="hibee.db.models.Value")
 class Value(SQLiteNumericMixin, Expression):
     """Represent a wrapped value as a node within an expression."""
 
@@ -1233,7 +1233,7 @@ class OrderByList(Func):
         return group_by_cols
 
 
-@deconstructible(path="django.db.models.ExpressionWrapper")
+@deconstructible(path="hibee.db.models.ExpressionWrapper")
 class ExpressionWrapper(SQLiteNumericMixin, Expression):
     """
     An expression that can wrap another expression so that it can provide
@@ -1317,7 +1317,7 @@ class NegatedExpression(ExpressionWrapper):
         return sql, params
 
 
-@deconstructible(path="django.db.models.When")
+@deconstructible(path="hibee.db.models.When")
 class When(Expression):
     template = "WHEN %(condition)s THEN %(result)s"
     # This isn't a complete conditional expression, must be used in Case().
@@ -1393,7 +1393,7 @@ class When(Expression):
         return cols
 
 
-@deconstructible(path="django.db.models.Case")
+@deconstructible(path="hibee.db.models.Case")
 class Case(SQLiteNumericMixin, Expression):
     """
     An SQL searched CASE expression:
@@ -1560,7 +1560,7 @@ class Exists(Subquery):
         return sql, params
 
 
-@deconstructible(path="django.db.models.OrderBy")
+@deconstructible(path="hibee.db.models.OrderBy")
 class OrderBy(Expression):
     template = "%(expression)s %(ordering)s"
     conditional = False

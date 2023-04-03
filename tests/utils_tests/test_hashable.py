@@ -1,5 +1,5 @@
-from django.test import SimpleTestCase
-from django.utils.hashable import make_hashable
+from hibee.test import SimpleTestCase
+from hibee.utils.hashable import make_hashable
 
 
 class TestHashable(SimpleTestCase):

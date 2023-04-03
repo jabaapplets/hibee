@@ -1,7 +1,7 @@
-from django.apps.registry import Apps
-from django.db import DatabaseError, models
-from django.utils.functional import classproperty
-from django.utils.timezone import now
+from hibee.apps.registry import Apps
+from hibee.db import DatabaseError, models
+from hibee.utils.functional import classproperty
+from hibee.utils.timezone import now
 
 from .exceptions import MigrationSchemaMissing
 
@@ -37,7 +37,7 @@ class MigrationRecorder:
                 class Meta:
                     apps = Apps()
                     app_label = "migrations"
-                    db_table = "django_migrations"
+                    db_table = "hibee_migrations"
 
                 def __str__(self):
                     return "Migration %s for %s" % (self.name, self.app)
@@ -53,7 +53,7 @@ class MigrationRecorder:
         return self.Migration.objects.using(self.connection.alias)
 
     def has_table(self):
-        """Return True if the django_migrations table exists."""
+        """Return True if the hibee_migrations table exists."""
         with self.connection.cursor() as cursor:
             tables = self.connection.introspection.table_names(cursor)
         return self.Migration._meta.db_table in tables
@@ -70,7 +70,7 @@ class MigrationRecorder:
                 editor.create_model(self.Migration)
         except DatabaseError as exc:
             raise MigrationSchemaMissing(
-                "Unable to create the django_migrations table (%s)" % exc
+                "Unable to create the hibee_migrations table (%s)" % exc
             )
 
     def applied_migrations(self):
@@ -84,7 +84,7 @@ class MigrationRecorder:
                 for migration in self.migration_qs
             }
         else:
-            # If the django_migrations table doesn't exist, then no migrations
+            # If the hibee_migrations table doesn't exist, then no migrations
             # are applied.
             return {}
 

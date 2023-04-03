@@ -1,11 +1,11 @@
 import re
 
-from django.core.exceptions import ValidationError
-from django.forms.utils import pretty_name
-from django.forms.widgets import MultiWidget, Textarea, TextInput
-from django.utils.functional import cached_property
-from django.utils.html import format_html, html_safe
-from django.utils.translation import gettext_lazy as _
+from hibee.core.exceptions import ValidationError
+from hibee.forms.utils import pretty_name
+from hibee.forms.widgets import MultiWidget, Textarea, TextInput
+from hibee.utils.functional import cached_property
+from hibee.utils.html import format_html, html_safe
+from hibee.utils.translation import gettext_lazy as _
 
 __all__ = ("BoundField",)
 

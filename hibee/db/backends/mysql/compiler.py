@@ -1,6 +1,6 @@
-from django.core.exceptions import FieldError, FullResultSet
-from django.db.models.expressions import Col
-from django.db.models.sql import compiler
+from hibee.core.exceptions import FieldError, FullResultSet
+from hibee.db.models.expressions import Col
+from hibee.db.models.sql import compiler
 
 
 class SQLCompiler(compiler.SQLCompiler):

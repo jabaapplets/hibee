@@ -6,10 +6,10 @@ import time
 from contextlib import contextmanager
 from hashlib import md5
 
-from django.db import NotSupportedError
-from django.utils.dateparse import parse_time
+from hibee.db import NotSupportedError
+from hibee.utils.dateparse import parse_time
 
-logger = logging.getLogger("django.db.backends")
+logger = logging.getLogger("hibee.db.backends")
 
 
 class CursorWrapper:

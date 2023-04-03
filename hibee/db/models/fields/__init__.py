@@ -8,27 +8,27 @@ import warnings
 from base64 import b64decode, b64encode
 from functools import partialmethod, total_ordering
 
-from django import forms
-from django.apps import apps
-from django.conf import settings
-from django.core import checks, exceptions, validators
-from django.db import connection, connections, router
-from django.db.models.constants import LOOKUP_SEP
-from django.db.models.query_utils import DeferredAttribute, RegisterLookupMixin
-from django.utils import timezone
-from django.utils.datastructures import DictWrapper
-from django.utils.dateparse import (
+from hibee import forms
+from hibee.apps import apps
+from hibee.conf import settings
+from hibee.core import checks, exceptions, validators
+from hibee.db import connection, connections, router
+from hibee.db.models.constants import LOOKUP_SEP
+from hibee.db.models.query_utils import DeferredAttribute, RegisterLookupMixin
+from hibee.utils import timezone
+from hibee.utils.datastructures import DictWrapper
+from hibee.utils.dateparse import (
     parse_date,
     parse_datetime,
     parse_duration,
     parse_time,
 )
-from django.utils.duration import duration_microseconds, duration_string
-from django.utils.functional import Promise, cached_property
-from django.utils.ipv6 import clean_ipv6_address
-from django.utils.itercompat import is_iterable
-from django.utils.text import capfirst
-from django.utils.translation import gettext_lazy as _
+from hibee.utils.duration import duration_microseconds, duration_string
+from hibee.utils.functional import Promise, cached_property
+from hibee.utils.ipv6 import clean_ipv6_address
+from hibee.utils.itercompat import is_iterable
+from hibee.utils.text import capfirst
+from hibee.utils.translation import gettext_lazy as _
 
 __all__ = [
     "AutoField",
@@ -119,7 +119,7 @@ class Field(RegisterLookupMixin):
     empty_values = list(validators.EMPTY_VALUES)
 
     # These track each time a Field instance is created. Used to retain order.
-    # The auto_creation_counter is used for fields that Django implicitly
+    # The auto_creation_counter is used for fields that Hibee implicitly
     # creates, creation_counter is used for all user-specified fields.
     creation_counter = 0
     auto_creation_counter = -1
@@ -494,13 +494,13 @@ class Field(RegisterLookupMixin):
             output_field is None or output_field == self
         ):
             return self.cached_col
-        from django.db.models.expressions import Col
+        from hibee.db.models.expressions import Col
 
         return Col(alias, self, output_field)
 
     @cached_property
     def cached_col(self):
-        from django.db.models.expressions import Col
+        from hibee.db.models.expressions import Col
 
         return Col(self.model._meta.db_table, self)
 
@@ -508,7 +508,7 @@ class Field(RegisterLookupMixin):
         """
         Custom format for select clauses. For example, GIS columns need to be
         selected as AsText(table.col) on MySQL as the table.col data can't be
-        used by Django.
+        used by Hibee.
         """
         return sql, params
 
@@ -519,7 +519,7 @@ class Field(RegisterLookupMixin):
          * The name of the field on the model, if contribute_to_class() has
            been run.
          * The import path of the field, including the class, e.g.
-           django.db.models.IntegerField. This should be the most portable
+           hibee.db.models.IntegerField. This should be the most portable
            version, so less specific may be better.
          * A list of positional arguments.
          * A dict of keyword arguments.
@@ -589,18 +589,18 @@ class Field(RegisterLookupMixin):
             else:
                 if value is not default:
                     keywords[name] = value
-        # Work out path - we shorten it for known Django core fields
+        # Work out path - we shorten it for known Hibee core fields
         path = "%s.%s" % (self.__class__.__module__, self.__class__.__qualname__)
-        if path.startswith("django.db.models.fields.related"):
-            path = path.replace("django.db.models.fields.related", "django.db.models")
-        elif path.startswith("django.db.models.fields.files"):
-            path = path.replace("django.db.models.fields.files", "django.db.models")
-        elif path.startswith("django.db.models.fields.json"):
-            path = path.replace("django.db.models.fields.json", "django.db.models")
-        elif path.startswith("django.db.models.fields.proxy"):
-            path = path.replace("django.db.models.fields.proxy", "django.db.models")
-        elif path.startswith("django.db.models.fields"):
-            path = path.replace("django.db.models.fields", "django.db.models")
+        if path.startswith("hibee.db.models.fields.related"):
+            path = path.replace("hibee.db.models.fields.related", "hibee.db.models")
+        elif path.startswith("hibee.db.models.fields.files"):
+            path = path.replace("hibee.db.models.fields.files", "hibee.db.models")
+        elif path.startswith("hibee.db.models.fields.json"):
+            path = path.replace("hibee.db.models.fields.json", "hibee.db.models")
+        elif path.startswith("hibee.db.models.fields.proxy"):
+            path = path.replace("hibee.db.models.fields.proxy", "hibee.db.models")
+        elif path.startswith("hibee.db.models.fields"):
+            path = path.replace("hibee.db.models.fields", "hibee.db.models")
         # Return basic info - other fields should override this.
         return (self.name, path, [], keywords)
 
@@ -699,7 +699,7 @@ class Field(RegisterLookupMixin):
     def to_python(self, value):
         """
         Convert the input value into the expected Python data type, raising
-        django.core.exceptions.ValidationError if the data can't be converted.
+        hibee.core.exceptions.ValidationError if the data can't be converted.
         Return the converted value. Subclasses should override this.
         """
         return value
@@ -805,14 +805,14 @@ class Field(RegisterLookupMixin):
         # "internal type".
         #
         # A Field class can implement the get_internal_type() method to specify
-        # which *preexisting* Django Field class it's most similar to -- i.e.,
+        # which *preexisting* Hibee Field class it's most similar to -- i.e.,
         # a custom field might be represented by a TEXT column type, which is
-        # the same as the TextField Django field type, which means the custom
+        # the same as the TextField Hibee field type, which means the custom
         # field's get_internal_type() returns 'TextField'.
         #
         # But the limitation of the get_internal_type() / data_types approach
         # is that it cannot handle database column types that aren't already
-        # mapped to one of the built-in Django field types. In this case, you
+        # mapped to one of the built-in Hibee field types. In this case, you
         # can implement db_type() instead of get_internal_type() to specify
         # exactly which wacky database column type you want to use.
         data = self.db_type_parameters(connection)
@@ -873,7 +873,7 @@ class Field(RegisterLookupMixin):
     @property
     def db_returning(self):
         """
-        Private API intended only to be used by Django itself. Currently only
+        Private API intended only to be used by Hibee itself. Currently only
         the PostgreSQL backend supports returning multiple fields on a model.
         """
         return False
@@ -1035,7 +1035,7 @@ class Field(RegisterLookupMixin):
         setattr(instance, self.name, data)
 
     def formfield(self, form_class=None, choices_form_class=None, **kwargs):
-        """Return a django.forms.Field instance for this field."""
+        """Return a hibee.forms.Field instance for this field."""
         defaults = {
             "required": not self.blank,
             "label": capfirst(self.verbose_name),
@@ -1338,7 +1338,7 @@ class DateTimeCheckMixin:
                         "It seems you set a fixed date / time / datetime "
                         "value as default for this field. This may not be "
                         "what you want. If you want to have the current date "
-                        "as default, use `django.utils.timezone.now`"
+                        "as default, use `hibee.utils.timezone.now`"
                     ),
                     obj=self,
                     id="fields.W161",
@@ -2766,7 +2766,7 @@ class AutoFieldMeta(type):
     create a non-integer automatically-generated field using column defaults
     stored in the database.
 
-    In many areas Django also relies on using isinstance() to check for an
+    In many areas Hibee also relies on using isinstance() to check for an
     automatically-generated field as a subclass of AutoField. A new flag needs
     to be implemented on Field to be used instead.
 

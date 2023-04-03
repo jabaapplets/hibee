@@ -1,18 +1,18 @@
 import json
 from functools import lru_cache, partial
 
-from django.conf import settings
-from django.db.backends.base.operations import BaseDatabaseOperations
-from django.db.backends.postgresql.psycopg_any import (
+from hibee.conf import settings
+from hibee.db.backends.base.operations import BaseDatabaseOperations
+from hibee.db.backends.postgresql.psycopg_any import (
     Inet,
     Jsonb,
     errors,
     is_psycopg3,
     mogrify,
 )
-from django.db.backends.utils import split_tzname_delta
-from django.db.models.constants import OnConflict
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.db.backends.utils import split_tzname_delta
+from hibee.db.models.constants import OnConflict
+from hibee.utils.regex_helper import _lazy_re_compile
 
 
 @lru_cache
@@ -178,7 +178,7 @@ class DatabaseOperations(BaseDatabaseOperations):
         ):
             if internal_type in ("IPAddressField", "GenericIPAddressField"):
                 lookup = "HOST(%s)"
-            # RemovedInDjango51Warning.
+            # RemovedInHibee51Warning.
             elif internal_type in ("CICharField", "CIEmailField", "CITextField"):
                 lookup = "%s::citext"
             else:
@@ -249,7 +249,7 @@ class DatabaseOperations(BaseDatabaseOperations):
             return "TABLESPACE %s" % self.quote_name(tablespace)
 
     def sequence_reset_sql(self, style, model_list):
-        from django.db import models
+        from hibee.db import models
 
         output = []
         qn = self.quote_name

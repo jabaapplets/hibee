@@ -2,7 +2,7 @@
 import html
 from html.parser import HTMLParser
 
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.utils.regex_helper import _lazy_re_compile
 
 # ASCII whitespace is U+0009 TAB, U+000A LF, U+000C FF, U+000D CR, or U+0020
 # SPACE.

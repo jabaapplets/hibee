@@ -3,8 +3,8 @@ from functools import partial, reduce
 from itertools import chain
 from operator import attrgetter, or_
 
-from django.db import IntegrityError, connections, models, transaction
-from django.db.models import query_utils, signals, sql
+from hibee.db import IntegrityError, connections, models, transaction
+from hibee.db.models import query_utils, signals, sql
 
 
 class ProtectedError(IntegrityError):
@@ -60,7 +60,7 @@ def SET(value):
         def set_on_delete(collector, field, sub_objs, using):
             collector.add_field_update(field, value, sub_objs)
 
-    set_on_delete.deconstruct = lambda: ("django.db.models.SET", (value,), {})
+    set_on_delete.deconstruct = lambda: ("hibee.db.models.SET", (value,), {})
     set_on_delete.lazy_sub_objs = True
     return set_on_delete
 

@@ -1,8 +1,8 @@
 """
-Regression tests for Django built-in views.
+Regression tests for Hibee built-in views.
 """
 
-from django.db import models
+from hibee.db import models
 
 
 class Author(models.Model):

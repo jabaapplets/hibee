@@ -4,8 +4,8 @@ import warnings
 
 from asgiref.sync import sync_to_async
 
-from django.core.exceptions import ImproperlyConfigured
-from django.utils.module_loading import import_string
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.utils.module_loading import import_string
 
 
 class InvalidCacheBackendError(ImproperlyConfigured):

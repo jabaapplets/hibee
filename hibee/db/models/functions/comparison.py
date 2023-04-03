@@ -1,9 +1,9 @@
 """Database functions that do comparisons or type conversions."""
-from django.db import NotSupportedError
-from django.db.models.expressions import Func, Value
-from django.db.models.fields import TextField
-from django.db.models.fields.json import JSONField
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.db import NotSupportedError
+from hibee.db.models.expressions import Func, Value
+from hibee.db.models.fields import TextField
+from hibee.db.models.fields.json import JSONField
+from hibee.utils.regex_helper import _lazy_re_compile
 
 
 class Cast(Func):

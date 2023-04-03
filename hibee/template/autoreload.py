@@ -1,20 +1,20 @@
 from pathlib import Path
 
-from django.dispatch import receiver
-from django.template import engines
-from django.template.backends.django import DjangoTemplates
-from django.utils._os import to_path
-from django.utils.autoreload import autoreload_started, file_changed, is_django_path
+from hibee.dispatch import receiver
+from hibee.template import engines
+from hibee.template.backends.hibee import HibeeTemplates
+from hibee.utils._os import to_path
+from hibee.utils.autoreload import autoreload_started, file_changed, is_hibee_path
 
 
 def get_template_directories():
     # Iterate through each template backend and find
     # any template_loader that has a 'get_dirs' method.
-    # Collect the directories, filtering out Django templates.
+    # Collect the directories, filtering out hibee templates.
     cwd = Path.cwd()
     items = set()
     for backend in engines.all():
-        if not isinstance(backend, DjangoTemplates):
+        if not isinstance(backend, HibeeTemplates):
             continue
 
         items.update(cwd / to_path(dir) for dir in backend.engine.dirs if dir)
@@ -25,14 +25,14 @@ def get_template_directories():
             items.update(
                 cwd / to_path(directory)
                 for directory in loader.get_dirs()
-                if directory and not is_django_path(directory)
+                if directory and not is_hibee_path(directory)
             )
     return items
 
 
 def reset_loaders():
     for backend in engines.all():
-        if not isinstance(backend, DjangoTemplates):
+        if not isinstance(backend, HibeeTemplates):
             continue
         for loader in backend.engine.template_loaders:
             loader.reset()

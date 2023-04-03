@@ -3,9 +3,9 @@ import unittest
 from datetime import datetime, timezone
 from unittest import mock
 
-from django.test import SimpleTestCase
-from django.utils.datastructures import MultiValueDict
-from django.utils.http import (
+from hibee.test import SimpleTestCase
+from hibee.utils.datastructures import MultiValueDict
+from hibee.utils.http import (
     base36_to_int,
     content_disposition_header,
     escape_leading_slashes,
@@ -151,7 +151,7 @@ class Base36IntTests(SimpleTestCase):
                 base36_to_int(n)
 
     def test_values(self):
-        for n, b36 in [(0, "0"), (1, "1"), (42, "16"), (818469960, "django")]:
+        for n, b36 in [(0, "0"), (1, "1"), (42, "16"), (818469960, "hibee")]:
             self.assertEqual(int_to_base36(n), b36)
             self.assertEqual(base36_to_int(b36), n)
 
@@ -352,7 +352,7 @@ class HttpDateProcessingTests(unittest.TestCase):
         )
 
     @unittest.skipIf(platform.architecture()[0] == "32bit", "The Year 2038 problem.")
-    @mock.patch("django.utils.http.datetime.datetime")
+    @mock.patch("hibee.utils.http.datetime.datetime")
     def test_parsing_rfc850(self, mocked_datetime):
         mocked_datetime.side_effect = datetime
         mocked_datetime.now = mock.Mock()

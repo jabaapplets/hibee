@@ -1,9 +1,9 @@
 import itertools
 import math
 
-from django.core.exceptions import EmptyResultSet
-from django.db.models.expressions import Case, Expression, Func, Value, When
-from django.db.models.fields import (
+from hibee.core.exceptions import EmptyResultSet
+from hibee.db.models.expressions import Case, Expression, Func, Value, When
+from hibee.db.models.fields import (
     BooleanField,
     CharField,
     DateTimeField,
@@ -11,10 +11,10 @@ from django.db.models.fields import (
     IntegerField,
     UUIDField,
 )
-from django.db.models.query_utils import RegisterLookupMixin
-from django.utils.datastructures import OrderedSet
-from django.utils.functional import cached_property
-from django.utils.hashable import make_hashable
+from hibee.db.models.query_utils import RegisterLookupMixin
+from hibee.utils.datastructures import OrderedSet
+from hibee.utils.functional import cached_property
+from hibee.utils.hashable import make_hashable
 
 
 class Lookup(Expression):
@@ -33,7 +33,7 @@ class Lookup(Expression):
         if bilateral_transforms:
             # Warn the user as soon as possible if they are trying to apply
             # a bilateral transformation on a nested QuerySet: that won't work.
-            from django.db.models.sql.query import Query  # avoid circular import
+            from hibee.db.models.sql.query import Query  # avoid circular import
 
             if isinstance(rhs, Query):
                 raise NotImplementedError(
@@ -326,7 +326,7 @@ class Exact(FieldGetDbPrepValueMixin, BuiltinLookup):
     lookup_name = "exact"
 
     def get_prep_lookup(self):
-        from django.db.models.sql.query import Query  # avoid circular import
+        from hibee.db.models.sql.query import Query  # avoid circular import
 
         if isinstance(self.rhs, Query):
             if self.rhs.has_limit_one():
@@ -416,7 +416,7 @@ class In(FieldGetDbPrepValueIterableMixin, BuiltinLookup):
     lookup_name = "in"
 
     def get_prep_lookup(self):
-        from django.db.models.sql.query import Query  # avoid circular import
+        from hibee.db.models.sql.query import Query  # avoid circular import
 
         if isinstance(self.rhs, Query):
             self.rhs.clear_ordering(clear_default=True)
@@ -597,7 +597,7 @@ class IRegex(Regex):
 
 class YearLookup(Lookup):
     def year_lookup_bounds(self, connection, year):
-        from django.db.models.functions import ExtractIsoYear
+        from hibee.db.models.functions import ExtractIsoYear
 
         iso_year = isinstance(self.lhs, ExtractIsoYear)
         output_field = self.lhs.lhs.output_field
@@ -672,7 +672,7 @@ class UUIDTextMixin:
 
     def process_rhs(self, qn, connection):
         if not connection.features.has_native_uuid_field:
-            from django.db.models.functions import Replace
+            from hibee.db.models.functions import Replace
 
             if self.rhs_is_direct_value():
                 self.rhs = Value(self.rhs)

@@ -2,16 +2,16 @@ import warnings
 from enum import Enum
 from types import NoneType
 
-from django.core.exceptions import FieldError, ValidationError
-from django.db import connections
-from django.db.models.expressions import Exists, ExpressionList, F, OrderBy
-from django.db.models.indexes import IndexExpression
-from django.db.models.lookups import Exact
-from django.db.models.query_utils import Q
-from django.db.models.sql.query import Query
-from django.db.utils import DEFAULT_DB_ALIAS
-from django.utils.deprecation import RemovedInDjango60Warning
-from django.utils.translation import gettext_lazy as _
+from hibee.core.exceptions import FieldError, ValidationError
+from hibee.db import connections
+from hibee.db.models.expressions import Exists, ExpressionList, F, OrderBy
+from hibee.db.models.indexes import IndexExpression
+from hibee.db.models.lookups import Exact
+from hibee.db.models.query_utils import Q
+from hibee.db.models.sql.query import Query
+from hibee.db.utils import DEFAULT_DB_ALIAS
+from hibee.utils.deprecation import RemovedInHibee60Warning
+from hibee.utils.translation import gettext_lazy as _
 
 __all__ = ["BaseConstraint", "CheckConstraint", "Deferrable", "UniqueConstraint"]
 
@@ -20,10 +20,10 @@ class BaseConstraint:
     default_violation_error_message = _("Constraint “%(name)s” is violated.")
     violation_error_message = None
 
-    # RemovedInDjango60Warning: When the deprecation ends, replace with:
+    # RemovedInHibee60Warning: When the deprecation ends, replace with:
     # def __init__(self, *, name, violation_error_message=None):
     def __init__(self, *args, name=None, violation_error_message=None):
-        # RemovedInDjango60Warning.
+        # RemovedInHibee60Warning.
         if name is None and not args:
             raise TypeError(
                 f"{self.__class__.__name__}.__init__() missing 1 required keyword-only "
@@ -34,12 +34,12 @@ class BaseConstraint:
             self.violation_error_message = violation_error_message
         else:
             self.violation_error_message = self.default_violation_error_message
-        # RemovedInDjango60Warning.
+        # RemovedInHibee60Warning.
         if args:
             warnings.warn(
                 f"Passing positional arguments to {self.__class__.__name__} is "
                 f"deprecated.",
-                RemovedInDjango60Warning,
+                RemovedInHibee60Warning,
                 stacklevel=2,
             )
             for arg, attr in zip(args, ["name", "violation_error_message"]):
@@ -67,7 +67,7 @@ class BaseConstraint:
 
     def deconstruct(self):
         path = "%s.%s" % (self.__class__.__module__, self.__class__.__name__)
-        path = path.replace("django.db.models.constraints", "django.db.models")
+        path = path.replace("hibee.db.models.constraints", "hibee.db.models")
         kwargs = {"name": self.name}
         if (
             self.violation_error_message is not None
@@ -183,7 +183,7 @@ class UniqueConstraint(BaseConstraint):
         if expressions and opclasses:
             raise ValueError(
                 "UniqueConstraint.opclasses cannot be used with expressions. "
-                "Use django.contrib.postgres.indexes.OpClass() instead."
+                "Use hibee.contrib.postgres.indexes.OpClass() instead."
             )
         if not isinstance(deferrable, (NoneType, Deferrable)):
             raise ValueError(

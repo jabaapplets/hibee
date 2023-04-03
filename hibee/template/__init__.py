@@ -1,11 +1,11 @@
 """
-Django's support for templates.
+Hibee's support for templates.
 
-The django.template namespace contains two independent subsystems:
+The hibee.template namespace contains two independent subsystems:
 
 1. Multiple Template Engines: support for pluggable template backends,
    built-in backends and backend-independent APIs
-2. Django Template Language: Django's own template engine, including its
+2. Hibee Template Language: Hibee's own template engine, including its
    built-in loaders, context processors, tags and filters.
 
 Ideally these subsystems would be implemented in distinct packages. However
@@ -16,26 +16,26 @@ Here's a breakdown of which modules belong to which subsystem.
 
 Multiple Template Engines:
 
-- django.template.backends.*
-- django.template.loader
-- django.template.response
+- hibee.template.backends.*
+- hibee.template.loader
+- hibee.template.response
 
-Django Template Language:
+Hibee Template Language:
 
-- django.template.base
-- django.template.context
-- django.template.context_processors
-- django.template.loaders.*
-- django.template.debug
-- django.template.defaultfilters
-- django.template.defaulttags
-- django.template.engine
-- django.template.loader_tags
-- django.template.smartif
+- hibee.template.base
+- hibee.template.context
+- hibee.template.context_processors
+- hibee.template.loaders.*
+- hibee.template.debug
+- hibee.template.defaultfilters
+- hibee.template.defaulttags
+- hibee.template.engine
+- hibee.template.loader_tags
+- hibee.template.smartif
 
 Shared:
 
-- django.template.utils
+- hibee.template.utils
 
 """
 
@@ -49,7 +49,7 @@ engines = EngineHandler()
 __all__ = ("Engine", "engines")
 
 
-# Django Template Language
+# Hibee Template Language
 
 # Public exceptions
 from .base import VariableDoesNotExist  # NOQA isort:skip

@@ -11,12 +11,12 @@ import re
 import types
 import uuid
 
-from django.conf import SettingsReference
-from django.db import models
-from django.db.migrations.operations.base import Operation
-from django.db.migrations.utils import COMPILED_REGEX_TYPE, RegexObject
-from django.utils.functional import LazyObject, Promise
-from django.utils.version import PY311, get_docs_version
+from hibee.conf import SettingsReference
+from hibee.db import models
+from hibee.db.migrations.operations.base import Operation
+from hibee.db.migrations.utils import COMPILED_REGEX_TYPE, RegexObject
+from hibee.utils.functional import LazyObject, Promise
+from hibee.utils.version import PY311, get_docs_version
 
 
 class BaseSerializer:
@@ -96,8 +96,8 @@ class DeconstructableSerializer(BaseSerializer):
     @staticmethod
     def _serialize_path(path):
         module, name = path.rsplit(".", 1)
-        if module == "django.db.models":
-            imports = {"from django.db import models"}
+        if module == "hibee.db.models":
+            imports = {"from hibee.db import models"}
             name = "models.%s" % name
         else:
             imports = {"import %s" % module}
@@ -238,7 +238,7 @@ class ModelManagerSerializer(DeconstructableSerializer):
 
 class OperationSerializer(BaseSerializer):
     def serialize(self):
-        from django.db.migrations.writer import OperationWriter
+        from hibee.db.migrations.writer import OperationWriter
 
         string, imports = OperationWriter(self.value, indentation=0).serialize()
         # Nested operation, trailing comma is handled in upper OperationWriter._write()
@@ -289,7 +289,7 @@ class SetSerializer(BaseSequenceSerializer):
 class SettingsReferenceSerializer(BaseSerializer):
     def serialize(self):
         return "settings.%s" % self.value.setting_name, {
-            "from django.conf import settings"
+            "from hibee.conf import settings"
         }
 
 
@@ -303,7 +303,7 @@ class TupleSerializer(BaseSequenceSerializer):
 class TypeSerializer(BaseSerializer):
     def serialize(self):
         special_cases = [
-            (models.Model, "models.Model", ["from django.db import models"]),
+            (models.Model, "models.Model", ["from hibee.db import models"]),
             (types.NoneType, "types.NoneType", ["import types"]),
         ]
         for case, string, imports in special_cases:
@@ -389,7 +389,7 @@ def serializer_factory(value):
         if isinstance(value, type_):
             return serializer_cls(value)
     raise ValueError(
-        "Cannot serialize: %r\nThere are some values Django cannot serialize into "
-        "migration files.\nFor more, see https://docs.djangoproject.com/en/%s/"
+        "Cannot serialize: %r\nThere are some values Hibee cannot serialize into "
+        "migration files.\nFor more, see https://docs.hibeeproject.com/en/%s/"
         "topics/migrations/#migration-serializing" % (value, get_docs_version())
     )

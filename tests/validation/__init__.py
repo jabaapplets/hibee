@@ -1,4 +1,4 @@
-from django.core.exceptions import ValidationError
+from hibee.core.exceptions import ValidationError
 
 
 class ValidationAssertions:

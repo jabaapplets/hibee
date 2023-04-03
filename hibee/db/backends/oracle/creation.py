@@ -1,10 +1,10 @@
 import sys
 
-from django.conf import settings
-from django.db import DatabaseError
-from django.db.backends.base.creation import BaseDatabaseCreation
-from django.utils.crypto import get_random_string
-from django.utils.functional import cached_property
+from hibee.conf import settings
+from hibee.db import DatabaseError
+from hibee.db.backends.base.creation import BaseDatabaseCreation
+from hibee.utils.crypto import get_random_string
+from hibee.utils.functional import cached_property
 
 TEST_DATABASE_PREFIX = "test_"
 
@@ -194,7 +194,7 @@ class DatabaseCreation(BaseDatabaseCreation):
                 sys.exit(1)
         else:
             self.log(
-                "Django is configured to use pre-existing test user '%s',"
+                "Hibee is configured to use pre-existing test user '%s',"
                 " and will not attempt to delete it." % parameters["user"]
             )
             self.log("Tests cancelled -- test database cannot be recreated.")
@@ -449,7 +449,7 @@ class DatabaseCreation(BaseDatabaseCreation):
         """
         Return the 'production' DB name to get the test DB creation machinery
         to work. This isn't a great deal in this case because DB names as
-        handled by Django don't have real counterparts in Oracle.
+        handled by Hibee don't have real counterparts in Oracle.
         """
         return self.connection.settings_dict["NAME"]
 

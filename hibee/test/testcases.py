@@ -26,36 +26,36 @@ from urllib.request import url2pathname
 
 from asgiref.sync import async_to_sync, iscoroutinefunction
 
-from django.apps import apps
-from django.conf import settings
-from django.core import mail
-from django.core.exceptions import ImproperlyConfigured, ValidationError
-from django.core.files import locks
-from django.core.handlers.wsgi import WSGIHandler, get_path_info
-from django.core.management import call_command
-from django.core.management.color import no_style
-from django.core.management.sql import emit_post_migrate_signal
-from django.core.servers.basehttp import ThreadedWSGIServer, WSGIRequestHandler
-from django.core.signals import setting_changed
-from django.db import DEFAULT_DB_ALIAS, connection, connections, transaction
-from django.forms.fields import CharField
-from django.http import QueryDict
-from django.http.request import split_domain_port, validate_host
-from django.test.client import AsyncClient, Client
-from django.test.html import HTMLParseError, parse_html
-from django.test.signals import template_rendered
-from django.test.utils import (
+from hibee.apps import apps
+from hibee.conf import settings
+from hibee.core import mail
+from hibee.core.exceptions import ImproperlyConfigured, ValidationError
+from hibee.core.files import locks
+from hibee.core.handlers.wsgi import WSGIHandler, get_path_info
+from hibee.core.management import call_command
+from hibee.core.management.color import no_style
+from hibee.core.management.sql import emit_post_migrate_signal
+from hibee.core.servers.basehttp import ThreadedWSGIServer, WSGIRequestHandler
+from hibee.core.signals import setting_changed
+from hibee.db import DEFAULT_DB_ALIAS, connection, connections, transaction
+from hibee.forms.fields import CharField
+from hibee.http import QueryDict
+from hibee.http.request import split_domain_port, validate_host
+from hibee.test.client import AsyncClient, Client
+from hibee.test.html import HTMLParseError, parse_html
+from hibee.test.signals import template_rendered
+from hibee.test.utils import (
     CaptureQueriesContext,
     ContextList,
     compare_xml,
     modify_settings,
     override_settings,
 )
-from django.utils.deprecation import RemovedInDjango51Warning
-from django.utils.functional import classproperty
-from django.views.static import serve
+from hibee.utils.deprecation import RemovedInHibee51Warning
+from hibee.utils.functional import classproperty
+from hibee.views.static import serve
 
-logger = logging.getLogger("django.test")
+logger = logging.getLogger("hibee.test")
 
 __all__ = (
     "TestCase",
@@ -250,7 +250,7 @@ class SimpleTestCase(unittest.TestCase):
 
     def __call__(self, result=None):
         """
-        Wrapper around default __call__ method to perform common Django test
+        Wrapper around default __call__ method to perform common Hibee test
         set up. This means that user-defined Test Cases aren't required to
         include a call to super().setUp().
         """
@@ -405,14 +405,14 @@ class SimpleTestCase(unittest.TestCase):
                 path = urljoin(response.request["PATH_INFO"], path)
 
             if fetch_redirect_response:
-                # netloc might be empty, or in cases where Django tests the
+                # netloc might be empty, or in cases where Hibee tests the
                 # HTTP scheme, the convention is for netloc to be 'testserver'.
                 # Trust both as "internal" URLs here.
                 domain, port = split_domain_port(netloc)
                 if domain and not validate_host(domain, settings.ALLOWED_HOSTS):
                     raise ValueError(
                         "The test client is unable to fetch remote URLs (got %s). "
-                        "If the host is served by Django, add '%s' to ALLOWED_HOSTS. "
+                        "If the host is served by Hibee, add '%s' to ALLOWED_HOSTS. "
                         "Otherwise, use "
                         "assertRedirects(..., fetch_redirect_response=False)."
                         % (url, domain)
@@ -561,7 +561,7 @@ class SimpleTestCase(unittest.TestCase):
         if not hasattr(response, attribute):
             raise ValueError(
                 f"{method_name}() is only usable on responses fetched using "
-                "the Django test Client."
+                "the Hibee test Client."
             )
 
     def _assert_form_error(self, form, field, errors, msg_prefix, form_repr):
@@ -601,11 +601,11 @@ class SimpleTestCase(unittest.TestCase):
         errors = to_list(errors)
         self._assert_form_error(form, field, errors, msg_prefix, f"form {form!r}")
 
-    # RemovedInDjango51Warning.
+    # RemovedInHibee51Warning.
     def assertFormsetError(self, *args, **kw):
         warnings.warn(
             "assertFormsetError() is deprecated in favor of assertFormSetError().",
-            category=RemovedInDjango51Warning,
+            category=RemovedInHibee51Warning,
             stacklevel=2,
         )
         return self.assertFormSetError(*args, **kw)
@@ -998,7 +998,7 @@ class TransactionTestCase(SimpleTestCase):
         "and silence this failure."
     )
 
-    # If transactions aren't available, Django will serialize the database
+    # If transactions aren't available, Hibee will serialize the database
     # contents into a fixture during setup and flush and reload them
     # during teardown (as flush does not restore data from migrations).
     # This can be slow; this flag allows enabling on a per-case basis.
@@ -1146,11 +1146,11 @@ class TransactionTestCase(SimpleTestCase):
                 inhibit_post_migrate=inhibit_post_migrate,
             )
 
-    # RemovedInDjango51Warning.
+    # RemovedInHibee51Warning.
     def assertQuerysetEqual(self, *args, **kw):
         warnings.warn(
             "assertQuerysetEqual() is deprecated in favor of assertQuerySetEqual().",
-            category=RemovedInDjango51Warning,
+            category=RemovedInHibee51Warning,
             stacklevel=2,
         )
         return self.assertQuerySetEqual(*args, **kw)
@@ -1525,7 +1525,7 @@ class FSFilesHandler(WSGIHandler):
         return url2pathname(relative_url)
 
     def get_response(self, request):
-        from django.http import Http404
+        from hibee.http import Http404
 
         if self._should_handle(request.path):
             try:
@@ -1537,7 +1537,7 @@ class FSFilesHandler(WSGIHandler):
     def serve(self, request):
         os_rel_path = self.file_path(request.path)
         os_rel_path = posixpath.normpath(unquote(os_rel_path))
-        # Emulate behavior of django.contrib.staticfiles.views.serve() when it
+        # Emulate behavior of hibee.contrib.staticfiles.views.serve() when it
         # invokes staticfiles' finders functionality.
         # TODO: Modify if/when that internal API is refactored
         final_rel_path = os_rel_path.replace("\\", "/").lstrip("/")

@@ -1,19 +1,19 @@
 import json
 import warnings
 
-from django import forms
-from django.core import checks, exceptions
-from django.db import NotSupportedError, connections, router
-from django.db.models import expressions, lookups
-from django.db.models.constants import LOOKUP_SEP
-from django.db.models.fields import TextField
-from django.db.models.lookups import (
+from hibee import forms
+from hibee.core import checks, exceptions
+from hibee.db import NotSupportedError, connections, router
+from hibee.db.models import expressions, lookups
+from hibee.db.models.constants import LOOKUP_SEP
+from hibee.db.models.fields import TextField
+from hibee.db.models.lookups import (
     FieldGetDbPrepValueMixin,
     PostgresOperatorLookup,
     Transform,
 )
-from django.utils.deprecation import RemovedInDjango51Warning
-from django.utils.translation import gettext_lazy as _
+from hibee.utils.deprecation import RemovedInHibee51Warning
+from hibee.utils.translation import gettext_lazy as _
 
 from . import Field
 from .mixins import CheckFieldDefaultMixin
@@ -99,7 +99,7 @@ class JSONField(CheckFieldDefaultMixin, Field):
         return "JSONField"
 
     def get_db_prep_value(self, value, connection, prepared=False):
-        # RemovedInDjango51Warning: When the deprecation ends, replace with:
+        # RemovedInHibee51Warning: When the deprecation ends, replace with:
         # if (
         #     isinstance(value, expressions.Value)
         #     and isinstance(value.output_field, JSONField)
@@ -118,7 +118,7 @@ class JSONField(CheckFieldDefaultMixin, Field):
                     warnings.warn(
                         "Providing an encoded JSON string via Value() is deprecated. "
                         f"Use Value({value!r}, output_field=JSONField()) instead.",
-                        category=RemovedInDjango51Warning,
+                        category=RemovedInhibee51Warning,
                     )
             elif isinstance(value.output_field, JSONField):
                 value = value.value

@@ -1,13 +1,13 @@
 import re
 from urllib.parse import urlparse
 
-from django.conf import settings
-from django.core.exceptions import PermissionDenied
-from django.core.mail import mail_managers
-from django.http import HttpResponsePermanentRedirect
-from django.urls import is_valid_path
-from django.utils.deprecation import MiddlewareMixin
-from django.utils.http import escape_leading_slashes
+from hibee.conf import settings
+from hibee.core.exceptions import PermissionDenied
+from hibee.core.mail import mail_managers
+from hibee.http import HttpResponsePermanentRedirect
+from hibee.urls import is_valid_path
+from hibee.utils.deprecation import MiddlewareMixin
+from hibee.utils.http import escape_leading_slashes
 
 
 class CommonMiddleware(MiddlewareMixin):
@@ -86,10 +86,10 @@ class CommonMiddleware(MiddlewareMixin):
         if settings.DEBUG and request.method in ("POST", "PUT", "PATCH"):
             raise RuntimeError(
                 "You called this URL via %(method)s, but the URL doesn't end "
-                "in a slash and you have APPEND_SLASH set. Django can't "
+                "in a slash and you have APPEND_SLASH set. Hibee can't "
                 "redirect to the slash URL while maintaining %(method)s data. "
                 "Change your form to point to %(url)s (note the trailing "
-                "slash), or set APPEND_SLASH=False in your Django settings."
+                "slash), or set APPEND_SLASH=False in your Hibee settings."
                 % {
                     "method": request.method,
                     "url": request.get_host() + new_path,

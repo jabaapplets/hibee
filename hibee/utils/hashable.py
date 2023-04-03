@@ -1,4 +1,4 @@
-from django.utils.itercompat import is_iterable
+from hibee.utils.itercompat import is_iterable
 
 
 def make_hashable(value):

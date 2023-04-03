@@ -1,8 +1,8 @@
 import datetime
 
-from django.test import SimpleTestCase
-from django.utils import feedgenerator
-from django.utils.timezone import get_fixed_timezone
+from hibee.test import SimpleTestCase
+from hibee.utils import feedgenerator
+from hibee.utils.timezone import get_fixed_timezone
 
 
 class FeedgeneratorTests(SimpleTestCase):
@@ -27,10 +27,10 @@ class FeedgeneratorTests(SimpleTestCase):
         """
         self.assertEqual(
             feedgenerator.get_tag_uri(
-                "http://www.example.org:8000/2008/11/14/django#headline",
+                "http://www.example.org:8000/2008/11/14/hibee#headline",
                 datetime.datetime(2008, 11, 14, 13, 37, 0),
             ),
-            "tag:www.example.org,2008-11-14:/2008/11/14/django/headline",
+            "tag:www.example.org,2008-11-14:/2008/11/14/hibee/headline",
         )
 
     def test_rfc2822_date(self):

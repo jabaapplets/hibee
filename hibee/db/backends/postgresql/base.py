@@ -1,5 +1,5 @@
 """
-PostgreSQL database backend for Django.
+PostgreSQL database backend for Hibee.
 
 Requires psycopg2 >= 2.8.4 or psycopg >= 3.1.8
 """
@@ -9,16 +9,16 @@ import threading
 import warnings
 from contextlib import contextmanager
 
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
-from django.db import DatabaseError as WrappedDatabaseError
-from django.db import connections
-from django.db.backends.base.base import BaseDatabaseWrapper
-from django.db.backends.utils import CursorDebugWrapper as BaseCursorDebugWrapper
-from django.utils.asyncio import async_unsafe
-from django.utils.functional import cached_property
-from django.utils.safestring import SafeString
-from django.utils.version import get_version_tuple
+from hibee.conf import settings
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.db import DatabaseError as WrappedDatabaseError
+from hibee.db import connections
+from hibee.db.backends.base.base import BaseDatabaseWrapper
+from hibee.db.backends.utils import CursorDebugWrapper as BaseCursorDebugWrapper
+from hibee.utils.asyncio import async_unsafe
+from hibee.utils.functional import cached_property
+from hibee.utils.safestring import SafeString
+from hibee.utils.version import get_version_tuple
 
 try:
     try:
@@ -362,7 +362,7 @@ class DatabaseWrapper(BaseDatabaseWrapper):
             task_ident = "sync"
         # Use that and the thread ident to get a unique name
         return self._cursor(
-            name="_django_curs_%d_%s_%d"
+            name="_hibee_curs_%d_%s_%d"
             % (
                 # Avoid reusing name in other threads / tasks
                 threading.current_thread().ident,
@@ -386,7 +386,7 @@ class DatabaseWrapper(BaseDatabaseWrapper):
 
     def is_usable(self):
         try:
-            # Use a psycopg cursor directly, bypassing Django's utilities.
+            # Use a psycopg cursor directly, bypassing Hibee's utilities.
             with self.connection.cursor() as cursor:
                 cursor.execute("SELECT 1")
         except Database.Error:
@@ -404,10 +404,10 @@ class DatabaseWrapper(BaseDatabaseWrapper):
             if cursor is not None:
                 raise
             warnings.warn(
-                "Normally Django will use a connection to the 'postgres' database "
+                "Normally Hibee will use a connection to the 'postgres' database "
                 "to avoid running initialization queries against the production "
                 "database when it's not needed (for example, when running tests). "
-                "Django was unable to create a connection to the 'postgres' database "
+                "Hibee was unable to create a connection to the 'postgres' database "
                 "and will use the first PostgreSQL database instead.",
                 RuntimeWarning,
             )

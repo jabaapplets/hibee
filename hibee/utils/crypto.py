@@ -1,12 +1,12 @@
 """
-Django's standard crypto functions and utilities.
+Hibee's standard crypto functions and utilities.
 """
 import hashlib
 import hmac
 import secrets
 
-from django.conf import settings
-from django.utils.encoding import force_bytes
+from hibee.conf import settings
+from hibee.utils.encoding import force_bytes
 
 
 class InvalidAlgorithm(ValueError):

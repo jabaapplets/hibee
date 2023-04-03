@@ -5,9 +5,9 @@ from pathlib import Path
 from unittest import mock
 from urllib.parse import quote_plus
 
-from django.test import SimpleTestCase
-from django.utils.encoding import (
-    DjangoUnicodeDecodeError,
+from hibee.test import SimpleTestCase
+from hibee.utils.encoding import (
+    hibeeUnicodeDecodeError,
     escape_uri_path,
     filepath_to_uri,
     force_bytes,
@@ -19,8 +19,8 @@ from django.utils.encoding import (
     smart_str,
     uri_to_iri,
 )
-from django.utils.functional import SimpleLazyObject
-from django.utils.translation import gettext_lazy
+from hibee.utils.functional import SimpleLazyObject
+from hibee.utils.translation import gettext_lazy
 
 
 class TestEncodingUtils(SimpleTestCase):
@@ -41,12 +41,12 @@ class TestEncodingUtils(SimpleTestCase):
         s = SimpleLazyObject(lambda: "x")
         self.assertIs(type(force_str(s)), str)
 
-    def test_force_str_DjangoUnicodeDecodeError(self):
+    def test_force_str_HibeeUnicodeDecodeError(self):
         msg = (
             "'utf-8' codec can't decode byte 0xff in position 0: invalid "
             "start byte. You passed in b'\\xff' (<class 'bytes'>)"
         )
-        with self.assertRaisesMessage(DjangoUnicodeDecodeError, msg):
+        with self.assertRaisesMessage(HibeeUnicodeDecodeError, msg):
             force_str(b"\xff")
 
     def test_force_bytes_exception(self):

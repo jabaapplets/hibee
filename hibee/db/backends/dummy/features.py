@@ -1,4 +1,4 @@
-from django.db.backends.base.features import BaseDatabaseFeatures
+from hibee.db.backends.base.features import BaseDatabaseFeatures
 
 
 class DummyDatabaseFeatures(BaseDatabaseFeatures):

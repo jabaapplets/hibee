@@ -2,9 +2,9 @@ import logging
 import threading
 import weakref
 
-from django.utils.inspect import func_accepts_kwargs
+from hibee.utils.inspect import func_accepts_kwargs
 
-logger = logging.getLogger("django.dispatch")
+logger = logging.getLogger("hibee.dispatch")
 
 
 def _make_id(target):
@@ -77,7 +77,7 @@ class Signal:
                 a receiver. This will usually be a string, though it may be
                 anything hashable.
         """
-        from django.conf import settings
+        from hibee.conf import settings
 
         # If DEBUG is on, check that we got a good receiver
         if settings.configured and settings.DEBUG:

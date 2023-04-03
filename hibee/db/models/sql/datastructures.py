@@ -2,8 +2,8 @@
 Useful auxiliary data structures for query construction. Not useful outside
 the SQL domain.
 """
-from django.core.exceptions import FullResultSet
-from django.db.models.sql.constants import INNER, LOUTER
+from hibee.core.exceptions import FullResultSet
+from hibee.db.models.sql.constants import INNER, LOUTER
 
 
 class MultiJoin(Exception):

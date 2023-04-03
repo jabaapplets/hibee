@@ -1,8 +1,8 @@
 import copy
 from collections import defaultdict
 
-from django.conf import settings
-from django.template.backends.django import get_template_tag_modules
+from hibee.conf import settings
+from hibee.template.backends.hibee import get_template_tag_modules
 
 from . import Error, Tags, Warning, register
 

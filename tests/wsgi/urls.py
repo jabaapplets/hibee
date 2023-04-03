@@ -1,5 +1,5 @@
-from django.http import FileResponse, HttpResponse
-from django.urls import path
+from hibee.http import FileResponse, HttpResponse
+from hibee.urls import path
 
 
 def helloworld(request):

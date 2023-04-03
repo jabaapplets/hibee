@@ -13,16 +13,16 @@ from urllib.parse import urlparse
 
 from asgiref.sync import async_to_sync, sync_to_async
 
-from django.conf import settings
-from django.core import signals, signing
-from django.core.exceptions import DisallowedRedirect
-from django.core.serializers.json import DjangoJSONEncoder
-from django.http.cookie import SimpleCookie
-from django.utils import timezone
-from django.utils.datastructures import CaseInsensitiveMapping
-from django.utils.encoding import iri_to_uri
-from django.utils.http import content_disposition_header, http_date
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.conf import settings
+from hibee.core import signals, signing
+from hibee.core.exceptions import DisallowedRedirect
+from hibee.core.serializers.json import HibeeJSONEncoder
+from hibee.http.cookie import SimpleCookie
+from hibee.utils import timezone
+from hibee.utils.datastructures import CaseInsensitiveMapping
+from hibee.utils.encoding import iri_to_uri
+from hibee.utils.http import content_disposition_header, http_date
+from hibee.utils.regex_helper import _lazy_re_compile
 
 _charset_from_content_type_re = _lazy_re_compile(
     r";\s*charset=(?P<charset>[^\s;]+)", re.I
@@ -723,7 +723,7 @@ class JsonResponse(HttpResponse):
       are allowed to be passed due to a security flaw before ECMAScript 5. See
       the ``safe`` parameter for more information.
     :param encoder: Should be a json encoder class. Defaults to
-      ``django.core.serializers.json.DjangoJSONEncoder``.
+      ``hibee.core.serializers.json.HibeeJSONEncoder``.
     :param safe: Controls if only ``dict`` objects may be serialized. Defaults
       to ``True``.
     :param json_dumps_params: A dictionary of kwargs passed to json.dumps().
@@ -732,7 +732,7 @@ class JsonResponse(HttpResponse):
     def __init__(
         self,
         data,
-        encoder=DjangoJSONEncoder,
+        encoder=HibeeJSONEncoder,
         safe=True,
         json_dumps_params=None,
         **kwargs,

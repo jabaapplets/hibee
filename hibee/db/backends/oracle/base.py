@@ -1,5 +1,5 @@
 """
-Oracle database backend for Django.
+Oracle database backend for Hibee.
 
 Requires cx_Oracle: https://oracle.github.io/python-cx_Oracle/
 """
@@ -9,14 +9,14 @@ import os
 import platform
 from contextlib import contextmanager
 
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
-from django.db import IntegrityError
-from django.db.backends.base.base import BaseDatabaseWrapper
-from django.db.backends.utils import debug_transaction
-from django.utils.asyncio import async_unsafe
-from django.utils.encoding import force_bytes, force_str
-from django.utils.functional import cached_property
+from hibee.conf import settings
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.db import IntegrityError
+from hibee.db.backends.base.base import BaseDatabaseWrapper
+from hibee.db.backends.utils import debug_transaction
+from hibee.utils.asyncio import async_unsafe
+from hibee.utils.encoding import force_bytes, force_str
+from hibee.utils.functional import cached_property
 
 
 def _setup_environment(environ):
@@ -74,12 +74,12 @@ def wrap_oracle_errors():
         # following attributes and values:
         #  code = 2091
         #  message = 'ORA-02091: transaction rolled back
-        #            'ORA-02291: integrity constraint (TEST_DJANGOTEST.SYS
+        #            'ORA-02291: integrity constraint (TEST_HIBEETEST.SYS
         #               _C00102056) violated - parent key not found'
         #            or:
-        #            'ORA-00001: unique constraint (DJANGOTEST.DEFERRABLE_
+        #            'ORA-00001: unique constraint (HIBEETEST.DEFERRABLE_
         #               PINK_CONSTRAINT) violated
-        # Convert that case to Django's IntegrityError exception.
+        # Convert that case to Hibee's IntegrityError exception.
         x = e.args[0]
         if (
             hasattr(x, "code")
@@ -426,7 +426,7 @@ class VariableWrapper:
 
 class FormatStylePlaceholderCursor:
     """
-    Django uses "format" (e.g. '%s') style placeholders, but Oracle uses ":var"
+    Hibee uses "format" (e.g. '%s') style placeholders, but Oracle uses ":var"
     style. This fixes it -- but note that if you want to use a literal "%s" in
     a query, you'll need to use "%%s".
     """

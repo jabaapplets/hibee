@@ -4,9 +4,9 @@ import pickle
 import random
 import re
 
-from django.core.cache.backends.base import DEFAULT_TIMEOUT, BaseCache
-from django.utils.functional import cached_property
-from django.utils.module_loading import import_string
+from hibee.core.cache.backends.base import DEFAULT_TIMEOUT, BaseCache
+from hibee.utils.functional import cached_property
+from hibee.utils.module_loading import import_string
 
 
 class RedisSerializer:

@@ -1,17 +1,17 @@
 from importlib import import_module
 from pkgutil import walk_packages
 
-from django.apps import apps
-from django.conf import settings
-from django.template import TemplateDoesNotExist
-from django.template.context import make_context
-from django.template.engine import Engine
-from django.template.library import InvalidTemplateLibrary
+from hibee.apps import apps
+from hibee.conf import settings
+from hibee.template import TemplateDoesNotExist
+from hibee.template.context import make_context
+from hibee.template.engine import Engine
+from hibee.template.library import InvalidTemplateLibrary
 
 from .base import BaseEngine
 
 
-class DjangoTemplates(BaseEngine):
+class HibeeTemplates(BaseEngine):
     app_dirname = "templates"
 
     def __init__(self, params):
@@ -89,7 +89,7 @@ def get_template_tag_modules():
     Yield (module_name, module_path) pairs for all installed template tag
     libraries.
     """
-    candidates = ["django.templatetags"]
+    candidates = ["hibee.templatetags"]
     candidates.extend(
         f"{app_config.name}.templatetags" for app_config in apps.get_app_configs()
     )
@@ -111,7 +111,7 @@ def get_installed_libraries():
     Return the built-in template tag libraries and those from installed
     applications. Libraries are stored in a dictionary where keys are the
     individual module names, not the full module paths. Example:
-    django.templatetags.i18n is stored as i18n.
+    hibee.templatetags.i18n is stored as i18n.
     """
     return {
         module_name: full_name for module_name, full_name in get_template_tag_modules()

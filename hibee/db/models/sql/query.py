@@ -15,11 +15,11 @@ from collections.abc import Iterator, Mapping
 from itertools import chain, count, product
 from string import ascii_uppercase
 
-from django.core.exceptions import FieldDoesNotExist, FieldError
-from django.db import DEFAULT_DB_ALIAS, NotSupportedError, connections
-from django.db.models.aggregates import Count
-from django.db.models.constants import LOOKUP_SEP
-from django.db.models.expressions import (
+from hibee.core.exceptions import FieldDoesNotExist, FieldError
+from hibee.db import DEFAULT_DB_ALIAS, NotSupportedError, connections
+from hibee.db.models.aggregates import Count
+from hibee.db.models.constants import LOOKUP_SEP
+from hibee.db.models.expressions import (
     BaseExpression,
     Col,
     Exists,
@@ -29,20 +29,20 @@ from django.db.models.expressions import (
     ResolvedOuterRef,
     Value,
 )
-from django.db.models.fields import Field
-from django.db.models.fields.related_lookups import MultiColSource
-from django.db.models.lookups import Lookup
-from django.db.models.query_utils import (
+from hibee.db.models.fields import Field
+from hibee.db.models.fields.related_lookups import MultiColSource
+from hibee.db.models.lookups import Lookup
+from hibee.db.models.query_utils import (
     Q,
     check_rel_lookup_compatibility,
     refs_expression,
 )
-from django.db.models.sql.constants import INNER, LOUTER, ORDER_DIR, SINGLE
-from django.db.models.sql.datastructures import BaseTable, Empty, Join, MultiJoin
-from django.db.models.sql.where import AND, OR, ExtraWhere, NothingNode, WhereNode
-from django.utils.functional import cached_property
-from django.utils.regex_helper import _lazy_re_compile
-from django.utils.tree import Node
+from hibee.db.models.sql.constants import INNER, LOUTER, ORDER_DIR, SINGLE
+from hibee.db.models.sql.datastructures import BaseTable, Empty, Join, MultiJoin
+from hibee.db.models.sql.where import AND, OR, ExtraWhere, NothingNode, WhereNode
+from hibee.utils.functional import cached_property
+from hibee.utils.regex_helper import _lazy_re_compile
+from hibee.utils.tree import Node
 
 __all__ = ["Query", "RawQuery"]
 
@@ -424,7 +424,7 @@ class Query(BaseExpression):
             or self.distinct
             or self.combinator
         ):
-            from django.db.models.sql.subqueries import AggregateQuery
+            from hibee.db.models.sql.subqueries import AggregateQuery
 
             inner_query = self.clone()
             inner_query.subquery = True
@@ -2526,7 +2526,7 @@ class Query(BaseExpression):
         """
         Check if the given field should be treated as nullable.
 
-        Some backends treat '' as null and Django treats such fields as
+        Some backends treat '' as null and Hibee treats such fields as
         nullable for those backends. In such situations field.null can be
         False even if we should treat the field as nullable.
         """

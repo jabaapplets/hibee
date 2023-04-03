@@ -2,19 +2,19 @@ import functools
 import inspect
 from functools import partial
 
-from django import forms
-from django.apps import apps
-from django.conf import SettingsReference, settings
-from django.core import checks, exceptions
-from django.db import connection, router
-from django.db.backends import utils
-from django.db.models import Q
-from django.db.models.constants import LOOKUP_SEP
-from django.db.models.deletion import CASCADE, SET_DEFAULT, SET_NULL
-from django.db.models.query_utils import PathInfo
-from django.db.models.utils import make_model_tuple
-from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy as _
+from hibee import forms
+from hibee.apps import apps
+from hibee.conf import SettingsReference, settings
+from hibee.core import checks, exceptions
+from hibee.db import connection, router
+from hibee.db.backends import utils
+from hibee.db.models import Q
+from hibee.db.models.constants import LOOKUP_SEP
+from hibee.db.models.deletion import CASCADE, SET_DEFAULT, SET_NULL
+from hibee.db.models.query_utils import PathInfo
+from hibee.db.models.utils import make_model_tuple
+from hibee.utils.functional import cached_property
+from hibee.utils.translation import gettext_lazy as _
 
 from . import Field
 from .mixins import FieldCacheMixin
@@ -225,7 +225,7 @@ class RelatedField(FieldCacheMixin, Field):
 
     def _check_clashes(self):
         """Check accessor and reverse query name clashes."""
-        from django.db.models.base import ModelBase
+        from hibee.db.models.base import ModelBase
 
         errors = []
         opts = self.model._meta
@@ -1242,7 +1242,7 @@ class OneToOneField(ForeignKey):
 
 
 def create_many_to_many_intermediary_model(field, klass):
-    from django.db import models
+    from hibee.db import models
 
     def set_managed(model, related, through):
         through._meta.managed = model._meta.managed or related._meta.managed
@@ -1489,12 +1489,12 @@ class ManyToManyField(RelatedField):
                             "The model is used as an intermediate model by "
                             "'%s', but it has more than two foreign keys "
                             "to '%s', which is ambiguous. You must specify "
-                            "which two foreign keys Django should use via the "
+                            "which two foreign keys Hibee should use via the "
                             "through_fields keyword argument."
                             % (self, from_model_name),
                             hint=(
                                 "Use through_fields to specify which two foreign keys "
-                                "Django should use."
+                                "Hibee should use."
                             ),
                             obj=self.remote_field.through,
                             id="fields.E333",
@@ -1519,7 +1519,7 @@ class ManyToManyField(RelatedField):
                                 "The model is used as an intermediate model by "
                                 "'%s', but it has more than one foreign key "
                                 "from '%s', which is ambiguous. You must specify "
-                                "which foreign key Django should use via the "
+                                "which foreign key Hibee should use via the "
                                 "through_fields keyword argument."
                             )
                             % (self, from_model_name),
@@ -1542,7 +1542,7 @@ class ManyToManyField(RelatedField):
                             "The model is used as an intermediate model by "
                             "'%s', but it has more than one foreign key "
                             "to '%s', which is ambiguous. You must specify "
-                            "which foreign key Django should use via the "
+                            "which foreign key Hibee should use via the "
                             "through_fields keyword argument." % (self, to_model_name),
                             hint=(
                                 "If you want to create a recursive relationship, "
@@ -1882,7 +1882,7 @@ class ManyToManyField(RelatedField):
             self.remote_field.related_name = "%s_rel_+" % name
         elif self.remote_field.is_hidden():
             # If the backwards relation is disabled, replace the original
-            # related_name with one generated from the m2m field name. Django
+            # related_name with one generated from the m2m field name. Hibee
             # still uses backwards relations internally and we need to avoid
             # clashes between multiple m2m fields with related_name == '+'.
             self.remote_field.related_name = "_%s_%s_%s_+" % (

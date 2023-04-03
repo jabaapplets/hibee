@@ -1,8 +1,8 @@
 import datetime
 import unittest
 
-from django.utils.dateparse import parse_duration
-from django.utils.duration import (
+from hibee.utils.dateparse import parse_duration
+from hibee.utils.duration import (
     duration_iso_string,
     duration_microseconds,
     duration_string,

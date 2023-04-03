@@ -116,7 +116,7 @@ for key, op in OPERATORS.items():
 
 class Literal(TokenBase):
     """
-    A basic self-resolvable object similar to a Django template variable.
+    A basic self-resolvable object similar to a Hibee template variable.
     """
 
     # IfParser uses Literal in create_var, but TemplateIfParser overrides

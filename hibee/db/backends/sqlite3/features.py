@@ -1,9 +1,9 @@
 import operator
 
-from django.db import transaction
-from django.db.backends.base.features import BaseDatabaseFeatures
-from django.db.utils import OperationalError
-from django.utils.functional import cached_property
+from hibee.db import transaction
+from hibee.db.backends.base.features import BaseDatabaseFeatures
+from hibee.db.utils import OperationalError
+from hibee.utils.functional import cached_property
 
 from .base import Database
 
@@ -47,8 +47,8 @@ class DatabaseFeatures(BaseDatabaseFeatures):
         "cs": "binary",
         "non_default": "nocase",
     }
-    django_test_expected_failures = {
-        # The django_format_dtdelta() function doesn't properly handle mixed
+    hibee_test_expected_failures = {
+        # The hibee_format_dtdelta() function doesn't properly handle mixed
         # Date/DateTime fields and timedeltas.
         "expressions.tests.FTimeDeltaTests.test_mixed_comparisons1",
     }
@@ -61,7 +61,7 @@ class DatabaseFeatures(BaseDatabaseFeatures):
     """
 
     @cached_property
-    def django_test_skips(self):
+    def hibee_test_skips(self):
         skips = {
             "SQLite stores values rounded to 15 significant digits.": {
                 "model_fields.test_decimalfield.DecimalFieldTests."

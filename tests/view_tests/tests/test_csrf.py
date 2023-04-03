@@ -1,9 +1,9 @@
 from unittest import mock
 
-from django.template import TemplateDoesNotExist
-from django.test import Client, RequestFactory, SimpleTestCase, override_settings
-from django.utils.translation import override
-from django.views.csrf import CSRF_FAILURE_TEMPLATE_NAME, csrf_failure
+from hibee.template import TemplateDoesNotExist
+from hibee.test import Client, RequestFactory, SimpleTestCase, override_settings
+from hibee.utils.translation import override
+from hibee.views.csrf import CSRF_FAILURE_TEMPLATE_NAME, csrf_failure
 
 
 @override_settings(ROOT_URLCONF="view_tests.urls")
@@ -15,9 +15,9 @@ class CsrfViewTests(SimpleTestCase):
     @override_settings(
         USE_I18N=True,
         MIDDLEWARE=[
-            "django.middleware.locale.LocaleMiddleware",
-            "django.middleware.common.CommonMiddleware",
-            "django.middleware.csrf.CsrfViewMiddleware",
+            "hibee.middleware.locale.LocaleMiddleware",
+            "hibee.middleware.common.CommonMiddleware",
+            "hibee.middleware.csrf.CsrfViewMiddleware",
         ],
     )
     def test_translation(self):
@@ -82,7 +82,7 @@ class CsrfViewTests(SimpleTestCase):
         )
 
     @override_settings(TEMPLATES=[])
-    def test_no_django_template_engine(self):
+    def test_no_hibee_template_engine(self):
         """
         The CSRF view doesn't depend on the TEMPLATES configuration (#24388).
         """
@@ -92,11 +92,11 @@ class CsrfViewTests(SimpleTestCase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "hibee.template.backends.hibee.HibeeTemplates",
                 "OPTIONS": {
                     "loaders": [
                         (
-                            "django.template.loaders.locmem.Loader",
+                            "hibee.template.loaders.locmem.Loader",
                             {
                                 CSRF_FAILURE_TEMPLATE_NAME: (
                                     "Test template for CSRF failure"
@@ -126,7 +126,7 @@ class CsrfViewTests(SimpleTestCase):
         be opened as utf-8 charset as is the default specified on template
         engines.
         """
-        from django.views.csrf import Path
+        from hibee.views.csrf import Path
 
         with mock.patch.object(Path, "open") as m:
             csrf_failure(mock.MagicMock(), mock.Mock())

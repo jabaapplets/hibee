@@ -1,29 +1,29 @@
 """
-Helper functions for creating Form classes from Django models
+Helper functions for creating Form classes from Hibee models
 and database field objects.
 """
 from itertools import chain
 
-from django.core.exceptions import (
+from hibee.core.exceptions import (
     NON_FIELD_ERRORS,
     FieldError,
     ImproperlyConfigured,
     ValidationError,
 )
-from django.db.models.utils import AltersData
-from django.forms.fields import ChoiceField, Field
-from django.forms.forms import BaseForm, DeclarativeFieldsMetaclass
-from django.forms.formsets import BaseFormSet, formset_factory
-from django.forms.utils import ErrorList
-from django.forms.widgets import (
+from hibee.db.models.utils import AltersData
+from hibee.forms.fields import ChoiceField, Field
+from hibee.forms.forms import BaseForm, DeclarativeFieldsMetaclass
+from hibee.forms.formsets import BaseFormSet, formset_factory
+from hibee.forms.utils import ErrorList
+from hibee.forms.widgets import (
     HiddenInput,
     MultipleHiddenInput,
     RadioSelect,
     SelectMultiple,
 )
-from django.utils.text import capfirst, get_text_list
-from django.utils.translation import gettext
-from django.utils.translation import gettext_lazy as _
+from hibee.utils.text import capfirst, get_text_list
+from hibee.utils.translation import gettext
+from hibee.utils.translation import gettext_lazy as _
 
 __all__ = (
     "ModelForm",
@@ -48,7 +48,7 @@ def construct_instance(form, instance, fields=None, exclude=None):
     Construct and return a model instance from the bound ``form``'s
     ``cleaned_data``, but do not save the returned instance to the database.
     """
-    from django.db import models
+    from hibee.db import models
 
     opts = instance._meta
 
@@ -118,7 +118,7 @@ def model_to_dict(instance, fields=None, exclude=None):
 
 def apply_limit_choices_to_to_formfield(formfield):
     """Apply limit_choices_to to the formfield's queryset if needed."""
-    from django.db.models import Exists, OuterRef, Q
+    from hibee.db.models import Exists, OuterRef, Q
 
     if hasattr(formfield, "queryset") and hasattr(formfield, "get_limit_choices_to"):
         limit_choices_to = formfield.get_limit_choices_to()
@@ -181,7 +181,7 @@ def fields_for_model(
     ignored = []
     opts = model._meta
     # Avoid circular import
-    from django.db.models import Field as ModelField
+    from hibee.db.models import Field as ModelField
 
     sortable_private_fields = [
         f for f in opts.private_fields if isinstance(f, ModelField)
@@ -747,7 +747,7 @@ class BaseModelFormSet(BaseFormSet, AltersData):
                 qs = qs.order_by(self.model._meta.pk.name)
 
             # Removed queryset limiting here. As per discussion re: #13023
-            # on django-dev, max_num should not prevent existing
+            # on hibee-dev, max_num should not prevent existing
             # related objects/inlines from being displayed.
             self._queryset = qs
         return self._queryset
@@ -948,7 +948,7 @@ class BaseModelFormSet(BaseFormSet, AltersData):
 
     def add_fields(self, form, index):
         """Add a hidden field for the object's primary key."""
-        from django.db.models import AutoField, ForeignKey, OneToOneField
+        from hibee.db.models import AutoField, ForeignKey, OneToOneField
 
         self._pk_field = pk = self.model._meta.pk
         # If a pk isn't editable, then it won't be on the form, so we need to
@@ -1022,7 +1022,7 @@ def modelformset_factory(
     renderer=None,
     edit_only=False,
 ):
-    """Return a FormSet class for the given Django model class."""
+    """Return a FormSet class for the given Hibee model class."""
     meta = getattr(form, "Meta", None)
     if (
         getattr(meta, "fields", fields) is None
@@ -1188,7 +1188,7 @@ def _get_foreign_key(parent_model, model, fk_name=None, can_fail=False):
     parent_model.
     """
     # avoid circular import
-    from django.db.models import ForeignKey
+    from hibee.db.models import ForeignKey
 
     opts = model._meta
     if fk_name:

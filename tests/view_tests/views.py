@@ -4,18 +4,18 @@ import logging
 import sys
 from pathlib import Path
 
-from django.core.exceptions import BadRequest, PermissionDenied, SuspiciousOperation
-from django.http import Http404, HttpResponse, JsonResponse
-from django.shortcuts import render
-from django.template import Context, Template, TemplateDoesNotExist
-from django.urls import get_resolver
-from django.views import View
-from django.views.debug import (
+from hibee.core.exceptions import BadRequest, PermissionDenied, SuspiciousOperation
+from hibee.http import Http404, HttpResponse, JsonResponse
+from hibee.shortcuts import render
+from hibee.template import Context, Template, TemplateDoesNotExist
+from hibee.urls import get_resolver
+from hibee.views import View
+from hibee.views.debug import (
     ExceptionReporter,
     SafeExceptionReporterFilter,
     technical_500_response,
 )
-from django.views.decorators.debug import sensitive_post_parameters, sensitive_variables
+from hibee.views.decorators.debug import sensitive_post_parameters, sensitive_variables
 
 TEMPLATES_PATH = Path(__file__).resolve().parent / "templates"
 
@@ -124,7 +124,7 @@ def render_no_template(request):
 
 
 def send_log(request, exc_info):
-    logger = logging.getLogger("django")
+    logger = logging.getLogger("hibee")
     # The default logging config has a logging filter to ensure admin emails are
     # only sent with DEBUG=False, but since someone might choose to remove that
     # filter, we still want to be able to test the behavior of error emails

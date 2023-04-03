@@ -27,7 +27,7 @@ import stat
 import tarfile
 import zipfile
 
-from django.core.exceptions import SuspiciousOperation
+from hibee.core.exceptions import SuspiciousOperation
 
 
 class ArchiveException(Exception):

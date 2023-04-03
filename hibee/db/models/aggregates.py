@@ -1,11 +1,11 @@
 """
 Classes to represent the definitions of aggregate functions.
 """
-from django.core.exceptions import FieldError, FullResultSet
-from django.db.models.expressions import Case, Func, Star, Value, When
-from django.db.models.fields import IntegerField
-from django.db.models.functions.comparison import Coalesce
-from django.db.models.functions.mixins import (
+from hibee.core.exceptions import FieldError, FullResultSet
+from hibee.db.models.expressions import Case, Func, Star, Value, When
+from hibee.db.models.fields import IntegerField
+from hibee.db.models.functions.comparison import Coalesce
+from hibee.db.models.functions.mixins import (
     FixDurationInputMixin,
     NumericOutputFieldMixin,
 )

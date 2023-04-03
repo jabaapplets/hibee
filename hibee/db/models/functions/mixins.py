@@ -1,7 +1,7 @@
 import sys
 
-from django.db.models.fields import DecimalField, FloatField, IntegerField
-from django.db.models.functions import Cast
+from hibee.db.models.fields import DecimalField, FloatField, IntegerField
+from hibee.db.models.functions import Cast
 
 
 class FixDecimalInputMixin:
@@ -34,7 +34,7 @@ class FixDurationInputMixin:
         if self.output_field.get_internal_type() == "DurationField":
             expression = self.get_source_expressions()[0]
             options = self._get_repr_options()
-            from django.db.backends.oracle.functions import (
+            from hibee.db.backends.oracle.functions import (
                 IntervalToSeconds,
                 SecondsToInterval,
             )

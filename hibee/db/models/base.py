@@ -6,11 +6,11 @@ from itertools import chain
 
 from asgiref.sync import sync_to_async
 
-import django
-from django.apps import apps
-from django.conf import settings
-from django.core import checks
-from django.core.exceptions import (
+import hibee
+from hibee.apps import apps
+from hibee.conf import settings
+from hibee.core import checks
+from hibee.core.exceptions import (
     NON_FIELD_ERRORS,
     FieldDoesNotExist,
     FieldError,
@@ -18,41 +18,41 @@ from django.core.exceptions import (
     ObjectDoesNotExist,
     ValidationError,
 )
-from django.db import (
-    DJANGO_VERSION_PICKLE_KEY,
+from hibee.db import (
+    HIBEE_VERSION_PICKLE_KEY,
     DatabaseError,
     connection,
     connections,
     router,
     transaction,
 )
-from django.db.models import NOT_PROVIDED, ExpressionWrapper, IntegerField, Max, Value
-from django.db.models.constants import LOOKUP_SEP
-from django.db.models.constraints import CheckConstraint, UniqueConstraint
-from django.db.models.deletion import CASCADE, Collector
-from django.db.models.expressions import RawSQL
-from django.db.models.fields.related import (
+from hibee.db.models import NOT_PROVIDED, ExpressionWrapper, IntegerField, Max, Value
+from hibee.db.models.constants import LOOKUP_SEP
+from hibee.db.models.constraints import CheckConstraint, UniqueConstraint
+from hibee.db.models.deletion import CASCADE, Collector
+from hibee.db.models.expressions import RawSQL
+from hibee.db.models.fields.related import (
     ForeignObjectRel,
     OneToOneField,
     lazy_related_operation,
     resolve_relation,
 )
-from django.db.models.functions import Coalesce
-from django.db.models.manager import Manager
-from django.db.models.options import Options
-from django.db.models.query import F, Q
-from django.db.models.signals import (
+from hibee.db.models.functions import Coalesce
+from hibee.db.models.manager import Manager
+from hibee.db.models.options import Options
+from hibee.db.models.query import F, Q
+from hibee.db.models.signals import (
     class_prepared,
     post_init,
     post_save,
     pre_init,
     pre_save,
 )
-from django.db.models.utils import AltersData, make_model_tuple
-from django.utils.encoding import force_str
-from django.utils.hashable import make_hashable
-from django.utils.text import capfirst, get_text_list
-from django.utils.translation import gettext_lazy as _
+from hibee.db.models.utils import AltersData, make_model_tuple
+from hibee.utils.encoding import force_str
+from hibee.utils.hashable import make_hashable
+from hibee.utils.text import capfirst, get_text_list
+from hibee.utils.translation import gettext_lazy as _
 
 
 class Deferred:
@@ -108,7 +108,7 @@ class ModelBase(type):
         if classcell is not None:
             new_attrs["__classcell__"] = classcell
         attr_meta = attrs.pop("Meta", None)
-        # Pass all attrs without a (Django-specific) contribute_to_class()
+        # Pass all attrs without a (Hibee-specific) contribute_to_class()
         # method to type.__new__() so that they're properly initialized
         # (i.e. __set_name__()).
         contributable_attrs = {}
@@ -607,7 +607,7 @@ class Model(AltersData, metaclass=ModelBase):
 
     def __reduce__(self):
         data = self.__getstate__()
-        data[DJANGO_VERSION_PICKLE_KEY] = django.__version__
+        data[HIBEE_VERSION_PICKLE_KEY] = hibee.__version__
         class_id = self._meta.app_label, self._meta.object_name
         return model_unpickle, (class_id,), data
 
@@ -629,19 +629,19 @@ class Model(AltersData, metaclass=ModelBase):
         return state
 
     def __setstate__(self, state):
-        pickled_version = state.get(DJANGO_VERSION_PICKLE_KEY)
+        pickled_version = state.get(HIBEE_VERSION_PICKLE_KEY)
         if pickled_version:
-            if pickled_version != django.__version__:
+            if pickled_version != hibee.__version__:
                 warnings.warn(
-                    "Pickled model instance's Django version %s does not "
+                    "Pickled model instance's Hibee version %s does not "
                     "match the current version %s."
-                    % (pickled_version, django.__version__),
+                    % (pickled_version, hibee.__version__),
                     RuntimeWarning,
                     stacklevel=2,
                 )
         else:
             warnings.warn(
-                "Pickled model instance's Django version is not specified.",
+                "Pickled model instance's Hibee version is not specified.",
                 RuntimeWarning,
                 stacklevel=2,
             )
@@ -1588,7 +1588,7 @@ class Model(AltersData, metaclass=ModelBase):
                         f"Configure the DEFAULT_AUTO_FIELD setting or the "
                         f"{cls._meta.app_config.__class__.__qualname__}."
                         f"default_auto_field attribute to point to a subclass "
-                        f"of AutoField, e.g. 'django.db.models.BigAutoField'."
+                        f"of AutoField, e.g. 'hibee.db.models.BigAutoField'."
                     ),
                     obj=cls,
                     id="models.W042",
@@ -1871,7 +1871,7 @@ class Model(AltersData, metaclass=ModelBase):
             )
         return errors
 
-    # RemovedInDjango51Warning.
+    # RemovedInHibee51Warning.
     @classmethod
     def _check_index_together(cls):
         """Check the value of "index_together" option."""
@@ -2024,7 +2024,7 @@ class Model(AltersData, metaclass=ModelBase):
 
     @classmethod
     def _check_local_fields(cls, fields, option):
-        from django.db import models
+        from hibee.db import models
 
         # In order to avoid hitting the relation tree prematurely, we use our
         # own fields_map instead of using get_field()

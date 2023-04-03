@@ -1,6 +1,6 @@
-from django.db.backends.base.schema import BaseDatabaseSchemaEditor
-from django.db.models import NOT_PROVIDED, F, UniqueConstraint
-from django.db.models.constants import LOOKUP_SEP
+from hibee.db.backends.base.schema import BaseDatabaseSchemaEditor
+from hibee.db.models import NOT_PROVIDED, F, UniqueConstraint
+from hibee.db.models.constants import LOOKUP_SEP
 
 
 class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):

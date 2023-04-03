@@ -1,6 +1,6 @@
-from django.conf import settings
-from django.utils.translation import get_supported_language_variant
-from django.utils.translation.trans_real import language_code_re
+from hibee.conf import settings
+from hibee.utils.translation import get_supported_language_variant
+from hibee.utils.translation.trans_real import language_code_re
 
 from . import Error, Tags, register
 

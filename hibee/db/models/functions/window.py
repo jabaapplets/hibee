@@ -1,5 +1,5 @@
-from django.db.models.expressions import Func
-from django.db.models.fields import FloatField, IntegerField
+from hibee.db.models.expressions import Func
+from hibee.db.models.fields import FloatField, IntegerField
 
 __all__ = [
     "CumeDist",

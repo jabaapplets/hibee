@@ -2,7 +2,7 @@ import os
 from asyncio import get_running_loop
 from functools import wraps
 
-from django.core.exceptions import SynchronousOnlyOperation
+from hibee.core.exceptions import SynchronousOnlyOperation
 
 
 def async_unsafe(message):
@@ -20,7 +20,7 @@ def async_unsafe(message):
             except RuntimeError:
                 pass
             else:
-                if not os.environ.get("DJANGO_ALLOW_ASYNC_UNSAFE"):
+                if not os.environ.get("HIBEE_ALLOW_ASYNC_UNSAFE"):
                     raise SynchronousOnlyOperation(message)
             # Pass onward.
             return func(*args, **kwargs)

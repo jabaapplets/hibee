@@ -15,15 +15,15 @@ from urllib.parse import quote
 
 from asgiref.local import Local
 
-from django.conf import settings
-from django.core.checks import Error, Warning
-from django.core.checks.urls import check_resolver
-from django.core.exceptions import ImproperlyConfigured, ViewDoesNotExist
-from django.utils.datastructures import MultiValueDict
-from django.utils.functional import cached_property
-from django.utils.http import RFC3986_SUBDELIMS, escape_leading_slashes
-from django.utils.regex_helper import _lazy_re_compile, normalize
-from django.utils.translation import get_language
+from hibee.conf import settings
+from hibee.core.checks import Error, Warning
+from hibee.core.checks.urls import check_resolver
+from hibee.core.exceptions import ImproperlyConfigured, ViewDoesNotExist
+from hibee.utils.datastructures import MultiValueDict
+from hibee.utils.functional import cached_property
+from hibee.utils.http import RFC3986_SUBDELIMS, escape_leading_slashes
+from hibee.utils.regex_helper import _lazy_re_compile, normalize
+from hibee.utils.translation import get_language
 
 from .converters import get_converter
 from .exceptions import NoReverseMatch, Resolver404
@@ -252,7 +252,7 @@ def _route_to_regex(route, is_endpoint=False):
     Convert a path pattern into a regular expression. Return the regular
     expression and a dictionary mapping the capture names to the converters.
     For example, 'foo/<int:pk>' returns '^foo\\/(?P<pk>[0-9]+)'
-    and {'pk': <django.urls.converters.IntConverter>}.
+    and {'pk': <hibee.urls.converters.IntConverter>}.
     """
     original_route = route
     parts = ["^"]
@@ -325,7 +325,7 @@ class RoutePattern(CheckURLMixin):
                 Warning(
                     "Your URL pattern {} has a route that contains '(?P<', begins "
                     "with a '^', or ends with a '$'. This was likely an oversight "
-                    "when migrating to django.urls.path().".format(self.describe()),
+                    "when migrating to hibee.urls.path().".format(self.describe()),
                     id="2_0.W001",
                 )
             )
@@ -403,7 +403,7 @@ class URLPattern:
             return []
 
     def _check_callback(self):
-        from django.views import View
+        from hibee.views import View
 
         view = self.callback
         if inspect.isclass(view) and issubclass(view, View):
@@ -727,8 +727,8 @@ class URLResolver:
         callback = getattr(self.urlconf_module, "handler%s" % view_type, None)
         if not callback:
             # No handler specified in file; use lazy import, since
-            # django.conf.urls imports this file.
-            from django.conf import urls
+            # hibee.conf.urls imports this file.
+            from hibee.conf import urls
 
             callback = getattr(urls, "handler%s" % view_type)
         return get_callable(callback)

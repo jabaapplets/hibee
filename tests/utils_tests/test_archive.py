@@ -4,9 +4,9 @@ import sys
 import tempfile
 import unittest
 
-from django.core.exceptions import SuspiciousOperation
-from django.test import SimpleTestCase
-from django.utils import archive
+from hibee.core.exceptions import SuspiciousOperation
+from hibee.test import SimpleTestCase
+from hibee.utils import archive
 
 try:
     import bz2  # NOQA

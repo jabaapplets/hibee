@@ -2,7 +2,7 @@
 from functools import partial
 from importlib import import_module
 
-from django.core.exceptions import ImproperlyConfigured
+from hibee.core.exceptions import ImproperlyConfigured
 
 from .resolvers import (
     LocalePrefixPattern,
@@ -59,7 +59,7 @@ def include(arg, namespace=None):
 
 
 def _path(route, view, kwargs=None, name=None, Pattern=None):
-    from django.views import View
+    from hibee.views import View
 
     if kwargs is not None and not isinstance(kwargs, dict):
         raise TypeError(

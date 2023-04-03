@@ -1,11 +1,11 @@
 import pickle
 
-from django.contrib.auth.models import User
-from django.test import TestCase
-from django.utils.functional import SimpleLazyObject
+from hibee.contrib.auth.models import User
+from hibee.test import TestCase
+from hibee.utils.functional import SimpleLazyObject
 
 
-class TestUtilsSimpleLazyObjectDjangoTestCase(TestCase):
+class TestUtilsSimpleLazyObjectHibeeTestCase(TestCase):
     def test_pickle(self):
         user = User.objects.create_user("johndoe", "john@example.com", "pass")
         x = SimpleLazyObject(lambda: user)

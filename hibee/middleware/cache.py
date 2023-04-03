@@ -1,13 +1,13 @@
 """
-Cache middleware. If enabled, each Django-powered page will be cached based on
+Cache middleware. If enabled, each Hibee-powered page will be cached based on
 URL. The canonical way to enable cache middleware is to set
 ``UpdateCacheMiddleware`` as your first piece of middleware, and
 ``FetchFromCacheMiddleware`` as the last::
 
     MIDDLEWARE = [
-        'django.middleware.cache.UpdateCacheMiddleware',
+        'hibee.middleware.cache.UpdateCacheMiddleware',
         ...
-        'django.middleware.cache.FetchFromCacheMiddleware'
+        'hibee.middleware.cache.FetchFromCacheMiddleware'
     ]
 
 This is counter-intuitive, but correct: ``UpdateCacheMiddleware`` needs to run
@@ -19,7 +19,7 @@ The single-class ``CacheMiddleware`` can be used for some simple sites.
 However, if any other piece of middleware needs to affect the cache key, you'll
 need to use the two-part ``UpdateCacheMiddleware`` and
 ``FetchFromCacheMiddleware``. This'll most often happen when you're using
-Django's ``LocaleMiddleware``.
+Hibee's ``LocaleMiddleware``.
 
 More details about how the caching works:
 
@@ -43,16 +43,16 @@ More details about how the caching works:
 
 """
 
-from django.conf import settings
-from django.core.cache import DEFAULT_CACHE_ALIAS, caches
-from django.utils.cache import (
+from hibee.conf import settings
+from hibee.core.cache import DEFAULT_CACHE_ALIAS, caches
+from hibee.utils.cache import (
     get_cache_key,
     get_max_age,
     has_vary_header,
     learn_cache_key,
     patch_response_headers,
 )
-from django.utils.deprecation import MiddlewareMixin
+from hibee.utils.deprecation import MiddlewareMixin
 
 
 class UpdateCacheMiddleware(MiddlewareMixin):

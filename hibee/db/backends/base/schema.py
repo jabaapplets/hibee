@@ -2,8 +2,8 @@ import logging
 import operator
 from datetime import datetime
 
-from django.conf import settings
-from django.db.backends.ddl_references import (
+from hibee.conf import settings
+from hibee.db.backends.ddl_references import (
     Columns,
     Expressions,
     ForeignKeyName,
@@ -11,13 +11,13 @@ from django.db.backends.ddl_references import (
     Statement,
     Table,
 )
-from django.db.backends.utils import names_digest, split_identifier, truncate_name
-from django.db.models import Deferrable, Index
-from django.db.models.sql import Query
-from django.db.transaction import TransactionManagementError, atomic
-from django.utils import timezone
+from hibee.db.backends.utils import names_digest, split_identifier, truncate_name
+from hibee.db.models import Deferrable, Index
+from hibee.db.models.sql import Query
+from hibee.db.transaction import TransactionManagementError, atomic
+from hibee.utils import timezone
 
-logger = logging.getLogger("django.db.backends.schema")
+logger = logging.getLogger("hibee.db.backends.schema")
 
 
 def _is_relevant_relation(relation, altered_field):
@@ -711,7 +711,7 @@ class BaseDatabaseSchemaEditor:
         }
         self.execute(sql, params)
         # Drop the default if we need to
-        # (Django usually does not use in-database defaults)
+        # (Hibee usually does not use in-database defaults)
         if (
             not self.skip_default_on_alter(field)
             and self.effective_default(field) is not None
@@ -1170,7 +1170,7 @@ class BaseDatabaseSchemaEditor:
                 self._create_check_sql(model, constraint_name, new_db_params["check"])
             )
         # Drop the default if we need to
-        # (Django usually does not use in-database defaults)
+        # (Hibee usually does not use in-database defaults)
         if needs_database_default:
             changes_sql, params = self._alter_column_default_sql(
                 model, old_field, new_field, drop=True

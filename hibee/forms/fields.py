@@ -14,11 +14,11 @@ from decimal import Decimal, DecimalException
 from io import BytesIO
 from urllib.parse import urlsplit, urlunsplit
 
-from django.core import validators
-from django.core.exceptions import ValidationError
-from django.forms.boundfield import BoundField
-from django.forms.utils import from_current_timezone, to_current_timezone
-from django.forms.widgets import (
+from hibee.core import validators
+from hibee.core.exceptions import ValidationError
+from hibee.forms.boundfield import BoundField
+from hibee.forms.utils import from_current_timezone, to_current_timezone
+from hibee.forms.widgets import (
     FILE_INPUT_CONTRADICTION,
     CheckboxInput,
     ClearableFileInput,
@@ -39,13 +39,13 @@ from django.forms.widgets import (
     TimeInput,
     URLInput,
 )
-from django.utils import formats
-from django.utils.dateparse import parse_datetime, parse_duration
-from django.utils.duration import duration_string
-from django.utils.ipv6 import clean_ipv6_address
-from django.utils.regex_helper import _lazy_re_compile
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import ngettext_lazy
+from hibee.utils import formats
+from hibee.utils.dateparse import parse_datetime, parse_duration
+from hibee.utils.duration import duration_string
+from hibee.utils.ipv6 import clean_ipv6_address
+from hibee.utils.regex_helper import _lazy_re_compile
+from hibee.utils.translation import gettext_lazy as _
+from hibee.utils.translation import ngettext_lazy
 
 __all__ = (
     "Field",
@@ -114,7 +114,7 @@ class Field:
         #           default Widget that it'll use if you don't specify this. In
         #           most cases, the default widget is TextInput.
         # label -- A verbose name for this field, for use in displaying this
-        #          field in a form. By default, Django will use a "pretty"
+        #          field in a form. By default, Hibee will use a "pretty"
         #          version of the form field name, if the Field is part of a
         #          Form.
         # initial -- A value to use in this Field's initial display. This value

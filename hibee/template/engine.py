@@ -1,8 +1,8 @@
 import functools
 
-from django.core.exceptions import ImproperlyConfigured
-from django.utils.functional import cached_property
-from django.utils.module_loading import import_string
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.utils.functional import cached_property
+from hibee.utils.module_loading import import_string
 
 from .base import Template
 from .context import Context, _builtin_context_processors
@@ -12,9 +12,9 @@ from .library import import_library
 
 class Engine:
     default_builtins = [
-        "django.template.defaulttags",
-        "django.template.defaultfilters",
-        "django.template.loader_tags",
+        "hibee.template.defaulttags",
+        "hibee.template.defaultfilters",
+        "hibee.template.loader_tags",
     ]
 
     def __init__(
@@ -35,10 +35,10 @@ class Engine:
         if context_processors is None:
             context_processors = []
         if loaders is None:
-            loaders = ["django.template.loaders.filesystem.Loader"]
+            loaders = ["hibee.template.loaders.filesystem.Loader"]
             if app_dirs:
-                loaders += ["django.template.loaders.app_directories.Loader"]
-            loaders = [("django.template.loaders.cached.Loader", loaders)]
+                loaders += ["hibee.template.loaders.app_directories.Loader"]
+            loaders = [("hibee.template.loaders.cached.Loader", loaders)]
         else:
             if app_dirs:
                 raise ImproperlyConfigured(
@@ -86,28 +86,28 @@ class Engine:
     @functools.lru_cache
     def get_default():
         """
-        Return the first DjangoTemplates backend that's configured, or raise
+        Return the first HibeeTemplates backend that's configured, or raise
         ImproperlyConfigured if none are configured.
 
         This is required for preserving historical APIs that rely on a
         globally available, implicitly configured engine such as:
 
-        >>> from django.template import Context, Template
+        >>> from hibee.template import Context, Template
         >>> template = Template("Hello {{ name }}!")
         >>> context = Context({'name': "world"})
         >>> template.render(context)
         'Hello world!'
         """
-        # Since Engine is imported in django.template and since
-        # DjangoTemplates is a wrapper around this Engine class,
+        # Since Engine is imported in hibee.template and since
+        # HibeeTemplates is a wrapper around this Engine class,
         # local imports are required to avoid import loops.
-        from django.template import engines
-        from django.template.backends.django import DjangoTemplates
+        from hibee.template import engines
+        from hibee.template.backends.hibee import HibeeTemplates
 
         for engine in engines.all():
-            if isinstance(engine, DjangoTemplates):
+            if isinstance(engine, HibeeTemplates):
                 return engine.engine
-        raise ImproperlyConfigured("No DjangoTemplates backend is configured.")
+        raise ImproperlyConfigured("No HibeeTemplates backend is configured.")
 
     @cached_property
     def template_context_processors(self):
@@ -181,13 +181,13 @@ class Engine:
     def render_to_string(self, template_name, context=None):
         """
         Render the template specified by template_name with the given context.
-        For use in Django's test suite.
+        For use in Hibee's test suite.
         """
         if isinstance(template_name, (list, tuple)):
             t = self.select_template(template_name)
         else:
             t = self.get_template(template_name)
-        # Django < 1.8 accepted a Context in `context` even though that's
+        # Hibee < 1.8 accepted a Context in `context` even though that's
         # unintended. Preserve this ability but don't rewrap `context`.
         if isinstance(context, Context):
             return t.render(context)

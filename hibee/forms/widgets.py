@@ -9,15 +9,15 @@ from collections import defaultdict
 from graphlib import CycleError, TopologicalSorter
 from itertools import chain
 
-from django.forms.utils import to_current_timezone
-from django.templatetags.static import static
-from django.utils import formats
-from django.utils.dates import MONTHS
-from django.utils.formats import get_format
-from django.utils.html import format_html, html_safe
-from django.utils.regex_helper import _lazy_re_compile
-from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy as _
+from hibee.forms.utils import to_current_timezone
+from hibee.templatetags.static import static
+from hibee.utils import formats
+from hibee.utils.dates import MONTHS
+from hibee.utils.formats import get_format
+from hibee.utils.html import format_html, html_safe
+from hibee.utils.regex_helper import _lazy_re_compile
+from hibee.utils.safestring import mark_safe
+from hibee.utils.translation import gettext_lazy as _
 
 from .renderers import get_default_renderer
 
@@ -128,7 +128,7 @@ class Media:
         """
         Given a relative or absolute path to a static asset, return an absolute
         path. An absolute path will be returned unchanged while a relative path
-        will be passed to django.templatetags.static.static().
+        will be passed to hibee.templatetags.static.static().
         """
         if path.startswith(("http://", "https://", "/")):
             return path
@@ -314,7 +314,7 @@ class Input(Widget):
     """
 
     input_type = None  # Subclasses must define this.
-    template_name = "django/forms/widgets/input.html"
+    template_name = "hibee/forms/widgets/input.html"
 
     def __init__(self, attrs=None):
         if attrs is not None:
@@ -330,27 +330,27 @@ class Input(Widget):
 
 class TextInput(Input):
     input_type = "text"
-    template_name = "django/forms/widgets/text.html"
+    template_name = "hibee/forms/widgets/text.html"
 
 
 class NumberInput(Input):
     input_type = "number"
-    template_name = "django/forms/widgets/number.html"
+    template_name = "hibee/forms/widgets/number.html"
 
 
 class EmailInput(Input):
     input_type = "email"
-    template_name = "django/forms/widgets/email.html"
+    template_name = "hibee/forms/widgets/email.html"
 
 
 class URLInput(Input):
     input_type = "url"
-    template_name = "django/forms/widgets/url.html"
+    template_name = "hibee/forms/widgets/url.html"
 
 
 class PasswordInput(Input):
     input_type = "password"
-    template_name = "django/forms/widgets/password.html"
+    template_name = "hibee/forms/widgets/password.html"
 
     def __init__(self, attrs=None, render_value=False):
         super().__init__(attrs)
@@ -364,7 +364,7 @@ class PasswordInput(Input):
 
 class HiddenInput(Input):
     input_type = "hidden"
-    template_name = "django/forms/widgets/hidden.html"
+    template_name = "hibee/forms/widgets/hidden.html"
 
 
 class MultipleHiddenInput(HiddenInput):
@@ -373,7 +373,7 @@ class MultipleHiddenInput(HiddenInput):
     of values.
     """
 
-    template_name = "django/forms/widgets/multiple_hidden.html"
+    template_name = "hibee/forms/widgets/multiple_hidden.html"
 
     def get_context(self, name, value, attrs):
         context = super().get_context(name, value, attrs)
@@ -408,7 +408,7 @@ class MultipleHiddenInput(HiddenInput):
 class FileInput(Input):
     input_type = "file"
     needs_multipart_form = True
-    template_name = "django/forms/widgets/file.html"
+    template_name = "hibee/forms/widgets/file.html"
 
     def format_value(self, value):
         """File input never renders a value."""
@@ -432,7 +432,7 @@ class ClearableFileInput(FileInput):
     clear_checkbox_label = _("Clear")
     initial_text = _("Currently")
     input_text = _("Change")
-    template_name = "django/forms/widgets/clearable_file_input.html"
+    template_name = "hibee/forms/widgets/clearable_file_input.html"
 
     def clear_checkbox_name(self, name):
         """
@@ -499,7 +499,7 @@ class ClearableFileInput(FileInput):
 
 
 class Textarea(Widget):
-    template_name = "django/forms/widgets/textarea.html"
+    template_name = "hibee/forms/widgets/textarea.html"
 
     def __init__(self, attrs=None):
         # Use slightly better defaults than HTML's 20x2 box
@@ -525,17 +525,17 @@ class DateTimeBaseInput(TextInput):
 
 class DateInput(DateTimeBaseInput):
     format_key = "DATE_INPUT_FORMATS"
-    template_name = "django/forms/widgets/date.html"
+    template_name = "hibee/forms/widgets/date.html"
 
 
 class DateTimeInput(DateTimeBaseInput):
     format_key = "DATETIME_INPUT_FORMATS"
-    template_name = "django/forms/widgets/datetime.html"
+    template_name = "hibee/forms/widgets/datetime.html"
 
 
 class TimeInput(DateTimeBaseInput):
     format_key = "TIME_INPUT_FORMATS"
-    template_name = "django/forms/widgets/time.html"
+    template_name = "hibee/forms/widgets/time.html"
 
 
 # Defined at module level so that CheckboxInput is picklable (#17976)
@@ -545,7 +545,7 @@ def boolean_check(v):
 
 class CheckboxInput(Input):
     input_type = "checkbox"
-    template_name = "django/forms/widgets/checkbox.html"
+    template_name = "hibee/forms/widgets/checkbox.html"
 
     def __init__(self, attrs=None, check_test=None):
         super().__init__(attrs)
@@ -717,8 +717,8 @@ class ChoiceWidget(Widget):
 
 class Select(ChoiceWidget):
     input_type = "select"
-    template_name = "django/forms/widgets/select.html"
-    option_template_name = "django/forms/widgets/select_option.html"
+    template_name = "hibee/forms/widgets/select.html"
+    option_template_name = "hibee/forms/widgets/select_option.html"
     add_id_index = False
     checked_attribute = {"selected": True}
     option_inherits_attrs = False
@@ -773,7 +773,7 @@ class NullBooleanSelect(Select):
                 False: "false",
                 "true": "true",
                 "false": "false",
-                # For backwards compatibility with Django < 2.2.
+                # For backwards compatibility with Hibee < 2.2.
                 "2": "true",
                 "3": "false",
             }[value]
@@ -789,7 +789,7 @@ class NullBooleanSelect(Select):
             False: False,
             "true": True,
             "false": False,
-            # For backwards compatibility with Django < 2.2.
+            # For backwards compatibility with Hibee < 2.2.
             "2": True,
             "3": False,
         }.get(value)

@@ -19,16 +19,16 @@ from io import StringIO
 
 import sqlparse
 
-import django
-from django.core.management import call_command
-from django.db import connections
-from django.test import SimpleTestCase, TestCase
-from django.test.utils import NullTimeKeeper, TimeKeeper, iter_test_cases
-from django.test.utils import setup_databases as _setup_databases
-from django.test.utils import setup_test_environment
-from django.test.utils import teardown_databases as _teardown_databases
-from django.test.utils import teardown_test_environment
-from django.utils.datastructures import OrderedSet
+import hibee
+from hibee.core.management import call_command
+from hibee.db import connections
+from hibee.test import SimpleTestCase, TestCase
+from hibee.test.utils import NullTimeKeeper, TimeKeeper, iter_test_cases
+from hibee.test.utils import setup_databases as _setup_databases
+from hibee.test.utils import setup_test_environment
+from hibee.test.utils import teardown_databases as _teardown_databases
+from hibee.test.utils import teardown_test_environment
+from hibee.utils.datastructures import OrderedSet
 
 try:
     import ipdb as pdb
@@ -43,7 +43,7 @@ except ImportError:
 
 class DebugSQLTextTestResult(unittest.TextTestResult):
     def __init__(self, stream, descriptions, verbosity):
-        self.logger = logging.getLogger("django.db.backends")
+        self.logger = logging.getLogger("hibee.db.backends")
         self.logger.setLevel(logging.DEBUG)
         self.debug_sql_stream = None
         super().__init__(stream, descriptions, verbosity)
@@ -374,7 +374,7 @@ def get_max_test_processes():
     if multiprocessing.get_start_method() not in {"fork", "spawn"}:
         return 1
     try:
-        return int(os.environ["DJANGO_TEST_PROCESSES"])
+        return int(os.environ["HIBEE_TEST_PROCESSES"])
     except KeyError:
         return multiprocessing.cpu_count()
 
@@ -422,7 +422,7 @@ def _init_worker(
             if process_setup_args is None:
                 process_setup_args = ()
             process_setup(*process_setup_args)
-        django.setup()
+        hibee.setup()
         setup_test_environment(debug=debug_mode)
 
     for alias in connections:
@@ -626,7 +626,7 @@ class Shuffler:
 
 
 class DiscoverRunner:
-    """A Django test runner that uses unittest2 test discovery."""
+    """A Hibee test runner that uses unittest2 test discovery."""
 
     test_suite = unittest.TestSuite
     parallel_test_suite = ParallelTestSuite

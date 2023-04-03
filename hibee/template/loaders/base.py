@@ -1,4 +1,4 @@
-from django.template import Template, TemplateDoesNotExist
+from hibee.template import Template, TemplateDoesNotExist
 
 
 class Loader:

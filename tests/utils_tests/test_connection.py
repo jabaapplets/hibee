@@ -1,5 +1,5 @@
-from django.test import SimpleTestCase
-from django.utils.connection import BaseConnectionHandler
+from hibee.test import SimpleTestCase
+from hibee.utils.connection import BaseConnectionHandler
 
 
 class BaseConnectionHandlerTests(SimpleTestCase):

@@ -2,9 +2,9 @@
 Wrapper for loading templates from the filesystem.
 """
 
-from django.core.exceptions import SuspiciousFileOperation
-from django.template import Origin, TemplateDoesNotExist
-from django.utils._os import safe_join
+from hibee.core.exceptions import SuspiciousFileOperation
+from hibee.template import Origin, TemplateDoesNotExist
+from hibee.utils._os import safe_join
 
 from .base import Loader as BaseLoader
 

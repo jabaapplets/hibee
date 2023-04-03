@@ -1,12 +1,12 @@
-from django.http.cookie import SimpleCookie, parse_cookie
-from django.http.request import (
+from hibee.http.cookie import SimpleCookie, parse_cookie
+from hibee.http.request import (
     HttpHeaders,
     HttpRequest,
     QueryDict,
     RawPostDataException,
     UnreadablePostError,
 )
-from django.http.response import (
+from hibee.http.response import (
     BadHeaderError,
     FileResponse,
     Http404,

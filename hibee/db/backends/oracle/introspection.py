@@ -2,11 +2,11 @@ from collections import namedtuple
 
 import cx_Oracle
 
-from django.db import models
-from django.db.backends.base.introspection import BaseDatabaseIntrospection
-from django.db.backends.base.introspection import FieldInfo as BaseFieldInfo
-from django.db.backends.base.introspection import TableInfo as BaseTableInfo
-from django.utils.functional import cached_property
+from hibee.db import models
+from hibee.db.backends.base.introspection import BaseDatabaseIntrospection
+from hibee.db.backends.base.introspection import FieldInfo as BaseFieldInfo
+from hibee.db.backends.base.introspection import TableInfo as BaseTableInfo
+from hibee.utils.functional import cached_property
 
 FieldInfo = namedtuple(
     "FieldInfo", BaseFieldInfo._fields + ("is_autofield", "is_json", "comment")
@@ -17,7 +17,7 @@ TableInfo = namedtuple("TableInfo", BaseTableInfo._fields + ("comment",))
 class DatabaseIntrospection(BaseDatabaseIntrospection):
     cache_bust_counter = 1
 
-    # Maps type objects to Django Field types.
+    # Maps type objects to Hibee Field types.
     @cached_property
     def data_types_reverse(self):
         if self.connection.cx_oracle_version < (8,):

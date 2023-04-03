@@ -1,17 +1,17 @@
 import uuid
 
-from django.conf import settings
-from django.db.backends.base.operations import BaseDatabaseOperations
-from django.db.backends.utils import split_tzname_delta
-from django.db.models import Exists, ExpressionWrapper, Lookup
-from django.db.models.constants import OnConflict
-from django.utils import timezone
-from django.utils.encoding import force_str
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.conf import settings
+from hibee.db.backends.base.operations import BaseDatabaseOperations
+from hibee.db.backends.utils import split_tzname_delta
+from hibee.db.models import Exists, ExpressionWrapper, Lookup
+from hibee.db.models.constants import OnConflict
+from hibee.utils import timezone
+from hibee.utils.encoding import force_str
+from hibee.utils.regex_helper import _lazy_re_compile
 
 
 class DatabaseOperations(BaseDatabaseOperations):
-    compiler_module = "django.db.backends.mysql.compiler"
+    compiler_module = "hibee.db.backends.mysql.compiler"
 
     # MySQL stores positive fields as UNSIGNED ints.
     integer_field_ranges = {

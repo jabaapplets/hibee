@@ -4,16 +4,16 @@ import warnings
 
 from asgiref.local import Local
 
-from django.apps import apps
-from django.core.exceptions import ImproperlyConfigured
-from django.core.signals import setting_changed
-from django.db import connections, router
-from django.db.utils import ConnectionRouter
-from django.dispatch import Signal, receiver
-from django.utils import timezone
-from django.utils.formats import FORMAT_SETTINGS, reset_format_cache
-from django.utils.functional import empty
-from django.utils.module_loading import import_string
+from hibee.apps import apps
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.core.signals import setting_changed
+from hibee.db import connections, router
+from hibee.db.utils import ConnectionRouter
+from hibee.dispatch import Signal, receiver
+from hibee.utils import timezone
+from hibee.utils.formats import FORMAT_SETTINGS, reset_format_cache
+from hibee.utils.functional import empty
+from hibee.utils.module_loading import import_string
 
 template_rendered = Signal()
 
@@ -27,7 +27,7 @@ COMPLEX_OVERRIDE_SETTINGS = {"DATABASES"}
 @receiver(setting_changed)
 def clear_cache_handlers(*, setting, **kwargs):
     if setting == "CACHES":
-        from django.core.cache import caches, close_caches
+        from hibee.core.cache import caches, close_caches
 
         close_caches()
         caches._settings = caches.settings = caches.configure_settings(None)
@@ -38,19 +38,19 @@ def clear_cache_handlers(*, setting, **kwargs):
 def update_installed_apps(*, setting, **kwargs):
     if setting == "INSTALLED_APPS":
         # Rebuild any AppDirectoriesFinder instance.
-        from django.contrib.staticfiles.finders import get_finder
+        from hibee.contrib.staticfiles.finders import get_finder
 
         get_finder.cache_clear()
         # Rebuild management commands cache
-        from django.core.management import get_commands
+        from hibee.core.management import get_commands
 
         get_commands.cache_clear()
         # Rebuild get_app_template_dirs cache.
-        from django.template.utils import get_app_template_dirs
+        from hibee.template.utils import get_app_template_dirs
 
         get_app_template_dirs.cache_clear()
         # Rebuild translations cache.
-        from django.utils.translation import trans_real
+        from hibee.utils.translation import trans_real
 
         trans_real._translations = {}
 
@@ -96,7 +96,7 @@ def reset_template_engines(*, setting, **kwargs):
         "DEBUG",
         "INSTALLED_APPS",
     }:
-        from django.template import engines
+        from hibee.template import engines
 
         try:
             del engines.templates
@@ -104,18 +104,18 @@ def reset_template_engines(*, setting, **kwargs):
             pass
         engines._templates = None
         engines._engines = {}
-        from django.template.engine import Engine
+        from hibee.template.engine import Engine
 
         Engine.get_default.cache_clear()
-        from django.forms.renderers import get_default_renderer
+        from hibee.forms.renderers import get_default_renderer
 
         get_default_renderer.cache_clear()
 
 
 @receiver(setting_changed)
 def storages_changed(*, setting, **kwargs):
-    from django.contrib.staticfiles.storage import staticfiles_storage
-    from django.core.files.storage import default_storage, storages
+    from hibee.contrib.staticfiles.storage import staticfiles_storage
+    from hibee.core.files.storage import default_storage, storages
 
     if setting in (
         "STORAGES",
@@ -136,7 +136,7 @@ def storages_changed(*, setting, **kwargs):
 @receiver(setting_changed)
 def clear_serializers_cache(*, setting, **kwargs):
     if setting == "SERIALIZATION_MODULES":
-        from django.core import serializers
+        from hibee.core import serializers
 
         serializers._serializers = {}
 
@@ -144,12 +144,12 @@ def clear_serializers_cache(*, setting, **kwargs):
 @receiver(setting_changed)
 def language_changed(*, setting, **kwargs):
     if setting in {"LANGUAGES", "LANGUAGE_CODE", "LOCALE_PATHS"}:
-        from django.utils.translation import trans_real
+        from hibee.utils.translation import trans_real
 
         trans_real._default = None
         trans_real._active = Local()
     if setting in {"LANGUAGES", "LOCALE_PATHS"}:
-        from django.utils.translation import trans_real
+        from hibee.utils.translation import trans_real
 
         trans_real._translations = {}
         trans_real.check_for_language.cache_clear()
@@ -161,12 +161,12 @@ def localize_settings_changed(*, setting, **kwargs):
         reset_format_cache()
 
 
-# RemovedInDjango51Warning.
+# RemovedInHibee51Warning.
 @receiver(setting_changed)
 def file_storage_changed(*, setting, **kwargs):
     if setting == "DEFAULT_FILE_STORAGE":
-        from django.conf import DEFAULT_STORAGE_ALIAS
-        from django.core.files.storage import default_storage, storages
+        from hibee.conf import DEFAULT_STORAGE_ALIAS
+        from hibee.core.files.storage import default_storage, storages
 
         try:
             del storages.backends
@@ -190,7 +190,7 @@ def complex_setting_changed(*, enter, setting, **kwargs):
 @receiver(setting_changed)
 def root_urlconf_changed(*, setting, **kwargs):
     if setting == "ROOT_URLCONF":
-        from django.urls import clear_url_caches, set_urlconf
+        from hibee.urls import clear_url_caches, set_urlconf
 
         clear_url_caches()
         set_urlconf(None)
@@ -203,14 +203,14 @@ def static_storage_changed(*, setting, **kwargs):
         "STATIC_ROOT",
         "STATIC_URL",
     }:
-        from django.contrib.staticfiles.storage import staticfiles_storage
+        from hibee.contrib.staticfiles.storage import staticfiles_storage
 
         staticfiles_storage._wrapped = empty
 
-    # RemovedInDjango51Warning.
+    # RemovedInHibee51Warning.
     if setting == "STATICFILES_STORAGE":
-        from django.conf import STATICFILES_STORAGE_ALIAS
-        from django.core.files.storage import storages
+        from hibee.conf import STATICFILES_STORAGE_ALIAS
+        from hibee.core.files.storage import storages
 
         try:
             del storages.backends
@@ -225,7 +225,7 @@ def static_finders_changed(*, setting, **kwargs):
         "STATICFILES_DIRS",
         "STATIC_ROOT",
     }:
-        from django.contrib.staticfiles.finders import get_finder
+        from hibee.contrib.staticfiles.finders import get_finder
 
         get_finder.cache_clear()
 
@@ -233,7 +233,7 @@ def static_finders_changed(*, setting, **kwargs):
 @receiver(setting_changed)
 def auth_password_validators_changed(*, setting, **kwargs):
     if setting == "AUTH_PASSWORD_VALIDATORS":
-        from django.contrib.auth.password_validation import (
+        from hibee.contrib.auth.password_validation import (
             get_default_password_validators,
         )
 
@@ -245,29 +245,29 @@ def user_model_swapped(*, setting, **kwargs):
     if setting == "AUTH_USER_MODEL":
         apps.clear_cache()
         try:
-            from django.contrib.auth import get_user_model
+            from hibee.contrib.auth import get_user_model
 
             UserModel = get_user_model()
         except ImproperlyConfigured:
             # Some tests set an invalid AUTH_USER_MODEL.
             pass
         else:
-            from django.contrib.auth import backends
+            from hibee.contrib.auth import backends
 
             backends.UserModel = UserModel
 
-            from django.contrib.auth import forms
+            from hibee.contrib.auth import forms
 
             forms.UserModel = UserModel
 
-            from django.contrib.auth.handlers import modwsgi
+            from hibee.contrib.auth.handlers import modwsgi
 
             modwsgi.UserModel = UserModel
 
-            from django.contrib.auth.management.commands import changepassword
+            from hibee.contrib.auth.management.commands import changepassword
 
             changepassword.UserModel = UserModel
 
-            from django.contrib.auth import views
+            from hibee.contrib.auth import views
 
             views.UserModel = UserModel

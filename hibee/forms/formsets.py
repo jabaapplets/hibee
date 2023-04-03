@@ -1,12 +1,12 @@
-from django.core.exceptions import ValidationError
-from django.forms import Form
-from django.forms.fields import BooleanField, IntegerField
-from django.forms.renderers import get_default_renderer
-from django.forms.utils import ErrorList, RenderableFormMixin
-from django.forms.widgets import CheckboxInput, HiddenInput, NumberInput
-from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import ngettext_lazy
+from hibee.core.exceptions import ValidationError
+from hibee.forms import Form
+from hibee.forms.fields import BooleanField, IntegerField
+from hibee.forms.renderers import get_default_renderer
+from hibee.forms.utils import ErrorList, RenderableFormMixin
+from hibee.forms.widgets import CheckboxInput, HiddenInput, NumberInput
+from hibee.utils.functional import cached_property
+from hibee.utils.translation import gettext_lazy as _
+from hibee.utils.translation import ngettext_lazy
 
 __all__ = ("BaseFormSet", "formset_factory", "all_valid")
 
@@ -73,10 +73,10 @@ class BaseFormSet(RenderableFormMixin):
         ),
     }
 
-    template_name_div = "django/forms/formsets/div.html"
-    template_name_p = "django/forms/formsets/p.html"
-    template_name_table = "django/forms/formsets/table.html"
-    template_name_ul = "django/forms/formsets/ul.html"
+    template_name_div = "hibee/forms/formsets/div.html"
+    template_name_p = "hibee/forms/formsets/p.html"
+    template_name_table = "hibee/forms/formsets/table.html"
+    template_name_ul = "hibee/forms/formsets/ul.html"
 
     def __init__(
         self,

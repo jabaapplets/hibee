@@ -2,12 +2,12 @@ import functools
 import warnings
 from pathlib import Path
 
-from django.conf import settings
-from django.template.backends.django import DjangoTemplates
-from django.template.loader import get_template
-from django.utils.deprecation import RemovedInDjango60Warning
-from django.utils.functional import cached_property
-from django.utils.module_loading import import_string
+from hibee.conf import settings
+from hibee.template.backends.hibee import HibeeTemplates
+from hibee.template.loader import get_template
+from hibee.utils.deprecation import RemovedInHibee60Warning
+from hibee.utils.functional import cached_property
+from hibee.utils.module_loading import import_string
 
 
 @functools.lru_cache
@@ -17,8 +17,8 @@ def get_default_renderer():
 
 
 class BaseRenderer:
-    form_template_name = "django/forms/div.html"
-    formset_template_name = "django/forms/formsets/div.html"
+    form_template_name = "hibee/forms/div.html"
+    formset_template_name = "hibee/forms/formsets/div.html"
 
     def get_template(self, template_name):
         raise NotImplementedError("subclasses must implement get_template()")
@@ -38,63 +38,63 @@ class EngineMixin:
             {
                 "APP_DIRS": True,
                 "DIRS": [Path(__file__).parent / self.backend.app_dirname],
-                "NAME": "djangoforms",
+                "NAME": "hibeeforms",
                 "OPTIONS": {},
             }
         )
 
 
-class DjangoTemplates(EngineMixin, BaseRenderer):
+class HibeeTemplates(EngineMixin, BaseRenderer):
     """
-    Load Django templates from the built-in widget templates in
-    django/forms/templates and from apps' 'templates' directory.
+    Load Hibee templates from the built-in widget templates in
+    hibee/forms/templates and from apps' 'templates' directory.
     """
 
-    backend = DjangoTemplates
+    backend = HibeeTemplates
 
 
 class Jinja2(EngineMixin, BaseRenderer):
     """
     Load Jinja2 templates from the built-in widget templates in
-    django/forms/jinja2 and from apps' 'jinja2' directory.
+    hibee/forms/jinja2 and from apps' 'jinja2' directory.
     """
 
     @cached_property
     def backend(self):
-        from django.template.backends.jinja2 import Jinja2
+        from hibee.template.backends.jinja2 import Jinja2
 
         return Jinja2
 
 
-# RemovedInDjango60Warning.
-class DjangoDivFormRenderer(DjangoTemplates):
+# RemovedInHibee60Warning.
+class HibeeDivFormRenderer(HibeeTemplates):
     """
-    Load Django templates from django/forms/templates and from apps'
+    Load Hibee templates from hibee/forms/templates and from apps'
     'templates' directory and use the 'div.html' template to render forms and
     formsets.
     """
 
     def __init__(self, *args, **kwargs):
         warnings.warn(
-            "The DjangoDivFormRenderer transitional form renderer is deprecated. Use "
-            "DjangoTemplates instead.",
-            RemovedInDjango60Warning,
+            "The HibeeDivFormRenderer transitional form renderer is deprecated. Use "
+            "HibeeTemplates instead.",
+            RemovedInHibee60Warning,
         )
         super.__init__(*args, **kwargs)
 
 
-# RemovedInDjango60Warning.
+# RemovedInHibee60Warning.
 class Jinja2DivFormRenderer(Jinja2):
     """
     Load Jinja2 templates from the built-in widget templates in
-    django/forms/jinja2 and from apps' 'jinja2' directory.
+    hibee/forms/jinja2 and from apps' 'jinja2' directory.
     """
 
     def __init__(self, *args, **kwargs):
         warnings.warn(
             "The Jinja2DivFormRenderer transitional form renderer is deprecated. Use "
             "Jinja2 instead.",
-            RemovedInDjango60Warning,
+            RemovedInHibee60Warning,
         )
         super.__init__(*args, **kwargs)
 

@@ -1,8 +1,8 @@
 import copy
 import unittest
 
-from django.db.models.sql import AND, OR
-from django.utils.tree import Node
+from hibee.db.models.sql import AND, OR
+from hibee.utils.tree import Node
 
 
 class NodeTests(unittest.TestCase):

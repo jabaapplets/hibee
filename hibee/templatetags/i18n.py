@@ -1,11 +1,11 @@
 from decimal import Decimal
 
-from django.conf import settings
-from django.template import Library, Node, TemplateSyntaxError, Variable
-from django.template.base import TokenType, render_value_in_context
-from django.template.defaulttags import token_kwargs
-from django.utils import translation
-from django.utils.safestring import SafeData, SafeString, mark_safe
+from hibee.conf import settings
+from hibee.template import Library, Node, TemplateSyntaxError, Variable
+from hibee.template.base import TokenType, render_value_in_context
+from hibee.template.defaulttags import token_kwargs
+from hibee.utils import translation
+from hibee.utils.safestring import SafeData, SafeString, mark_safe
 
 register = Library()
 

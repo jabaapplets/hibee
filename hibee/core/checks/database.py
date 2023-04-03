@@ -1,4 +1,4 @@
-from django.db import connections
+from hibee.db import connections
 
 from . import Tags, register
 

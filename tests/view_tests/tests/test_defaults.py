@@ -1,11 +1,11 @@
 import datetime
 
-from django.contrib.sites.models import Site
-from django.http import Http404
-from django.template import TemplateDoesNotExist
-from django.test import RequestFactory, TestCase
-from django.test.utils import override_settings
-from django.views.defaults import (
+from hibee.contrib.sites.models import Site
+from hibee.http import Http404
+from hibee.template import TemplateDoesNotExist
+from hibee.test import RequestFactory, TestCase
+from hibee.test.utils import override_settings
+from hibee.views.defaults import (
     bad_request,
     page_not_found,
     permission_denied,
@@ -17,7 +17,7 @@ from ..models import Article, Author, UrlArticle
 
 @override_settings(ROOT_URLCONF="view_tests.urls")
 class DefaultsTests(TestCase):
-    """Test django views in django/views/defaults.py"""
+    """Test hibee views in hibee/views/defaults.py"""
 
     nonexistent_urls = [
         "/nonexistent_url/",  # this is in urls.py
@@ -68,11 +68,11 @@ class DefaultsTests(TestCase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "hibee.template.backends.hibee.HibeeTemplates",
                 "OPTIONS": {
                     "loaders": [
                         (
-                            "django.template.loaders.locmem.Loader",
+                            "hibee.template.loaders.locmem.Loader",
                             {
                                 "404.html": "{{ csrf_token }}",
                             },
@@ -105,11 +105,11 @@ class DefaultsTests(TestCase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "hibee.template.backends.hibee.HibeeTemplates",
                 "OPTIONS": {
                     "loaders": [
                         (
-                            "django.template.loaders.locmem.Loader",
+                            "hibee.template.loaders.locmem.Loader",
                             {
                                 "404.html": (
                                     "This is a test template for a 404 error "

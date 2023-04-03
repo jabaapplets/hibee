@@ -1,8 +1,8 @@
 import re
 
-from django.conf import settings
-from django.http import HttpResponsePermanentRedirect
-from django.utils.deprecation import MiddlewareMixin
+from hibee.conf import settings
+from hibee.http import HttpResponsePermanentRedirect
+from hibee.utils.deprecation import MiddlewareMixin
 
 
 class SecurityMiddleware(MiddlewareMixin):

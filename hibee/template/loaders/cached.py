@@ -5,8 +5,8 @@ to load templates from them in order, caching the result.
 
 import hashlib
 
-from django.template import TemplateDoesNotExist
-from django.template.backends.django import copy_exception
+from hibee.template import TemplateDoesNotExist
+from hibee.template.backends.hibee import copy_exception
 
 from .base import Loader as BaseLoader
 

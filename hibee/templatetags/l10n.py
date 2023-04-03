@@ -1,5 +1,5 @@
-from django.template import Library, Node, TemplateSyntaxError
-from django.utils import formats
+from hibee.template import Library, Node, TemplateSyntaxError
+from hibee.utils import formats
 
 register = Library()
 

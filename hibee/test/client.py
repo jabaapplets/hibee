@@ -11,22 +11,22 @@ from urllib.parse import unquote_to_bytes, urljoin, urlparse, urlsplit
 
 from asgiref.sync import sync_to_async
 
-from django.conf import settings
-from django.core.handlers.asgi import ASGIRequest
-from django.core.handlers.base import BaseHandler
-from django.core.handlers.wsgi import LimitedStream, WSGIRequest
-from django.core.serializers.json import DjangoJSONEncoder
-from django.core.signals import got_request_exception, request_finished, request_started
-from django.db import close_old_connections
-from django.http import HttpHeaders, HttpRequest, QueryDict, SimpleCookie
-from django.test import signals
-from django.test.utils import ContextList
-from django.urls import resolve
-from django.utils.encoding import force_bytes
-from django.utils.functional import SimpleLazyObject
-from django.utils.http import urlencode
-from django.utils.itercompat import is_iterable
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.conf import settings
+from hibee.core.handlers.asgi import ASGIRequest
+from hibee.core.handlers.base import BaseHandler
+from hibee.core.handlers.wsgi import LimitedStream, WSGIRequest
+from hibee.core.serializers.json import HibeeJSONEncoder
+from hibee.core.signals import got_request_exception, request_finished, request_started
+from hibee.db import close_old_connections
+from hibee.http import HttpHeaders, HttpRequest, QueryDict, SimpleCookie
+from hibee.test import signals
+from hibee.test.utils import ContextList
+from hibee.urls import resolve
+from hibee.utils.encoding import force_bytes
+from hibee.utils.functional import SimpleLazyObject
+from hibee.utils.http import urlencode
+from hibee.utils.itercompat import is_iterable
+from hibee.utils.regex_helper import _lazy_re_compile
 
 __all__ = (
     "AsyncClient",
@@ -373,7 +373,7 @@ class RequestFactory:
     just as if that view had been hooked up using a URLconf.
     """
 
-    def __init__(self, *, json_encoder=DjangoJSONEncoder, headers=None, **defaults):
+    def __init__(self, *, json_encoder=HibeeJSONEncoder, headers=None, **defaults):
         self.json_encoder = json_encoder
         self.defaults = defaults
         self.cookies = SimpleCookie()
@@ -756,7 +756,7 @@ class ClientMixin:
         Return True if login is possible or False if the provided credentials
         are incorrect.
         """
-        from django.contrib.auth import authenticate
+        from hibee.contrib.auth import authenticate
 
         user = authenticate(**credentials)
         if user:
@@ -766,7 +766,7 @@ class ClientMixin:
 
     def force_login(self, user, backend=None):
         def get_backend():
-            from django.contrib.auth import load_backend
+            from hibee.contrib.auth import load_backend
 
             for backend_path in settings.AUTHENTICATION_BACKENDS:
                 backend = load_backend(backend_path)
@@ -779,7 +779,7 @@ class ClientMixin:
         self._login(user, backend)
 
     def _login(self, user, backend=None):
-        from django.contrib.auth import login
+        from hibee.contrib.auth import login
 
         # Create a fake request to store login details.
         request = HttpRequest()
@@ -805,7 +805,7 @@ class ClientMixin:
 
     def logout(self):
         """Log out the user by removing the cookies and session object."""
-        from django.contrib.auth import get_user, logout
+        from hibee.contrib.auth import get_user, logout
 
         request = HttpRequest()
         if self.session:

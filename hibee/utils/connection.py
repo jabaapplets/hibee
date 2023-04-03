@@ -1,7 +1,7 @@
 from asgiref.local import Local
 
-from django.conf import settings as django_settings
-from django.utils.functional import cached_property
+from hibee.conf import settings as hibee_settings
+from hibee.utils.functional import cached_property
 
 
 class ConnectionProxy:
@@ -47,7 +47,7 @@ class BaseConnectionHandler:
 
     def configure_settings(self, settings):
         if settings is None:
-            settings = getattr(django_settings, self.settings_name)
+            settings = getattr(hibee_settings, self.settings_name)
         return settings
 
     def create_connection(self, alias):

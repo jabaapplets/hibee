@@ -9,31 +9,31 @@ from itertools import chain, islice
 
 from asgiref.sync import sync_to_async
 
-import django
-from django.conf import settings
-from django.core import exceptions
-from django.db import (
-    DJANGO_VERSION_PICKLE_KEY,
+import hibee
+from hibee.conf import settings
+from hibee.core import exceptions
+from hibee.db import (
+    HIBEE_VERSION_PICKLE_KEY,
     IntegrityError,
     NotSupportedError,
     connections,
     router,
     transaction,
 )
-from django.db.models import AutoField, DateField, DateTimeField, Field, sql
-from django.db.models.constants import LOOKUP_SEP, OnConflict
-from django.db.models.deletion import Collector
-from django.db.models.expressions import Case, F, Value, When
-from django.db.models.functions import Cast, Trunc
-from django.db.models.query_utils import FilteredRelation, Q
-from django.db.models.sql.constants import CURSOR, GET_ITERATOR_CHUNK_SIZE
-from django.db.models.utils import (
+from hibee.db.models import AutoField, DateField, DateTimeField, Field, sql
+from hibee.db.models.constants import LOOKUP_SEP, OnConflict
+from hibee.db.models.deletion import Collector
+from hibee.db.models.expressions import Case, F, Value, When
+from hibee.db.models.functions import Cast, Trunc
+from hibee.db.models.query_utils import FilteredRelation, Q
+from hibee.db.models.sql.constants import CURSOR, GET_ITERATOR_CHUNK_SIZE
+from hibee.db.models.utils import (
     AltersData,
     create_namedtuple_class,
     resolve_callables,
 )
-from django.utils import timezone
-from django.utils.functional import cached_property, partition
+from hibee.utils import timezone
+from hibee.utils.functional import cached_property, partition
 
 # The maximum number of results to fetch in a get() query.
 MAX_GET_RESULTS = 21
@@ -322,7 +322,7 @@ class QuerySet(AltersData):
 
     def as_manager(cls):
         # Address the circular dependency between `Queryset` and `Manager`.
-        from django.db.models.manager import Manager
+        from hibee.db.models.manager import Manager
 
         manager = Manager.from_queryset(cls)()
         manager._built_with_as_manager = True
@@ -348,22 +348,22 @@ class QuerySet(AltersData):
     def __getstate__(self):
         # Force the cache to be fully populated.
         self._fetch_all()
-        return {**self.__dict__, DJANGO_VERSION_PICKLE_KEY: django.__version__}
+        return {**self.__dict__, HIBEE_VERSION_PICKLE_KEY: hibee.__version__}
 
     def __setstate__(self, state):
-        pickled_version = state.get(DJANGO_VERSION_PICKLE_KEY)
+        pickled_version = state.get(HIBEE_VERSION_PICKLE_KEY)
         if pickled_version:
-            if pickled_version != django.__version__:
+            if pickled_version != hibee.__version__:
                 warnings.warn(
-                    "Pickled queryset instance's Django version %s does not "
+                    "Pickled queryset instance's Hibee version %s does not "
                     "match the current version %s."
-                    % (pickled_version, django.__version__),
+                    % (pickled_version, hibee.__version__),
                     RuntimeWarning,
                     stacklevel=2,
                 )
         else:
             warnings.warn(
-                "Pickled queryset instance's Django version is not specified.",
+                "Pickled queryset instance's Hibee version is not specified.",
                 RuntimeWarning,
                 stacklevel=2,
             )
@@ -2270,7 +2270,7 @@ def prefetch_related_objects(model_instances, *related_lookups):
                         # Must be an immutable object from
                         # values_list(flat=True), for example (TypeError) or
                         # a QuerySet subclass that isn't returning Model
-                        # instances (AttributeError), either in Django or a 3rd
+                        # instances (AttributeError), either in Hibee or a 3rd
                         # party. prefetch_related() doesn't make sense, so quit.
                         good_objects = False
                         break
