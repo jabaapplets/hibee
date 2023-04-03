@@ -1,11 +1,11 @@
 import json
 
-from django.contrib.postgres import forms, lookups
-from django.contrib.postgres.fields.array import ArrayField
-from django.core import exceptions
-from django.db.models import Field, TextField, Transform
-from django.db.models.fields.mixins import CheckFieldDefaultMixin
-from django.utils.translation import gettext_lazy as _
+from hibee.contrib.postgres import forms, lookups
+from hibee.contrib.postgres.fields.array import ArrayField
+from hibee.core import exceptions
+from hibee.db.models import Field, TextField, Transform
+from hibee.db.models.fields.mixins import CheckFieldDefaultMixin
+from hibee.utils.translation import gettext_lazy as _
 
 __all__ = ["HStoreField"]
 

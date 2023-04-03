@@ -1,5 +1,5 @@
-from django.contrib.sessions.backends.base import SessionBase
-from django.core import signing
+from hibee.contrib.sessions.backends.base import SessionBase
+from hibee.core import signing
 
 
 class SessionStore(SessionBase):
@@ -15,7 +15,7 @@ class SessionStore(SessionBase):
                 serializer=self.serializer,
                 # This doesn't handle non-default expiry dates, see #19201
                 max_age=self.get_session_cookie_age(),
-                salt="django.contrib.sessions.backends.signed_cookies",
+                salt="hibee.contrib.sessions.backends.signed_cookies",
             )
         except Exception:
             # BadSignature, ValueError, or unpickling exceptions. If any of
@@ -72,7 +72,7 @@ class SessionStore(SessionBase):
         return signing.dumps(
             self._session,
             compress=True,
-            salt="django.contrib.sessions.backends.signed_cookies",
+            salt="hibee.contrib.sessions.backends.signed_cookies",
             serializer=self.serializer,
         )
 

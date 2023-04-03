@@ -1,20 +1,20 @@
 """
-This module allows importing AbstractBaseUser even when django.contrib.auth is
+This module allows importing AbstractBaseUser even when hibee.contrib.auth is
 not in INSTALLED_APPS.
 """
 import unicodedata
 import warnings
 
-from django.contrib.auth import password_validation
-from django.contrib.auth.hashers import (
+from hibee.contrib.auth import password_validation
+from hibee.contrib.auth.hashers import (
     check_password,
     is_password_usable,
     make_password,
 )
-from django.db import models
-from django.utils.crypto import get_random_string, salted_hmac
-from django.utils.deprecation import RemovedInDjango51Warning
-from django.utils.translation import gettext_lazy as _
+from hibee.db import models
+from hibee.utils.crypto import get_random_string, salted_hmac
+from hibee.utils.deprecation import RemovedInHibee51Warning
+from hibee.utils.translation import gettext_lazy as _
 
 
 class BaseUserManager(models.Manager):
@@ -44,7 +44,7 @@ class BaseUserManager(models.Manager):
         """
         warnings.warn(
             "BaseUserManager.make_random_password() is deprecated.",
-            category=RemovedInDjango51Warning,
+            category=RemovedInHibee51Warning,
             stacklevel=2,
         )
         return get_random_string(length, allowed_chars)
@@ -135,7 +135,7 @@ class AbstractBaseUser(models.Model):
         """
         Return an HMAC of the password field.
         """
-        key_salt = "django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash"
+        key_salt = "hibee.contrib.auth.models.AbstractBaseUser.get_session_auth_hash"
         return salted_hmac(
             key_salt,
             self.password,

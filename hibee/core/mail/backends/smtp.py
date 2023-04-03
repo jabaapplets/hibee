@@ -3,11 +3,11 @@ import smtplib
 import ssl
 import threading
 
-from django.conf import settings
-from django.core.mail.backends.base import BaseEmailBackend
-from django.core.mail.message import sanitize_address
-from django.core.mail.utils import DNS_NAME
-from django.utils.functional import cached_property
+from hibee.conf import settings
+from hibee.core.mail.backends.base import BaseEmailBackend
+from hibee.core.mail.message import sanitize_address
+from hibee.core.mail.utils import DNS_NAME
+from hibee.utils.functional import cached_property
 
 
 class EmailBackend(BaseEmailBackend):

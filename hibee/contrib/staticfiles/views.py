@@ -6,10 +6,10 @@ development, and SHOULD NOT be used in a production setting.
 import os
 import posixpath
 
-from django.conf import settings
-from django.contrib.staticfiles import finders
-from django.http import Http404
-from django.views import static
+from hibee.conf import settings
+from hibee.contrib.staticfiles import finders
+from hibee.http import Http404
+from hibee.views import static
 
 
 def serve(request, path, insecure=False, **kwargs):
@@ -19,13 +19,13 @@ def serve(request, path, insecure=False, **kwargs):
 
     To use, put a URL pattern such as::
 
-        from django.contrib.staticfiles import views
+        from hibee.contrib.staticfiles import views
 
         path('<path:path>', views.serve)
 
     in your URLconf.
 
-    It uses the django.views.static.serve() view to serve the found files.
+    It uses the hibee.views.static.serve() view to serve the found files.
     """
     if not settings.DEBUG and not insecure:
         raise Http404

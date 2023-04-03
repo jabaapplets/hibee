@@ -6,19 +6,19 @@ import importlib
 import math
 import warnings
 
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
-from django.core.signals import setting_changed
-from django.dispatch import receiver
-from django.utils.crypto import (
+from hibee.conf import settings
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.core.signals import setting_changed
+from hibee.dispatch import receiver
+from hibee.utils.crypto import (
     RANDOM_STRING_CHARS,
     constant_time_compare,
     get_random_string,
     pbkdf2,
 )
-from django.utils.deprecation import RemovedInDjango51Warning
-from django.utils.module_loading import import_string
-from django.utils.translation import gettext_noop as _
+from hibee.utils.deprecation import RemovedInHibee51Warning
+from hibee.utils.module_loading import import_string
+from hibee.utils.translation import gettext_noop as _
 
 UNUSABLE_PASSWORD_PREFIX = "!"  # This will never be a valid encoded hash
 UNUSABLE_PASSWORD_SUFFIX_LENGTH = (
@@ -149,13 +149,13 @@ def identify_hasher(encoded):
     get_hasher() to return hasher. Raise ValueError if
     algorithm cannot be identified, or if hasher is not loaded.
     """
-    # Ancient versions of Django created plain MD5 passwords and accepted
+    # Ancient versions of Hibee created plain MD5 passwords and accepted
     # MD5 passwords with an empty salt.
     if (len(encoded) == 32 and "$" not in encoded) or (
         len(encoded) == 37 and encoded.startswith("md5$$")
     ):
         algorithm = "unsalted_md5"
-    # Ancient versions of Django accepted SHA1 passwords with an empty salt.
+    # Ancient versions of Hibee accepted SHA1 passwords with an empty salt.
     elif len(encoded) == 46 and encoded.startswith("sha1$$"):
         algorithm = "unsalted_sha1"
     else:
@@ -623,7 +623,7 @@ class ScryptPasswordHasher(BasePasswordHasher):
         pass
 
 
-# RemovedInDjango51Warning.
+# RemovedInHibee51Warning.
 class SHA1PasswordHasher(BasePasswordHasher):
     """
     The SHA1 password hashing algorithm (not recommended)
@@ -633,8 +633,8 @@ class SHA1PasswordHasher(BasePasswordHasher):
 
     def __init__(self, *args, **kwargs):
         warnings.warn(
-            "django.contrib.auth.hashers.SHA1PasswordHasher is deprecated.",
-            RemovedInDjango51Warning,
+            "hibee.contrib.auth.hashers.SHA1PasswordHasher is deprecated.",
+            RemovedInHibee51Warning,
             stacklevel=2,
         )
         super().__init__(*args, **kwargs)
@@ -716,14 +716,14 @@ class MD5PasswordHasher(BasePasswordHasher):
         pass
 
 
-# RemovedInDjango51Warning.
+# RemovedInHibee51Warning.
 class UnsaltedSHA1PasswordHasher(BasePasswordHasher):
     """
     Very insecure algorithm that you should *never* use; store SHA1 hashes
     with an empty salt.
 
-    This class is implemented because Django used to accept such password
-    hashes. Some older Django installs still have these values lingering
+    This class is implemented because Hibee used to accept such password
+    hashes. Some older Hibee installs still have these values lingering
     around so we need to handle and upgrade them properly.
     """
 
@@ -731,8 +731,8 @@ class UnsaltedSHA1PasswordHasher(BasePasswordHasher):
 
     def __init__(self, *args, **kwargs):
         warnings.warn(
-            "django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher is deprecated.",
-            RemovedInDjango51Warning,
+            "hibee.contrib.auth.hashers.UnsaltedSHA1PasswordHasher is deprecated.",
+            RemovedInHibee51Warning,
             stacklevel=2,
         )
         super().__init__(*args, **kwargs)
@@ -769,15 +769,15 @@ class UnsaltedSHA1PasswordHasher(BasePasswordHasher):
         pass
 
 
-# RemovedInDjango51Warning.
+# RemovedInHibee51Warning.
 class UnsaltedMD5PasswordHasher(BasePasswordHasher):
     """
     Incredibly insecure algorithm that you should *never* use; stores unsalted
     MD5 hashes without the algorithm prefix, also accepts MD5 hashes with an
     empty salt.
 
-    This class is implemented because Django used to store passwords this way
-    and to accept such password hashes. Some older Django installs still have
+    This class is implemented because Hibee used to store passwords this way
+    and to accept such password hashes. Some older Hibee installs still have
     these values lingering around so we need to handle and upgrade them
     properly.
     """
@@ -786,8 +786,8 @@ class UnsaltedMD5PasswordHasher(BasePasswordHasher):
 
     def __init__(self, *args, **kwargs):
         warnings.warn(
-            "django.contrib.auth.hashers.UnsaltedMD5PasswordHasher is deprecated.",
-            RemovedInDjango51Warning,
+            "hibee.contrib.auth.hashers.UnsaltedMD5PasswordHasher is deprecated.",
+            RemovedInHibee51Warning,
             stacklevel=2,
         )
         super().__init__(*args, **kwargs)

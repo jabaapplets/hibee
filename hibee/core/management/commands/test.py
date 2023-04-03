@@ -1,10 +1,10 @@
 import sys
 
-from django.conf import settings
-from django.core.management.base import BaseCommand
-from django.core.management.utils import get_command_line_option
-from django.test.runner import get_max_test_processes
-from django.test.utils import NullTimeKeeper, TimeKeeper, get_runner
+from hibee.conf import settings
+from hibee.core.management.base import BaseCommand
+from hibee.core.management.utils import get_command_line_option
+from hibee.test.runner import get_max_test_processes
+from hibee.test.utils import NullTimeKeeper, TimeKeeper, get_runner
 
 
 class Command(BaseCommand):
@@ -38,16 +38,16 @@ class Command(BaseCommand):
             "--no-input",
             action="store_false",
             dest="interactive",
-            help="Tells Django to NOT prompt the user for input of any kind.",
+            help="Tells Hibee to NOT prompt the user for input of any kind.",
         )
         parser.add_argument(
             "--failfast",
             action="store_true",
-            help="Tells Django to stop running the test suite after first failed test.",
+            help="Tells Hibee to stop running the test suite after first failed test.",
         )
         parser.add_argument(
             "--testrunner",
-            help="Tells Django to use specified test runner class instead of "
+            help="Tells Hibee to use specified test runner class instead of "
             "the one specified by the TEST_RUNNER setting.",
         )
 

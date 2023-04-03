@@ -1,4 +1,4 @@
-from django.core.exceptions import BadRequest, SuspiciousOperation
+from hibee.core.exceptions import BadRequest, SuspiciousOperation
 
 
 class InvalidSessionKey(SuspiciousOperation):

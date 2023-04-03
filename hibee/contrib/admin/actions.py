@@ -2,14 +2,14 @@
 Built-in, globally-available admin actions.
 """
 
-from django.contrib import messages
-from django.contrib.admin import helpers
-from django.contrib.admin.decorators import action
-from django.contrib.admin.utils import model_ngettext
-from django.core.exceptions import PermissionDenied
-from django.template.response import TemplateResponse
-from django.utils.translation import gettext as _
-from django.utils.translation import gettext_lazy
+from hibee.contrib import messages
+from hibee.contrib.admin import helpers
+from hibee.contrib.admin.decorators import action
+from hibee.contrib.admin.utils import model_ngettext
+from hibee.core.exceptions import PermissionDenied
+from hibee.template.response import TemplateResponse
+from hibee.utils.translation import gettext as _
+from hibee.utils.translation import gettext_lazy
 
 
 @action(

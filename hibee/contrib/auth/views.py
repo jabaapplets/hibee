@@ -1,33 +1,33 @@
 from urllib.parse import urlparse, urlunparse
 
-from django.conf import settings
+from hibee.conf import settings
 
 # Avoid shadowing the login() and logout() views below.
-from django.contrib.auth import REDIRECT_FIELD_NAME, get_user_model
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import logout as auth_logout
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import (
+from hibee.contrib.auth import REDIRECT_FIELD_NAME, get_user_model
+from hibee.contrib.auth import login as auth_login
+from hibee.contrib.auth import logout as auth_logout
+from hibee.contrib.auth import update_session_auth_hash
+from hibee.contrib.auth.decorators import login_required
+from hibee.contrib.auth.forms import (
     AuthenticationForm,
     PasswordChangeForm,
     PasswordResetForm,
     SetPasswordForm,
 )
-from django.contrib.auth.tokens import default_token_generator
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.exceptions import ImproperlyConfigured, ValidationError
-from django.http import HttpResponseRedirect, QueryDict
-from django.shortcuts import resolve_url
-from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.utils.http import url_has_allowed_host_and_scheme, urlsafe_base64_decode
-from django.utils.translation import gettext_lazy as _
-from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.debug import sensitive_post_parameters
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import FormView
+from hibee.contrib.auth.tokens import default_token_generator
+from hibee.contrib.sites.shortcuts import get_current_site
+from hibee.core.exceptions import ImproperlyConfigured, ValidationError
+from hibee.http import HttpResponseRedirect, QueryDict
+from hibee.shortcuts import resolve_url
+from hibee.urls import reverse_lazy
+from hibee.utils.decorators import method_decorator
+from hibee.utils.http import url_has_allowed_host_and_scheme, urlsafe_base64_decode
+from hibee.utils.translation import gettext_lazy as _
+from hibee.views.decorators.cache import never_cache
+from hibee.views.decorators.csrf import csrf_protect
+from hibee.views.decorators.debug import sensitive_post_parameters
+from hibee.views.generic.base import TemplateView
+from hibee.views.generic.edit import FormView
 
 UserModel = get_user_model()
 

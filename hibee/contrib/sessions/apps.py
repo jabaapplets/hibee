@@ -1,7 +1,7 @@
-from django.apps import AppConfig
-from django.utils.translation import gettext_lazy as _
+from hibee.apps import AppConfig
+from hibee.utils.translation import gettext_lazy as _
 
 
 class SessionsConfig(AppConfig):
-    name = "django.contrib.sessions"
+    name = "hibee.contrib.sessions"
     verbose_name = _("Sessions")

@@ -2,12 +2,12 @@
  This module houses the Geometry Collection objects:
  GeometryCollection, MultiPoint, MultiLineString, and MultiPolygon
 """
-from django.contrib.gis.geos import prototypes as capi
-from django.contrib.gis.geos.geometry import GEOSGeometry, LinearGeometryMixin
-from django.contrib.gis.geos.libgeos import GEOM_PTR
-from django.contrib.gis.geos.linestring import LinearRing, LineString
-from django.contrib.gis.geos.point import Point
-from django.contrib.gis.geos.polygon import Polygon
+from hibee.contrib.gis.geos import prototypes as capi
+from hibee.contrib.gis.geos.geometry import GEOSGeometry, LinearGeometryMixin
+from hibee.contrib.gis.geos.libgeos import GEOM_PTR
+from hibee.contrib.gis.geos.linestring import LinearRing, LineString
+from hibee.contrib.gis.geos.point import Point
+from hibee.contrib.gis.geos.polygon import Polygon
 
 
 class GeometryCollection(GEOSGeometry):

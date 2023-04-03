@@ -1,16 +1,16 @@
 import datetime
 import json
 
-from django.contrib.postgres import forms, lookups
-from django.db import models
-from django.db.backends.postgresql.psycopg_any import (
+from hibee.contrib.postgres import forms, lookups
+from hibee.db import models
+from hibee.db.backends.postgresql.psycopg_any import (
     DateRange,
     DateTimeTZRange,
     NumericRange,
     Range,
 )
-from django.db.models.functions import Cast
-from django.db.models.lookups import PostgresOperatorLookup
+from hibee.db.models.functions import Cast
+from hibee.db.models.lookups import PostgresOperatorLookup
 
 from .utils import AttributeSetter
 

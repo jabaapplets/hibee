@@ -1,4 +1,4 @@
-from django.core.exceptions import SuspiciousOperation
+from hibee.core.exceptions import SuspiciousOperation
 
 
 class DisallowedModelAdminLookup(SuspiciousOperation):

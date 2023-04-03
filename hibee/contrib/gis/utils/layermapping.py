@@ -1,18 +1,18 @@
-# LayerMapping -- A Django Model/OGR Layer Mapping Utility
+# LayerMapping -- A hibee Model/OGR Layer Mapping Utility
 """
  The LayerMapping class provides a way to map the contents of OGR
- vector files (e.g. SHP files) to Geographic-enabled Django models.
+ vector files (e.g. SHP files) to Geographic-enabled hibee models.
 
- For more information, please consult the GeoDjango documentation:
-   https://docs.djangoproject.com/en/dev/ref/contrib/gis/layermapping/
+ For more information, please consult the Geohibee documentation:
+   https://docs.hibeeproject.com/en/dev/ref/contrib/gis/layermapping/
 """
 import sys
 from decimal import Decimal
 from decimal import InvalidOperation as DecimalInvalidOperation
 from pathlib import Path
 
-from django.contrib.gis.db.models import GeometryField
-from django.contrib.gis.gdal import (
+from hibee.contrib.gis.db.models import GeometryField
+from hibee.contrib.gis.gdal import (
     CoordTransform,
     DataSource,
     GDALException,
@@ -20,7 +20,7 @@ from django.contrib.gis.gdal import (
     OGRGeomType,
     SpatialReference,
 )
-from django.contrib.gis.gdal.field import (
+from hibee.contrib.gis.gdal.field import (
     OFTDate,
     OFTDateTime,
     OFTInteger,
@@ -29,9 +29,9 @@ from django.contrib.gis.gdal.field import (
     OFTString,
     OFTTime,
 )
-from django.core.exceptions import FieldDoesNotExist, ObjectDoesNotExist
-from django.db import connections, models, router, transaction
-from django.utils.encoding import force_str
+from hibee.core.exceptions import FieldDoesNotExist, ObjectDoesNotExist
+from hibee.db import connections, models, router, transaction
+from hibee.utils.encoding import force_str
 
 
 # LayerMapping exceptions.
@@ -56,7 +56,7 @@ class MissingForeignKey(LayerMapError):
 
 
 class LayerMapping:
-    "A class that maps OGR Layers to GeoDjango Models."
+    "A class that maps OGR Layers to GeoHibee Models."
 
     # Acceptable 'base' types for a multi-geometry type.
     MULTI_TYPES = {
@@ -67,7 +67,7 @@ class LayerMapping:
         OGRGeomType("LineString25D").num: OGRGeomType("MultiLineString25D"),
         OGRGeomType("Polygon25D").num: OGRGeomType("MultiPolygon25D"),
     }
-    # Acceptable Django field types and corresponding acceptable OGR
+    # Acceptable Hibee field types and corresponding acceptable OGR
     # counterparts.
     FIELD_TYPES = {
         models.AutoField: OFTInteger,
@@ -227,7 +227,7 @@ class LayerMapping:
                     'Given mapping field "%s" not in given Model fields.' % field_name
                 )
 
-            # Getting the string name for the Django field class (e.g., 'PointField').
+            # Getting the string name for the Hibee field class (e.g., 'PointField').
             fld_name = model_field.__class__.__name__
 
             if isinstance(model_field, GeometryField):
@@ -288,17 +288,17 @@ class LayerMapping:
                 # Is the model field type supported by LayerMapping?
                 if model_field.__class__ not in self.FIELD_TYPES:
                     raise LayerMapError(
-                        'Django field type "%s" has no OGR mapping (yet).' % fld_name
+                        'Hibee field type "%s" has no OGR mapping (yet).' % fld_name
                     )
 
                 # Is the OGR field in the Layer?
                 idx = check_ogr_fld(ogr_name)
                 ogr_field = ogr_field_types[idx]
 
-                # Can the OGR field type be mapped to the Django field type?
+                # Can the OGR field type be mapped to the Hibee field type?
                 if not issubclass(ogr_field, self.FIELD_TYPES[model_field.__class__]):
                     raise LayerMapError(
-                        'OGR field "%s" (of type %s) cannot be mapped to Django %s.'
+                        'OGR field "%s" (of type %s) cannot be mapped to Hibee %s.'
                         % (ogr_field, ogr_field.__name__, fld_name)
                     )
                 fields_val = model_field
@@ -542,7 +542,7 @@ class LayerMapping:
         """
         return (
             geom_type.num in self.MULTI_TYPES
-            and model_field.__class__.__name__ == "Multi%s" % geom_type.django
+            and model_field.__class__.__name__ == "Multi%s" % geom_type.hibee
         )
 
     def save(

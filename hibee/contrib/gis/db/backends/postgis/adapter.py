@@ -1,9 +1,9 @@
 """
  This object provides quoting for GEOS geometries into PostgreSQL/PostGIS.
 """
-from django.contrib.gis.db.backends.postgis.pgraster import to_pgraster
-from django.contrib.gis.geos import GEOSGeometry
-from django.db.backends.postgresql.psycopg_any import sql
+from hibee.contrib.gis.db.backends.postgis.pgraster import to_pgraster
+from hibee.contrib.gis.geos import GEOSGeometry
+from hibee.db.backends.postgresql.psycopg_any import sql
 
 
 class PostGISAdapter:

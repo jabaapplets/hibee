@@ -1,8 +1,8 @@
-from django.conf import settings
-from django.core.cache import caches
-from django.core.cache.backends.db import BaseDatabaseCache
-from django.core.management.base import BaseCommand, CommandError
-from django.db import (
+from hibee.conf import settings
+from hibee.core.cache import caches
+from hibee.core.cache.backends.db import BaseDatabaseCache
+from hibee.core.management.base import BaseCommand, CommandError
+from hibee.db import (
     DEFAULT_DB_ALIAS,
     DatabaseError,
     connections,

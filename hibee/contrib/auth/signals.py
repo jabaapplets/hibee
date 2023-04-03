@@ -1,4 +1,4 @@
-from django.dispatch import Signal
+from hibee.dispatch import Signal
 
 user_logged_in = Signal()
 user_login_failed = Signal()

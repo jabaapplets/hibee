@@ -1,5 +1,5 @@
-from django.conf import settings
-from django.contrib.messages import constants, utils
+from hibee.conf import settings
+from hibee.contrib.messages import constants, utils
 
 LEVEL_TAGS = utils.get_level_tags()
 

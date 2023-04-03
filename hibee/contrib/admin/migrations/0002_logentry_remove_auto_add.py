@@ -1,5 +1,5 @@
-from django.db import migrations, models
-from django.utils import timezone
+from hibee.db import migrations, models
+from hibee.utils import timezone
 
 
 class Migration(migrations.Migration):

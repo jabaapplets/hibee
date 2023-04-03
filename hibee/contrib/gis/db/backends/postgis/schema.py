@@ -1,5 +1,5 @@
-from django.db.backends.postgresql.schema import DatabaseSchemaEditor
-from django.db.models.expressions import Col, Func
+from hibee.db.backends.postgresql.schema import DatabaseSchemaEditor
+from hibee.db.models.expressions import Col, Func
 
 
 class PostGISSchemaEditor(DatabaseSchemaEditor):

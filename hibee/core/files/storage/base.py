@@ -1,11 +1,11 @@
 import os
 import pathlib
 
-from django.core.exceptions import SuspiciousFileOperation
-from django.core.files import File
-from django.core.files.utils import validate_file_name
-from django.utils.crypto import get_random_string
-from django.utils.text import get_valid_filename
+from hibee.core.exceptions import SuspiciousFileOperation
+from hibee.core.files import File
+from hibee.core.files.utils import validate_file_name
+from hibee.utils.crypto import get_random_string
+from hibee.utils.text import get_valid_filename
 
 
 class Storage:

@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from django.conf import settings
-from django.utils.crypto import constant_time_compare, salted_hmac
-from django.utils.http import base36_to_int, int_to_base36
+from hibee.conf import settings
+from hibee.utils.crypto import constant_time_compare, salted_hmac
+from hibee.utils.http import base36_to_int, int_to_base36
 
 
 class PasswordResetTokenGenerator:
@@ -11,7 +11,7 @@ class PasswordResetTokenGenerator:
     reset mechanism.
     """
 
-    key_salt = "django.contrib.auth.tokens.PasswordResetTokenGenerator"
+    key_salt = "hibee.contrib.auth.tokens.PasswordResetTokenGenerator"
     algorithm = None
     _secret = None
     _secret_fallbacks = None

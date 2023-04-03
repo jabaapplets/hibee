@@ -1,7 +1,7 @@
-from django.conf import DEFAULT_STORAGE_ALIAS, STATICFILES_STORAGE_ALIAS, settings
-from django.core.exceptions import ImproperlyConfigured
-from django.utils.functional import cached_property
-from django.utils.module_loading import import_string
+from hibee.conf import DEFAULT_STORAGE_ALIAS, STATICFILES_STORAGE_ALIAS, settings
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.utils.functional import cached_property
+from hibee.utils.module_loading import import_string
 
 
 class InvalidStorageError(ImproperlyConfigured):
@@ -19,7 +19,7 @@ class StorageHandler:
     def backends(self):
         if self._backends is None:
             self._backends = settings.STORAGES.copy()
-            # RemovedInDjango51Warning.
+            # RemovedInHibee51Warning.
             if settings.is_overridden("DEFAULT_FILE_STORAGE"):
                 self._backends[DEFAULT_STORAGE_ALIAS] = {
                     "BACKEND": settings.DEFAULT_FILE_STORAGE

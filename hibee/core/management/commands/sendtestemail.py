@@ -1,8 +1,8 @@
 import socket
 
-from django.core.mail import mail_admins, mail_managers, send_mail
-from django.core.management.base import BaseCommand
-from django.utils import timezone
+from hibee.core.mail import mail_admins, mail_managers, send_mail
+from hibee.core.management.base import BaseCommand
+from hibee.utils import timezone
 
 
 class Command(BaseCommand):

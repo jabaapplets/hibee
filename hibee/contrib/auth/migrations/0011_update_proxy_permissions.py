@@ -1,8 +1,8 @@
 import sys
 
-from django.core.management.color import color_style
-from django.db import IntegrityError, migrations, transaction
-from django.db.models import Q
+from hibee.core.management.color import color_style
+from hibee.db import IntegrityError, migrations, transaction
+from hibee.db.models import Q
 
 WARNING = """
     A problem arose migrating proxy model permissions for {old} to {new}.

@@ -1,8 +1,8 @@
-from django.apps import AppConfig
-from django.utils.translation import gettext_lazy as _
+from hibee.apps import AppConfig
+from hibee.utils.translation import gettext_lazy as _
 
 
 class RedirectsConfig(AppConfig):
-    default_auto_field = "django.db.models.AutoField"
-    name = "django.contrib.redirects"
+    default_auto_field = "hibee.db.models.AutoField"
+    name = "hibee.contrib.redirects"
     verbose_name = _("Redirects")

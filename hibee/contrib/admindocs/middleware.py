@@ -1,7 +1,7 @@
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
-from django.http import HttpResponse
-from django.utils.deprecation import MiddlewareMixin
+from hibee.conf import settings
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.http import HttpResponse
+from hibee.utils.deprecation import MiddlewareMixin
 
 from .utils import get_view_name
 
@@ -22,7 +22,7 @@ class XViewMiddleware(MiddlewareMixin):
             raise ImproperlyConfigured(
                 "The XView middleware requires authentication middleware to "
                 "be installed. Edit your MIDDLEWARE setting to insert "
-                "'django.contrib.auth.middleware.AuthenticationMiddleware'."
+                "'hibee.contrib.auth.middleware.AuthenticationMiddleware'."
             )
         if request.method == "HEAD" and (
             request.META.get("REMOTE_ADDR") in settings.INTERNAL_IPS

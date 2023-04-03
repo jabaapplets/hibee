@@ -1,7 +1,7 @@
 import os
 
-from django.contrib.staticfiles import finders
-from django.core.management.base import LabelCommand
+from hibee.contrib.staticfiles import finders
+from hibee.core.management.base import LabelCommand
 
 
 class Command(LabelCommand):

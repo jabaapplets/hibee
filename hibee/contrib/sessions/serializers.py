@@ -1,3 +1,3 @@
-from django.core.signing import JSONSerializer as BaseJSONSerializer
+from hibee.core.signing import JSONSerializer as BaseJSONSerializer
 
 JSONSerializer = BaseJSONSerializer

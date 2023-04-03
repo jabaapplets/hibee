@@ -1,5 +1,5 @@
-import django.contrib.contenttypes.models
-from django.db import migrations, models
+import hibee.contrib.contenttypes.models
+from hibee.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -29,13 +29,13 @@ class Migration(migrations.Migration):
             ],
             options={
                 "ordering": ("name",),
-                "db_table": "django_content_type",
+                "db_table": "hibee_content_type",
                 "verbose_name": "content type",
                 "verbose_name_plural": "content types",
             },
             bases=(models.Model,),
             managers=[
-                ("objects", django.contrib.contenttypes.models.ContentTypeManager()),
+                ("objects", hibee.contrib.contenttypes.models.ContentTypeManager()),
             ],
         ),
         migrations.AlterUniqueTogether(

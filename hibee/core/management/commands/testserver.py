@@ -1,6 +1,6 @@
-from django.core.management import call_command
-from django.core.management.base import BaseCommand
-from django.db import connection
+from hibee.core.management import call_command
+from hibee.core.management.base import BaseCommand
+from hibee.db import connection
 
 
 class Command(BaseCommand):
@@ -20,7 +20,7 @@ class Command(BaseCommand):
             "--no-input",
             action="store_false",
             dest="interactive",
-            help="Tells Django to NOT prompt the user for input of any kind.",
+            help="Tells Hibee to NOT prompt the user for input of any kind.",
         )
         parser.add_argument(
             "--addrport",
@@ -32,7 +32,7 @@ class Command(BaseCommand):
             "-6",
             action="store_true",
             dest="use_ipv6",
-            help="Tells Django to use an IPv6 address.",
+            help="Tells Hibee to use an IPv6 address.",
         )
 
     def handle(self, *fixture_labels, **options):

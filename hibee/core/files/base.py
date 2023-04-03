@@ -1,8 +1,8 @@
 import os
 from io import BytesIO, StringIO, UnsupportedOperation
 
-from django.core.files.utils import FileProxyMixin
-from django.utils.functional import cached_property
+from hibee.core.files.utils import FileProxyMixin
+from hibee.utils.functional import cached_property
 
 
 class File(FileProxyMixin):

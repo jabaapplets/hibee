@@ -1,12 +1,12 @@
 from urllib.parse import urlencode
 from urllib.request import urlopen
 
-from django.apps import apps as django_apps
-from django.conf import settings
-from django.core import paginator
-from django.core.exceptions import ImproperlyConfigured
-from django.urls import NoReverseMatch, reverse
-from django.utils import translation
+from hibee.apps import apps as hibee_apps
+from hibee.conf import settings
+from hibee.core import paginator
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.urls import NoReverseMatch, reverse
+from hibee.utils import translation
 
 PING_URL = "https://www.google.com/webmasters/tools/ping"
 
@@ -28,19 +28,19 @@ def ping_google(sitemap_url=None, ping_url=PING_URL, sitemap_uses_https=True):
 
 
 def _get_sitemap_full_url(sitemap_url, sitemap_uses_https=True):
-    if not django_apps.is_installed("django.contrib.sites"):
+    if not hibee_apps.is_installed("hibee.contrib.sites"):
         raise ImproperlyConfigured(
-            "ping_google requires django.contrib.sites, which isn't installed."
+            "ping_google requires hibee.contrib.sites, which isn't installed."
         )
 
     if sitemap_url is None:
         try:
             # First, try to get the "index" sitemap URL.
-            sitemap_url = reverse("django.contrib.sitemaps.views.index")
+            sitemap_url = reverse("hibee.contrib.sitemaps.views.index")
         except NoReverseMatch:
             try:
                 # Next, try for the "global" sitemap URL.
-                sitemap_url = reverse("django.contrib.sitemaps.views.sitemap")
+                sitemap_url = reverse("hibee.contrib.sitemaps.views.sitemap")
             except NoReverseMatch:
                 pass
 
@@ -50,7 +50,7 @@ def _get_sitemap_full_url(sitemap_url, sitemap_uses_https=True):
             "auto-detected."
         )
 
-    Site = django_apps.get_model("sites.Site")
+    Site = hibee_apps.get_model("sites.Site")
     current_site = Site.objects.get_current()
     scheme = "https" if sitemap_uses_https else "http"
     return "%s://%s%s" % (scheme, current_site.domain, sitemap_url)
@@ -136,8 +136,8 @@ class Sitemap:
     def get_domain(self, site=None):
         # Determine domain
         if site is None:
-            if django_apps.is_installed("django.contrib.sites"):
-                Site = django_apps.get_model("sites.Site")
+            if hibee_apps.is_installed("hibee.contrib.sites"):
+                Site = hibee_apps.get_model("sites.Site")
                 try:
                     site = Site.objects.get_current()
                 except Site.DoesNotExist:

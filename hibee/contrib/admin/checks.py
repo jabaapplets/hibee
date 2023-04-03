@@ -1,18 +1,18 @@
 import collections
 from itertools import chain
 
-from django.apps import apps
-from django.conf import settings
-from django.contrib.admin.utils import NotRelationField, flatten, get_fields_from_path
-from django.core import checks
-from django.core.exceptions import FieldDoesNotExist
-from django.db import models
-from django.db.models.constants import LOOKUP_SEP
-from django.db.models.expressions import Combinable
-from django.forms.models import BaseModelForm, BaseModelFormSet, _get_foreign_key
-from django.template import engines
-from django.template.backends.django import DjangoTemplates
-from django.utils.module_loading import import_string
+from hibee.apps import apps
+from hibee.conf import settings
+from hibee.contrib.admin.utils import NotRelationField, flatten, get_fields_from_path
+from hibee.core import checks
+from hibee.core.exceptions import FieldDoesNotExist
+from hibee.db import models
+from hibee.db.models.constants import LOOKUP_SEP
+from hibee.db.models.expressions import Combinable
+from hibee.forms.models import BaseModelForm, BaseModelFormSet, _get_foreign_key
+from hibee.template import engines
+from hibee.template.backends.hibee import HibeeTemplates
+from hibee.utils.module_loading import import_string
 
 
 def _issubclass(cls, classinfo):
@@ -44,7 +44,7 @@ def _contains_subclass(class_path, candidate_paths):
 
 
 def check_admin_app(app_configs, **kwargs):
-    from django.contrib.admin.sites import all_sites
+    from hibee.contrib.admin.sites import all_sites
 
     errors = []
     for site in all_sites:
@@ -56,15 +56,15 @@ def check_dependencies(**kwargs):
     """
     Check that the admin's dependencies are correctly installed.
     """
-    from django.contrib.admin.sites import all_sites
+    from hibee.contrib.admin.sites import all_sites
 
-    if not apps.is_installed("django.contrib.admin"):
+    if not apps.is_installed("hibee.contrib.admin"):
         return []
     errors = []
     app_dependencies = (
-        ("django.contrib.contenttypes", 401),
-        ("django.contrib.auth", 405),
-        ("django.contrib.messages", 406),
+        ("hibee.contrib.contenttypes", 401),
+        ("hibee.contrib.auth", 405),
+        ("hibee.contrib.messages", 406),
     )
     for app_name, error_code in app_dependencies:
         if not apps.is_installed(app_name):
@@ -76,15 +76,15 @@ def check_dependencies(**kwargs):
                 )
             )
     for engine in engines.all():
-        if isinstance(engine, DjangoTemplates):
-            django_templates_instance = engine.engine
+        if isinstance(engine, hibeeTemplates):
+            hibee_templates_instance = engine.engine
             break
     else:
-        django_templates_instance = None
-    if not django_templates_instance:
+        hibee_templates_instance = None
+    if not hibee_templates_instance:
         errors.append(
             checks.Error(
-                "A 'django.template.backends.django.DjangoTemplates' instance "
+                "A 'hibee.template.backends.hibee.HibeeTemplates' instance "
                 "must be configured in TEMPLATES in order to use the admin "
                 "application.",
                 id="admin.E403",
@@ -92,29 +92,29 @@ def check_dependencies(**kwargs):
         )
     else:
         if (
-            "django.contrib.auth.context_processors.auth"
-            not in django_templates_instance.context_processors
+            "hibee.contrib.auth.context_processors.auth"
+            not in hibee_templates_instance.context_processors
             and _contains_subclass(
-                "django.contrib.auth.backends.ModelBackend",
+                "hibee.contrib.auth.backends.ModelBackend",
                 settings.AUTHENTICATION_BACKENDS,
             )
         ):
             errors.append(
                 checks.Error(
-                    "'django.contrib.auth.context_processors.auth' must be "
-                    "enabled in DjangoTemplates (TEMPLATES) if using the default "
+                    "'hibee.contrib.auth.context_processors.auth' must be "
+                    "enabled in HibeeTemplates (TEMPLATES) if using the default "
                     "auth backend in order to use the admin application.",
                     id="admin.E402",
                 )
             )
         if (
-            "django.contrib.messages.context_processors.messages"
-            not in django_templates_instance.context_processors
+            "hibee.contrib.messages.context_processors.messages"
+            not in hibee_templates_instance.context_processors
         ):
             errors.append(
                 checks.Error(
-                    "'django.contrib.messages.context_processors.messages' must "
-                    "be enabled in DjangoTemplates (TEMPLATES) in order to use "
+                    "'hibee.contrib.messages.context_processors.messages' must "
+                    "be enabled in HibeeTemplates (TEMPLATES) in order to use "
                     "the admin application.",
                     id="admin.E404",
                 )
@@ -122,50 +122,50 @@ def check_dependencies(**kwargs):
         sidebar_enabled = any(site.enable_nav_sidebar for site in all_sites)
         if (
             sidebar_enabled
-            and "django.template.context_processors.request"
-            not in django_templates_instance.context_processors
+            and "hibee.template.context_processors.request"
+            not in hibee_templates_instance.context_processors
         ):
             errors.append(
                 checks.Warning(
-                    "'django.template.context_processors.request' must be enabled "
-                    "in DjangoTemplates (TEMPLATES) in order to use the admin "
+                    "'hibee.template.context_processors.request' must be enabled "
+                    "in HibeeTemplates (TEMPLATES) in order to use the admin "
                     "navigation sidebar.",
                     id="admin.W411",
                 )
             )
 
     if not _contains_subclass(
-        "django.contrib.auth.middleware.AuthenticationMiddleware", settings.MIDDLEWARE
+        "hibee.contrib.auth.middleware.AuthenticationMiddleware", settings.MIDDLEWARE
     ):
         errors.append(
             checks.Error(
-                "'django.contrib.auth.middleware.AuthenticationMiddleware' must "
+                "'hibee.contrib.auth.middleware.AuthenticationMiddleware' must "
                 "be in MIDDLEWARE in order to use the admin application.",
                 id="admin.E408",
             )
         )
     if not _contains_subclass(
-        "django.contrib.messages.middleware.MessageMiddleware", settings.MIDDLEWARE
+        "hibee.contrib.messages.middleware.MessageMiddleware", settings.MIDDLEWARE
     ):
         errors.append(
             checks.Error(
-                "'django.contrib.messages.middleware.MessageMiddleware' must "
+                "'hibee.contrib.messages.middleware.MessageMiddleware' must "
                 "be in MIDDLEWARE in order to use the admin application.",
                 id="admin.E409",
             )
         )
     if not _contains_subclass(
-        "django.contrib.sessions.middleware.SessionMiddleware", settings.MIDDLEWARE
+        "hibee.contrib.sessions.middleware.SessionMiddleware", settings.MIDDLEWARE
     ):
         errors.append(
             checks.Error(
-                "'django.contrib.sessions.middleware.SessionMiddleware' must "
+                "'hibee.contrib.sessions.middleware.SessionMiddleware' must "
                 "be in MIDDLEWARE in order to use the admin application.",
                 hint=(
                     "Insert "
-                    "'django.contrib.sessions.middleware.SessionMiddleware' "
+                    "'hibee.contrib.sessions.middleware.SessionMiddleware' "
                     "before "
-                    "'django.contrib.auth.middleware.AuthenticationMiddleware'."
+                    "'hibee.contrib.auth.middleware.AuthenticationMiddleware'."
                 ),
                 id="admin.E410",
             )
@@ -580,7 +580,7 @@ class BaseModelAdminChecks:
     def _check_radio_fields_value(self, obj, val, label):
         """Check type of a value of `radio_fields` dictionary."""
 
-        from django.contrib.admin.options import HORIZONTAL, VERTICAL
+        from hibee.contrib.admin.options import HORIZONTAL, VERTICAL
 
         if val not in (HORIZONTAL, VERTICAL):
             return [
@@ -850,7 +850,7 @@ class ModelAdminChecks(BaseModelAdminChecks):
                 )
             ]
 
-        from django.contrib.admin.options import InlineModelAdmin
+        from hibee.contrib.admin.options import InlineModelAdmin
 
         if not _issubclass(inline, InlineModelAdmin):
             return [
@@ -928,7 +928,7 @@ class ModelAdminChecks(BaseModelAdminChecks):
 
     def _check_list_display_links(self, obj):
         """Check that list_display_links is a unique subset of list_display."""
-        from django.contrib.admin.options import ModelAdmin
+        from hibee.contrib.admin.options import ModelAdmin
 
         if obj.list_display_links is None:
             return []
@@ -985,7 +985,7 @@ class ModelAdminChecks(BaseModelAdminChecks):
         2. ('field', SomeFieldListFilter) - a field-based list filter class
         3. SomeListFilter - a non-field list filter class
         """
-        from django.contrib.admin import FieldListFilter, ListFilter
+        from hibee.contrib.admin import FieldListFilter, ListFilter
 
         if callable(item) and not isinstance(item, models.Field):
             # If item is option 3, it should be a ListFilter...

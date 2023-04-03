@@ -1,5 +1,5 @@
-import django.contrib.sessions.models
-from django.db import migrations, models
+import hibee.contrib.sessions.models
+from hibee.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -26,12 +26,12 @@ class Migration(migrations.Migration):
             ],
             options={
                 "abstract": False,
-                "db_table": "django_session",
+                "db_table": "hibee_session",
                 "verbose_name": "session",
                 "verbose_name_plural": "sessions",
             },
             managers=[
-                ("objects", django.contrib.sessions.models.SessionManager()),
+                ("objects", hibee.contrib.sessions.models.SessionManager()),
             ],
         ),
     ]

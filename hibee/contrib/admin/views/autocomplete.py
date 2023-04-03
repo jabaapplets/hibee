@@ -1,7 +1,7 @@
-from django.apps import apps
-from django.core.exceptions import FieldDoesNotExist, PermissionDenied
-from django.http import Http404, JsonResponse
-from django.views.generic.list import BaseListView
+from hibee.apps import apps
+from hibee.core.exceptions import FieldDoesNotExist, PermissionDenied
+from hibee.http import Http404, JsonResponse
+from hibee.views.generic.list import BaseListView
 
 
 class AutocompleteJsonView(BaseListView):

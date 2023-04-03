@@ -1,9 +1,9 @@
-from django.contrib import auth
-from django.contrib.auth import load_backend
-from django.contrib.auth.backends import RemoteUserBackend
-from django.core.exceptions import ImproperlyConfigured
-from django.utils.deprecation import MiddlewareMixin
-from django.utils.functional import SimpleLazyObject
+from hibee.contrib import auth
+from hibee.contrib.auth import load_backend
+from hibee.contrib.auth.backends import RemoteUserBackend
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.utils.deprecation import MiddlewareMixin
+from hibee.utils.functional import SimpleLazyObject
 
 
 def get_user(request):
@@ -16,11 +16,11 @@ class AuthenticationMiddleware(MiddlewareMixin):
     def process_request(self, request):
         if not hasattr(request, "session"):
             raise ImproperlyConfigured(
-                "The Django authentication middleware requires session "
+                "The Hibee authentication middleware requires session "
                 "middleware to be installed. Edit your MIDDLEWARE setting to "
                 "insert "
-                "'django.contrib.sessions.middleware.SessionMiddleware' before "
-                "'django.contrib.auth.middleware.AuthenticationMiddleware'."
+                "'hibee.contrib.sessions.middleware.SessionMiddleware' before "
+                "'hibee.contrib.auth.middleware.AuthenticationMiddleware'."
             )
         request.user = SimpleLazyObject(lambda: get_user(request))
 
@@ -49,10 +49,10 @@ class RemoteUserMiddleware(MiddlewareMixin):
         # AuthenticationMiddleware is required so that request.user exists.
         if not hasattr(request, "user"):
             raise ImproperlyConfigured(
-                "The Django remote user auth middleware requires the"
+                "The Hibee remote user auth middleware requires the"
                 " authentication middleware to be installed.  Edit your"
                 " MIDDLEWARE setting to insert"
-                " 'django.contrib.auth.middleware.AuthenticationMiddleware'"
+                " 'hibee.contrib.auth.middleware.AuthenticationMiddleware'"
                 " before the RemoteUserMiddleware class."
             )
         try:
@@ -122,7 +122,7 @@ class PersistentRemoteUserMiddleware(RemoteUserMiddleware):
     the header (``REMOTE_USER``) is not found in the request. Useful
     for setups when the external authentication via ``REMOTE_USER``
     is only expected to happen on some "logon" URL and the rest of
-    the application wants to use Django's authentication mechanism.
+    the application wants to use Hibee's authentication mechanism.
     """
 
     force_logout_if_no_header = False

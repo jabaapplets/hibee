@@ -1,7 +1,7 @@
 import threading
 
-from django.contrib.gis.geos.base import GEOSBase
-from django.contrib.gis.geos.libgeos import CONTEXT_PTR, error_h, lgeos, notice_h
+from hibee.contrib.gis.geos.base import GEOSBase
+from hibee.contrib.gis.geos.libgeos import CONTEXT_PTR, error_h, lgeos, notice_h
 
 
 class GEOSContextHandle(GEOSBase):

@@ -5,11 +5,11 @@
 """
 from ctypes import byref, c_byte, c_double, c_uint
 
-from django.contrib.gis.geos import prototypes as capi
-from django.contrib.gis.geos.base import GEOSBase
-from django.contrib.gis.geos.error import GEOSException
-from django.contrib.gis.geos.libgeos import CS_PTR, geos_version_tuple
-from django.contrib.gis.shortcuts import numpy
+from hibee.contrib.gis.geos import prototypes as capi
+from hibee.contrib.gis.geos.base import GEOSBase
+from hibee.contrib.gis.geos.error import GEOSException
+from hibee.contrib.gis.geos.libgeos import CS_PTR, geos_version_tuple
+from hibee.contrib.gis.shortcuts import numpy
 
 
 class GEOSCoordSeq(GEOSBase):

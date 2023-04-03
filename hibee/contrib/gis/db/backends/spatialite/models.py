@@ -1,8 +1,8 @@
 """
  The GeometryColumns and SpatialRefSys models for the SpatiaLite backend.
 """
-from django.contrib.gis.db.backends.base.models import SpatialRefSysMixin
-from django.db import models
+from hibee.contrib.gis.db.backends.base.models import SpatialRefSysMixin
+from hibee.db import models
 
 
 class SpatialiteGeometryColumns(models.Model):

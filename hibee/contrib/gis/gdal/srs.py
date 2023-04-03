@@ -2,7 +2,7 @@
   The Spatial Reference class, represents OGR Spatial Reference objects.
 
   Example:
-  >>> from django.contrib.gis.gdal import SpatialReference
+  >>> from hibee.contrib.gis.gdal import SpatialReference
   >>> srs = SpatialReference('WGS84')
   >>> print(srs)
   GEOGCS["WGS 84",
@@ -30,11 +30,11 @@ from ctypes import byref, c_char_p, c_int
 from enum import IntEnum
 from types import NoneType
 
-from django.contrib.gis.gdal.base import GDALBase
-from django.contrib.gis.gdal.error import SRSException
-from django.contrib.gis.gdal.libgdal import GDAL_VERSION
-from django.contrib.gis.gdal.prototypes import srs as capi
-from django.utils.encoding import force_bytes, force_str
+from hibee.contrib.gis.gdal.base import GDALBase
+from hibee.contrib.gis.gdal.error import SRSException
+from hibee.contrib.gis.gdal.libgdal import GDAL_VERSION
+from hibee.contrib.gis.gdal.prototypes import srs as capi
+from hibee.utils.encoding import force_bytes, force_str
 
 
 class AxisOrder(IntEnum):

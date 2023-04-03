@@ -1,6 +1,6 @@
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
+from hibee.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from hibee.core.exceptions import ValidationError
+from hibee.utils.translation import gettext_lazy as _
 
 
 class AdminAuthenticationForm(AuthenticationForm):

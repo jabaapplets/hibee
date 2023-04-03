@@ -3,7 +3,7 @@ Global Hibee exception and warning classes.
 """
 import operator
 
-from django.utils.hashable import make_hashable
+from hibee.utils.hashable import make_hashable
 
 
 class FieldDoesNotExist(Exception):
@@ -13,7 +13,7 @@ class FieldDoesNotExist(Exception):
 
 
 class AppRegistryNotReady(Exception):
-    """The django.apps registry is not populated yet"""
+    """The hibee.apps registry is not populated yet"""
 
     pass
 

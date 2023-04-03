@@ -1,8 +1,8 @@
 from ctypes.util import find_library
 
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
-from django.db.backends.sqlite3.base import DatabaseWrapper as SQLiteDatabaseWrapper
+from hibee.conf import settings
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.db.backends.sqlite3.base import DatabaseWrapper as SQLiteDatabaseWrapper
 
 from .client import SpatiaLiteClient
 from .features import DatabaseFeatures

@@ -1,14 +1,14 @@
-from django.apps import apps as django_apps
-from django.contrib.sitemaps import Sitemap
-from django.core.exceptions import ImproperlyConfigured
+from hibee.apps import apps as hibee_apps
+from hibee.contrib.sitemaps import Sitemap
+from hibee.core.exceptions import ImproperlyConfigured
 
 
 class FlatPageSitemap(Sitemap):
     def items(self):
-        if not django_apps.is_installed("django.contrib.sites"):
+        if not hibee_apps.is_installed("hibee.contrib.sites"):
             raise ImproperlyConfigured(
-                "FlatPageSitemap requires django.contrib.sites, which isn't installed."
+                "FlatPageSitemap requires hibee.contrib.sites, which isn't installed."
             )
-        Site = django_apps.get_model("sites.Site")
+        Site = hibee_apps.get_model("sites.Site")
         current_site = Site.objects.get_current()
         return current_site.flatpage_set.filter(registration_required=False)

@@ -1,6 +1,6 @@
-from django.contrib.sites.models import Site
-from django.db import models
-from django.utils.translation import gettext_lazy as _
+from hibee.contrib.sites.models import Site
+from hibee.db import models
+from hibee.utils.translation import gettext_lazy as _
 
 
 class Redirect(models.Model):
@@ -27,7 +27,7 @@ class Redirect(models.Model):
     class Meta:
         verbose_name = _("redirect")
         verbose_name_plural = _("redirects")
-        db_table = "django_redirect"
+        db_table = "hibee_redirect"
         unique_together = [["site", "old_path"]]
         ordering = ["old_path"]
 

@@ -1,7 +1,7 @@
-from django.apps import AppConfig
-from django.utils.translation import gettext_lazy as _
+from hibee.apps import AppConfig
+from hibee.utils.translation import gettext_lazy as _
 
 
 class HumanizeConfig(AppConfig):
-    name = "django.contrib.humanize"
+    name = "hibee.contrib.humanize"
     verbose_name = _("Humanize")

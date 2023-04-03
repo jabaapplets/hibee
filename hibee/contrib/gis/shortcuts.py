@@ -1,9 +1,9 @@
 import zipfile
 from io import BytesIO
 
-from django.conf import settings
-from django.http import HttpResponse
-from django.template import loader
+from hibee.conf import settings
+from hibee.http import HttpResponse
+from hibee.template import loader
 
 # NumPy supported?
 try:

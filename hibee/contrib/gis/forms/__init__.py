@@ -1,4 +1,4 @@
-from django.forms import *  # NOQA
+from hibee.forms import *  # NOQA
 
 from .fields import (  # NOQA
     GeometryCollectionField,

@@ -1,5 +1,5 @@
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.decorators import user_passes_test
+from hibee.contrib.auth import REDIRECT_FIELD_NAME
+from hibee.contrib.auth.decorators import user_passes_test
 
 
 def staff_member_required(

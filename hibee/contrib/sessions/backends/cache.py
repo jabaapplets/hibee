@@ -1,8 +1,8 @@
-from django.conf import settings
-from django.contrib.sessions.backends.base import CreateError, SessionBase, UpdateError
-from django.core.cache import caches
+from hibee.conf import settings
+from hibee.contrib.sessions.backends.base import CreateError, SessionBase, UpdateError
+from hibee.core.cache import caches
 
-KEY_PREFIX = "django.contrib.sessions.cache"
+KEY_PREFIX = "hibee.contrib.sessions.cache"
 
 
 class SessionStore(SessionBase):

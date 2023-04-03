@@ -1,14 +1,14 @@
 import json
 
-from django.conf import settings
-from django.contrib.admin.utils import quote
-from django.contrib.contenttypes.models import ContentType
-from django.db import models
-from django.urls import NoReverseMatch, reverse
-from django.utils import timezone
-from django.utils.text import get_text_list
-from django.utils.translation import gettext
-from django.utils.translation import gettext_lazy as _
+from hibee.conf import settings
+from hibee.contrib.admin.utils import quote
+from hibee.contrib.contenttypes.models import ContentType
+from hibee.db import models
+from hibee.urls import NoReverseMatch, reverse
+from hibee.utils import timezone
+from hibee.utils.text import get_text_list
+from hibee.utils.translation import gettext
+from hibee.utils.translation import gettext_lazy as _
 
 ADDITION = 1
 CHANGE = 2
@@ -78,7 +78,7 @@ class LogEntry(models.Model):
     class Meta:
         verbose_name = _("log entry")
         verbose_name_plural = _("log entries")
-        db_table = "django_admin_log"
+        db_table = "hibee_admin_log"
         ordering = ["-action_time"]
 
     def __repr__(self):

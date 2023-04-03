@@ -1,4 +1,4 @@
-from django.contrib.gis import gdal
+from hibee.contrib.gis import gdal
 
 
 class SpatialRefSysMixin:

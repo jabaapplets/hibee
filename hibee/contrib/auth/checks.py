@@ -1,9 +1,9 @@
 from itertools import chain
 from types import MethodType
 
-from django.apps import apps
-from django.conf import settings
-from django.core import checks
+from hibee.apps import apps
+from hibee.conf import settings
+from hibee.core import checks
 
 from .management import _get_builtin_permissions
 
@@ -57,7 +57,7 @@ def check_user_model(app_configs=None, **kwargs):
         for constraint in cls._meta.total_unique_constraints
     ):
         if settings.AUTHENTICATION_BACKENDS == [
-            "django.contrib.auth.backends.ModelBackend"
+            "hibee.contrib.auth.backends.ModelBackend"
         ]:
             errors.append(
                 checks.Error(

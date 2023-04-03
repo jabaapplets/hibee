@@ -1,6 +1,6 @@
-from django.conf import settings
-from django.contrib.messages.storage import default_storage
-from django.utils.deprecation import MiddlewareMixin
+from hibee.conf import settings
+from hibee.contrib.messages.storage import default_storage
+from hibee.utils.deprecation import MiddlewareMixin
 
 
 class MessageMiddleware(MiddlewareMixin):

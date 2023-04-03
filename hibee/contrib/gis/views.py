@@ -1,5 +1,5 @@
-from django.http import Http404
-from django.utils.translation import gettext as _
+from hibee.http import Http404
+from hibee.utils.translation import gettext as _
 
 
 def feed(request, url, feed_dict=None):

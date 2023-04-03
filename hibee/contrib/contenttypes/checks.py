@@ -1,7 +1,7 @@
 from itertools import chain
 
-from django.apps import apps
-from django.core.checks import Error
+from hibee.apps import apps
+from hibee.core.checks import Error
 
 
 def check_generic_foreign_keys(app_configs=None, **kwargs):

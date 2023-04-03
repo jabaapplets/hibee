@@ -1,36 +1,36 @@
 from datetime import datetime, timedelta
 
-from django import forms
-from django.conf import settings
-from django.contrib import messages
-from django.contrib.admin import FieldListFilter
-from django.contrib.admin.exceptions import (
+from hibee import forms
+from hibee.conf import settings
+from hibee.contrib import messages
+from hibee.contrib.admin import FieldListFilter
+from hibee.contrib.admin.exceptions import (
     DisallowedModelAdminLookup,
     DisallowedModelAdminToField,
 )
-from django.contrib.admin.options import (
+from hibee.contrib.admin.options import (
     IS_POPUP_VAR,
     TO_FIELD_VAR,
     IncorrectLookupParameters,
 )
-from django.contrib.admin.utils import (
+from hibee.contrib.admin.utils import (
     get_fields_from_path,
     lookup_spawns_duplicates,
     prepare_lookup_value,
     quote,
 )
-from django.core.exceptions import (
+from hibee.core.exceptions import (
     FieldDoesNotExist,
     ImproperlyConfigured,
     SuspiciousOperation,
 )
-from django.core.paginator import InvalidPage
-from django.db.models import Exists, F, Field, ManyToOneRel, OrderBy, OuterRef
-from django.db.models.expressions import Combinable
-from django.urls import reverse
-from django.utils.http import urlencode
-from django.utils.timezone import make_aware
-from django.utils.translation import gettext
+from hibee.core.paginator import InvalidPage
+from hibee.db.models import Exists, F, Field, ManyToOneRel, OrderBy, OuterRef
+from hibee.db.models.expressions import Combinable
+from hibee.urls import reverse
+from hibee.utils.http import urlencode
+from hibee.utils.timezone import make_aware
+from hibee.utils.translation import gettext
 
 # Changelist settings
 ALL_VAR = "all"

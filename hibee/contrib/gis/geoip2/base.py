@@ -2,10 +2,10 @@ import socket
 
 import geoip2.database
 
-from django.conf import settings
-from django.core.exceptions import ValidationError
-from django.core.validators import validate_ipv46_address
-from django.utils._os import to_path
+from hibee.conf import settings
+from hibee.core.exceptions import ValidationError
+from hibee.core.validators import validate_ipv46_address
+from hibee.utils._os import to_path
 
 from .resources import City, Country
 
@@ -192,7 +192,7 @@ class GeoIP2:
         """
         Return a dictionary with the country code and name when given an
         IP address or a Fully Qualified Domain Name (FQDN). For example, both
-        '24.124.1.80' and 'djangoproject.com' are valid parameters.
+        '24.124.1.80' and 'hibeeproject.com' are valid parameters.
         """
         # Returning the country code and name
         enc_query = self._check_query(query, city_or_country=True)
@@ -219,7 +219,7 @@ class GeoIP2:
         ll = self.lon_lat(query)
         if ll:
             # Allows importing and using GeoIP2() when GEOS is not installed.
-            from django.contrib.gis.geos import Point
+            from hibee.contrib.gis.geos import Point
 
             return Point(ll, srid=4326)
         else:

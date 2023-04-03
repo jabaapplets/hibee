@@ -1,13 +1,13 @@
 import os
 
-from django.apps import apps
-from django.contrib.staticfiles.finders import get_finders
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.checks import Tags
-from django.core.files.storage import FileSystemStorage
-from django.core.management.base import BaseCommand, CommandError
-from django.core.management.color import no_style
-from django.utils.functional import cached_property
+from hibee.apps import apps
+from hibee.contrib.staticfiles.finders import get_finders
+from hibee.contrib.staticfiles.storage import staticfiles_storage
+from hibee.core.checks import Tags
+from hibee.core.files.storage import FileSystemStorage
+from hibee.core.management.base import BaseCommand, CommandError
+from hibee.core.management.color import no_style
+from hibee.utils.functional import cached_property
 
 
 class Command(BaseCommand):

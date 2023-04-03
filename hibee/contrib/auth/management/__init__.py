@@ -4,11 +4,11 @@ Creates permissions for all installed apps that need permissions.
 import getpass
 import unicodedata
 
-from django.apps import apps as global_apps
-from django.contrib.auth import get_permission_codename
-from django.contrib.contenttypes.management import create_contenttypes
-from django.core import exceptions
-from django.db import DEFAULT_DB_ALIAS, router
+from hibee.apps import apps as global_apps
+from hibee.contrib.auth import get_permission_codename
+from hibee.contrib.contenttypes.management import create_contenttypes
+from hibee.core import exceptions
+from hibee.db import DEFAULT_DB_ALIAS, router
 
 
 def _get_all_permissions(opts):
@@ -46,8 +46,8 @@ def create_permissions(
         return
 
     # Ensure that contenttypes are created for this app. Needed if
-    # 'django.contrib.auth' is in INSTALLED_APPS before
-    # 'django.contrib.contenttypes'.
+    # 'hibee.contrib.auth' is in INSTALLED_APPS before
+    # 'hibee.contrib.contenttypes'.
     create_contenttypes(
         app_config,
         verbosity=verbosity,
@@ -137,7 +137,7 @@ def get_default_username(check_db=True, database=DEFAULT_DB_ALIAS):
         determined or the suggested username is already taken.
     """
     # This file is used in apps.py, it should not trigger models import.
-    from django.contrib.auth import models as auth_app
+    from hibee.contrib.auth import models as auth_app
 
     # If the User model has been swapped out, we can't make any assumptions
     # about the default user name.

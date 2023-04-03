@@ -1,16 +1,16 @@
 import getpass
 
-from django.contrib.auth import get_user_model
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
-from django.core.management.base import BaseCommand, CommandError
-from django.db import DEFAULT_DB_ALIAS
+from hibee.contrib.auth import get_user_model
+from hibee.contrib.auth.password_validation import validate_password
+from hibee.core.exceptions import ValidationError
+from hibee.core.management.base import BaseCommand, CommandError
+from hibee.db import DEFAULT_DB_ALIAS
 
 UserModel = get_user_model()
 
 
 class Command(BaseCommand):
-    help = "Change a user's password for django.contrib.auth."
+    help = "Change a user's password for hibee.contrib.auth."
     requires_migrations_checks = True
     requires_system_checks = []
 

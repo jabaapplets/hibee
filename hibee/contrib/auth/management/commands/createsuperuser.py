@@ -5,14 +5,14 @@ import getpass
 import os
 import sys
 
-from django.contrib.auth import get_user_model
-from django.contrib.auth.management import get_default_username
-from django.contrib.auth.password_validation import validate_password
-from django.core import exceptions
-from django.core.management.base import BaseCommand, CommandError
-from django.db import DEFAULT_DB_ALIAS
-from django.utils.functional import cached_property
-from django.utils.text import capfirst
+from hibee.contrib.auth import get_user_model
+from hibee.contrib.auth.management import get_default_username
+from hibee.contrib.auth.password_validation import validate_password
+from hibee.core import exceptions
+from hibee.core.management.base import BaseCommand, CommandError
+from hibee.db import DEFAULT_DB_ALIAS
+from hibee.utils.functional import cached_property
+from hibee.utils.text import capfirst
 
 
 class NotRunningInTTYException(Exception):
@@ -45,7 +45,7 @@ class Command(BaseCommand):
             action="store_false",
             dest="interactive",
             help=(
-                "Tells Django to NOT prompt the user for input of any kind. "
+                "Tells Hibee to NOT prompt the user for input of any kind. "
                 "You must use --%s with --noinput, along with an option for "
                 "any other required field. Superusers created with --noinput will "
                 "not be able to log in until they're given a valid password."
@@ -194,14 +194,14 @@ class Command(BaseCommand):
                 # Use password from environment variable, if provided.
                 if (
                     PASSWORD_FIELD in user_data
-                    and "DJANGO_SUPERUSER_PASSWORD" in os.environ
+                    and "HIBEE_SUPERUSER_PASSWORD" in os.environ
                 ):
-                    user_data[PASSWORD_FIELD] = os.environ["DJANGO_SUPERUSER_PASSWORD"]
+                    user_data[PASSWORD_FIELD] = os.environ["HIBEE_SUPERUSER_PASSWORD"]
                 # Use username from environment variable, if not provided in
                 # options.
                 if username is None:
                     username = os.environ.get(
-                        "DJANGO_SUPERUSER_" + self.UserModel.USERNAME_FIELD.upper()
+                        "HIBEE_SUPERUSER_" + self.UserModel.USERNAME_FIELD.upper()
                     )
                 if username is None:
                     raise CommandError(
@@ -217,7 +217,7 @@ class Command(BaseCommand):
 
                 user_data[self.UserModel.USERNAME_FIELD] = username
                 for field_name in self.UserModel.REQUIRED_FIELDS:
-                    env_var = "DJANGO_SUPERUSER_" + field_name.upper()
+                    env_var = "HIBEE_SUPERUSER_" + field_name.upper()
                     value = options[field_name] or os.environ.get(env_var)
                     if not value:
                         raise CommandError(

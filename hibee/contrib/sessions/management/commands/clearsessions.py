@@ -1,7 +1,7 @@
 from importlib import import_module
 
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
+from hibee.conf import settings
+from hibee.core.management.base import BaseCommand, CommandError
 
 
 class Command(BaseCommand):

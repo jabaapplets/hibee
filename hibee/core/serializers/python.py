@@ -4,10 +4,10 @@ and from basic Python data types (lists, dicts, strings, etc.). Useful as a basi
 other serializers.
 """
 
-from django.apps import apps
-from django.core.serializers import base
-from django.db import DEFAULT_DB_ALIAS, models
-from django.utils.encoding import is_protected_type
+from hibee.apps import apps
+from hibee.core.serializers import base
+from hibee.db import DEFAULT_DB_ALIAS, models
+from hibee.utils.encoding import is_protected_type
 
 
 class Serializer(base.Serializer):
@@ -95,7 +95,7 @@ def Deserializer(
     object_list, *, using=DEFAULT_DB_ALIAS, ignorenonexistent=False, **options
 ):
     """
-    Deserialize simple Python objects back into Django ORM instances.
+    Deserialize simple Python objects back into Hibee ORM instances.
 
     It's expected that you pass the Python objects themselves (instead of a
     stream or a string) to the constructor

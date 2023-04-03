@@ -1,5 +1,5 @@
-from django.contrib import admin
-from django.contrib.redirects.models import Redirect
+from hibee.contrib import admin
+from hibee.contrib.redirects.models import Redirect
 
 
 @admin.register(Redirect)

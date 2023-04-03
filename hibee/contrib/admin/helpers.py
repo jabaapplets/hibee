@@ -1,7 +1,7 @@
 import json
 
-from django import forms
-from django.contrib.admin.utils import (
+from hibee import forms
+from hibee.contrib.admin.utils import (
     display_for_field,
     flatten_fieldsets,
     help_text_for_field,
@@ -9,19 +9,19 @@ from django.contrib.admin.utils import (
     lookup_field,
     quote,
 )
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models.fields.related import (
+from hibee.core.exceptions import ObjectDoesNotExist
+from hibee.db.models.fields.related import (
     ForeignObjectRel,
     ManyToManyRel,
     OneToOneField,
 )
-from django.forms.utils import flatatt
-from django.template.defaultfilters import capfirst, linebreaksbr
-from django.urls import NoReverseMatch, reverse
-from django.utils.html import conditional_escape, format_html
-from django.utils.safestring import mark_safe
-from django.utils.translation import gettext
-from django.utils.translation import gettext_lazy as _
+from hibee.forms.utils import flatatt
+from hibee.template.defaultfilters import capfirst, linebreaksbr
+from hibee.urls import NoReverseMatch, reverse
+from hibee.utils.html import conditional_escape, format_html
+from hibee.utils.safestring import mark_safe
+from hibee.utils.translation import gettext
+from hibee.utils.translation import gettext_lazy as _
 
 ACTION_CHECKBOX_NAME = "_selected_action"
 
@@ -129,7 +129,7 @@ class Fieldset:
 
 class Fieldline:
     def __init__(self, form, field, readonly_fields=None, model_admin=None):
-        self.form = form  # A django.forms.Form instance
+        self.form = form  # A hibee.forms.Form instance
         if not hasattr(field, "__iter__") or isinstance(field, str):
             self.fields = [field]
         else:
@@ -164,7 +164,7 @@ class Fieldline:
 
 class AdminField:
     def __init__(self, form, field, is_first):
-        self.field = form[field]  # A django.forms.BoundField instance
+        self.field = form[field]  # A hibee.forms.BoundField instance
         self.is_first = is_first  # Whether this field is first on the line
         self.is_checkbox = isinstance(self.field.field.widget, forms.CheckboxInput)
         self.is_readonly = False
@@ -259,7 +259,7 @@ class AdminReadonlyField:
             return str(remote_obj)
 
     def contents(self):
-        from django.contrib.admin.templatetags.admin_list import _boolean_icon
+        from hibee.contrib.admin.templatetags.admin_list import _boolean_icon
 
         field, obj, model_admin = (
             self.field["field"],
@@ -519,7 +519,7 @@ class InlineAdminForm(AdminForm):
             return ""
 
     def deletion_field(self):
-        from django.forms.formsets import DELETION_FIELD_NAME
+        from hibee.forms.formsets import DELETION_FIELD_NAME
 
         return AdminField(self.form, DELETION_FIELD_NAME, False)
 

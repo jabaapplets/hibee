@@ -4,13 +4,13 @@
 """
 from ctypes import c_double, c_int
 
-from django.contrib.gis.geos.libgeos import GEOM_PTR, GEOSFuncFactory
-from django.contrib.gis.geos.prototypes.errcheck import (
+from hibee.contrib.gis.geos.libgeos import GEOM_PTR, GEOSFuncFactory
+from hibee.contrib.gis.geos.prototypes.errcheck import (
     check_geom,
     check_minus_one,
     check_string,
 )
-from django.contrib.gis.geos.prototypes.geom import geos_char_p
+from hibee.contrib.gis.geos.prototypes.geom import geos_char_p
 
 
 class Topology(GEOSFuncFactory):

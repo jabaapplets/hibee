@@ -1,26 +1,26 @@
 from functools import update_wrapper
 from weakref import WeakSet
 
-from django.apps import apps
-from django.conf import settings
-from django.contrib.admin import ModelAdmin, actions
-from django.contrib.admin.views.autocomplete import AutocompleteJsonView
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.core.exceptions import ImproperlyConfigured
-from django.db.models.base import ModelBase
-from django.http import Http404, HttpResponsePermanentRedirect, HttpResponseRedirect
-from django.template.response import TemplateResponse
-from django.urls import NoReverseMatch, Resolver404, resolve, reverse
-from django.utils.decorators import method_decorator
-from django.utils.functional import LazyObject
-from django.utils.module_loading import import_string
-from django.utils.text import capfirst
-from django.utils.translation import gettext as _
-from django.utils.translation import gettext_lazy
-from django.views.decorators.cache import never_cache
-from django.views.decorators.common import no_append_slash
-from django.views.decorators.csrf import csrf_protect
-from django.views.i18n import JavaScriptCatalog
+from hibee.apps import apps
+from hibee.conf import settings
+from hibee.contrib.admin import ModelAdmin, actions
+from hibee.contrib.admin.views.autocomplete import AutocompleteJsonView
+from hibee.contrib.auth import REDIRECT_FIELD_NAME
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.db.models.base import ModelBase
+from hibee.http import Http404, HttpResponsePermanentRedirect, HttpResponseRedirect
+from hibee.template.response import TemplateResponse
+from hibee.urls import NoReverseMatch, Resolver404, resolve, reverse
+from hibee.utils.decorators import method_decorator
+from hibee.utils.functional import LazyObject
+from hibee.utils.module_loading import import_string
+from hibee.utils.text import capfirst
+from hibee.utils.translation import gettext as _
+from hibee.utils.translation import gettext_lazy
+from hibee.views.decorators.cache import never_cache
+from hibee.views.decorators.common import no_append_slash
+from hibee.views.decorators.csrf import csrf_protect
+from hibee.views.i18n import JavaScriptCatalog
 
 all_sites = WeakSet()
 
@@ -35,18 +35,18 @@ class NotRegistered(Exception):
 
 class AdminSite:
     """
-    An AdminSite object encapsulates an instance of the Django admin application, ready
+    An AdminSite object encapsulates an instance of the Hibee admin application, ready
     to be hooked in to your URLconf. Models are registered with the AdminSite using the
-    register() method, and the get_urls() method can then be used to access Django view
+    register() method, and the get_urls() method can then be used to access Hibee view
     functions that present a full admin interface for the collection of registered
     models.
     """
 
     # Text to put at the end of each page's <title>.
-    site_title = gettext_lazy("Django site admin")
+    site_title = gettext_lazy("Hibee site admin")
 
     # Text to put in each page's <h1>.
-    site_header = gettext_lazy("Django administration")
+    site_header = gettext_lazy("Hibee administration")
 
     # Text to put at the top of the admin index page.
     index_title = gettext_lazy("Site administration")
@@ -212,7 +212,7 @@ class AdminSite:
             class MyAdminSite(AdminSite):
 
                 def get_urls(self):
-                    from django.urls import path
+                    from hibee.urls import path
 
                     urls = super().get_urls()
                     urls += [
@@ -230,9 +230,9 @@ class AdminSite:
                 if request.path == reverse("admin:logout", current_app=self.name):
                     index_path = reverse("admin:index", current_app=self.name)
                     return HttpResponseRedirect(index_path)
-                # Inner import to prevent django.contrib.admin (app) from
-                # importing django.contrib.auth.models.User (unrelated model).
-                from django.contrib.auth.views import redirect_to_login
+                # Inner import to prevent hibee.contrib.admin (app) from
+                # importing hibee.contrib.auth.models.User (unrelated model).
+                from hibee.contrib.auth.views import redirect_to_login
 
                 return redirect_to_login(
                     request.get_full_path(),
@@ -251,9 +251,9 @@ class AdminSite:
     def get_urls(self):
         # Since this module gets imported in the application's root package,
         # it cannot import models from other applications at the module level,
-        # and django.contrib.contenttypes.views imports ContentType.
-        from django.contrib.contenttypes import views as contenttype_views
-        from django.urls import include, path, re_path
+        # and hibee.contrib.contenttypes.views imports ContentType.
+        from hibee.contrib.contenttypes import views as contenttype_views
+        from hibee.urls import include, path, re_path
 
         def wrap(view, cacheable=False):
             def wrapper(*args, **kwargs):
@@ -343,8 +343,8 @@ class AdminSite:
         """
         Handle the "change password" task -- both form display and validation.
         """
-        from django.contrib.admin.forms import AdminPasswordChangeForm
-        from django.contrib.auth.views import PasswordChangeView
+        from hibee.contrib.admin.forms import AdminPasswordChangeForm
+        from hibee.contrib.auth.views import PasswordChangeView
 
         url = reverse("admin:password_change_done", current_app=self.name)
         defaults = {
@@ -361,7 +361,7 @@ class AdminSite:
         """
         Display the "success" page after a password change.
         """
-        from django.contrib.auth.views import PasswordChangeDoneView
+        from hibee.contrib.auth.views import PasswordChangeDoneView
 
         defaults = {
             "extra_context": {**self.each_context(request), **(extra_context or {})},
@@ -373,12 +373,12 @@ class AdminSite:
 
     def i18n_javascript(self, request, extra_context=None):
         """
-        Display the i18n JavaScript that the Django admin requires.
+        Display the i18n JavaScript that the Hibee admin requires.
 
         `extra_context` is unused but present for consistency with the other
         admin views.
         """
-        return JavaScriptCatalog.as_view(packages=["django.contrib.admin"])(request)
+        return JavaScriptCatalog.as_view(packages=["hibee.contrib.admin"])(request)
 
     def logout(self, request, extra_context=None):
         """
@@ -386,7 +386,7 @@ class AdminSite:
 
         This should *not* assume the user is already logged in.
         """
-        from django.contrib.auth.views import LogoutView
+        from hibee.contrib.auth.views import LogoutView
 
         defaults = {
             "extra_context": {
@@ -414,9 +414,9 @@ class AdminSite:
 
         # Since this module gets imported in the application's root package,
         # it cannot import models from other applications at the module level,
-        # and django.contrib.admin.forms eventually imports User.
-        from django.contrib.admin.forms import AdminAuthenticationForm
-        from django.contrib.auth.views import LoginView
+        # and hibee.contrib.admin.forms eventually imports User.
+        from hibee.contrib.admin.forms import AdminAuthenticationForm
+        from hibee.contrib.auth.views import LoginView
 
         context = {
             **self.each_context(request),
@@ -590,7 +590,7 @@ class AdminSite:
         )
 
     def get_log_entries(self, request):
-        from django.contrib.admin.models import LogEntry
+        from hibee.contrib.admin.models import LogEntry
 
         return LogEntry.objects.select_related("content_type", "user")
 

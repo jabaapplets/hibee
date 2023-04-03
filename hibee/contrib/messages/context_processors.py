@@ -1,5 +1,5 @@
-from django.contrib.messages.api import get_messages
-from django.contrib.messages.constants import DEFAULT_LEVELS
+from hibee.contrib.messages.api import get_messages
+from hibee.contrib.messages.constants import DEFAULT_LEVELS
 
 
 def messages(request):

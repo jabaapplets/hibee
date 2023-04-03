@@ -1,13 +1,13 @@
 """
 Tools for sending email.
 """
-from django.conf import settings
+from hibee.conf import settings
 
 # Imported for backwards compatibility and for the sake
 # of a cleaner namespace. These symbols used to be in
-# django/core/mail.py before the introduction of email
+# hibee/core/mail.py before the introduction of email
 # backends and the subsequent reorganization (See #10355)
-from django.core.mail.message import (
+from hibee.core.mail.message import (
     DEFAULT_ATTACHMENT_MIME_TYPE,
     BadHeaderError,
     EmailMessage,
@@ -17,8 +17,8 @@ from django.core.mail.message import (
     forbid_multi_line_headers,
     make_msgid,
 )
-from django.core.mail.utils import DNS_NAME, CachedDnsName
-from django.utils.module_loading import import_string
+from hibee.core.mail.utils import DNS_NAME, CachedDnsName
+from hibee.utils.module_loading import import_string
 
 __all__ = [
     "CachedDnsName",

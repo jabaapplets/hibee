@@ -1,8 +1,8 @@
 import functools
 
-from django.conf import settings
-from django.urls import LocalePrefixPattern, URLResolver, get_resolver, path
-from django.views.i18n import set_language
+from hibee.conf import settings
+from hibee.urls import LocalePrefixPattern, URLResolver, get_resolver, path
+from hibee.views.i18n import set_language
 
 
 def i18n_patterns(*urls, prefix_default_language=True):

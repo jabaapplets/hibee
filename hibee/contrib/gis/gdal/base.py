@@ -1,5 +1,5 @@
-from django.contrib.gis.gdal.error import GDALException
-from django.contrib.gis.ptr import CPointerBase
+from hibee.contrib.gis.gdal.error import GDALException
+from hibee.contrib.gis.ptr import CPointerBase
 
 
 class GDALBase(CPointerBase):

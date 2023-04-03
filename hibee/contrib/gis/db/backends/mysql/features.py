@@ -1,6 +1,6 @@
-from django.contrib.gis.db.backends.base.features import BaseSpatialFeatures
-from django.db.backends.mysql.features import DatabaseFeatures as MySQLDatabaseFeatures
-from django.utils.functional import cached_property
+from hibee.contrib.gis.db.backends.base.features import BaseSpatialFeatures
+from hibee.db.backends.mysql.features import DatabaseFeatures as MySQLDatabaseFeatures
+from hibee.utils.functional import cached_property
 
 
 class DatabaseFeatures(BaseSpatialFeatures, MySQLDatabaseFeatures):

@@ -1,25 +1,25 @@
-from django.conf import settings
-from django.contrib import admin, messages
-from django.contrib.admin.options import IS_POPUP_VAR
-from django.contrib.admin.utils import unquote
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import (
+from hibee.conf import settings
+from hibee.contrib import admin, messages
+from hibee.contrib.admin.options import IS_POPUP_VAR
+from hibee.contrib.admin.utils import unquote
+from hibee.contrib.auth import update_session_auth_hash
+from hibee.contrib.auth.forms import (
     AdminPasswordChangeForm,
     UserChangeForm,
     UserCreationForm,
 )
-from django.contrib.auth.models import Group, User
-from django.core.exceptions import PermissionDenied
-from django.db import router, transaction
-from django.http import Http404, HttpResponseRedirect
-from django.template.response import TemplateResponse
-from django.urls import path, reverse
-from django.utils.decorators import method_decorator
-from django.utils.html import escape
-from django.utils.translation import gettext
-from django.utils.translation import gettext_lazy as _
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.debug import sensitive_post_parameters
+from hibee.contrib.auth.models import Group, User
+from hibee.core.exceptions import PermissionDenied
+from hibee.db import router, transaction
+from hibee.http import Http404, HttpResponseRedirect
+from hibee.template.response import TemplateResponse
+from hibee.urls import path, reverse
+from hibee.utils.decorators import method_decorator
+from hibee.utils.html import escape
+from hibee.utils.translation import gettext
+from hibee.utils.translation import gettext_lazy as _
+from hibee.views.decorators.csrf import csrf_protect
+from hibee.views.decorators.debug import sensitive_post_parameters
 
 csrf_protect_m = method_decorator(csrf_protect)
 sensitive_post_parameters_m = method_decorator(sensitive_post_parameters())
@@ -131,7 +131,7 @@ class UserAdmin(admin.ModelAdmin):
                 # error message.
                 raise Http404(
                     'Your user does not have the "Change user" permission. In '
-                    "order to add users, Django requires that your user "
+                    "order to add users, Hibee requires that your user "
                     'account have both the "Add user" and "Change user" '
                     "permissions set."
                 )

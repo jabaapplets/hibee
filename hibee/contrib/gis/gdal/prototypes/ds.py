@@ -5,9 +5,9 @@
 """
 from ctypes import POINTER, c_char_p, c_double, c_int, c_long, c_void_p
 
-from django.contrib.gis.gdal.envelope import OGREnvelope
-from django.contrib.gis.gdal.libgdal import lgdal
-from django.contrib.gis.gdal.prototypes.generation import (
+from hibee.contrib.gis.gdal.envelope import OGREnvelope
+from hibee.contrib.gis.gdal.libgdal import lgdal
+from hibee.contrib.gis.gdal.prototypes.generation import (
     bool_output,
     const_string_output,
     double_output,

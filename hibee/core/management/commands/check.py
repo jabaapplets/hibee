@@ -1,11 +1,11 @@
-from django.apps import apps
-from django.core import checks
-from django.core.checks.registry import registry
-from django.core.management.base import BaseCommand, CommandError
+from hibee.apps import apps
+from hibee.core import checks
+from hibee.core.checks.registry import registry
+from hibee.core.management.base import BaseCommand, CommandError
 
 
 class Command(BaseCommand):
-    help = "Checks the entire Django project for potential problems."
+    help = "Checks the entire Hibee project for potential problems."
 
     requires_system_checks = []
 

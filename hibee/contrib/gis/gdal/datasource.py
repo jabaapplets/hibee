@@ -36,12 +36,12 @@
 from ctypes import byref
 from pathlib import Path
 
-from django.contrib.gis.gdal.base import GDALBase
-from django.contrib.gis.gdal.driver import Driver
-from django.contrib.gis.gdal.error import GDALException
-from django.contrib.gis.gdal.layer import Layer
-from django.contrib.gis.gdal.prototypes import ds as capi
-from django.utils.encoding import force_bytes, force_str
+from hibee.contrib.gis.gdal.base import GDALBase
+from hibee.contrib.gis.gdal.driver import Driver
+from hibee.contrib.gis.gdal.error import GDALException
+from hibee.contrib.gis.gdal.layer import Layer
+from hibee.contrib.gis.gdal.prototypes import ds as capi
+from hibee.utils.encoding import force_bytes, force_str
 
 
 # For more information, see the OGR C API documentation:

@@ -9,14 +9,14 @@ import os
 import pathlib
 from urllib.parse import urljoin
 
-from django.conf import settings
-from django.core.files.base import ContentFile
-from django.core.signals import setting_changed
-from django.utils._os import safe_join
-from django.utils.deconstruct import deconstructible
-from django.utils.encoding import filepath_to_uri
-from django.utils.functional import cached_property
-from django.utils.timezone import now
+from hibee.conf import settings
+from hibee.core.files.base import ContentFile
+from hibee.core.signals import setting_changed
+from hibee.utils._os import safe_join
+from hibee.utils.deconstruct import deconstructible
+from hibee.utils.encoding import filepath_to_uri
+from hibee.utils.functional import cached_property
+from hibee.utils.timezone import now
 
 from .base import Storage
 from .mixins import StorageSettingsMixin
@@ -161,7 +161,7 @@ class InMemoryDirNode(TimingMixin):
             del self._children[name]
 
 
-@deconstructible(path="django.core.files.storage.InMemoryStorage")
+@deconstructible(path="hibee.core.files.storage.InMemoryStorage")
 class InMemoryStorage(Storage, StorageSettingsMixin):
     """A storage saving files in memory."""
 

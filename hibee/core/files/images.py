@@ -6,12 +6,12 @@ Requires Pillow as you might imagine.
 import struct
 import zlib
 
-from django.core.files import File
+from hibee.core.files import File
 
 
 class ImageFile(File):
     """
-    A mixin for use alongside django.core.files.base.File, which provides
+    A mixin for use alongside hibee.core.files.base.File, which provides
     additional features for dealing with images.
     """
 

@@ -1,7 +1,7 @@
-from django import template
-from django.conf import settings
-from django.contrib.flatpages.models import FlatPage
-from django.contrib.sites.shortcuts import get_current_site
+from hibee import template
+from hibee.conf import settings
+from hibee.contrib.flatpages.models import FlatPage
+from hibee.contrib.sites.shortcuts import get_current_site
 
 register = template.Library()
 

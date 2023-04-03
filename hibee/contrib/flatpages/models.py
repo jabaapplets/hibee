@@ -1,8 +1,8 @@
-from django.contrib.sites.models import Site
-from django.db import models
-from django.urls import NoReverseMatch, get_script_prefix, reverse
-from django.utils.encoding import iri_to_uri
-from django.utils.translation import gettext_lazy as _
+from hibee.contrib.sites.models import Site
+from hibee.db import models
+from hibee.urls import NoReverseMatch, get_script_prefix, reverse
+from hibee.utils.encoding import iri_to_uri
+from hibee.utils.translation import gettext_lazy as _
 
 
 class FlatPage(models.Model):
@@ -29,7 +29,7 @@ class FlatPage(models.Model):
     sites = models.ManyToManyField(Site, verbose_name=_("sites"))
 
     class Meta:
-        db_table = "django_flatpage"
+        db_table = "hibee_flatpage"
         verbose_name = _("flat page")
         verbose_name_plural = _("flat pages")
         ordering = ["url"]

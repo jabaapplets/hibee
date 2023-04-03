@@ -3,8 +3,8 @@ Module for abstract serializer/unserializer base classes.
 """
 from io import StringIO
 
-from django.core.exceptions import ObjectDoesNotExist
-from django.db import models
+from hibee.core.exceptions import ObjectDoesNotExist
+from hibee.db import models
 
 DEFER_FIELD = object()
 
@@ -75,7 +75,7 @@ class Serializer:
     """
 
     # Indicates if the implemented serializer is only available for
-    # internal Django use.
+    # internal Hibee use.
     internal_use_only = False
     progress_class = ProgressBar
     stream_class = StringIO

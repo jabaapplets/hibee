@@ -1,11 +1,11 @@
-from django.contrib.gis.db.models.fields import (
+from hibee.contrib.gis.db.models.fields import (
     ExtentField,
     GeometryCollectionField,
     GeometryField,
     LineStringField,
 )
-from django.db.models import Aggregate, Value
-from django.utils.functional import cached_property
+from hibee.db.models import Aggregate, Value
+from hibee.utils.functional import cached_property
 
 __all__ = ["Collect", "Extent", "Extent3D", "MakeLine", "Union"]
 

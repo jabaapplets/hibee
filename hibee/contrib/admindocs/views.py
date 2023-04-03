@@ -3,32 +3,32 @@ from importlib import import_module
 from inspect import cleandoc
 from pathlib import Path
 
-from django.apps import apps
-from django.contrib import admin
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.admindocs import utils
-from django.contrib.admindocs.utils import (
+from hibee.apps import apps
+from hibee.contrib import admin
+from hibee.contrib.admin.views.decorators import staff_member_required
+from hibee.contrib.admindocs import utils
+from hibee.contrib.admindocs.utils import (
     remove_non_capturing_groups,
     replace_metacharacters,
     replace_named_groups,
     replace_unnamed_groups,
 )
-from django.core.exceptions import ImproperlyConfigured, ViewDoesNotExist
-from django.db import models
-from django.http import Http404
-from django.template.engine import Engine
-from django.urls import get_mod_func, get_resolver, get_urlconf
-from django.utils._os import safe_join
-from django.utils.decorators import method_decorator
-from django.utils.functional import cached_property
-from django.utils.inspect import (
+from hibee.core.exceptions import ImproperlyConfigured, ViewDoesNotExist
+from hibee.db import models
+from hibee.http import Http404
+from hibee.template.engine import Engine
+from hibee.urls import get_mod_func, get_resolver, get_urlconf
+from hibee.utils._os import safe_join
+from hibee.utils.decorators import method_decorator
+from hibee.utils.functional import cached_property
+from hibee.utils.inspect import (
     func_accepts_kwargs,
     func_accepts_var_args,
     get_func_full_args,
     method_has_no_args,
 )
-from django.utils.translation import gettext as _
-from django.views.generic import TemplateView
+from hibee.utils.translation import gettext as _
+from hibee.views.generic import TemplateView
 
 from .utils import get_view_name
 

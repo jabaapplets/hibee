@@ -1,13 +1,13 @@
 import inspect
 import re
 
-from django.apps import apps as django_apps
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured, PermissionDenied
-from django.middleware.csrf import rotate_token
-from django.utils.crypto import constant_time_compare
-from django.utils.module_loading import import_string
-from django.views.decorators.debug import sensitive_variables
+from hibee.apps import apps as hibee_apps
+from hibee.conf import settings
+from hibee.core.exceptions import ImproperlyConfigured, PermissionDenied
+from hibee.middleware.csrf import rotate_token
+from hibee.utils.crypto import constant_time_compare
+from hibee.utils.module_loading import import_string
+from hibee.views.decorators.debug import sensitive_variables
 
 from .signals import user_logged_in, user_logged_out, user_login_failed
 
@@ -157,7 +157,7 @@ def logout(request):
     user_logged_out.send(sender=user.__class__, request=request, user=user)
     request.session.flush()
     if hasattr(request, "user"):
-        from django.contrib.auth.models import AnonymousUser
+        from hibee.contrib.auth.models import AnonymousUser
 
         request.user = AnonymousUser()
 
@@ -167,7 +167,7 @@ def get_user_model():
     Return the User model that is active in this project.
     """
     try:
-        return django_apps.get_model(settings.AUTH_USER_MODEL, require_ready=False)
+        return hibee_apps.get_model(settings.AUTH_USER_MODEL, require_ready=False)
     except ValueError:
         raise ImproperlyConfigured(
             "AUTH_USER_MODEL must be of the form 'app_label.model_name'"

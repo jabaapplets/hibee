@@ -48,16 +48,16 @@ class PermWrapper:
 
 def auth(request):
     """
-    Return context variables required by apps that use Django's authentication
+    Return context variables required by apps that use Hibee's authentication
     system.
 
     If there is no 'user' attribute in the request, use AnonymousUser (from
-    django.contrib.auth).
+    hibee.contrib.auth).
     """
     if hasattr(request, "user"):
         user = request.user
     else:
-        from django.contrib.auth.models import AnonymousUser
+        from hibee.contrib.auth.models import AnonymousUser
 
         user = AnonymousUser()
 

@@ -1,12 +1,12 @@
-from django import forms
-from django.core import exceptions
-from django.db.backends.postgresql.psycopg_any import (
+from hibee import forms
+from hibee.core import exceptions
+from hibee.db.backends.postgresql.psycopg_any import (
     DateRange,
     DateTimeTZRange,
     NumericRange,
 )
-from django.forms.widgets import HiddenInput, MultiWidget
-from django.utils.translation import gettext_lazy as _
+from hibee.forms.widgets import HiddenInput, MultiWidget
+from hibee.utils.translation import gettext_lazy as _
 
 __all__ = [
     "BaseRangeField",

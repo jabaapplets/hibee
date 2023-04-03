@@ -1,9 +1,9 @@
-from django.contrib.gis.db.models import GeometryField
-from django.contrib.gis.db.models.functions import Distance
-from django.contrib.gis.measure import Area as AreaMeasure
-from django.contrib.gis.measure import Distance as DistanceMeasure
-from django.db import NotSupportedError
-from django.utils.functional import cached_property
+from hibee.contrib.gis.db.models import GeometryField
+from hibee.contrib.gis.db.models.functions import Distance
+from hibee.contrib.gis.measure import Area as AreaMeasure
+from hibee.contrib.gis.measure import Distance as DistanceMeasure
+from hibee.db import NotSupportedError
+from hibee.utils.functional import cached_property
 
 
 class BaseSpatialOperations:
@@ -28,7 +28,7 @@ class BaseSpatialOperations:
 
     geom_func_prefix = ""
 
-    # Mapping between Django function names and backend names, when names do not
+    # Mapping between Hibee function names and backend names, when names do not
     # match; used in spatial_function_name().
     function_names = {}
 

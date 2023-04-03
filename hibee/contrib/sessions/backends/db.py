@@ -1,10 +1,10 @@
 import logging
 
-from django.contrib.sessions.backends.base import CreateError, SessionBase, UpdateError
-from django.core.exceptions import SuspiciousOperation
-from django.db import DatabaseError, IntegrityError, router, transaction
-from django.utils import timezone
-from django.utils.functional import cached_property
+from hibee.contrib.sessions.backends.base import CreateError, SessionBase, UpdateError
+from hibee.core.exceptions import SuspiciousOperation
+from hibee.db import DatabaseError, IntegrityError, router, transaction
+from hibee.utils import timezone
+from hibee.utils.functional import cached_property
 
 
 class SessionStore(SessionBase):
@@ -18,8 +18,8 @@ class SessionStore(SessionBase):
     @classmethod
     def get_model_class(cls):
         # Avoids a circular import and allows importing SessionStore when
-        # django.contrib.sessions is not in INSTALLED_APPS.
-        from django.contrib.sessions.models import Session
+        # hibee.contrib.sessions is not in INSTALLED_APPS.
+        from hibee.contrib.sessions.models import Session
 
         return Session
 
@@ -34,7 +34,7 @@ class SessionStore(SessionBase):
             )
         except (self.model.DoesNotExist, SuspiciousOperation) as e:
             if isinstance(e, SuspiciousOperation):
-                logger = logging.getLogger("django.security.%s" % e.__class__.__name__)
+                logger = logging.getLogger("hibee.security.%s" % e.__class__.__name__)
                 logger.warning(str(e))
             self._session_key = None
 

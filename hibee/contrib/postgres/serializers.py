@@ -1,4 +1,4 @@
-from django.db.migrations.serializer import BaseSerializer
+from hibee.db.migrations.serializer import BaseSerializer
 
 
 class RangeSerializer(BaseSerializer):

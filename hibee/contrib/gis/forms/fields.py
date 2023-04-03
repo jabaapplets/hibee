@@ -1,8 +1,8 @@
-from django import forms
-from django.contrib.gis.gdal import GDALException
-from django.contrib.gis.geos import GEOSException, GEOSGeometry
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
+from hibee import forms
+from hibee.contrib.gis.gdal import GDALException
+from hibee.contrib.gis.geos import GEOSException, GEOSGeometry
+from hibee.core.exceptions import ValidationError
+from hibee.utils.translation import gettext_lazy as _
 
 from .widgets import OpenLayersWidget
 

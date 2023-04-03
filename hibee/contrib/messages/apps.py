@@ -1,8 +1,8 @@
-from django.apps import AppConfig
-from django.contrib.messages.storage import base
-from django.contrib.messages.utils import get_level_tags
-from django.core.signals import setting_changed
-from django.utils.translation import gettext_lazy as _
+from hibee.apps import AppConfig
+from hibee.contrib.messages.storage import base
+from hibee.contrib.messages.utils import get_level_tags
+from hibee.core.signals import setting_changed
+from hibee.utils.translation import gettext_lazy as _
 
 
 def update_level_tags(setting, **kwargs):
@@ -11,7 +11,7 @@ def update_level_tags(setting, **kwargs):
 
 
 class MessagesConfig(AppConfig):
-    name = "django.contrib.messages"
+    name = "hibee.contrib.messages"
     verbose_name = _("Messages")
 
     def ready(self):

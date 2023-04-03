@@ -2,8 +2,8 @@
 Backend for test environment.
 """
 
-from django.core import mail
-from django.core.mail.backends.base import BaseEmailBackend
+from hibee.core import mail
+from hibee.core.mail.backends.base import BaseEmailBackend
 
 
 class EmailBackend(BaseEmailBackend):

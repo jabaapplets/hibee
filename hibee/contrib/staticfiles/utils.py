@@ -1,8 +1,8 @@
 import fnmatch
 import os
 
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
+from hibee.conf import settings
+from hibee.core.exceptions import ImproperlyConfigured
 
 
 def matches_patterns(path, patterns):

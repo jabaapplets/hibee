@@ -1,18 +1,18 @@
 import warnings
 
-from django.db.models import CharField, EmailField, TextField
-from django.test.utils import ignore_warnings
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibee.db.models import CharField, EmailField, TextField
+from hibee.test.utils import ignore_warnings
+from hibee.utils.deprecation import RemovedInHibee51Warning
 
 __all__ = ["CICharField", "CIEmailField", "CIText", "CITextField"]
 
 
-# RemovedInDjango51Warning.
+# RemovedInHibee51Warning.
 class CIText:
     def __init__(self, *args, **kwargs):
         warnings.warn(
-            "django.contrib.postgres.fields.CIText mixin is deprecated.",
-            RemovedInDjango51Warning,
+            "hibee.contrib.postgres.fields.CIText mixin is deprecated.",
+            RemovedInHibee51Warning,
             stacklevel=2,
         )
         super().__init__(*args, **kwargs)
@@ -27,8 +27,8 @@ class CIText:
 class CICharField(CIText, CharField):
     system_check_deprecated_details = {
         "msg": (
-            "django.contrib.postgres.fields.CICharField is deprecated. Support for it "
-            "(except in historical migrations) will be removed in Django 5.1."
+            "hibee.contrib.postgres.fields.CICharField is deprecated. Support for it "
+            "(except in historical migrations) will be removed in Hibee 5.1."
         ),
         "hint": (
             'Use CharField(db_collation="…") with a case-insensitive non-deterministic '
@@ -38,15 +38,15 @@ class CICharField(CIText, CharField):
     }
 
     def __init__(self, *args, **kwargs):
-        with ignore_warnings(category=RemovedInDjango51Warning):
+        with ignore_warnings(category=RemovedInHibee51Warning):
             super().__init__(*args, **kwargs)
 
 
 class CIEmailField(CIText, EmailField):
     system_check_deprecated_details = {
         "msg": (
-            "django.contrib.postgres.fields.CIEmailField is deprecated. Support for it "
-            "(except in historical migrations) will be removed in Django 5.1."
+            "hibee.contrib.postgres.fields.CIEmailField is deprecated. Support for it "
+            "(except in historical migrations) will be removed in Hibee 5.1."
         ),
         "hint": (
             'Use EmailField(db_collation="…") with a case-insensitive '
@@ -56,15 +56,15 @@ class CIEmailField(CIText, EmailField):
     }
 
     def __init__(self, *args, **kwargs):
-        with ignore_warnings(category=RemovedInDjango51Warning):
+        with ignore_warnings(category=RemovedInHibee51Warning):
             super().__init__(*args, **kwargs)
 
 
 class CITextField(CIText, TextField):
     system_check_deprecated_details = {
         "msg": (
-            "django.contrib.postgres.fields.CITextField is deprecated. Support for it "
-            "(except in historical migrations) will be removed in Django 5.1."
+            "hibee.contrib.postgres.fields.CITextField is deprecated. Support for it "
+            "(except in historical migrations) will be removed in Hibee 5.1."
         ),
         "hint": (
             'Use TextField(db_collation="…") with a case-insensitive non-deterministic '
@@ -74,5 +74,5 @@ class CITextField(CIText, TextField):
     }
 
     def __init__(self, *args, **kwargs):
-        with ignore_warnings(category=RemovedInDjango51Warning):
+        with ignore_warnings(category=RemovedInHibee51Warning):
             super().__init__(*args, **kwargs)

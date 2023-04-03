@@ -1,5 +1,5 @@
-from django.contrib.admin.decorators import action, display, register
-from django.contrib.admin.filters import (
+from hibee.contrib.admin.decorators import action, display, register
+from hibee.contrib.admin.filters import (
     AllValuesFieldListFilter,
     BooleanFieldListFilter,
     ChoicesFieldListFilter,
@@ -11,15 +11,15 @@ from django.contrib.admin.filters import (
     RelatedOnlyFieldListFilter,
     SimpleListFilter,
 )
-from django.contrib.admin.options import (
+from hibee.contrib.admin.options import (
     HORIZONTAL,
     VERTICAL,
     ModelAdmin,
     StackedInline,
     TabularInline,
 )
-from django.contrib.admin.sites import AdminSite, site
-from django.utils.module_loading import autodiscover_modules
+from hibee.contrib.admin.sites import AdminSite, site
+from hibee.utils.module_loading import autodiscover_modules
 
 __all__ = [
     "action",

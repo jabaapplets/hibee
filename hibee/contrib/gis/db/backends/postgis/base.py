@@ -1,17 +1,17 @@
 from functools import lru_cache
 
-from django.db.backends.base.base import NO_DB_ALIAS
-from django.db.backends.postgresql.base import DatabaseWrapper as PsycopgDatabaseWrapper
-from django.db.backends.postgresql.features import (
+from hibee.db.backends.base.base import NO_DB_ALIAS
+from hibee.db.backends.postgresql.base import DatabaseWrapper as PsycopgDatabaseWrapper
+from hibee.db.backends.postgresql.features import (
     DatabaseFeatures as PsycopgDatabaseFeatures,
 )
-from django.db.backends.postgresql.introspection import (
+from hibee.db.backends.postgresql.introspection import (
     DatabaseIntrospection as PsycopgDatabaseIntrospection,
 )
-from django.db.backends.postgresql.operations import (
+from hibee.db.backends.postgresql.operations import (
     DatabaseOperations as PsycopgDatabaseOperations,
 )
-from django.db.backends.postgresql.psycopg_any import is_psycopg3
+from hibee.db.backends.postgresql.psycopg_any import is_psycopg3
 
 from .adapter import PostGISAdapter
 from .features import DatabaseFeatures

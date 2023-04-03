@@ -1,4 +1,4 @@
-from django.db.models.expressions import OrderByList
+from hibee.db.models.expressions import OrderByList
 
 
 class OrderableAggMixin:

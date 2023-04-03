@@ -1,5 +1,5 @@
-from django.contrib import admin
-from django.contrib.sites.models import Site
+from hibee.contrib import admin
+from hibee.contrib.sites.models import Site
 
 
 @admin.register(Site)

@@ -5,11 +5,11 @@ import socket
 import sys
 from datetime import datetime
 
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
-from django.core.servers.basehttp import WSGIServer, get_internal_wsgi_application, run
-from django.utils import autoreload
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.conf import settings
+from hibee.core.management.base import BaseCommand, CommandError
+from hibee.core.servers.basehttp import WSGIServer, get_internal_wsgi_application, run
+from hibee.utils import autoreload
+from hibee.utils.regex_helper import _lazy_re_compile
 
 naiveip_re = _lazy_re_compile(
     r"""^(?:
@@ -45,19 +45,19 @@ class Command(BaseCommand):
             "-6",
             action="store_true",
             dest="use_ipv6",
-            help="Tells Django to use an IPv6 address.",
+            help="Tells Hibee to use an IPv6 address.",
         )
         parser.add_argument(
             "--nothreading",
             action="store_false",
             dest="use_threading",
-            help="Tells Django to NOT use threading.",
+            help="Tells Hibee to NOT use threading.",
         )
         parser.add_argument(
             "--noreload",
             action="store_false",
             dest="use_reloader",
-            help="Tells Django to NOT use the auto-reloader.",
+            help="Tells Hibee to NOT use the auto-reloader.",
         )
         parser.add_argument(
             "--skip-checks",
@@ -70,7 +70,7 @@ class Command(BaseCommand):
             # We rely on the environment because it's currently the only
             # way to reach WSGIRequestHandler. This seems an acceptable
             # compromise considering `runserver` runs indefinitely.
-            os.environ["DJANGO_COLORS"] = "nocolor"
+            os.environ["HIBEE_COLORS"] = "nocolor"
         super().execute(*args, **options)
 
     def get_handler(self, *args, **options):
@@ -179,7 +179,7 @@ class Command(BaseCommand):
         version = self.get_version()
         print(
             f"{now}\n"
-            f"Django version {version}, using settings {settings.SETTINGS_MODULE!r}\n"
+            f"Hibee version {version}, using settings {settings.SETTINGS_MODULE!r}\n"
             f"Starting development server at {self.protocol}://{addr}:{server_port}/\n"
             f"Quit the server with {quit_command}.",
             file=self.stdout,

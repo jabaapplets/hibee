@@ -62,7 +62,7 @@ class MapWidget {
             this.options.base_layer = new ol.layer.Tile({source: new ol.source.OSM()});
         }
 
-        // RemovedInDjango51Warning: when the deprecation ends, remove setting
+        // RemovedInHibee51Warning: when the deprecation ends, remove setting
         // width/height (3 lines below).
         const mapContainer = document.getElementById(this.options.map_id);
         mapContainer.style.width = `${mapContainer.dataset.width}px`;

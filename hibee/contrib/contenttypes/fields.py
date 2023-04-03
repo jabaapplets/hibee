@@ -4,22 +4,22 @@ from collections import defaultdict
 
 from asgiref.sync import sync_to_async
 
-from django.contrib.contenttypes.models import ContentType
-from django.core import checks
-from django.core.exceptions import FieldDoesNotExist, ObjectDoesNotExist
-from django.db import DEFAULT_DB_ALIAS, models, router, transaction
-from django.db.models import DO_NOTHING, ForeignObject, ForeignObjectRel
-from django.db.models.base import ModelBase, make_foreign_order_accessors
-from django.db.models.fields.mixins import FieldCacheMixin
-from django.db.models.fields.related import (
+from hibee.contrib.contenttypes.models import ContentType
+from hibee.core import checks
+from hibee.core.exceptions import FieldDoesNotExist, ObjectDoesNotExist
+from hibee.db import DEFAULT_DB_ALIAS, models, router, transaction
+from hibee.db.models import DO_NOTHING, ForeignObject, ForeignObjectRel
+from hibee.db.models.base import ModelBase, make_foreign_order_accessors
+from hibee.db.models.fields.mixins import FieldCacheMixin
+from hibee.db.models.fields.related import (
     ReverseManyToOneDescriptor,
     lazy_related_operation,
 )
-from django.db.models.query_utils import PathInfo
-from django.db.models.sql import AND
-from django.db.models.sql.where import WhereNode
-from django.db.models.utils import AltersData
-from django.utils.functional import cached_property
+from hibee.db.models.query_utils import PathInfo
+from hibee.db.models.sql import AND
+from hibee.db.models.sql.where import WhereNode
+from hibee.db.models.utils import AltersData
+from hibee.utils.functional import cached_property
 
 
 class GenericForeignKey(FieldCacheMixin):
@@ -326,7 +326,7 @@ class GenericRelation(ForeignObject):
             limit_choices_to=limit_choices_to,
         )
 
-        # Reverse relations are always nullable (Django can't enforce that a
+        # Reverse relations are always nullable (Hibee can't enforce that a
         # foreign key on the related model points to this model).
         kwargs["null"] = True
         kwargs["blank"] = True

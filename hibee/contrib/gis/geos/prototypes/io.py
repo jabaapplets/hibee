@@ -1,19 +1,19 @@
 import threading
 from ctypes import POINTER, Structure, byref, c_byte, c_char_p, c_int, c_size_t
 
-from django.contrib.gis.geos.base import GEOSBase
-from django.contrib.gis.geos.libgeos import (
+from hibee.contrib.gis.geos.base import GEOSBase
+from hibee.contrib.gis.geos.libgeos import (
     GEOM_PTR,
     GEOSFuncFactory,
     geos_version_tuple,
 )
-from django.contrib.gis.geos.prototypes.errcheck import (
+from hibee.contrib.gis.geos.prototypes.errcheck import (
     check_geom,
     check_sized_string,
     check_string,
 )
-from django.contrib.gis.geos.prototypes.geom import c_uchar_p, geos_char_p
-from django.utils.encoding import force_bytes
+from hibee.contrib.gis.geos.prototypes.geom import c_uchar_p, geos_char_p
+from hibee.utils.encoding import force_bytes
 
 
 # ### The WKB/WKT Reader/Writer structures and pointers ###
@@ -245,7 +245,7 @@ class WKBWriter(IOBase):
         self.outdim = dim
 
     def _handle_empty_point(self, geom):
-        from django.contrib.gis.geos import Point
+        from hibee.contrib.gis.geos import Point
 
         if isinstance(geom, Point) and geom.empty:
             if self.srid:
@@ -259,7 +259,7 @@ class WKBWriter(IOBase):
 
     def write(self, geom):
         "Return the WKB representation of the given geometry."
-        from django.contrib.gis.geos import Polygon
+        from hibee.contrib.gis.geos import Polygon
 
         geom = self._handle_empty_point(geom)
         wkb = wkb_writer_write(self.ptr, geom.ptr, byref(c_size_t()))
@@ -271,7 +271,7 @@ class WKBWriter(IOBase):
 
     def write_hex(self, geom):
         "Return the HEXEWKB representation of the given geometry."
-        from django.contrib.gis.geos.polygon import Polygon
+        from hibee.contrib.gis.geos.polygon import Polygon
 
         geom = self._handle_empty_point(geom)
         wkb = wkb_writer_write_hex(self.ptr, geom.ptr, byref(c_size_t()))

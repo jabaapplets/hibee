@@ -2,11 +2,11 @@
 Cached, database-backed sessions.
 """
 
-from django.conf import settings
-from django.contrib.sessions.backends.db import SessionStore as DBStore
-from django.core.cache import caches
+from hibee.conf import settings
+from hibee.contrib.sessions.backends.db import SessionStore as DBStore
+from hibee.core.cache import caches
 
-KEY_PREFIX = "django.contrib.sessions.cached_db"
+KEY_PREFIX = "hibee.contrib.sessions.cached_db"
 
 
 class SessionStore(DBStore):

@@ -3,8 +3,8 @@
 """
 from ctypes import c_void_p, string_at
 
-from django.contrib.gis.geos.error import GEOSException
-from django.contrib.gis.geos.libgeos import GEOSFuncFactory
+from hibee.contrib.gis.geos.error import GEOSException
+from hibee.contrib.gis.geos.libgeos import GEOSFuncFactory
 
 # Getting the `free` routine used to free the memory allocated for
 # string pointers returned by GEOS.

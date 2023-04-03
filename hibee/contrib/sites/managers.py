@@ -1,7 +1,7 @@
-from django.conf import settings
-from django.core import checks
-from django.core.exceptions import FieldDoesNotExist
-from django.db import models
+from hibee.conf import settings
+from hibee.core import checks
+from hibee.core.exceptions import FieldDoesNotExist
+from hibee.db import models
 
 
 class CurrentSiteManager(models.Manager):

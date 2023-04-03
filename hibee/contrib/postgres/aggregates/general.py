@@ -1,9 +1,9 @@
 import json
 import warnings
 
-from django.contrib.postgres.fields import ArrayField
-from django.db.models import Aggregate, BooleanField, JSONField, TextField, Value
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibee.contrib.postgres.fields import ArrayField
+from hibee.db.models import Aggregate, BooleanField, JSONField, TextField, Value
+from hibee.utils.deprecation import RemovedInHibee51Warning
 
 from .mixins import OrderableAggMixin
 
@@ -57,7 +57,7 @@ class JSONBAgg(OrderableAggMixin, Aggregate):
     allow_distinct = True
     output_field = JSONField()
 
-    # RemovedInDjango51Warning: When the deprecation ends, remove __init__().
+    # RemovedInHibee51Warning: When the deprecation ends, remove __init__().
     def __init__(self, *expressions, default=None, **extra):
         super().__init__(*expressions, default=default, **extra)
         if (
@@ -74,7 +74,7 @@ class JSONBAgg(OrderableAggMixin, Aggregate):
                     "JSONBAgg(default) is deprecated. Pass default="
                     f"Value({value!r}, output_field=JSONField()) instead.",
                     stacklevel=2,
-                    category=RemovedInDjango51Warning,
+                    category=RemovedInHibee51Warning,
                 )
                 self.default.output_field = self.output_field
             else:
@@ -83,7 +83,7 @@ class JSONBAgg(OrderableAggMixin, Aggregate):
                     "Passing an encoded JSON string as JSONBAgg(default) is "
                     f"deprecated. Pass default={decoded!r} instead.",
                     stacklevel=2,
-                    category=RemovedInDjango51Warning,
+                    category=RemovedInHibee51Warning,
                 )
 
 

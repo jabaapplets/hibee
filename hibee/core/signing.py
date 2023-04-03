@@ -40,12 +40,12 @@ import time
 import warnings
 import zlib
 
-from django.conf import settings
-from django.utils.crypto import constant_time_compare, salted_hmac
-from django.utils.deprecation import RemovedInDjango51Warning
-from django.utils.encoding import force_bytes
-from django.utils.module_loading import import_string
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.conf import settings
+from hibee.utils.crypto import constant_time_compare, salted_hmac
+from hibee.utils.deprecation import RemovedInHibee51Warning
+from hibee.utils.encoding import force_bytes
+from hibee.utils.module_loading import import_string
+from hibee.utils.regex_helper import _lazy_re_compile
 
 _SEP_UNSAFE = _lazy_re_compile(r"^[A-z0-9-_=]*$")
 BASE62_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -105,10 +105,10 @@ def base64_hmac(salt, value, key, algorithm="sha1"):
 
 def _cookie_signer_key(key):
     # SECRET_KEYS items may be str or bytes.
-    return b"django.http.cookies" + force_bytes(key)
+    return b"hibee.http.cookies" + force_bytes(key)
 
 
-def get_cookie_signer(salt="django.core.signing.get_cookie_signer"):
+def get_cookie_signer(salt="hibee.core.signing.get_cookie_signer"):
     Signer = import_string(settings.SIGNING_BACKEND)
     return Signer(
         key=_cookie_signer_key(settings.SECRET_KEY),
@@ -131,7 +131,7 @@ class JSONSerializer:
 
 
 def dumps(
-    obj, key=None, salt="django.core.signing", serializer=JSONSerializer, compress=False
+    obj, key=None, salt="hibee.core.signing", serializer=JSONSerializer, compress=False
 ):
     """
     Return URL-safe, hmac signed base64 compressed JSON string. If key is
@@ -157,7 +157,7 @@ def dumps(
 def loads(
     s,
     key=None,
-    salt="django.core.signing",
+    salt="hibee.core.signing",
     serializer=JSONSerializer,
     max_age=None,
     fallback_keys=None,
@@ -177,7 +177,7 @@ def loads(
 
 
 class Signer:
-    # RemovedInDjango51Warning: When the deprecation ends, replace with:
+    # RemovedInHibee51Warning: When the deprecation ends, replace with:
     # def __init__(
     #   self, *, key=None, sep=":", salt=None, algorithm=None, fallback_keys=None
     # ):
@@ -202,12 +202,12 @@ class Signer:
             self.__class__.__name__,
         )
         self.algorithm = algorithm or "sha256"
-        # RemovedInDjango51Warning.
+        # RemovedInHibee51Warning.
         if args:
             warnings.warn(
                 f"Passing positional arguments to {self.__class__.__name__} is "
                 f"deprecated.",
-                RemovedInDjango51Warning,
+                RemovedInHibee51Warning,
                 stacklevel=2,
             )
             for arg, attr in zip(

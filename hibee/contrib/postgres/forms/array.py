@@ -1,13 +1,13 @@
 import copy
 from itertools import chain
 
-from django import forms
-from django.contrib.postgres.validators import (
+from hibee import forms
+from hibee.contrib.postgres.validators import (
     ArrayMaxLengthValidator,
     ArrayMinLengthValidator,
 )
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
+from hibee.core.exceptions import ValidationError
+from hibee.utils.translation import gettext_lazy as _
 
 from ..utils import prefix_validation_error
 

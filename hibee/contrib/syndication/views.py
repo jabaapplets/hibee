@@ -1,15 +1,15 @@
 from inspect import getattr_static, unwrap
 
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.exceptions import ImproperlyConfigured, ObjectDoesNotExist
-from django.http import Http404, HttpResponse
-from django.template import TemplateDoesNotExist, loader
-from django.utils import feedgenerator
-from django.utils.encoding import iri_to_uri
-from django.utils.html import escape
-from django.utils.http import http_date
-from django.utils.timezone import get_default_timezone, is_naive, make_aware
-from django.utils.translation import get_language
+from hibee.contrib.sites.shortcuts import get_current_site
+from hibee.core.exceptions import ImproperlyConfigured, ObjectDoesNotExist
+from hibee.http import Http404, HttpResponse
+from hibee.template import TemplateDoesNotExist, loader
+from hibee.utils import feedgenerator
+from hibee.utils.encoding import iri_to_uri
+from hibee.utils.html import escape
+from hibee.utils.http import http_date
+from hibee.utils.timezone import get_default_timezone, is_naive, make_aware
+from hibee.utils.translation import get_language
 
 
 def add_domain(domain, url, secure=False):

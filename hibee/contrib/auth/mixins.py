@@ -1,10 +1,10 @@
 from urllib.parse import urlparse
 
-from django.conf import settings
-from django.contrib.auth import REDIRECT_FIELD_NAME
-from django.contrib.auth.views import redirect_to_login
-from django.core.exceptions import ImproperlyConfigured, PermissionDenied
-from django.shortcuts import resolve_url
+from hibee.conf import settings
+from hibee.contrib.auth import REDIRECT_FIELD_NAME
+from hibee.contrib.auth.views import redirect_to_login
+from hibee.core.exceptions import ImproperlyConfigured, PermissionDenied
+from hibee.shortcuts import resolve_url
 
 
 class AccessMixin:

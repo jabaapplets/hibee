@@ -2,13 +2,13 @@ import re
 from datetime import date, datetime, timezone
 from decimal import Decimal
 
-from django import template
-from django.template import defaultfilters
-from django.utils.formats import number_format
-from django.utils.safestring import mark_safe
-from django.utils.timezone import is_aware
-from django.utils.translation import gettext as _
-from django.utils.translation import (
+from hibee import template
+from hibee.template import defaultfilters
+from hibee.utils.formats import number_format
+from hibee.utils.safestring import mark_safe
+from hibee.utils.timezone import is_aware
+from hibee.utils.translation import gettext as _
+from hibee.utils.translation import (
     gettext_lazy,
     ngettext,
     ngettext_lazy,

@@ -1,7 +1,7 @@
 import json
 
-from django import template
-from django.template.context import Context
+from hibee import template
+from hibee.template.context import Context
 
 from .base import InclusionAdminNode
 

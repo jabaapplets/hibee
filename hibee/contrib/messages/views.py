@@ -1,4 +1,4 @@
-from django.contrib import messages
+from hibee.contrib import messages
 
 
 class SuccessMessageMixin:

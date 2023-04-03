@@ -1,12 +1,12 @@
 import time
 from importlib import import_module
 
-from django.conf import settings
-from django.contrib.sessions.backends.base import UpdateError
-from django.contrib.sessions.exceptions import SessionInterrupted
-from django.utils.cache import patch_vary_headers
-from django.utils.deprecation import MiddlewareMixin
-from django.utils.http import http_date
+from hibee.conf import settings
+from hibee.contrib.sessions.backends.base import UpdateError
+from hibee.contrib.sessions.exceptions import SessionInterrupted
+from hibee.utils.cache import patch_vary_headers
+from hibee.utils.deprecation import MiddlewareMixin
+from hibee.utils.http import http_date
 
 
 class SessionMiddleware(MiddlewareMixin):

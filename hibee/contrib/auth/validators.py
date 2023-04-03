@@ -1,8 +1,8 @@
 import re
 
-from django.core import validators
-from django.utils.deconstruct import deconstructible
-from django.utils.translation import gettext_lazy as _
+from hibee.core import validators
+from hibee.utils.deconstruct import deconstructible
+from hibee.utils.translation import gettext_lazy as _
 
 
 @deconstructible

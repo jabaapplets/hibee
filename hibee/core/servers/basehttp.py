@@ -14,15 +14,15 @@ import sys
 from collections import deque
 from wsgiref import simple_server
 
-from django.core.exceptions import ImproperlyConfigured
-from django.core.handlers.wsgi import LimitedStream
-from django.core.wsgi import get_wsgi_application
-from django.db import connections
-from django.utils.module_loading import import_string
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.core.handlers.wsgi import LimitedStream
+from hibee.core.wsgi import get_wsgi_application
+from hibee.db import connections
+from hibee.utils.module_loading import import_string
 
 __all__ = ("WSGIServer", "WSGIRequestHandler")
 
-logger = logging.getLogger("django.server")
+logger = logging.getLogger("hibee.server")
 
 
 def get_internal_wsgi_application():
@@ -32,13 +32,13 @@ def get_internal_wsgi_application():
     this will be the ``application`` object in ``projectname/wsgi.py``.
 
     This function, and the ``WSGI_APPLICATION`` setting itself, are only useful
-    for Django's internal server (runserver); external WSGI servers should just
+    for Hibee's internal server (runserver); external WSGI servers should just
     be configured to point to the correct application object directly.
 
     If settings.WSGI_APPLICATION is not set (is ``None``), return
-    whatever ``django.core.wsgi.get_wsgi_application`` returns.
+    whatever ``hibee.core.wsgi.get_wsgi_application`` returns.
     """
-    from django.conf import settings
+    from hibee.conf import settings
 
     app_path = getattr(settings, "WSGI_APPLICATION")
     if app_path is None:

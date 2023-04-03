@@ -4,18 +4,18 @@ import re
 from functools import partial, update_wrapper
 from urllib.parse import quote as urlquote
 
-from django import forms
-from django.conf import settings
-from django.contrib import messages
-from django.contrib.admin import helpers, widgets
-from django.contrib.admin.checks import (
+from hibee import forms
+from hibee.conf import settings
+from hibee.contrib import messages
+from hibee.contrib.admin import helpers, widgets
+from hibee.contrib.admin.checks import (
     BaseModelAdminChecks,
     InlineModelAdminChecks,
     ModelAdminChecks,
 )
-from django.contrib.admin.exceptions import DisallowedModelAdminToField
-from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
-from django.contrib.admin.utils import (
+from hibee.contrib.admin.exceptions import DisallowedModelAdminToField
+from hibee.contrib.admin.templatetags.admin_urls import add_preserved_filters
+from hibee.contrib.admin.utils import (
     NestedObjects,
     construct_change_message,
     flatten_fieldsets,
@@ -26,45 +26,45 @@ from django.contrib.admin.utils import (
     quote,
     unquote,
 )
-from django.contrib.admin.widgets import AutocompleteSelect, AutocompleteSelectMultiple
-from django.contrib.auth import get_permission_codename
-from django.core.exceptions import (
+from hibee.contrib.admin.widgets import AutocompleteSelect, AutocompleteSelectMultiple
+from hibee.contrib.auth import get_permission_codename
+from hibee.core.exceptions import (
     FieldDoesNotExist,
     FieldError,
     PermissionDenied,
     ValidationError,
 )
-from django.core.paginator import Paginator
-from django.db import models, router, transaction
-from django.db.models.constants import LOOKUP_SEP
-from django.forms.formsets import DELETION_FIELD_NAME, all_valid
-from django.forms.models import (
+from hibee.core.paginator import Paginator
+from hibee.db import models, router, transaction
+from hibee.db.models.constants import LOOKUP_SEP
+from hibee.forms.formsets import DELETION_FIELD_NAME, all_valid
+from hibee.forms.models import (
     BaseInlineFormSet,
     inlineformset_factory,
     modelform_defines_fields,
     modelform_factory,
     modelformset_factory,
 )
-from django.forms.widgets import CheckboxSelectMultiple, SelectMultiple
-from django.http import HttpResponseRedirect
-from django.http.response import HttpResponseBase
-from django.template.response import SimpleTemplateResponse, TemplateResponse
-from django.urls import reverse
-from django.utils.decorators import method_decorator
-from django.utils.html import format_html
-from django.utils.http import urlencode
-from django.utils.safestring import mark_safe
-from django.utils.text import (
+from hibee.forms.widgets import CheckboxSelectMultiple, SelectMultiple
+from hibee.http import HttpResponseRedirect
+from hibee.http.response import HttpResponseBase
+from hibee.template.response import SimpleTemplateResponse, TemplateResponse
+from hibee.urls import reverse
+from hibee.utils.decorators import method_decorator
+from hibee.utils.html import format_html
+from hibee.utils.http import urlencode
+from hibee.utils.safestring import mark_safe
+from hibee.utils.text import (
     capfirst,
     format_lazy,
     get_text_list,
     smart_split,
     unescape_string_literal,
 )
-from django.utils.translation import gettext as _
-from django.utils.translation import ngettext
-from django.views.decorators.csrf import csrf_protect
-from django.views.generic import RedirectView
+from hibee.utils.translation import gettext as _
+from hibee.utils.translation import ngettext
+from hibee.views.decorators.csrf import csrf_protect
+from hibee.views.generic import RedirectView
 
 IS_POPUP_VAR = "_popup"
 TO_FIELD_VAR = "_to_field"
@@ -76,7 +76,7 @@ HORIZONTAL, VERTICAL = 1, 2
 def get_content_type_for_model(obj):
     # Since this module gets imported in the application's root package,
     # it cannot import models from other applications at the module level.
-    from django.contrib.contenttypes.models import ContentType
+    from hibee.contrib.contenttypes.models import ContentType
 
     return ContentType.objects.get_for_model(obj, for_concrete_model=False)
 
@@ -429,7 +429,7 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
         )
 
     def lookup_allowed(self, lookup, value):
-        from django.contrib.admin.filters import SimpleListFilter
+        from hibee.contrib.admin.filters import SimpleListFilter
 
         model = self.model
         # Check FKey lookups that are allowed, so that popups produced by
@@ -546,7 +546,7 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
     def has_change_permission(self, request, obj=None):
         """
         Return True if the given request has permission to change the given
-        Django model instance, the default implementation doesn't examine the
+        Hibee model instance, the default implementation doesn't examine the
         `obj` parameter.
 
         Can be overridden by the user in subclasses. In such case it should
@@ -561,7 +561,7 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
     def has_delete_permission(self, request, obj=None):
         """
         Return True if the given request has permission to delete the given
-        Django model instance, the default implementation doesn't examine the
+        Hibee model instance, the default implementation doesn't examine the
         `obj` parameter.
 
         Can be overridden by the user in subclasses. In such case it should
@@ -576,7 +576,7 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
     def has_view_permission(self, request, obj=None):
         """
         Return True if the given request has permission to view the given
-        Django model instance. The default implementation doesn't examine the
+        Hibee model instance. The default implementation doesn't examine the
         `obj` parameter.
 
         If overridden by the user in subclasses, it should return True if the
@@ -680,7 +680,7 @@ class ModelAdmin(BaseModelAdmin):
         return inline_instances
 
     def get_urls(self):
-        from django.urls import path
+        from hibee.urls import path
 
         def wrap(view):
             def wrapper(*args, **kwargs):
@@ -816,7 +816,7 @@ class ModelAdmin(BaseModelAdmin):
         """
         Return the ChangeList class for use on the changelist page.
         """
-        from django.contrib.admin.views.main import ChangeList
+        from hibee.contrib.admin.views.main import ChangeList
 
         return ChangeList
 
@@ -916,7 +916,7 @@ class ModelAdmin(BaseModelAdmin):
 
         The default implementation creates an admin LogEntry object.
         """
-        from django.contrib.admin.models import ADDITION, LogEntry
+        from hibee.contrib.admin.models import ADDITION, LogEntry
 
         return LogEntry.objects.log_action(
             user_id=request.user.pk,
@@ -933,7 +933,7 @@ class ModelAdmin(BaseModelAdmin):
 
         The default implementation creates an admin LogEntry object.
         """
-        from django.contrib.admin.models import CHANGE, LogEntry
+        from hibee.contrib.admin.models import CHANGE, LogEntry
 
         return LogEntry.objects.log_action(
             user_id=request.user.pk,
@@ -951,7 +951,7 @@ class ModelAdmin(BaseModelAdmin):
 
         The default implementation creates an admin LogEntry object.
         """
-        from django.contrib.admin.models import DELETION, LogEntry
+        from hibee.contrib.admin.models import DELETION, LogEntry
 
         return LogEntry.objects.log_action(
             user_id=request.user.pk,
@@ -1193,7 +1193,7 @@ class ModelAdmin(BaseModelAdmin):
     ):
         """
         Send a message to the user. The default implementation
-        posts a message using the django.contrib.messages backend.
+        posts a message using the hibee.contrib.messages backend.
 
         Exposes almost the same API as messages.add_message(), but accepts the
         positional arguments in a different order to maintain backwards
@@ -1919,7 +1919,7 @@ class ModelAdmin(BaseModelAdmin):
         """
         The 'change list' admin view for this model.
         """
-        from django.contrib.admin.views.main import ERROR_FLAG
+        from hibee.contrib.admin.views.main import ERROR_FLAG
 
         app_label = self.opts.app_label
         if not self.has_view_or_change_permission(request):
@@ -2175,8 +2175,8 @@ class ModelAdmin(BaseModelAdmin):
 
     def history_view(self, request, object_id, extra_context=None):
         "The 'history' admin view for this model."
-        from django.contrib.admin.models import LogEntry
-        from django.contrib.admin.views.main import PAGE_VAR
+        from hibee.contrib.admin.models import LogEntry
+        from hibee.contrib.admin.views.main import PAGE_VAR
 
         # First check if the user can see this history.
         model = self.model

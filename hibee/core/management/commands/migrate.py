@@ -2,16 +2,16 @@ import sys
 import time
 from importlib import import_module
 
-from django.apps import apps
-from django.core.management.base import BaseCommand, CommandError, no_translations
-from django.core.management.sql import emit_post_migrate_signal, emit_pre_migrate_signal
-from django.db import DEFAULT_DB_ALIAS, connections, router
-from django.db.migrations.autodetector import MigrationAutodetector
-from django.db.migrations.executor import MigrationExecutor
-from django.db.migrations.loader import AmbiguityError
-from django.db.migrations.state import ModelState, ProjectState
-from django.utils.module_loading import module_has_submodule
-from django.utils.text import Truncator
+from hibee.apps import apps
+from hibee.core.management.base import BaseCommand, CommandError, no_translations
+from hibee.core.management.sql import emit_post_migrate_signal, emit_pre_migrate_signal
+from hibee.db import DEFAULT_DB_ALIAS, connections, router
+from hibee.db.migrations.autodetector import MigrationAutodetector
+from hibee.db.migrations.executor import MigrationExecutor
+from hibee.db.migrations.loader import AmbiguityError
+from hibee.db.migrations.state import ModelState, ProjectState
+from hibee.utils.module_loading import module_has_submodule
+from hibee.utils.text import Truncator
 
 
 class Command(BaseCommand):
@@ -42,7 +42,7 @@ class Command(BaseCommand):
             "--no-input",
             action="store_false",
             dest="interactive",
-            help="Tells Django to NOT prompt the user for input of any kind.",
+            help="Tells Hibee to NOT prompt the user for input of any kind.",
         )
         parser.add_argument(
             "--database",
@@ -63,7 +63,7 @@ class Command(BaseCommand):
             help=(
                 "Detect if tables already exist and fake-apply initial migrations if "
                 "so. Make sure that the current database schema matches your initial "
-                "migration before using this flag. Django will only check for an "
+                "migration before using this flag. Hibee will only check for an "
                 "existing table name."
             ),
         )
@@ -90,7 +90,7 @@ class Command(BaseCommand):
             "--prune",
             action="store_true",
             dest="prune",
-            help="Delete nonexistent migrations from the django_migrations table.",
+            help="Delete nonexistent migrations from the hibee_migrations table.",
         )
 
     @no_translations

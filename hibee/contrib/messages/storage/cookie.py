@@ -1,11 +1,11 @@
 import binascii
 import json
 
-from django.conf import settings
-from django.contrib.messages.storage.base import BaseStorage, Message
-from django.core import signing
-from django.http import SimpleCookie
-from django.utils.safestring import SafeData, mark_safe
+from hibee.conf import settings
+from hibee.contrib.messages.storage.base import BaseStorage, Message
+from hibee.core import signing
+from hibee.http import SimpleCookie
+from hibee.utils.safestring import SafeData, mark_safe
 
 
 class MessageEncoder(json.JSONEncoder):
@@ -70,7 +70,7 @@ class CookieStorage(BaseStorage):
     # restrict the session cookie to 1/2 of 4kb. See #18781.
     max_cookie_size = 2048
     not_finished = "__messagesnotfinished__"
-    key_salt = "django.contrib.messages"
+    key_salt = "hibee.contrib.messages"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

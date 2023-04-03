@@ -1,8 +1,8 @@
 import functools
 
-from django.db import connections
-from django.db.backends.base.base import NO_DB_ALIAS
-from django.db.backends.postgresql.psycopg_any import is_psycopg3
+from hibee.db import connections
+from hibee.db.backends.base.base import NO_DB_ALIAS
+from hibee.db.backends.postgresql.psycopg_any import is_psycopg3
 
 
 def get_type_oids(connection_alias, type_name):

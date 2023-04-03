@@ -1,31 +1,31 @@
 import datetime
 
-from django.contrib.admin.templatetags.admin_urls import add_preserved_filters
-from django.contrib.admin.utils import (
+from hibee.contrib.admin.templatetags.admin_urls import add_preserved_filters
+from hibee.contrib.admin.utils import (
     display_for_field,
     display_for_value,
     get_fields_from_path,
     label_for_field,
     lookup_field,
 )
-from django.contrib.admin.views.main import (
+from hibee.contrib.admin.views.main import (
     ALL_VAR,
     IS_POPUP_VAR,
     ORDER_VAR,
     PAGE_VAR,
     SEARCH_VAR,
 )
-from django.core.exceptions import ObjectDoesNotExist
-from django.db import models
-from django.template import Library
-from django.template.loader import get_template
-from django.templatetags.static import static
-from django.urls import NoReverseMatch
-from django.utils import formats, timezone
-from django.utils.html import format_html
-from django.utils.safestring import mark_safe
-from django.utils.text import capfirst
-from django.utils.translation import gettext as _
+from hibee.core.exceptions import ObjectDoesNotExist
+from hibee.db import models
+from hibee.template import Library
+from hibee.template.loader import get_template
+from hibee.templatetags.static import static
+from hibee.urls import NoReverseMatch
+from hibee.utils import formats, timezone
+from hibee.utils.html import format_html
+from hibee.utils.safestring import mark_safe
+from hibee.utils.text import capfirst
+from hibee.utils.translation import gettext as _
 
 from .base import InclusionAdminNode
 

@@ -11,17 +11,17 @@ import os
 from ctypes import CDLL, CFUNCTYPE, POINTER, Structure, c_char_p
 from ctypes.util import find_library
 
-from django.core.exceptions import ImproperlyConfigured
-from django.utils.functional import SimpleLazyObject, cached_property
-from django.utils.version import get_version_tuple
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.utils.functional import SimpleLazyObject, cached_property
+from hibee.utils.version import get_version_tuple
 
-logger = logging.getLogger("django.contrib.gis")
+logger = logging.getLogger("hibee.contrib.gis")
 
 
 def load_geos():
     # Custom library path set?
     try:
-        from django.conf import settings
+        from hibee.conf import settings
 
         lib_path = settings.GEOS_LIBRARY_PATH
     except (AttributeError, ImportError, ImproperlyConfigured, OSError):
@@ -154,7 +154,7 @@ class GEOSFuncFactory:
 
     @cached_property
     def func(self):
-        from django.contrib.gis.geos.prototypes.threadsafe import GEOSFunc
+        from hibee.contrib.gis.geos.prototypes.threadsafe import GEOSFunc
 
         func = GEOSFunc(self.func_name)
         func.argtypes = self.argtypes or []

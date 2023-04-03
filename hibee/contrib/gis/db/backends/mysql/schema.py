@@ -1,10 +1,10 @@
 import logging
 
-from django.contrib.gis.db.models import GeometryField
-from django.db import OperationalError
-from django.db.backends.mysql.schema import DatabaseSchemaEditor
+from hibee.contrib.gis.db.models import GeometryField
+from hibee.db import OperationalError
+from hibee.db.backends.mysql.schema import DatabaseSchemaEditor
 
-logger = logging.getLogger("django.contrib.gis")
+logger = logging.getLogger("hibee.contrib.gis")
 
 
 class MySQLGISSchemaEditor(DatabaseSchemaEditor):

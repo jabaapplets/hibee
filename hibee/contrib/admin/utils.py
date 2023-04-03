@@ -3,19 +3,19 @@ import decimal
 import json
 from collections import defaultdict
 
-from django.core.exceptions import FieldDoesNotExist
-from django.db import models, router
-from django.db.models.constants import LOOKUP_SEP
-from django.db.models.deletion import Collector
-from django.forms.utils import pretty_name
-from django.urls import NoReverseMatch, reverse
-from django.utils import formats, timezone
-from django.utils.hashable import make_hashable
-from django.utils.html import format_html
-from django.utils.regex_helper import _lazy_re_compile
-from django.utils.text import capfirst
-from django.utils.translation import ngettext
-from django.utils.translation import override as translation_override
+from hibee.core.exceptions import FieldDoesNotExist
+from hibee.db import models, router
+from hibee.db.models.constants import LOOKUP_SEP
+from hibee.db.models.deletion import Collector
+from hibee.forms.utils import pretty_name
+from hibee.urls import NoReverseMatch, reverse
+from hibee.utils import formats, timezone
+from hibee.utils.hashable import make_hashable
+from hibee.utils.html import format_html
+from hibee.utils.regex_helper import _lazy_re_compile
+from hibee.utils.text import capfirst
+from hibee.utils.translation import ngettext
+from hibee.utils.translation import override as translation_override
 
 QUOTE_MAP = {i: "_%02X" % i for i in b'":/_#?;@&=+$,"[]<>%\n\\'}
 UNQUOTE_MAP = {v: chr(k) for k, v in QUOTE_MAP.items()}
@@ -399,7 +399,7 @@ def help_text_for_field(name, model):
 
 
 def display_for_field(value, field, empty_value_display):
-    from django.contrib.admin.templatetags.admin_list import _boolean_icon
+    from hibee.contrib.admin.templatetags.admin_list import _boolean_icon
 
     if getattr(field, "flatchoices", None):
         try:
@@ -436,7 +436,7 @@ def display_for_field(value, field, empty_value_display):
 
 
 def display_for_value(value, empty_value_display, boolean=False):
-    from django.contrib.admin.templatetags.admin_list import _boolean_icon
+    from hibee.contrib.admin.templatetags.admin_list import _boolean_icon
 
     if boolean:
         return _boolean_icon(value)
@@ -502,9 +502,9 @@ def get_fields_from_path(model, path):
     """Return list of Fields given path relative to model.
 
     e.g. (ModelX, "user__groups__name") -> [
-        <django.db.models.fields.related.ForeignKey object at 0x...>,
-        <django.db.models.fields.related.ManyToManyField object at 0x...>,
-        <django.db.models.fields.CharField object at 0x...>,
+        <hibee.db.models.fields.related.ForeignKey object at 0x...>,
+        <hibee.db.models.fields.related.ManyToManyField object at 0x...>,
+        <hibee.db.models.fields.CharField object at 0x...>,
     ]
     """
     pieces = path.split(LOOKUP_SEP)

@@ -4,9 +4,9 @@ Base file upload handler classes, and the built-in concrete subclasses
 import os
 from io import BytesIO
 
-from django.conf import settings
-from django.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
-from django.utils.module_loading import import_string
+from hibee.conf import settings
+from hibee.core.files.uploadedfile import InMemoryUploadedFile, TemporaryUploadedFile
+from hibee.utils.module_loading import import_string
 
 __all__ = [
     "UploadFileException",
@@ -35,7 +35,7 @@ class StopUpload(UploadFileException):
 
     def __init__(self, connection_reset=False):
         """
-        If ``connection_reset`` is ``True``, Django knows will halt the upload
+        If ``connection_reset`` is ``True``, Hibee knows will halt the upload
         without consuming the rest of the upload. This will cause the browser to
         show a "connection reset" error.
         """
@@ -240,10 +240,10 @@ def load_handler(path, *args, **kwargs):
     Given a path to a handler, return an instance of that handler.
 
     E.g.::
-        >>> from django.http import HttpRequest
+        >>> from hibee.http import HttpRequest
         >>> request = HttpRequest()
         >>> load_handler(
-        ...     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+        ...     'hibee.core.files.uploadhandler.TemporaryFileUploadHandler',
         ...     request,
         ... )
         <TemporaryFileUploadHandler object at 0x...>

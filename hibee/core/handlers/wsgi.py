@@ -1,13 +1,13 @@
 from io import IOBase
 
-from django.conf import settings
-from django.core import signals
-from django.core.handlers import base
-from django.http import HttpRequest, QueryDict, parse_cookie
-from django.urls import set_script_prefix
-from django.utils.encoding import repercent_broken_unicode
-from django.utils.functional import cached_property
-from django.utils.regex_helper import _lazy_re_compile
+from hibee.conf import settings
+from hibee.core import signals
+from hibee.core.handlers import base
+from hibee.http import HttpRequest, QueryDict, parse_cookie
+from hibee.urls import set_script_prefix
+from hibee.utils.encoding import repercent_broken_unicode
+from hibee.utils.functional import cached_property
+from hibee.utils.regex_helper import _lazy_re_compile
 
 _slashes_re = _lazy_re_compile(rb"/+")
 
@@ -202,7 +202,7 @@ def get_bytes_from_wsgi(environ, key, default):
     """
     value = environ.get(key, default)
     # Non-ASCII values in the WSGI environ are arbitrarily decoded with
-    # ISO-8859-1. This is wrong for Django websites where UTF-8 is the default.
+    # ISO-8859-1. This is wrong for Hibee websites where UTF-8 is the default.
     # Re-encode to recover the original bytestring.
     return value.encode("iso-8859-1")
 

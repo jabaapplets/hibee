@@ -1,6 +1,6 @@
-from django.db import NotSupportedError
-from django.db.models import Func, Index
-from django.utils.functional import cached_property
+from hibee.db import NotSupportedError
+from hibee.db.models import Func, Index
+from hibee.utils.functional import cached_property
 
 __all__ = [
     "BloomIndex",

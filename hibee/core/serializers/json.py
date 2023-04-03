@@ -7,12 +7,12 @@ import decimal
 import json
 import uuid
 
-from django.core.serializers.base import DeserializationError
-from django.core.serializers.python import Deserializer as PythonDeserializer
-from django.core.serializers.python import Serializer as PythonSerializer
-from django.utils.duration import duration_iso_string
-from django.utils.functional import Promise
-from django.utils.timezone import is_aware
+from hibee.core.serializers.base import DeserializationError
+from hibee.core.serializers.python import Deserializer as PythonDeserializer
+from hibee.core.serializers.python import Serializer as PythonSerializer
+from hibee.utils.duration import duration_iso_string
+from hibee.utils.functional import Promise
+from hibee.utils.timezone import is_aware
 
 
 class Serializer(PythonSerializer):
@@ -28,7 +28,7 @@ class Serializer(PythonSerializer):
         if self.options.get("indent"):
             # Prevent trailing spaces
             self.json_kwargs["separators"] = (",", ": ")
-        self.json_kwargs.setdefault("cls", DjangoJSONEncoder)
+        self.json_kwargs.setdefault("cls", HibeeJSONEncoder)
         self.json_kwargs.setdefault("ensure_ascii", False)
 
     def start_serialization(self):
@@ -74,7 +74,7 @@ def Deserializer(stream_or_string, **options):
         raise DeserializationError() from exc
 
 
-class DjangoJSONEncoder(json.JSONEncoder):
+class HibeeJSONEncoder(json.JSONEncoder):
     """
     JSONEncoder subclass that knows how to encode date/time, decimal types, and
     UUIDs.

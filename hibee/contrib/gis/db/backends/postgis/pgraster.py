@@ -1,6 +1,6 @@
 import struct
 
-from django.core.exceptions import ValidationError
+from hibee.core.exceptions import ValidationError
 
 from .const import (
     BANDTYPE_FLAG_HASNODATA,

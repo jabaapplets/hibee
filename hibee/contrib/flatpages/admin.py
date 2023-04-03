@@ -1,7 +1,7 @@
-from django.contrib import admin
-from django.contrib.flatpages.forms import FlatpageForm
-from django.contrib.flatpages.models import FlatPage
-from django.utils.translation import gettext_lazy as _
+from hibee.contrib import admin
+from hibee.contrib.flatpages.forms import FlatpageForm
+from hibee.contrib.flatpages.models import FlatPage
+from hibee.utils.translation import gettext_lazy as _
 
 
 @admin.register(FlatPage)

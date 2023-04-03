@@ -1,7 +1,7 @@
-from django.contrib.contenttypes.models import ContentType
-from django.db import models
-from django.forms import ModelForm, modelformset_factory
-from django.forms.models import BaseModelFormSet
+from hibee.contrib.contenttypes.models import ContentType
+from hibee.db import models
+from hibee.forms import ModelForm, modelformset_factory
+from hibee.forms.models import BaseModelFormSet
 
 
 class BaseGenericInlineFormSet(BaseModelFormSet):

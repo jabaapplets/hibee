@@ -1,6 +1,6 @@
-import django.contrib.admin.models
-from django.conf import settings
-from django.db import migrations, models
+import hibee.contrib.admin.models
+from hibee.conf import settings
+from hibee.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -63,13 +63,13 @@ class Migration(migrations.Migration):
             ],
             options={
                 "ordering": ["-action_time"],
-                "db_table": "django_admin_log",
+                "db_table": "hibee_admin_log",
                 "verbose_name": "log entry",
                 "verbose_name_plural": "log entries",
             },
             bases=(models.Model,),
             managers=[
-                ("objects", django.contrib.admin.models.LogEntryManager()),
+                ("objects", hibee.contrib.admin.models.LogEntryManager()),
             ],
         ),
     ]

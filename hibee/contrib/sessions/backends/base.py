@@ -2,11 +2,11 @@ import logging
 import string
 from datetime import datetime, timedelta
 
-from django.conf import settings
-from django.core import signing
-from django.utils import timezone
-from django.utils.crypto import get_random_string
-from django.utils.module_loading import import_string
+from hibee.conf import settings
+from hibee.core import signing
+from hibee.utils import timezone
+from hibee.utils.crypto import get_random_string
+from hibee.utils.module_loading import import_string
 
 # session_key should not be case sensitive because some backends can store it
 # on case insensitive file systems.
@@ -24,7 +24,7 @@ class CreateError(Exception):
 
 class UpdateError(Exception):
     """
-    Occurs if Django tries to update a session that was deleted.
+    Occurs if Hibee tries to update a session that was deleted.
     """
 
     pass
@@ -62,7 +62,7 @@ class SessionBase:
 
     @property
     def key_salt(self):
-        return "django.contrib.sessions." + self.__class__.__qualname__
+        return "hibee.contrib.sessions." + self.__class__.__qualname__
 
     def get(self, key, default=None):
         return self._session.get(key, default)
@@ -104,7 +104,7 @@ class SessionBase:
                 session_data, salt=self.key_salt, serializer=self.serializer
             )
         except signing.BadSignature:
-            logger = logging.getLogger("django.security.SuspiciousSession")
+            logger = logging.getLogger("hibee.security.SuspiciousSession")
             logger.warning("Session data corrupted")
         except Exception:
             # ValueError, unpickling exceptions. If any of these happen, just

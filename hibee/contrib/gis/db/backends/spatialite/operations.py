@@ -2,17 +2,17 @@
 SQL functions reference lists:
 https://www.gaia-gis.it/gaia-sins/spatialite-sql-4.3.0.html
 """
-from django.contrib.gis.db import models
-from django.contrib.gis.db.backends.base.operations import BaseSpatialOperations
-from django.contrib.gis.db.backends.spatialite.adapter import SpatiaLiteAdapter
-from django.contrib.gis.db.backends.utils import SpatialOperator
-from django.contrib.gis.geos.geometry import GEOSGeometry, GEOSGeometryBase
-from django.contrib.gis.geos.prototypes.io import wkb_r
-from django.contrib.gis.measure import Distance
-from django.core.exceptions import ImproperlyConfigured
-from django.db.backends.sqlite3.operations import DatabaseOperations
-from django.utils.functional import cached_property
-from django.utils.version import get_version_tuple
+from hibee.contrib.gis.db import models
+from hibee.contrib.gis.db.backends.base.operations import BaseSpatialOperations
+from hibee.contrib.gis.db.backends.spatialite.adapter import SpatiaLiteAdapter
+from hibee.contrib.gis.db.backends.utils import SpatialOperator
+from hibee.contrib.gis.geos.geometry import GEOSGeometry, GEOSGeometryBase
+from hibee.contrib.gis.geos.prototypes.io import wkb_r
+from hibee.contrib.gis.measure import Distance
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.db.backends.sqlite3.operations import DatabaseOperations
+from hibee.utils.functional import cached_property
+from hibee.utils.version import get_version_tuple
 
 
 class SpatialiteNullCheckOperator(SpatialOperator):
@@ -97,7 +97,7 @@ class SpatiaLiteOperations(BaseSpatialOperations, DatabaseOperations):
                 % (self.connection.settings_dict["NAME"],)
             ) from exc
         if version < (4, 3, 0):
-            raise ImproperlyConfigured("GeoDjango supports SpatiaLite 4.3.0 and above.")
+            raise ImproperlyConfigured("GeoHibee supports SpatiaLite 4.3.0 and above.")
         return version
 
     def convert_extent(self, box):
@@ -204,14 +204,14 @@ class SpatiaLiteOperations(BaseSpatialOperations, DatabaseOperations):
 
     # Routines for getting the OGC-compliant models.
     def geometry_columns(self):
-        from django.contrib.gis.db.backends.spatialite.models import (
+        from hibee.contrib.gis.db.backends.spatialite.models import (
             SpatialiteGeometryColumns,
         )
 
         return SpatialiteGeometryColumns
 
     def spatial_ref_sys(self):
-        from django.contrib.gis.db.backends.spatialite.models import (
+        from hibee.contrib.gis.db.backends.spatialite.models import (
             SpatialiteSpatialRefSys,
         )
 

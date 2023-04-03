@@ -6,12 +6,12 @@ from xml.dom import pulldom
 from xml.sax import handler
 from xml.sax.expatreader import ExpatParser as _ExpatParser
 
-from django.apps import apps
-from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
-from django.core.serializers import base
-from django.db import DEFAULT_DB_ALIAS, models
-from django.utils.xmlutils import SimplerXMLGenerator, UnserializableContentError
+from hibee.apps import apps
+from hibee.conf import settings
+from hibee.core.exceptions import ObjectDoesNotExist
+from hibee.core.serializers import base
+from hibee.db import DEFAULT_DB_ALIAS, models
+from hibee.utils.xmlutils import SimplerXMLGenerator, UnserializableContentError
 
 
 class Serializer(base.Serializer):
@@ -31,14 +31,14 @@ class Serializer(base.Serializer):
             self.stream, self.options.get("encoding", settings.DEFAULT_CHARSET)
         )
         self.xml.startDocument()
-        self.xml.startElement("django-objects", {"version": "1.0"})
+        self.xml.startElement("hibee-objects", {"version": "1.0"})
 
     def end_serialization(self):
         """
         End serialization -- end the document.
         """
         self.indent(0)
-        self.xml.endElement("django-objects")
+        self.xml.endElement("hibee-objects")
         self.xml.endDocument()
 
     def start_object(self, obj):

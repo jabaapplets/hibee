@@ -1,9 +1,9 @@
 from ctypes import c_uint
 
-from django.contrib.gis import gdal
-from django.contrib.gis.geos import prototypes as capi
-from django.contrib.gis.geos.error import GEOSException
-from django.contrib.gis.geos.geometry import GEOSGeometry
+from hibee.contrib.gis import gdal
+from hibee.contrib.gis.geos import prototypes as capi
+from hibee.contrib.gis.geos.error import GEOSException
+from hibee.contrib.gis.geos.geometry import GEOSGeometry
 
 
 class Point(GEOSGeometry):

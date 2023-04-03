@@ -4,8 +4,8 @@ database.
 """
 from decimal import Decimal
 
-from django.contrib.gis.measure import Area, Distance
-from django.db import models
+from hibee.contrib.gis.measure import Area, Distance
+from hibee.db import models
 
 
 class AreaField(models.FloatField):

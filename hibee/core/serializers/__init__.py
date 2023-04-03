@@ -1,9 +1,9 @@
 """
-Interfaces for serializing Django objects.
+Interfaces for serializing Hibee objects.
 
 Usage::
 
-    from django.core import serializers
+    from hibee.core import serializers
     json = serializers.serialize("json", some_queryset)
     objects = list(serializers.deserialize("json", json))
 
@@ -18,17 +18,17 @@ To add your own serializers, use the SERIALIZATION_MODULES setting::
 
 import importlib
 
-from django.apps import apps
-from django.conf import settings
-from django.core.serializers.base import SerializerDoesNotExist
+from hibee.apps import apps
+from hibee.conf import settings
+from hibee.core.serializers.base import SerializerDoesNotExist
 
 # Built-in serializers
 BUILTIN_SERIALIZERS = {
-    "xml": "django.core.serializers.xml_serializer",
-    "python": "django.core.serializers.python",
-    "json": "django.core.serializers.json",
-    "yaml": "django.core.serializers.pyyaml",
-    "jsonl": "django.core.serializers.jsonl",
+    "xml": "hibee.core.serializers.xml_serializer",
+    "python": "hibee.core.serializers.python",
+    "json": "hibee.core.serializers.json",
+    "yaml": "hibee.core.serializers.pyyaml",
+    "jsonl": "hibee.core.serializers.jsonl",
 }
 
 _serializers = {}

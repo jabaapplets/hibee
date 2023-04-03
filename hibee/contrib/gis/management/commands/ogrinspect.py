@@ -1,8 +1,8 @@
 import argparse
 
-from django.contrib.gis import gdal
-from django.core.management.base import BaseCommand, CommandError
-from django.utils.inspect import get_func_args
+from hibee.contrib.gis import gdal
+from hibee.core.management.base import BaseCommand, CommandError
+from hibee.utils.inspect import get_func_args
 
 
 class LayerOptionAction(argparse.Action):
@@ -35,7 +35,7 @@ class ListOptionAction(argparse.Action):
 class Command(BaseCommand):
     help = (
         "Inspects the given OGR-compatible data source (e.g., a shapefile) and "
-        "outputs\na GeoDjango model with the given model name. For example:\n"
+        "outputs\na GeoHibee model with the given model name. For example:\n"
         " ./manage.py ogrinspect zipcode.shp Zipcode"
     )
 
@@ -87,7 +87,7 @@ class Command(BaseCommand):
             "--no-imports",
             action="store_false",
             dest="imports",
-            help="Do not include `from django.contrib.gis.db import models` statement.",
+            help="Do not include `from hibee.contrib.gis.db import models` statement.",
         )
         parser.add_argument(
             "--null",
@@ -119,7 +119,7 @@ class Command(BaseCommand):
 
         # Returning the output of ogrinspect with the given arguments
         # and options.
-        from django.contrib.gis.utils.ogrinspect import _ogrinspect, mapping
+        from hibee.contrib.gis.utils.ogrinspect import _ogrinspect, mapping
 
         # Filter options to params accepted by `_ogrinspect`
         ogr_options = {

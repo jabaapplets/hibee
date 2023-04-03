@@ -1,6 +1,6 @@
-from django.contrib.messages.storage.base import BaseStorage
-from django.contrib.messages.storage.cookie import CookieStorage
-from django.contrib.messages.storage.session import SessionStorage
+from hibee.contrib.messages.storage.base import BaseStorage
+from hibee.contrib.messages.storage.cookie import CookieStorage
+from hibee.contrib.messages.storage.session import SessionStorage
 
 
 class FallbackStorage(BaseStorage):

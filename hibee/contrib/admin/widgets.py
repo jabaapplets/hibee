@@ -1,21 +1,21 @@
 """
-Form Widget classes specific to the Django admin site.
+Form Widget classes specific to the Hibee admin site.
 """
 import copy
 import json
 
-from django import forms
-from django.conf import settings
-from django.core.exceptions import ValidationError
-from django.core.validators import URLValidator
-from django.db.models import CASCADE, UUIDField
-from django.urls import reverse
-from django.urls.exceptions import NoReverseMatch
-from django.utils.html import smart_urlquote
-from django.utils.http import urlencode
-from django.utils.text import Truncator
-from django.utils.translation import get_language
-from django.utils.translation import gettext as _
+from hibee import forms
+from hibee.conf import settings
+from hibee.core.exceptions import ValidationError
+from hibee.core.validators import URLValidator
+from hibee.db.models import CASCADE, UUIDField
+from hibee.urls import reverse
+from hibee.urls.exceptions import NoReverseMatch
+from hibee.utils.html import smart_urlquote
+from hibee.utils.http import urlencode
+from hibee.utils.text import Truncator
+from hibee.utils.translation import get_language
+from hibee.utils.translation import gettext as _
 
 
 class FilteredSelectMultiple(forms.SelectMultiple):
@@ -175,7 +175,7 @@ class ForeignKeyRawIdWidget(forms.TextInput):
         return url_params_from_lookup_dict(limit_choices_to)
 
     def url_parameters(self):
-        from django.contrib.admin.views.main import TO_FIELD_VAR
+        from hibee.contrib.admin.views.main import TO_FIELD_VAR
 
         params = self.base_url_parameters()
         params.update({TO_FIELD_VAR: self.rel.get_related_field().name})
@@ -295,7 +295,7 @@ class RelatedFieldWidgetWrapper(forms.Widget):
         )
 
     def get_context(self, name, value, attrs):
-        from django.contrib.admin.views.main import IS_POPUP_VAR, TO_FIELD_VAR
+        from hibee.contrib.admin.views.main import IS_POPUP_VAR, TO_FIELD_VAR
 
         rel_opts = self.rel.model._meta
         info = (rel_opts.app_label, rel_opts.model_name)
@@ -397,9 +397,9 @@ class AdminUUIDInputWidget(forms.TextInput):
         super().__init__(attrs={"class": "vUUIDField", **(attrs or {})})
 
 
-# Mapping of lowercase language codes [returned by Django's get_language()] to
+# Mapping of lowercase language codes [returned by Hibee's get_language()] to
 # language codes supported by select2.
-# See django/contrib/admin/static/admin/js/vendor/select2/i18n/*
+# See hibee/contrib/admin/static/admin/js/vendor/select2/i18n/*
 SELECT2_TRANSLATIONS = {
     x.lower(): x
     for x in [

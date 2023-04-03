@@ -1,5 +1,5 @@
-from django.conf import settings
-from django.utils.module_loading import import_string
+from hibee.conf import settings
+from hibee.utils.module_loading import import_string
 
 
 def default_storage(request):

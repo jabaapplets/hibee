@@ -1,9 +1,9 @@
 from collections import defaultdict
 
-from django.apps import apps
-from django.db import models
-from django.db.models import Q
-from django.utils.translation import gettext_lazy as _
+from hibee.apps import apps
+from hibee.db import models
+from hibee.db.models import Q
+from hibee.utils.translation import gettext_lazy as _
 
 
 class ContentTypeManager(models.Manager):
@@ -144,7 +144,7 @@ class ContentType(models.Model):
     class Meta:
         verbose_name = _("content type")
         verbose_name_plural = _("content types")
-        db_table = "django_content_type"
+        db_table = "hibee_content_type"
         unique_together = [["app_label", "model"]]
 
     def __str__(self):

@@ -3,8 +3,8 @@ import select
 import sys
 import traceback
 
-from django.core.management import BaseCommand, CommandError
-from django.utils.datastructures import OrderedSet
+from hibee.core.management import BaseCommand, CommandError
+from hibee.utils.datastructures import OrderedSet
 
 
 class Command(BaseCommand):
@@ -39,7 +39,7 @@ class Command(BaseCommand):
             "-c",
             "--command",
             help=(
-                "Instead of opening an interactive shell, run a command as Django and "
+                "Instead of opening an interactive shell, run a command as Hibee and "
                 "exit."
             ),
         )

@@ -1,13 +1,13 @@
-from django.core.exceptions import ValidationError
-from django.core.validators import (
+from hibee.core.exceptions import ValidationError
+from hibee.core.validators import (
     MaxLengthValidator,
     MaxValueValidator,
     MinLengthValidator,
     MinValueValidator,
 )
-from django.utils.deconstruct import deconstructible
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import ngettext_lazy
+from hibee.utils.deconstruct import deconstructible
+from hibee.utils.translation import gettext_lazy as _
+from hibee.utils.translation import ngettext_lazy
 
 
 class ArrayMaxLengthValidator(MaxLengthValidator):

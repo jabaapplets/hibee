@@ -1,6 +1,6 @@
-from django.contrib.admin import ModelAdmin
-from django.contrib.gis.db import models
-from django.contrib.gis.forms import OSMWidget
+from hibee.contrib.admin import ModelAdmin
+from hibee.contrib.gis.db import models
+from hibee.contrib.gis.forms import OSMWidget
 
 
 class GeoModelAdminMixin:

@@ -1,16 +1,16 @@
 import os
 import shutil
 
-from django.apps import apps
-from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
-from django.core.management.utils import run_formatters
-from django.db import DEFAULT_DB_ALIAS, connections, migrations
-from django.db.migrations.loader import AmbiguityError, MigrationLoader
-from django.db.migrations.migration import SwappableTuple
-from django.db.migrations.optimizer import MigrationOptimizer
-from django.db.migrations.writer import MigrationWriter
-from django.utils.version import get_docs_version
+from hibee.apps import apps
+from hibee.conf import settings
+from hibee.core.management.base import BaseCommand, CommandError
+from hibee.core.management.utils import run_formatters
+from hibee.db import DEFAULT_DB_ALIAS, connections, migrations
+from hibee.db.migrations.loader import AmbiguityError, MigrationLoader
+from hibee.db.migrations.migration import SwappableTuple
+from hibee.db.migrations.optimizer import MigrationOptimizer
+from hibee.db.migrations.writer import MigrationWriter
+from hibee.utils.version import get_docs_version
 
 
 class Command(BaseCommand):
@@ -46,7 +46,7 @@ class Command(BaseCommand):
             "--no-input",
             action="store_false",
             dest="interactive",
-            help="Tells Django to NOT prompt the user for input of any kind.",
+            help="Tells Hibee to NOT prompt the user for input of any kind.",
         )
         parser.add_argument(
             "--squashed-name",
@@ -144,7 +144,7 @@ class Command(BaseCommand):
             if smigration.replaces:
                 raise CommandError(
                     "You cannot squash squashed migrations! Please transition it to a "
-                    "normal migration first: https://docs.djangoproject.com/en/%s/"
+                    "normal migration first: https://docs.hibeeproject.com/en/%s/"
                     "topics/migrations/#squashing-migrations" % get_docs_version()
                 )
             operations.extend(smigration.operations)

@@ -1,5 +1,5 @@
-from django.contrib.sitemaps import ping_google
-from django.core.management.base import BaseCommand
+from hibee.contrib.sitemaps import ping_google
+from hibee.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):

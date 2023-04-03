@@ -1,10 +1,10 @@
 import sys
 
-from django.apps import apps
-from django.core.management.base import BaseCommand
-from django.db import DEFAULT_DB_ALIAS, connections
-from django.db.migrations.loader import MigrationLoader
-from django.db.migrations.recorder import MigrationRecorder
+from hibee.apps import apps
+from hibee.core.management.base import BaseCommand
+from hibee.db import DEFAULT_DB_ALIAS, connections
+from hibee.db.migrations.loader import MigrationLoader
+from hibee.db.migrations.recorder import MigrationRecorder
 
 
 class Command(BaseCommand):

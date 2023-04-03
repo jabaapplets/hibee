@@ -14,9 +14,9 @@ from email.utils import formataddr, formatdate, getaddresses, make_msgid
 from io import BytesIO, StringIO
 from pathlib import Path
 
-from django.conf import settings
-from django.core.mail.utils import DNS_NAME
-from django.utils.encoding import force_str, punycode
+from hibee.conf import settings
+from hibee.core.mail.utils import DNS_NAME
+from hibee.utils.encoding import force_str, punycode
 
 # Don't BASE64-encode UTF-8 messages so that we avoid unwanted attention from
 # some spam filters.
@@ -249,7 +249,7 @@ class EmailMessage:
         self.connection = connection
 
     def get_connection(self, fail_silently=False):
-        from django.core.mail import get_connection
+        from hibee.core.mail import get_connection
 
         if not self.connection:
             self.connection = get_connection(fail_silently=fail_silently)
@@ -270,7 +270,7 @@ class EmailMessage:
         header_names = [key.lower() for key in self.extra_headers]
         if "date" not in header_names:
             # formatdate() uses stdlib methods to format the date, which use
-            # the stdlib/OS concept of a timezone, however, Django sets the
+            # the stdlib/OS concept of a timezone, however, Hibee sets the
             # TZ environment variable based on the TIME_ZONE setting which
             # will get picked up by formatdate().
             msg["Date"] = formatdate(localtime=settings.EMAIL_USE_LOCALTIME)

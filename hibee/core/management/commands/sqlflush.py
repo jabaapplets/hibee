@@ -1,6 +1,6 @@
-from django.core.management.base import BaseCommand
-from django.core.management.sql import sql_flush
-from django.db import DEFAULT_DB_ALIAS, connections
+from hibee.core.management.base import BaseCommand
+from hibee.core.management.sql import sql_flush
+from hibee.db import DEFAULT_DB_ALIAS, connections
 
 
 class Command(BaseCommand):

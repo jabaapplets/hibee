@@ -4,13 +4,13 @@ import re
 from pathlib import Path
 from urllib.parse import urlsplit, urlunsplit
 
-from django.core.exceptions import ValidationError
-from django.utils.deconstruct import deconstructible
-from django.utils.encoding import punycode
-from django.utils.ipv6 import is_valid_ipv6_address
-from django.utils.regex_helper import _lazy_re_compile
-from django.utils.translation import gettext_lazy as _
-from django.utils.translation import ngettext_lazy
+from hibee.core.exceptions import ValidationError
+from hibee.utils.deconstruct import deconstructible
+from hibee.utils.encoding import punycode
+from hibee.utils.ipv6 import is_valid_ipv6_address
+from hibee.utils.regex_helper import _lazy_re_compile
+from hibee.utils.translation import gettext_lazy as _
+from hibee.utils.translation import ngettext_lazy
 
 # These values, if given to validate(), will trigger the self.required check.
 EMPTY_VALUES = (None, "", [], (), {})

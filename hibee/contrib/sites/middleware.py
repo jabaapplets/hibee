@@ -1,4 +1,4 @@
-from django.utils.deprecation import MiddlewareMixin
+from hibee.utils.deprecation import MiddlewareMixin
 
 from .shortcuts import get_current_site
 

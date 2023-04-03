@@ -1,11 +1,11 @@
-from django.apps import AppConfig
-from django.contrib.staticfiles.checks import check_finders
-from django.core import checks
-from django.utils.translation import gettext_lazy as _
+from hibee.apps import AppConfig
+from hibee.contrib.staticfiles.checks import check_finders
+from hibee.core import checks
+from hibee.utils.translation import gettext_lazy as _
 
 
 class StaticFilesConfig(AppConfig):
-    name = "django.contrib.staticfiles"
+    name = "hibee.contrib.staticfiles"
     verbose_name = _("Static Files")
     ignore_patterns = ["CVS", ".*", "*~"]
 

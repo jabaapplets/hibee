@@ -1,11 +1,11 @@
 from decimal import Decimal
 
-from django.contrib.gis.db.models.fields import BaseSpatialField, GeometryField
-from django.contrib.gis.db.models.sql import AreaField, DistanceField
-from django.contrib.gis.geos import GEOSGeometry
-from django.core.exceptions import FieldError
-from django.db import NotSupportedError
-from django.db.models import (
+from hibee.contrib.gis.db.models.fields import BaseSpatialField, GeometryField
+from hibee.contrib.gis.db.models.sql import AreaField, DistanceField
+from hibee.contrib.gis.geos import GEOSGeometry
+from hibee.core.exceptions import FieldError
+from hibee.db import NotSupportedError
+from hibee.db.models import (
     BinaryField,
     BooleanField,
     FloatField,
@@ -15,8 +15,8 @@ from django.db.models import (
     Transform,
     Value,
 )
-from django.db.models.functions import Cast
-from django.utils.functional import cached_property
+from hibee.db.models.functions import Cast
+from hibee.utils.functional import cached_property
 
 NUMERIC_TYPES = (int, float, Decimal)
 

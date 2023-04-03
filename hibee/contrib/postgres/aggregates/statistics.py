@@ -1,4 +1,4 @@
-from django.db.models import Aggregate, FloatField, IntegerField
+from hibee.db.models import Aggregate, FloatField, IntegerField
 
 __all__ = [
     "CovarPop",

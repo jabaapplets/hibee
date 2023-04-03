@@ -1,15 +1,15 @@
 import logging
 import warnings
 
-from django.conf import settings
-from django.contrib.gis import gdal
-from django.contrib.gis.geometry import json_regex
-from django.contrib.gis.geos import GEOSException, GEOSGeometry
-from django.forms.widgets import Widget
-from django.utils import translation
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibee.conf import settings
+from hibee.contrib.gis import gdal
+from hibee.contrib.gis.geometry import json_regex
+from hibee.contrib.gis.geos import GEOSException, GEOSGeometry
+from hibee.forms.widgets import Widget
+from hibee.utils import translation
+from hibee.utils.deprecation import RemovedInHibee51Warning
 
-logger = logging.getLogger("django.contrib.gis")
+logger = logging.getLogger("hibee.contrib.gis")
 
 
 class BaseGeometryWidget(Widget):
@@ -20,8 +20,8 @@ class BaseGeometryWidget(Widget):
 
     geom_type = "GEOMETRY"
     map_srid = 4326
-    map_width = 600  # RemovedInDjango51Warning
-    map_height = 400  # RemovedInDjango51Warning
+    map_width = 600  # RemovedInhibee51Warning
+    map_height = 400  # RemovedInhibee51Warning
     display_raw = False
 
     supports_3d = False
@@ -39,7 +39,7 @@ class BaseGeometryWidget(Widget):
             warnings.warn(
                 "The map_height and map_width widget attributes are deprecated. Please "
                 "use CSS to size map widgets.",
-                category=RemovedInDjango51Warning,
+                category=RemovedInHibee51Warning,
                 stacklevel=2,
             )
         if attrs:
@@ -83,7 +83,7 @@ class BaseGeometryWidget(Widget):
                 self.attrs,
                 {
                     "name": name,
-                    "module": "geodjango_%s" % name.replace("-", "_"),  # JS-safe
+                    "module": "geohibee_%s" % name.replace("-", "_"),  # JS-safe
                     "serialized": self.serialize(value),
                     "geom_type": "Geometry" if geom_type == "Unknown" else geom_type,
                     "STATIC_URL": settings.STATIC_URL,

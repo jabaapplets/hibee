@@ -1,6 +1,6 @@
-from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib.staticfiles.views import serve
+from hibee.conf import settings
+from hibee.conf.urls.static import static
+from hibee.contrib.staticfiles.views import serve
 
 urlpatterns = []
 

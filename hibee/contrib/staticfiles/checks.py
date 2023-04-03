@@ -1,4 +1,4 @@
-from django.contrib.staticfiles.finders import get_finders
+from hibee.contrib.staticfiles.finders import get_finders
 
 
 def check_finders(app_configs=None, **kwargs):

@@ -1,13 +1,13 @@
 import json
 
-from django.contrib.postgres import lookups
-from django.contrib.postgres.forms import SimpleArrayField
-from django.contrib.postgres.validators import ArrayMaxLengthValidator
-from django.core import checks, exceptions
-from django.db.models import Field, Func, IntegerField, Transform, Value
-from django.db.models.fields.mixins import CheckFieldDefaultMixin
-from django.db.models.lookups import Exact, In
-from django.utils.translation import gettext_lazy as _
+from hibee.contrib.postgres import lookups
+from hibee.contrib.postgres.forms import SimpleArrayField
+from hibee.contrib.postgres.validators import ArrayMaxLengthValidator
+from hibee.core import checks, exceptions
+from hibee.db.models import Field, Func, IntegerField, Transform, Value
+from hibee.db.models.fields.mixins import CheckFieldDefaultMixin
+from hibee.db.models.lookups import Exact, In
+from hibee.utils.translation import gettext_lazy as _
 
 from ..utils import prefix_validation_error
 from .utils import AttributeSetter
@@ -133,8 +133,8 @@ class ArrayField(CheckFieldDefaultMixin, Field):
 
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
-        if path == "django.contrib.postgres.fields.array.ArrayField":
-            path = "django.contrib.postgres.fields.ArrayField"
+        if path == "hibee.contrib.postgres.fields.array.ArrayField":
+            path = "hibee.contrib.postgres.fields.ArrayField"
         kwargs.update(
             {
                 "base_field": self.base_field.clone(),

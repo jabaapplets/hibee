@@ -1,20 +1,20 @@
 import re
 
-from django.conf import settings
-from django.contrib.gis.db.backends.base.operations import BaseSpatialOperations
-from django.contrib.gis.db.backends.utils import SpatialOperator
-from django.contrib.gis.db.models import GeometryField, RasterField
-from django.contrib.gis.gdal import GDALRaster
-from django.contrib.gis.geos.geometry import GEOSGeometryBase
-from django.contrib.gis.geos.prototypes.io import wkb_r
-from django.contrib.gis.measure import Distance
-from django.core.exceptions import ImproperlyConfigured
-from django.db import NotSupportedError, ProgrammingError
-from django.db.backends.postgresql.operations import DatabaseOperations
-from django.db.backends.postgresql.psycopg_any import is_psycopg3
-from django.db.models import Func, Value
-from django.utils.functional import cached_property
-from django.utils.version import get_version_tuple
+from hibee.conf import settings
+from hibee.contrib.gis.db.backends.base.operations import BaseSpatialOperations
+from hibee.contrib.gis.db.backends.utils import SpatialOperator
+from hibee.contrib.gis.db.models import GeometryField, RasterField
+from hibee.contrib.gis.gdal import GDALRaster
+from hibee.contrib.gis.geos.geometry import GEOSGeometryBase
+from hibee.contrib.gis.geos.prototypes.io import wkb_r
+from hibee.contrib.gis.measure import Distance
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.db import NotSupportedError, ProgrammingError
+from hibee.db.backends.postgresql.operations import DatabaseOperations
+from hibee.db.backends.postgresql.psycopg_any import is_psycopg3
+from hibee.db.models import Func, Value
+from hibee.utils.functional import cached_property
+from hibee.utils.version import get_version_tuple
 
 from .adapter import PostGISAdapter
 from .models import PostGISGeometryColumns, PostGISSpatialRefSys
@@ -203,7 +203,7 @@ class PostGISOperations(BaseSpatialOperations, DatabaseOperations):
                 raise ImproperlyConfigured(
                     'Cannot determine PostGIS version for database "%s" '
                     'using command "SELECT postgis_lib_version()". '
-                    "GeoDjango requires at least PostGIS version 2.5. "
+                    "GeoHibee requires at least PostGIS version 2.5. "
                     "Was the database created from a spatial database "
                     "template?" % self.connection.settings_dict["NAME"]
                 )

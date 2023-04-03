@@ -1,7 +1,7 @@
-from django.conf import settings
-from django.contrib.flatpages.views import flatpage
-from django.http import Http404
-from django.utils.deprecation import MiddlewareMixin
+from hibee.conf import settings
+from hibee.contrib.flatpages.views import flatpage
+from hibee.http import Http404
+from hibee.utils.deprecation import MiddlewareMixin
 
 
 class FlatpageFallbackMiddleware(MiddlewareMixin):

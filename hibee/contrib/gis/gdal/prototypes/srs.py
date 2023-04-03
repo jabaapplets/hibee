@@ -1,7 +1,7 @@
 from ctypes import POINTER, c_char_p, c_int, c_void_p
 
-from django.contrib.gis.gdal.libgdal import GDAL_VERSION, lgdal, std_call
-from django.contrib.gis.gdal.prototypes.generation import (
+from hibee.contrib.gis.gdal.libgdal import GDAL_VERSION, lgdal, std_call
+from hibee.contrib.gis.gdal.prototypes.generation import (
     const_string_output,
     double_output,
     int_output,

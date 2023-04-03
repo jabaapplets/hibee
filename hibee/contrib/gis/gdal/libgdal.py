@@ -4,14 +4,14 @@ import re
 from ctypes import CDLL, CFUNCTYPE, c_char_p, c_int
 from ctypes.util import find_library
 
-from django.contrib.gis.gdal.error import GDALException
-from django.core.exceptions import ImproperlyConfigured
+from hibee.contrib.gis.gdal.error import GDALException
+from hibee.core.exceptions import ImproperlyConfigured
 
-logger = logging.getLogger("django.contrib.gis")
+logger = logging.getLogger("hibee.contrib.gis")
 
 # Custom library path set?
 try:
-    from django.conf import settings
+    from hibee.conf import settings
 
     lib_path = settings.GDAL_LIBRARY_PATH
 except (AttributeError, ImportError, ImproperlyConfigured, OSError):

@@ -1,8 +1,8 @@
 """
-Settings and configuration for Django.
+Settings and configuration for Hibee.
 
-Read values from the module specified by the DJANGO_SETTINGS_MODULE environment
-variable, and then from django.conf.global_settings; see the global_settings.py
+Read values from the module specified by the HIBEE_SETTINGS_MODULE environment
+variable, and then from hibee.conf.global_settings; see the global_settings.py
 for a list of all possible variables.
 """
 
@@ -13,13 +13,13 @@ import traceback
 import warnings
 from pathlib import Path
 
-import django
-from django.conf import global_settings
-from django.core.exceptions import ImproperlyConfigured
-from django.utils.deprecation import RemovedInDjango51Warning
-from django.utils.functional import LazyObject, empty
+import hibee
+from hibee.conf import global_settings
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.utils.deprecation import RemovedInhibee51Warning
+from hibee.utils.functional import LazyObject, empty
 
-ENVIRONMENT_VARIABLE = "DJANGO_SETTINGS_MODULE"
+ENVIRONMENT_VARIABLE = "HIBEE_SETTINGS_MODULE"
 DEFAULT_STORAGE_ALIAS = "default"
 STATICFILES_STORAGE_ALIAS = "staticfiles"
 
@@ -47,9 +47,9 @@ class SettingsReference(str):
 
 class LazySettings(LazyObject):
     """
-    A lazy proxy for either global Django settings or a custom settings object.
+    A lazy proxy for either global Hibee settings or a custom settings object.
     The user can manually configure settings prior to using them. Otherwise,
-    Django uses the settings module pointed to by DJANGO_SETTINGS_MODULE.
+    Hibee uses the settings module pointed to by HIBEE_SETTINGS_MODULE.
     """
 
     def _setup(self, name=None):
@@ -137,7 +137,7 @@ class LazySettings(LazyObject):
         # Don't apply prefix to absolute paths and URLs.
         if value.startswith(("http://", "https://", "/")):
             return value
-        from django.urls import get_script_prefix
+        from hibee.urls import get_script_prefix
 
         return "%s%s" % (get_script_prefix(), value)
 
@@ -148,26 +148,26 @@ class LazySettings(LazyObject):
 
     def _show_deprecation_warning(self, message, category):
         stack = traceback.extract_stack()
-        # Show a warning if the setting is used outside of Django.
+        # Show a warning if the setting is used outside of Hibee.
         # Stack index: -1 this line, -2 the property, -3 the
         # LazyObject __getattribute__(), -4 the caller.
         filename, _, _, _ = stack[-4]
-        if not filename.startswith(os.path.dirname(django.__file__)):
+        if not filename.startswith(os.path.dirname(hibee.__file__)):
             warnings.warn(message, category, stacklevel=2)
 
-    # RemovedInDjango51Warning.
+    # RemovedInHibee51Warning.
     @property
     def DEFAULT_FILE_STORAGE(self):
         self._show_deprecation_warning(
-            DEFAULT_FILE_STORAGE_DEPRECATED_MSG, RemovedInDjango51Warning
+            DEFAULT_FILE_STORAGE_DEPRECATED_MSG, RemovedInHibee51Warning
         )
         return self.__getattr__("DEFAULT_FILE_STORAGE")
 
-    # RemovedInDjango51Warning.
+    # RemovedInHibee51Warning.
     @property
     def STATICFILES_STORAGE(self):
         self._show_deprecation_warning(
-            STATICFILES_STORAGE_DEPRECATED_MSG, RemovedInDjango51Warning
+            STATICFILES_STORAGE_DEPRECATED_MSG, RemovedInHibee51Warning
         )
         return self.__getattr__("STATICFILES_STORAGE")
 
@@ -222,14 +222,14 @@ class Settings:
                 raise ImproperlyConfigured(
                     "DEFAULT_FILE_STORAGE/STORAGES are mutually exclusive."
                 )
-            warnings.warn(DEFAULT_FILE_STORAGE_DEPRECATED_MSG, RemovedInDjango51Warning)
+            warnings.warn(DEFAULT_FILE_STORAGE_DEPRECATED_MSG, RemovedInHibee51Warning)
 
         if self.is_overridden("STATICFILES_STORAGE"):
             if self.is_overridden("STORAGES"):
                 raise ImproperlyConfigured(
                     "STATICFILES_STORAGE/STORAGES are mutually exclusive."
                 )
-            warnings.warn(STATICFILES_STORAGE_DEPRECATED_MSG, RemovedInDjango51Warning)
+            warnings.warn(STATICFILES_STORAGE_DEPRECATED_MSG, RemovedInHibee51Warning)
 
     def is_overridden(self, setting):
         return setting in self._explicit_settings
@@ -267,22 +267,22 @@ class UserSettingsHolder:
             self.STORAGES[DEFAULT_STORAGE_ALIAS] = {
                 "BACKEND": self.DEFAULT_FILE_STORAGE
             }
-            warnings.warn(DEFAULT_FILE_STORAGE_DEPRECATED_MSG, RemovedInDjango51Warning)
+            warnings.warn(DEFAULT_FILE_STORAGE_DEPRECATED_MSG, RemovedInHibee51Warning)
         if name == "STATICFILES_STORAGE":
             self.STORAGES[STATICFILES_STORAGE_ALIAS] = {
                 "BACKEND": self.STATICFILES_STORAGE
             }
-            warnings.warn(STATICFILES_STORAGE_DEPRECATED_MSG, RemovedInDjango51Warning)
+            warnings.warn(STATICFILES_STORAGE_DEPRECATED_MSG, RemovedInHibee51Warning)
         super().__setattr__(name, value)
-        # RemovedInDjango51Warning.
+        # RemovedInHibee51Warning.
         if name == "STORAGES":
             self.STORAGES.setdefault(
                 DEFAULT_STORAGE_ALIAS,
-                {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+                {"BACKEND": "hibee.core.files.storage.FileSystemStorage"},
             )
             self.STORAGES.setdefault(
                 STATICFILES_STORAGE_ALIAS,
-                {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+                {"BACKEND": "hibee.contrib.staticfiles.storage.StaticFilesStorage"},
             )
 
     def __delattr__(self, name):

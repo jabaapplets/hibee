@@ -5,10 +5,10 @@ Classes representing uploaded files.
 import os
 from io import BytesIO
 
-from django.conf import settings
-from django.core.files import temp as tempfile
-from django.core.files.base import File
-from django.core.files.utils import validate_file_name
+from hibee.conf import settings
+from hibee.core.files import temp as tempfile
+from hibee.core.files.base import File
+from hibee.core.files.utils import validate_file_name
 
 __all__ = (
     "UploadedFile",

@@ -1,12 +1,12 @@
-from django.contrib.postgres.signals import (
+from hibee.contrib.postgres.signals import (
     get_citext_oids,
     get_hstore_oids,
     register_type_handlers,
 )
-from django.db import NotSupportedError, router
-from django.db.migrations import AddConstraint, AddIndex, RemoveIndex
-from django.db.migrations.operations.base import Operation
-from django.db.models.constraints import CheckConstraint
+from hibee.db import NotSupportedError, router
+from hibee.db.migrations import AddConstraint, AddIndex, RemoveIndex
+from hibee.db.migrations.operations.base import Operation
+from hibee.db.models.constraints import CheckConstraint
 
 
 class CreateExtension(Operation):

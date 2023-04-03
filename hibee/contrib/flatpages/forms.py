@@ -1,9 +1,9 @@
-from django import forms
-from django.conf import settings
-from django.contrib.flatpages.models import FlatPage
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext
-from django.utils.translation import gettext_lazy as _
+from hibee import forms
+from hibee.conf import settings
+from hibee.contrib.flatpages.models import FlatPage
+from hibee.core.exceptions import ValidationError
+from hibee.utils.translation import gettext
+from hibee.utils.translation import gettext_lazy as _
 
 
 class FlatpageForm(forms.ModelForm):
@@ -37,7 +37,7 @@ class FlatpageForm(forms.ModelForm):
     def _trailing_slash_required(self):
         return (
             settings.APPEND_SLASH
-            and "django.middleware.common.CommonMiddleware" in settings.MIDDLEWARE
+            and "hibee.middleware.common.CommonMiddleware" in settings.MIDDLEWARE
         )
 
     def clean_url(self):

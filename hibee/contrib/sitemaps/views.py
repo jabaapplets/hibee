@@ -2,13 +2,13 @@ import datetime
 from dataclasses import dataclass
 from functools import wraps
 
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.paginator import EmptyPage, PageNotAnInteger
-from django.http import Http404
-from django.template.response import TemplateResponse
-from django.urls import reverse
-from django.utils import timezone
-from django.utils.http import http_date
+from hibee.contrib.sites.shortcuts import get_current_site
+from hibee.core.paginator import EmptyPage, PageNotAnInteger
+from hibee.http import Http404
+from hibee.template.response import TemplateResponse
+from hibee.urls import reverse
+from hibee.utils import timezone
+from hibee.utils.http import http_date
 
 
 @dataclass
@@ -45,7 +45,7 @@ def index(
     sitemaps,
     template_name="sitemap_index.xml",
     content_type="application/xml",
-    sitemap_url_name="django.contrib.sitemaps.views.sitemap",
+    sitemap_url_name="hibee.contrib.sitemaps.views.sitemap",
 ):
     req_protocol = request.scheme
     req_site = get_current_site(request)
