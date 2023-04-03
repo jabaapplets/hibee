@@ -1,6 +1,6 @@
 # Fake views for testing url reverse lookup
-from django.http import HttpResponse
-from django.template.response import TemplateResponse
+from hibee.http import HttpResponse
+from hibee.template.response import TemplateResponse
 
 
 def index(request):

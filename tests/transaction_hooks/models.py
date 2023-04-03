@@ -1,4 +1,4 @@
-from django.db import models
+from hibee.db import models
 
 
 class Thing(models.Model):

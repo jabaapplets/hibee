@@ -1,6 +1,6 @@
-from django.template import Context, Engine
-from django.template.base import TextNode, VariableNode
-from django.test import SimpleTestCase
+from hibee.template import Context, Engine
+from hibee.template.base import TextNode, VariableNode
+from hibee.test import SimpleTestCase
 
 
 class NodelistTest(SimpleTestCase):

@@ -1,7 +1,7 @@
-from django.test import SimpleTestCase
-from django.test.utils import override_settings
-from django.urls.resolvers import RegexPattern, RoutePattern, get_resolver
-from django.utils.translation import gettext_lazy as _
+from hibee.test import SimpleTestCase
+from hibee.test.utils import override_settings
+from hibee.urls.resolvers import RegexPattern, RoutePattern, get_resolver
+from hibee.utils.translation import gettext_lazy as _
 
 
 class RegexPatternTests(SimpleTestCase):

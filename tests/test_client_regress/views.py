@@ -1,12 +1,12 @@
 from urllib.parse import urlencode
 
-from django.conf import settings
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import render
-from django.template.loader import render_to_string
-from django.test import Client
-from django.test.client import CONTENT_TYPE_RE
+from hibee.conf import settings
+from hibee.contrib.auth.decorators import login_required
+from hibee.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from hibee.shortcuts import render
+from hibee.template.loader import render_to_string
+from hibee.test import Client
+from hibee.test.client import CONTENT_TYPE_RE
 
 
 class CustomTestException(Exception):

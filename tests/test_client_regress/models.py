@@ -1,5 +1,5 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.db import models
+from hibee.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from hibee.db import models
 
 
 class CustomUser(AbstractBaseUser):

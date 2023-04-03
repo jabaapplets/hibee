@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from django.test import tag
+from hibee.test import tag
 
 
 @tag('syntax_error')

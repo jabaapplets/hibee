@@ -1,7 +1,7 @@
-from django.template import Context, Template, Variable, VariableDoesNotExist
-from django.template.base import DebugLexer, Lexer, TokenType
-from django.test import SimpleTestCase
-from django.utils.translation import gettext_lazy
+from hibee.template import Context, Template, Variable, VariableDoesNotExist
+from hibee.template.base import DebugLexer, Lexer, TokenType
+from hibee.test import SimpleTestCase
+from hibee.utils.translation import gettext_lazy
 
 
 class LexerTestMixin:

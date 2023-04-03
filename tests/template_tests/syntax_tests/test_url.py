@@ -1,7 +1,7 @@
-from django.template import RequestContext, TemplateSyntaxError
-from django.template.defaulttags import URLNode
-from django.test import RequestFactory, SimpleTestCase, override_settings
-from django.urls import NoReverseMatch, resolve
+from hibee.template import RequestContext, TemplateSyntaxError
+from hibee.template.defaulttags import URLNode
+from hibee.test import RequestFactory, SimpleTestCase, override_settings
+from hibee.urls import NoReverseMatch, resolve
 
 from ..utils import setup
 

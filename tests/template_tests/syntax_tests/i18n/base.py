@@ -1,8 +1,8 @@
 import os
 
-from django.conf import settings
-from django.test import SimpleTestCase
-from django.utils.translation import activate, get_language
+from hibee.conf import settings
+from hibee.test import SimpleTestCase
+from hibee.utils.translation import activate, get_language
 
 here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 pdir = os.path.split(os.path.split(os.path.abspath(here))[0])[0]

@@ -1,6 +1,6 @@
-from django.template.defaultfilters import force_escape
-from django.test import SimpleTestCase
-from django.utils.safestring import SafeData
+from hibee.template.defaultfilters import force_escape
+from hibee.test import SimpleTestCase
+from hibee.utils.safestring import SafeData
 
 from ..utils import setup
 

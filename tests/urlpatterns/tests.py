@@ -1,11 +1,11 @@
 import string
 import uuid
 
-from django.core.exceptions import ImproperlyConfigured
-from django.test import SimpleTestCase
-from django.test.utils import override_settings
-from django.urls import NoReverseMatch, Resolver404, path, re_path, resolve, reverse
-from django.views import View
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.test import SimpleTestCase
+from hibee.test.utils import override_settings
+from hibee.urls import NoReverseMatch, Resolver404, path, re_path, resolve, reverse
+from hibee.views import View
 
 from .converters import DynamicConverter
 from .views import empty_view

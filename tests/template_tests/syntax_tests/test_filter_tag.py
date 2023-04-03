@@ -1,5 +1,5 @@
-from django.template import TemplateSyntaxError
-from django.test import SimpleTestCase
+from hibee.template import TemplateSyntaxError
+from hibee.test import SimpleTestCase
 
 from ..utils import setup
 
@@ -10,20 +10,20 @@ class FilterTagTests(SimpleTestCase):
         output = self.engine.render_to_string("filter01")
         self.assertEqual(output, "")
 
-    @setup({"filter02": "{% filter upper %}django{% endfilter %}"})
+    @setup({"filter02": "{% filter upper %}hibee{% endfilter %}"})
     def test_filter02(self):
         output = self.engine.render_to_string("filter02")
-        self.assertEqual(output, "DJANGO")
+        self.assertEqual(output, "HIBEE")
 
-    @setup({"filter03": "{% filter upper|lower %}django{% endfilter %}"})
+    @setup({"filter03": "{% filter upper|lower %}hibee{% endfilter %}"})
     def test_filter03(self):
         output = self.engine.render_to_string("filter03")
-        self.assertEqual(output, "django")
+        self.assertEqual(output, "hibee")
 
-    @setup({"filter04": "{% filter cut:remove %}djangospam{% endfilter %}"})
+    @setup({"filter04": "{% filter cut:remove %}hibeespam{% endfilter %}"})
     def test_filter04(self):
         output = self.engine.render_to_string("filter04", {"remove": "spam"})
-        self.assertEqual(output, "django")
+        self.assertEqual(output, "hibee")
 
     @setup({"filter05": "{% filter safe %}fail{% endfilter %}"})
     def test_filter05(self):

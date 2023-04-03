@@ -2,9 +2,9 @@ import pickle
 import sys
 import unittest
 
-from django.test import SimpleTestCase
-from django.test.runner import RemoteTestResult
-from django.utils.version import PY311
+from hibee.test import SimpleTestCase
+from hibee.test.runner import RemoteTestResult
+from hibee.utils.version import PY311
 
 try:
     import tblib.pickling_support

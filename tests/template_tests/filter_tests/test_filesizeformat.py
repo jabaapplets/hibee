@@ -1,6 +1,6 @@
-from django.template.defaultfilters import filesizeformat
-from django.test import SimpleTestCase
-from django.utils import translation
+from hibee.template.defaultfilters import filesizeformat
+from hibee.test import SimpleTestCase
+from hibee.utils import translation
 
 
 class FunctionTests(SimpleTestCase):

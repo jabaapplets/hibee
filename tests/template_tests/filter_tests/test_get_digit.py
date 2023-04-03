@@ -1,5 +1,5 @@
-from django.template.defaultfilters import get_digit
-from django.test import SimpleTestCase
+from hibee.template.defaultfilters import get_digit
+from hibee.test import SimpleTestCase
 
 
 class FunctionTests(SimpleTestCase):

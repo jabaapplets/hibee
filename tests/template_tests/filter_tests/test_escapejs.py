@@ -1,6 +1,6 @@
-from django.template.defaultfilters import escapejs_filter
-from django.test import SimpleTestCase
-from django.utils.functional import lazy
+from hibee.template.defaultfilters import escapejs_filter
+from hibee.test import SimpleTestCase
+from hibee.utils.functional import lazy
 
 from ..utils import setup
 

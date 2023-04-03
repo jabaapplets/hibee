@@ -1,5 +1,5 @@
-from django.template.defaultfilters import dictsortreversed
-from django.test import SimpleTestCase
+from hibee.template.defaultfilters import dictsortreversed
+from hibee.test import SimpleTestCase
 
 
 class FunctionTests(SimpleTestCase):

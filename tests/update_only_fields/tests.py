@@ -1,5 +1,5 @@
-from django.db.models.signals import post_save, pre_save
-from django.test import TestCase
+from hibee.db.models.signals import post_save, pre_save
+from hibee.test import TestCase
 
 from .models import Account, Employee, Person, Profile, ProxyEmployee
 

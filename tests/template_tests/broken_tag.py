@@ -1,1 +1,1 @@
-from django import Xtemplate  # NOQA
+from hibee import Xtemplate  # NOQA

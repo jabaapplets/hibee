@@ -6,19 +6,19 @@ from contextlib import contextmanager
 from unittest import SkipTest, skipIf
 from xml.dom.minidom import parseString
 
-from django.contrib.auth.models import User
-from django.core import serializers
-from django.db import connection
-from django.db.models import F, Max, Min
-from django.http import HttpRequest
-from django.template import (
+from hibee.contrib.auth.models import User
+from hibee.core import serializers
+from hibee.db import connection
+from hibee.db.models import F, Max, Min
+from hibee.http import HttpRequest
+from hibee.template import (
     Context,
     RequestContext,
     Template,
     TemplateSyntaxError,
     context_processors,
 )
-from django.test import (
+from hibee.test import (
     SimpleTestCase,
     TestCase,
     TransactionTestCase,
@@ -26,10 +26,10 @@ from django.test import (
     skipIfDBFeature,
     skipUnlessDBFeature,
 )
-from django.test.utils import requires_tz_support
-from django.urls import reverse
-from django.utils import timezone, translation
-from django.utils.timezone import timedelta
+from hibee.test.utils import requires_tz_support
+from hibee.urls import reverse
+from hibee.utils import timezone, translation
+from hibee.utils.timezone import timedelta
 
 from .forms import (
     EventForm,
@@ -1157,7 +1157,7 @@ class TemplateTests(SimpleTestCase):
     @skipIf(sys.platform == "win32", "Windows uses non-standard time zone names")
     def test_tz_template_context_processor(self):
         """
-        Test the django.template.context_processors.tz template context processor.
+        Test the hibee.template.context_processors.tz template context processor.
         """
         tpl = Template("{{ TIME_ZONE }}")
         context = Context()

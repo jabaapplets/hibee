@@ -1,9 +1,9 @@
 from decimal import Decimal, localcontext
 
-from django.template.defaultfilters import floatformat
-from django.test import SimpleTestCase
-from django.utils import translation
-from django.utils.safestring import mark_safe
+from hibee.template.defaultfilters import floatformat
+from hibee.test import SimpleTestCase
+from hibee.utils import translation
+from hibee.utils.safestring import mark_safe
 
 from ..utils import setup
 

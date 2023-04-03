@@ -1,9 +1,9 @@
 import os
 from functools import wraps
 
-from django.template.engine import Engine
-from django.test.utils import override_settings
-from django.utils.safestring import mark_safe
+from hibee.template.engine import Engine
+from hibee.test.utils import override_settings
+from hibee.utils.safestring import mark_safe
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_DIR = os.path.join(ROOT, "templates")
@@ -35,16 +35,16 @@ def setup(templates, *args, test_once=False):
 
     loaders = [
         (
-            "django.template.loaders.cached.Loader",
+            "hibee.template.loaders.cached.Loader",
             [
-                ("django.template.loaders.locmem.Loader", templates),
+                ("hibee.template.loaders.locmem.Loader", templates),
             ],
         ),
     ]
 
     def decorator(func):
         # Make Engine.get_default() raise an exception to ensure that tests
-        # are properly isolated from Django's global settings.
+        # are properly isolated from Hibee's global settings.
         @override_settings(TEMPLATES=None)
         @wraps(func)
         def inner(self):

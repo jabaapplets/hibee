@@ -1,8 +1,8 @@
 from functools import wraps
 
-from django.db import IntegrityError, connections, transaction
-from django.test import TestCase, skipUnlessDBFeature
-from django.test.testcases import DatabaseOperationForbidden, TestData
+from hibee.db import IntegrityError, connections, transaction
+from hibee.test import TestCase, skipUnlessDBFeature
+from hibee.test.testcases import DatabaseOperationForbidden, TestData
 
 from .models import Car, Person, PossessedCar
 

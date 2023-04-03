@@ -1,11 +1,11 @@
-from django.template import TemplateSyntaxError
-from django.test import SimpleTestCase
+from hibee.template import TemplateSyntaxError
+from hibee.test import SimpleTestCase
 
 from ...utils import setup
 
 
 class GetAvailableLanguagesTagTests(SimpleTestCase):
-    libraries = {"i18n": "django.templatetags.i18n"}
+    libraries = {"i18n": "hibee.templatetags.i18n"}
 
     @setup(
         {

@@ -1,11 +1,11 @@
-from django.template.defaultfilters import length_is
-from django.test import SimpleTestCase, ignore_warnings
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibee.template.defaultfilters import length_is
+from hibee.test import SimpleTestCase, ignore_warnings
+from hibee.utils.deprecation import RemovedInHibee51Warning
 
 from ..utils import setup
 
 
-@ignore_warnings(category=RemovedInDjango51Warning)
+@ignore_warnings(category=RemovedInHibee51Warning)
 class LengthIsTests(SimpleTestCase):
     @setup({"length_is01": '{% if some_list|length_is:"4" %}Four{% endif %}'})
     def test_length_is01(self):
@@ -62,7 +62,7 @@ class LengthIsTests(SimpleTestCase):
         }
     )
     def test_length_is06(self):
-        output = self.engine.render_to_string("length_is06", {"var": "django"})
+        output = self.engine.render_to_string("length_is06", {"var": "hibee"})
         self.assertEqual(output, "6")
 
     # Boolean return value from length_is should not be coerced to a string
@@ -91,7 +91,7 @@ class LengthIsTests(SimpleTestCase):
     # Invalid uses that should fail silently.
     @setup({"length_is09": '{{ var|length_is:"fish" }}'})
     def test_length_is09(self):
-        output = self.engine.render_to_string("length_is09", {"var": "django"})
+        output = self.engine.render_to_string("length_is09", {"var": "hibee"})
         self.assertEqual(output, "")
 
     @setup({"length_is10": '{{ int|length_is:"1" }}'})
@@ -105,7 +105,7 @@ class LengthIsTests(SimpleTestCase):
         self.assertEqual(output, "")
 
 
-@ignore_warnings(category=RemovedInDjango51Warning)
+@ignore_warnings(category=RemovedInHibee51Warning)
 class FunctionTests(SimpleTestCase):
     def test_empty_list(self):
         self.assertIs(length_is([], 0), True)
@@ -126,5 +126,5 @@ class DeprecationTests(SimpleTestCase):
             "The length_is template filter is deprecated in favor of the length "
             "template filter and the == operator within an {% if %} tag."
         )
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
+        with self.assertRaisesMessage(RemovedInHibee51Warning, msg):
             self.engine.render_to_string("length_is_warning", {"string": "good"})

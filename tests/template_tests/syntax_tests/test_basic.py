@@ -1,7 +1,7 @@
-from django.template.base import TemplateSyntaxError
-from django.template.context import Context
-from django.template.loader_tags import BlockContext, BlockNode
-from django.test import SimpleTestCase
+from hibee.template.base import TemplateSyntaxError
+from hibee.template.context import Context
+from hibee.template.loader_tags import BlockContext, BlockNode
+from hibee.test import SimpleTestCase
 
 from ..utils import SilentAttrClass, SilentGetItemClass, SomeClass, setup
 

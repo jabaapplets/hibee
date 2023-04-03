@@ -1,11 +1,11 @@
 import unittest
 
-from django.core.exceptions import FieldError
-from django.db import IntegrityError, connection, transaction
-from django.db.models import Case, CharField, Count, F, IntegerField, Max, When
-from django.db.models.functions import Abs, Concat, Lower
-from django.test import TestCase
-from django.test.utils import register_lookup
+from hibee.core.exceptions import FieldError
+from hibee.db import IntegrityError, connection, transaction
+from hibee.db.models import Case, CharField, Count, F, IntegerField, Max, When
+from hibee.db.models.functions import Abs, Concat, Lower
+from hibee.test import TestCase
+from hibee.test.utils import register_lookup
 
 from .models import (
     A,
@@ -159,7 +159,7 @@ class AdvancedTests(TestCase):
     def test_update_m2m_field(self):
         msg = (
             "Cannot update model field "
-            "<django.db.models.fields.related.ManyToManyField: m2m_foo> "
+            "<hibee.db.models.fields.related.ManyToManyField: m2m_foo> "
             "(only non-relations and foreign keys permitted)."
         )
         with self.assertRaisesMessage(FieldError, msg):

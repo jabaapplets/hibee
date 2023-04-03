@@ -1,11 +1,11 @@
 import sys
 
-from django.template import Context, Engine, TemplateDoesNotExist, TemplateSyntaxError
-from django.template.base import UNKNOWN_SOURCE
-from django.test import SimpleTestCase, override_settings
-from django.urls import NoReverseMatch
-from django.utils import translation
-from django.utils.html import escape
+from hibee.template import Context, Engine, TemplateDoesNotExist, TemplateSyntaxError
+from hibee.template.base import UNKNOWN_SOURCE
+from hibee.test import SimpleTestCase, override_settings
+from hibee.urls import NoReverseMatch
+from hibee.utils import translation
+from hibee.utils.html import escape
 
 
 class TemplateTestMixin:
@@ -164,7 +164,7 @@ class TemplateTestMixin:
 
     def test_extends_generic_template(self):
         """
-        #24338 -- Allow extending django.template.backends.django.Template
+        #24338 -- Allow extending hibee.template.backends.hibee.Template
         objects.
         """
         engine = self._engine()

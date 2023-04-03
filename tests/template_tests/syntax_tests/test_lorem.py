@@ -1,6 +1,6 @@
-from django.template.base import TemplateSyntaxError
-from django.test import SimpleTestCase
-from django.utils.lorem_ipsum import COMMON_P, WORDS
+from hibee.template.base import TemplateSyntaxError
+from hibee.test import SimpleTestCase
+from hibee.utils.lorem_ipsum import COMMON_P, WORDS
 
 from ..utils import setup
 

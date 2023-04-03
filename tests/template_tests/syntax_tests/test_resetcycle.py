@@ -1,5 +1,5 @@
-from django.template import TemplateSyntaxError
-from django.test import SimpleTestCase
+from hibee.template import TemplateSyntaxError
+from hibee.test import SimpleTestCase
 
 from ..utils import setup
 

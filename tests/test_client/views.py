@@ -2,23 +2,23 @@ import json
 from urllib.parse import urlencode
 from xml.dom.minidom import parseString
 
-from django.contrib.auth.decorators import login_required, permission_required
-from django.core import mail
-from django.core.exceptions import ValidationError
-from django.forms import fields
-from django.forms.forms import Form
-from django.http import (
+from hibee.contrib.auth.decorators import login_required, permission_required
+from hibee.core import mail
+from hibee.core.exceptions import ValidationError
+from hibee.forms import fields
+from hibee.forms.forms import Form
+from hibee.http import (
     HttpResponse,
     HttpResponseBadRequest,
     HttpResponseNotAllowed,
     HttpResponseNotFound,
     HttpResponseRedirect,
 )
-from django.shortcuts import render
-from django.template import Context, Template
-from django.test import Client
-from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView
+from hibee.shortcuts import render
+from hibee.template import Context, Template
+from hibee.test import Client
+from hibee.utils.decorators import method_decorator
+from hibee.views.generic import TemplateView
 
 
 def get_view(request):
@@ -128,7 +128,7 @@ def json_view(request):
 def view_with_header(request):
     "A view that has a custom header"
     response = HttpResponse()
-    response.headers["X-DJANGO-TEST"] = "Slartibartfast"
+    response.headers["X-HIBEE-TEST"] = "Slartibartfast"
     return response
 
 
@@ -389,8 +389,8 @@ def nesting_exception_view(request):
     raise Exception("exception message")
 
 
-def django_project_redirect(request):
-    return HttpResponseRedirect("https://www.djangoproject.com/")
+def hibee_project_redirect(request):
+    return HttpResponseRedirect("https://www.hibeeproject.com/")
 
 
 def no_trailing_slash_external_redirect(request):

@@ -1,5 +1,5 @@
-from django.urls import include, path
-from django.views.generic import RedirectView
+from hibee.urls import include, path
+from hibee.views.generic import RedirectView
 
 from . import views
 

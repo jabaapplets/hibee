@@ -4,13 +4,13 @@ from functools import partial, wraps
 
 from asgiref.local import Local
 
-from django.template import Context, Template, TemplateSyntaxError
-from django.template.base import Token, TokenType
-from django.templatetags.i18n import BlockTranslateNode
-from django.test import SimpleTestCase, override_settings
-from django.utils import translation
-from django.utils.safestring import mark_safe
-from django.utils.translation import trans_real
+from hibee.template import Context, Template, TemplateSyntaxError
+from hibee.template.base import Token, TokenType
+from hibee.templatetags.i18n import BlockTranslateNode
+from hibee.test import SimpleTestCase, override_settings
+from hibee.utils import translation
+from hibee.utils.safestring import mark_safe
+from hibee.utils.translation import trans_real
 
 from ...utils import setup as base_setup
 from .base import MultipleLocaleActivationTestCase, extended_locale_paths, here
@@ -48,7 +48,7 @@ def setup(templates, *args, **kwargs):
 
 
 class I18nBlockTransTagTests(SimpleTestCase):
-    libraries = {"i18n": "django.templatetags.i18n"}
+    libraries = {"i18n": "hibee.templatetags.i18n"}
 
     @setup(
         {

@@ -1,5 +1,5 @@
-from django.template.defaultfilters import default_if_none
-from django.test import SimpleTestCase
+from hibee.template.defaultfilters import default_if_none
+from hibee.test import SimpleTestCase
 
 
 class FunctionTests(SimpleTestCase):

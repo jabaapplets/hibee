@@ -1,10 +1,10 @@
 import unittest
 from io import StringIO
 
-from django.db import connection
-from django.test import TestCase
-from django.test.runner import DiscoverRunner
-from django.utils.version import PY311
+from hibee.db import connection
+from hibee.test import TestCase
+from hibee.test.runner import DiscoverRunner
+from hibee.utils.version import PY311
 
 from .models import Person
 

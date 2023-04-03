@@ -1,9 +1,9 @@
 import operator
 
-from django import template
-from django.template.defaultfilters import stringfilter
-from django.utils.html import escape, format_html
-from django.utils.safestring import mark_safe
+from hibee import template
+from hibee.template.defaultfilters import stringfilter
+from hibee.utils.html import escape, format_html
+from hibee.utils.safestring import mark_safe
 
 register = template.Library()
 

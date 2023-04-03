@@ -1,7 +1,7 @@
 from unittest import mock
 
-from django.http import HttpRequest
-from django.template import (
+from hibee.http import HttpRequest
+from hibee.template import (
     Context,
     Engine,
     RequestContext,
@@ -9,8 +9,8 @@ from django.template import (
     Variable,
     VariableDoesNotExist,
 )
-from django.template.context import RenderContext
-from django.test import RequestFactory, SimpleTestCase
+from hibee.template.context import RenderContext
+from hibee.test import RequestFactory, SimpleTestCase
 
 
 class ContextTests(SimpleTestCase):
@@ -233,7 +233,7 @@ class RequestContextTests(SimpleTestCase):
         engine = Engine(
             loaders=[
                 (
-                    "django.template.loaders.locmem.Loader",
+                    "hibee.template.loaders.locmem.Loader",
                     {
                         "child": '{{ var|default:"none" }}',
                     },

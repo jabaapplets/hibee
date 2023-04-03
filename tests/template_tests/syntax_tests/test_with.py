@@ -1,6 +1,6 @@
-from django.template import TemplateSyntaxError
-from django.template.defaulttags import WithNode
-from django.test import SimpleTestCase
+from hibee.template import TemplateSyntaxError
+from hibee.template.defaulttags import WithNode
+from hibee.test import SimpleTestCase
 
 from ..utils import setup
 

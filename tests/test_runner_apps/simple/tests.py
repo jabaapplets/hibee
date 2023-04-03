@@ -1,10 +1,10 @@
 from unittest import TestCase
 
-from django.test import SimpleTestCase
-from django.test import TestCase as DjangoTestCase
+from hibee.test import SimpleTestCase
+from hibee.test import TestCase as HibeeTestCase
 
 
-class DjangoCase1(DjangoTestCase):
+class HibeeCase1(HibeeTestCase):
     def test_1(self):
         pass
 
@@ -12,7 +12,7 @@ class DjangoCase1(DjangoTestCase):
         pass
 
 
-class DjangoCase2(DjangoTestCase):
+class HibeeCase2(HibeeTestCase):
     def test_1(self):
         pass
 

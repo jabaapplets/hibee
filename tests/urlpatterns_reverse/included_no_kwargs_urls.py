@@ -1,4 +1,4 @@
-from django.urls import re_path
+from hibee.urls import re_path
 
 from .views import empty_view
 

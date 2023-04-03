@@ -1,12 +1,12 @@
-from django.template import (
+from hibee.template import (
     Context,
     Engine,
     TemplateDoesNotExist,
     TemplateSyntaxError,
     loader,
 )
-from django.template.loader_tags import IncludeNode
-from django.test import SimpleTestCase
+from hibee.template.loader_tags import IncludeNode
+from hibee.test import SimpleTestCase
 
 from ..utils import setup
 from .test_basic import basic_templates
@@ -256,9 +256,9 @@ class IncludeTests(SimpleTestCase):
             debug=True,
             loaders=[
                 (
-                    "django.template.loaders.cached.Loader",
+                    "hibee.template.loaders.cached.Loader",
                     [
-                        "django.template.loaders.app_directories.Loader",
+                        "hibee.template.loaders.app_directories.Loader",
                     ],
                 ),
             ],
@@ -353,7 +353,7 @@ class IncludeTests(SimpleTestCase):
         engine = Engine(
             loaders=[
                 (
-                    "django.template.loaders.locmem.Loader",
+                    "hibee.template.loaders.locmem.Loader",
                     {
                         "template": (
                             '{% for x in vars %}{% include "include" %}{% endfor %}'

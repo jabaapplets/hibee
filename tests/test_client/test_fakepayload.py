@@ -1,5 +1,5 @@
-from django.test import SimpleTestCase
-from django.test.client import FakePayload
+from hibee.test import SimpleTestCase
+from hibee.test.client import FakePayload
 
 
 class FakePayloadTests(SimpleTestCase):

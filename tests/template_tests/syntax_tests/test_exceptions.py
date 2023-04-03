@@ -1,5 +1,5 @@
-from django.template import TemplateDoesNotExist, TemplateSyntaxError
-from django.test import SimpleTestCase
+from hibee.template import TemplateDoesNotExist, TemplateSyntaxError
+from hibee.test import SimpleTestCase
 
 from ..utils import setup
 from .test_extends import inheritance_templates

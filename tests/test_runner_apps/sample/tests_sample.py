@@ -1,8 +1,8 @@
 import doctest
 from unittest import TestCase
 
-from django.test import SimpleTestCase
-from django.test import TestCase as DjangoTestCase
+from hibee.test import SimpleTestCase
+from hibee.test import TestCase as HibeeTestCase
 
 from . import doctests
 
@@ -12,7 +12,7 @@ class TestVanillaUnittest(TestCase):
         self.assertEqual(1, 1)
 
 
-class TestDjangoTestCase(DjangoTestCase):
+class TestHibeeTestCase(HibeeTestCase):
     def test_sample(self):
         self.assertEqual(1, 1)
 

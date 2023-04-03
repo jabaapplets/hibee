@@ -1,5 +1,5 @@
-from django.http import HttpResponse
-from django.urls import path
+from hibee.http import HttpResponse
+from hibee.urls import path
 
 
 def empty_response(request):

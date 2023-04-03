@@ -1,8 +1,8 @@
 import functools
 
-from django.template import Library
-from django.template.base import Node
-from django.test import SimpleTestCase
+from hibee.template import Library
+from hibee.template.base import Node
+from hibee.test import SimpleTestCase
 
 
 class FilterRegistrationTests(SimpleTestCase):

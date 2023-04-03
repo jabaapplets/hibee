@@ -1,4 +1,4 @@
-from django import forms
+from hibee import forms
 
 from .models import Event
 

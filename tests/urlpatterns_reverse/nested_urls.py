@@ -1,5 +1,5 @@
-from django.urls import include, path
-from django.views import View
+from hibee.urls import include, path
+from hibee.views import View
 
 
 def view1(request):

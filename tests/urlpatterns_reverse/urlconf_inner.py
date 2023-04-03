@@ -1,6 +1,6 @@
-from django.http import HttpResponse
-from django.template import Context, Template
-from django.urls import path
+from hibee.http import HttpResponse
+from hibee.template import Context, Template
+from hibee.urls import path
 
 
 def inner_view(request):

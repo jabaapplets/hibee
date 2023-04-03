@@ -7,10 +7,10 @@ from contextlib import contextmanager
 from importlib import import_module
 from unittest import TestSuite, TextTestRunner, defaultTestLoader, mock
 
-from django.db import connections
-from django.test import SimpleTestCase
-from django.test.runner import DiscoverRunner, get_max_test_processes
-from django.test.utils import (
+from hibee.db import connections
+from hibee.test import SimpleTestCase
+from hibee.test.runner import DiscoverRunner, get_max_test_processes
+from hibee.test.utils import (
     NullTimeKeeper,
     TimeKeeper,
     captured_stderr,
@@ -76,7 +76,7 @@ class DiscoverRunnerParallelArgumentTests(SimpleTestCase):
     def test_get_max_test_processes(self, *mocked_objects):
         self.assertEqual(get_max_test_processes(), 12)
 
-    @mock.patch.dict(os.environ, {"DJANGO_TEST_PROCESSES": "7"})
+    @mock.patch.dict(os.environ, {"HIBEE_TEST_PROCESSES": "7"})
     def test_get_max_test_processes_env_var(self, *mocked_objects):
         self.assertEqual(get_max_test_processes(), 7)
 
@@ -87,7 +87,7 @@ class DiscoverRunnerParallelArgumentTests(SimpleTestCase):
     ):
         mocked_get_start_method.return_value = "spawn"
         self.assertEqual(get_max_test_processes(), 12)
-        with mock.patch.dict(os.environ, {"DJANGO_TEST_PROCESSES": "7"}):
+        with mock.patch.dict(os.environ, {"HIBEE_TEST_PROCESSES": "7"}):
             self.assertEqual(get_max_test_processes(), 7)
 
     def test_get_max_test_processes_forkserver(
@@ -97,7 +97,7 @@ class DiscoverRunnerParallelArgumentTests(SimpleTestCase):
     ):
         mocked_get_start_method.return_value = "forkserver"
         self.assertEqual(get_max_test_processes(), 1)
-        with mock.patch.dict(os.environ, {"DJANGO_TEST_PROCESSES": "7"}):
+        with mock.patch.dict(os.environ, {"HIBEE_TEST_PROCESSES": "7"}):
             self.assertEqual(get_max_test_processes(), 1)
 
 
@@ -185,22 +185,22 @@ class DiscoverRunnerTests(SimpleTestCase):
 
         self.assertEqual(count, 1)
 
-    def test_dotted_test_class_django_testcase(self):
+    def test_dotted_test_class_hibee_testcase(self):
         count = (
             DiscoverRunner(verbosity=0)
             .build_suite(
-                ["test_runner_apps.sample.tests_sample.TestDjangoTestCase"],
+                ["test_runner_apps.sample.tests_sample.TestHibeeTestCase"],
             )
             .countTestCases()
         )
 
         self.assertEqual(count, 1)
 
-    def test_dotted_test_method_django_testcase(self):
+    def test_dotted_test_method_hibee_testcase(self):
         count = (
             DiscoverRunner(verbosity=0)
             .build_suite(
-                ["test_runner_apps.sample.tests_sample.TestDjangoTestCase.test_sample"],
+                ["test_runner_apps.sample.tests_sample.TestHibeeTestCase.test_sample"],
             )
             .countTestCases()
         )
@@ -221,16 +221,16 @@ class DiscoverRunnerTests(SimpleTestCase):
 
     def test_name_patterns(self):
         all_test_1 = [
-            "DjangoCase1.test_1",
-            "DjangoCase2.test_1",
+            "HibeeCase1.test_1",
+            "HibeeCase2.test_1",
             "SimpleCase1.test_1",
             "SimpleCase2.test_1",
             "UnittestCase1.test_1",
             "UnittestCase2.test_1",
         ]
         all_test_2 = [
-            "DjangoCase1.test_2",
-            "DjangoCase2.test_2",
+            "HibeeCase1.test_2",
+            "HibeeCase2.test_2",
             "SimpleCase1.test_2",
             "SimpleCase2.test_2",
             "UnittestCase1.test_2",
@@ -348,8 +348,8 @@ class DiscoverRunnerTests(SimpleTestCase):
             )
             self.assertEqual(
                 suite._tests[0].__class__.__name__,
-                "TestDjangoTestCase",
-                msg="TestDjangoTestCase should be the first test case",
+                "TestHibeeTestCase",
+                msg="TestHibeeTestCase should be the first test case",
             )
             self.assertEqual(
                 suite._tests[1].__class__.__name__,
@@ -390,13 +390,13 @@ class DiscoverRunnerTests(SimpleTestCase):
         suite = runner.build_suite(test_labels=("test_runner_apps.simple",))
         suite = tuple(suite)
         self.assertIn(
-            "DjangoCase", suite[0].id(), msg="Test groups should not be reversed."
+            "HibeeCase", suite[0].id(), msg="Test groups should not be reversed."
         )
         self.assertIn(
             "SimpleCase", suite[4].id(), msg="Test groups order should be preserved."
         )
         self.assertIn(
-            "DjangoCase2", suite[0].id(), msg="Django test cases should be reversed."
+            "HibeeCase2", suite[0].id(), msg="Hibee test cases should be reversed."
         )
         self.assertIn(
             "SimpleCase2", suite[4].id(), msg="Simple test cases should be reversed."
@@ -407,7 +407,7 @@ class DiscoverRunnerTests(SimpleTestCase):
             msg="Unittest test cases should be reversed.",
         )
         self.assertIn(
-            "test_2", suite[0].id(), msg="Methods of Django cases should be reversed."
+            "test_2", suite[0].id(), msg="Methods of Hibee cases should be reversed."
         )
         self.assertIn(
             "test_2", suite[4].id(), msg="Methods of simple cases should be reversed."
@@ -532,7 +532,7 @@ class DiscoverRunnerTests(SimpleTestCase):
         with captured_stdout() as stdout:
             runner.build_suite(
                 [
-                    "test_runner_apps.sample.tests_sample.TestDjangoTestCase",
+                    "test_runner_apps.sample.tests_sample.TestHibeeTestCase",
                     "test_runner_apps.simple",
                 ]
             )
@@ -565,7 +565,7 @@ class DiscoverRunnerTests(SimpleTestCase):
         non-parallel tests.
         """
         runner = DiscoverRunner(parallel=8, verbosity=0)
-        suite = runner.build_suite(["test_runner_apps.simple.tests.DjangoCase1"])
+        suite = runner.build_suite(["test_runner_apps.simple.tests.HibeeCase1"])
         self.assertEqual(runner.parallel, 1)
         self.assertIsInstance(suite, TestSuite)
 

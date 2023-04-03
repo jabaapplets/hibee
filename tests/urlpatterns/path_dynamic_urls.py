@@ -1,4 +1,4 @@
-from django.urls import path, register_converter
+from hibee.urls import path, register_converter
 
 from . import converters, views
 

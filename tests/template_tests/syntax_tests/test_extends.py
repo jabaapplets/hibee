@@ -1,7 +1,7 @@
-from django.template import NodeList, TemplateSyntaxError
-from django.template.base import Node
-from django.template.loader_tags import ExtendsNode
-from django.test import SimpleTestCase
+from hibee.template import NodeList, TemplateSyntaxError
+from hibee.template.base import Node
+from hibee.template.loader_tags import ExtendsNode
+from hibee.test import SimpleTestCase
 
 from ..utils import setup
 

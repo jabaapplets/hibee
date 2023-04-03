@@ -1,4 +1,4 @@
-from django import template
+from hibee import template
 
 register = template.Library()
 

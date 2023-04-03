@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from django.template import TemplateSyntaxError
-from django.test import SimpleTestCase
-from django.utils.formats import date_format
+from hibee.template import TemplateSyntaxError
+from hibee.test import SimpleTestCase
+from hibee.utils.formats import date_format
 
 from ..utils import setup
 

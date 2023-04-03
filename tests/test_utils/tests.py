@@ -4,12 +4,12 @@ import warnings
 from io import StringIO
 from unittest import mock
 
-from django.conf import STATICFILES_STORAGE_ALIAS, settings
-from django.contrib.staticfiles.finders import get_finder, get_finders
-from django.contrib.staticfiles.storage import staticfiles_storage
-from django.core.exceptions import ImproperlyConfigured
-from django.core.files.storage import default_storage
-from django.db import (
+from hibee.conf import STATICFILES_STORAGE_ALIAS, settings
+from hibee.contrib.staticfiles.finders import get_finder, get_finders
+from hibee.contrib.staticfiles.storage import staticfiles_storage
+from hibee.core.exceptions import ImproperlyConfigured
+from hibee.core.files.storage import default_storage
+from hibee.db import (
     IntegrityError,
     connection,
     connections,
@@ -17,7 +17,7 @@ from django.db import (
     router,
     transaction,
 )
-from django.forms import (
+from hibee.forms import (
     CharField,
     EmailField,
     Form,
@@ -25,18 +25,18 @@ from django.forms import (
     ValidationError,
     formset_factory,
 )
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-from django.test import (
+from hibee.http import HttpResponse
+from hibee.template.loader import render_to_string
+from hibee.test import (
     SimpleTestCase,
     TestCase,
     TransactionTestCase,
     skipIfDBFeature,
     skipUnlessDBFeature,
 )
-from django.test.html import HTMLParseError, parse_html
-from django.test.testcases import DatabaseOperationForbidden
-from django.test.utils import (
+from hibee.test.html import HTMLParseError, parse_html
+from hibee.test.testcases import DatabaseOperationForbidden
+from hibee.test.utils import (
     CaptureQueriesContext,
     TestContextDecorator,
     ignore_warnings,
@@ -44,9 +44,9 @@ from django.test.utils import (
     override_settings,
     setup_test_environment,
 )
-from django.urls import NoReverseMatch, path, reverse, reverse_lazy
-from django.utils.deprecation import RemovedInDjango51Warning
-from django.utils.version import PY311
+from hibee.urls import NoReverseMatch, path, reverse, reverse_lazy
+from hibee.utils.deprecation import RemovedInHibee51Warning
+from hibee.utils.version import PY311
 
 from .models import Car, Person, PossessedCar
 from .views import empty_response
@@ -66,7 +66,7 @@ class SkippingTestCase(SimpleTestCase):
 
     def test_skip_unless_db_feature(self):
         """
-        Testing the django.test.skipUnlessDBFeature decorator.
+        Testing the hibee.test.skipUnlessDBFeature decorator.
         """
 
         # Total hack, but it works, just want an attribute that's always true.
@@ -109,7 +109,7 @@ class SkippingTestCase(SimpleTestCase):
 
     def test_skip_if_db_feature(self):
         """
-        Testing the django.test.skipIfDBFeature decorator.
+        Testing the hibee.test.skipIfDBFeature decorator.
         """
 
         @skipIfDBFeature("__class__")
@@ -252,7 +252,7 @@ class AssertNumQueriesUponConnectionTests(TransactionTestCase):
                     cursor.execute("SELECT 1" + connection.features.bare_select_suffix)
 
         ensure_connection = (
-            "django.db.backends.base.base.BaseDatabaseWrapper.ensure_connection"
+            "hibee.db.backends.base.base.BaseDatabaseWrapper.ensure_connection"
         )
         with mock.patch(ensure_connection, side_effect=make_configuration_query):
             with self.assertNumQueries(1):
@@ -267,10 +267,10 @@ class AssertQuerySetEqualTests(TestCase):
 
     def test_rename_assertquerysetequal_deprecation_warning(self):
         msg = "assertQuerysetEqual() is deprecated in favor of assertQuerySetEqual()."
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
+        with self.assertRaisesMessage(RemovedInHibee51Warning, msg):
             self.assertQuerysetEqual()
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInhibee51Warning)
     def test_deprecated_assertquerysetequal(self):
         self.assertQuerysetEqual(Person.objects.filter(name="p3"), [])
 
@@ -617,7 +617,7 @@ class AssertTemplateUsedContextManagerTests(SimpleTestCase):
 
     def test_assert_used_on_http_response(self):
         response = HttpResponse()
-        msg = "%s() is only usable on responses fetched using the Django test Client."
+        msg = "%s() is only usable on responses fetched using the Hibee test Client."
         with self.assertRaisesMessage(ValueError, msg % "assertTemplateUsed"):
             self.assertTemplateUsed(response, "template.html")
         with self.assertRaisesMessage(ValueError, msg % "assertTemplateNotUsed"):
@@ -1445,10 +1445,10 @@ class AssertFormErrorTests(SimpleTestCase):
 class AssertFormSetErrorTests(SimpleTestCase):
     def test_rename_assertformseterror_deprecation_warning(self):
         msg = "assertFormsetError() is deprecated in favor of assertFormSetError()."
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
+        with self.assertRaisesMessage(RemovedInHibee51Warning, msg):
             self.assertFormsetError()
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee51Warning)
     def test_deprecated_assertformseterror(self):
         self.assertFormsetError(TestFormset.invalid(), 0, "field", "invalid value")
 
@@ -1672,7 +1672,7 @@ class SetupTestEnvironmentTests(SimpleTestCase):
         for type_ in (list, tuple):
             with self.subTest(type_=type_):
                 allowed_hosts = type_("*")
-                with mock.patch("django.test.utils._TestState") as x:
+                with mock.patch("hibee.test.utils._TestState") as x:
                     del x.saved_data
                     with self.settings(ALLOWED_HOSTS=allowed_hosts):
                         setup_test_environment()
@@ -1720,7 +1720,7 @@ class OverrideSettingsTests(SimpleTestCase):
     def test_override_media_root(self):
         """
         Overriding the MEDIA_ROOT setting should be reflected in the
-        base_location attribute of django.core.files.storage.default_storage.
+        base_location attribute of hibee.core.files.storage.default_storage.
         """
         self.assertEqual(default_storage.base_location, "")
         with self.settings(MEDIA_ROOT="test_value"):
@@ -1729,7 +1729,7 @@ class OverrideSettingsTests(SimpleTestCase):
     def test_override_media_url(self):
         """
         Overriding the MEDIA_URL setting should be reflected in the
-        base_url attribute of django.core.files.storage.default_storage.
+        base_url attribute of hibee.core.files.storage.default_storage.
         """
         self.assertEqual(default_storage.base_location, "")
         with self.settings(MEDIA_URL="/test_value/"):
@@ -1739,7 +1739,7 @@ class OverrideSettingsTests(SimpleTestCase):
         """
         Overriding the FILE_UPLOAD_PERMISSIONS setting should be reflected in
         the file_permissions_mode attribute of
-        django.core.files.storage.default_storage.
+        hibee.core.files.storage.default_storage.
         """
         self.assertEqual(default_storage.file_permissions_mode, 0o644)
         with self.settings(FILE_UPLOAD_PERMISSIONS=0o777):
@@ -1749,7 +1749,7 @@ class OverrideSettingsTests(SimpleTestCase):
         """
         Overriding the FILE_UPLOAD_DIRECTORY_PERMISSIONS setting should be
         reflected in the directory_permissions_mode attribute of
-        django.core.files.storage.default_storage.
+        hibee.core.files.storage.default_storage.
         """
         self.assertIsNone(default_storage.directory_permissions_mode)
         with self.settings(FILE_UPLOAD_DIRECTORY_PERMISSIONS=0o777):
@@ -1767,7 +1767,7 @@ class OverrideSettingsTests(SimpleTestCase):
         """
         Overriding the STATIC_URL setting should be reflected in the
         base_url attribute of
-        django.contrib.staticfiles.storage.staticfiles_storage.
+        hibee.contrib.staticfiles.storage.staticfiles_storage.
         """
         with self.settings(STATIC_URL="/test/"):
             self.assertEqual(staticfiles_storage.base_url, "/test/")
@@ -1776,7 +1776,7 @@ class OverrideSettingsTests(SimpleTestCase):
         """
         Overriding the STATIC_ROOT setting should be reflected in the
         location attribute of
-        django.contrib.staticfiles.storage.staticfiles_storage.
+        hibee.contrib.staticfiles.storage.staticfiles_storage.
         """
         with self.settings(STATIC_ROOT="/tmp/test"):
             self.assertEqual(staticfiles_storage.location, os.path.abspath("/tmp/test"))
@@ -1784,10 +1784,10 @@ class OverrideSettingsTests(SimpleTestCase):
     def test_override_staticfiles_storage(self):
         """
         Overriding the STORAGES setting should be reflected in
-        the value of django.contrib.staticfiles.storage.staticfiles_storage.
+        the value of hibee.contrib.staticfiles.storage.staticfiles_storage.
         """
         new_class = "ManifestStaticFilesStorage"
-        new_storage = "django.contrib.staticfiles.storage." + new_class
+        new_storage = "hibee.contrib.staticfiles.storage." + new_class
         with self.settings(
             STORAGES={STATICFILES_STORAGE_ALIAS: {"BACKEND": new_storage}}
         ):
@@ -1796,11 +1796,11 @@ class OverrideSettingsTests(SimpleTestCase):
     def test_override_staticfiles_finders(self):
         """
         Overriding the STATICFILES_FINDERS setting should be reflected in
-        the return value of django.contrib.staticfiles.finders.get_finders.
+        the return value of hibee.contrib.staticfiles.finders.get_finders.
         """
         current = get_finders()
         self.assertGreater(len(list(current)), 1)
-        finders = ["django.contrib.staticfiles.finders.FileSystemFinder"]
+        finders = ["hibee.contrib.staticfiles.finders.FileSystemFinder"]
         with self.settings(STATICFILES_FINDERS=finders):
             self.assertEqual(len(list(get_finders())), len(finders))
 
@@ -1808,14 +1808,14 @@ class OverrideSettingsTests(SimpleTestCase):
         """
         Overriding the STATICFILES_DIRS setting should be reflected in
         the locations attribute of the
-        django.contrib.staticfiles.finders.FileSystemFinder instance.
+        hibee.contrib.staticfiles.finders.FileSystemFinder instance.
         """
-        finder = get_finder("django.contrib.staticfiles.finders.FileSystemFinder")
+        finder = get_finder("hibee.contrib.staticfiles.finders.FileSystemFinder")
         test_path = "/tmp/test"
         expected_location = ("", test_path)
         self.assertNotIn(expected_location, finder.locations)
         with self.settings(STATICFILES_DIRS=[test_path]):
-            finder = get_finder("django.contrib.staticfiles.finders.FileSystemFinder")
+            finder = get_finder("hibee.contrib.staticfiles.finders.FileSystemFinder")
             self.assertIn(expected_location, finder.locations)
 
 
@@ -1986,7 +1986,7 @@ class CaptureOnCommitCallbacksTests(TestCase):
             self.callback_called = True
             raise MyException("robust callback")
 
-        with self.assertLogs("django.test", "ERROR") as cm:
+        with self.assertLogs("hibee.test", "ERROR") as cm:
             with self.captureOnCommitCallbacks(execute=True) as callbacks:
                 transaction.on_commit(hook, robust=True)
 

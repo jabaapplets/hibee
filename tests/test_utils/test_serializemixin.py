@@ -1,5 +1,5 @@
-from django.test import SimpleTestCase
-from django.test.testcases import SerializeMixin
+from hibee.test import SimpleTestCase
+from hibee.test.testcases import SerializeMixin
 
 
 class TestSerializeMixin(SimpleTestCase):

@@ -24,10 +24,10 @@ import pickle
 import tempfile
 from unittest import mock
 
-from django.contrib.auth.models import User
-from django.core import mail
-from django.http import HttpResponse, HttpResponseNotAllowed
-from django.test import (
+from hibee.contrib.auth.models import User
+from hibee.core import mail
+from hibee.http import HttpResponse, HttpResponseNotAllowed
+from hibee.test import (
     AsyncRequestFactory,
     Client,
     RequestFactory,
@@ -36,9 +36,9 @@ from django.test import (
     modify_settings,
     override_settings,
 )
-from django.urls import reverse_lazy
-from django.utils.decorators import async_only_middleware
-from django.views.generic import RedirectView
+from hibee.urls import reverse_lazy
+from hibee.utils.decorators import async_only_middleware
+from hibee.views.generic import RedirectView
 
 from .views import TwoArgException, get_view, post_view, trace_view
 
@@ -200,7 +200,7 @@ class ClientTest(TestCase):
         "Check the value of HTTP headers returned in a response"
         response = self.client.get("/header_view/")
 
-        self.assertEqual(response.headers["X-DJANGO-TEST"], "Slartibartfast")
+        self.assertEqual(response.headers["X-HIBEE-TEST"], "Slartibartfast")
 
     def test_response_attached_request(self):
         """
@@ -553,8 +553,8 @@ class ClientTest(TestCase):
         self.assertEqual(response.context["user"].username, "testclient")
 
     @override_settings(
-        INSTALLED_APPS=["django.contrib.auth"],
-        SESSION_ENGINE="django.contrib.sessions.backends.file",
+        INSTALLED_APPS=["hibee.contrib.auth"],
+        SESSION_ENGINE="hibee.contrib.sessions.backends.file",
     )
     def test_view_with_login_when_sessions_app_is_not_installed(self):
         self.test_view_with_login()
@@ -664,15 +664,15 @@ class ClientTest(TestCase):
 
         with self.settings(
             AUTHENTICATION_BACKENDS=[
-                "django.contrib.auth.backends.AllowAllUsersModelBackend"
+                "hibee.contrib.auth.backends.AllowAllUsersModelBackend"
             ]
         ):
             self.assertTrue(self.client.login(**credentials))
 
     @override_settings(
         AUTHENTICATION_BACKENDS=[
-            "django.contrib.auth.backends.ModelBackend",
-            "django.contrib.auth.backends.AllowAllUsersModelBackend",
+            "hibee.contrib.auth.backends.ModelBackend",
+            "hibee.contrib.auth.backends.AllowAllUsersModelBackend",
         ]
     )
     def test_view_with_inactive_force_login(self):
@@ -684,7 +684,7 @@ class ClientTest(TestCase):
 
         # Log in
         self.client.force_login(
-            self.u2, backend="django.contrib.auth.backends.AllowAllUsersModelBackend"
+            self.u2, backend="hibee.contrib.auth.backends.AllowAllUsersModelBackend"
         )
 
         # Request a page that requires a login
@@ -728,7 +728,7 @@ class ClientTest(TestCase):
 
     @override_settings(
         AUTHENTICATION_BACKENDS=[
-            "django.contrib.auth.backends.ModelBackend",
+            "hibee.contrib.auth.backends.ModelBackend",
             "test_client.auth_backends.TestClientBackend",
         ],
     )
@@ -754,7 +754,7 @@ class ClientTest(TestCase):
 
     @override_settings(
         AUTHENTICATION_BACKENDS=[
-            "django.contrib.auth.backends.ModelBackend",
+            "hibee.contrib.auth.backends.ModelBackend",
             "test_client.auth_backends.TestClientBackend",
         ],
     )
@@ -767,12 +767,12 @@ class ClientTest(TestCase):
         response = self.client.get("/login_protected_view/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["user"].username, "testclient")
-        self.assertEqual(self.u1.backend, "django.contrib.auth.backends.ModelBackend")
+        self.assertEqual(self.u1.backend, "hibee.contrib.auth.backends.ModelBackend")
 
     @override_settings(
         AUTHENTICATION_BACKENDS=[
             "test_client.auth_backends.BackendWithoutGetUserMethod",
-            "django.contrib.auth.backends.ModelBackend",
+            "hibee.contrib.auth.backends.ModelBackend",
         ]
     )
     def test_force_login_with_backend_missing_get_user(self):
@@ -780,9 +780,9 @@ class ClientTest(TestCase):
         force_login() skips auth backends without a get_user() method.
         """
         self.client.force_login(self.u1)
-        self.assertEqual(self.u1.backend, "django.contrib.auth.backends.ModelBackend")
+        self.assertEqual(self.u1.backend, "hibee.contrib.auth.backends.ModelBackend")
 
-    @override_settings(SESSION_ENGINE="django.contrib.sessions.backends.signed_cookies")
+    @override_settings(SESSION_ENGINE="hibee.contrib.sessions.backends.signed_cookies")
     def test_logout_cookie_sessions(self):
         self.test_logout()
 
@@ -847,9 +847,9 @@ class ClientTest(TestCase):
         # TODO: Log in with right permissions and request the page again
 
     def test_external_redirect(self):
-        response = self.client.get("/django_project_redirect/")
+        response = self.client.get("/hibee_project_redirect/")
         self.assertRedirects(
-            response, "https://www.djangoproject.com/", fetch_redirect_response=False
+            response, "https://www.hibeeproject.com/", fetch_redirect_response=False
         )
 
     def test_external_redirect_without_trailing_slash(self):
@@ -864,15 +864,15 @@ class ClientTest(TestCase):
         assertRedirects without fetch_redirect_response=False raises
         a relevant ValueError rather than a non-descript AssertionError.
         """
-        response = self.client.get("/django_project_redirect/")
+        response = self.client.get("/hibee_project_redirect/")
         msg = (
             "The test client is unable to fetch remote URLs (got "
-            "https://www.djangoproject.com/). If the host is served by Django, "
-            "add 'www.djangoproject.com' to ALLOWED_HOSTS. "
+            "https://www.hibeeproject.com/). If the host is served by Hibee, "
+            "add 'www.hibeeproject.com' to ALLOWED_HOSTS. "
             "Otherwise, use assertRedirects(..., fetch_redirect_response=False)."
         )
         with self.assertRaisesMessage(ValueError, msg):
-            self.assertRedirects(response, "https://www.djangoproject.com/")
+            self.assertRedirects(response, "https://www.hibeeproject.com/")
 
     def test_session_modifying_view(self):
         "Request a page that modifies the session"
@@ -886,14 +886,14 @@ class ClientTest(TestCase):
 
     @override_settings(
         INSTALLED_APPS=[],
-        SESSION_ENGINE="django.contrib.sessions.backends.file",
+        SESSION_ENGINE="hibee.contrib.sessions.backends.file",
     )
     def test_sessions_app_is_not_installed(self):
         self.test_session_modifying_view()
 
     @override_settings(
         INSTALLED_APPS=[],
-        SESSION_ENGINE="django.contrib.sessions.backends.nonexistent",
+        SESSION_ENGINE="hibee.contrib.sessions.backends.nonexistent",
     )
     def test_session_engine_is_invalid(self):
         with self.assertRaisesMessage(ImportError, "nonexistent"):
@@ -993,7 +993,7 @@ class ClientTest(TestCase):
 
 
 @override_settings(
-    MIDDLEWARE=["django.middleware.csrf.CsrfViewMiddleware"],
+    MIDDLEWARE=["hibee.middleware.csrf.CsrfViewMiddleware"],
     ROOT_URLCONF="test_client.urls",
 )
 class CSRFEnabledClientTests(SimpleTestCase):

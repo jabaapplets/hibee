@@ -1,6 +1,6 @@
-from django.template.defaultfilters import length
-from django.test import SimpleTestCase
-from django.utils.safestring import mark_safe
+from hibee.template.defaultfilters import length
+from hibee.test import SimpleTestCase
+from hibee.utils.safestring import mark_safe
 
 from ..utils import setup
 
@@ -25,13 +25,13 @@ class LengthTests(SimpleTestCase):
 
     @setup({"length04": "{{ string|length }}"})
     def test_length04(self):
-        output = self.engine.render_to_string("length04", {"string": "django"})
+        output = self.engine.render_to_string("length04", {"string": "hibee"})
         self.assertEqual(output, "6")
 
     @setup({"length05": "{% if string|length == 6 %}Pass{% endif %}"})
     def test_length05(self):
         output = self.engine.render_to_string(
-            "length05", {"string": mark_safe("django")}
+            "length05", {"string": mark_safe("hibee")}
         )
         self.assertEqual(output, "Pass")
 
