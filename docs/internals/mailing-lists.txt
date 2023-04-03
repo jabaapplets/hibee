@@ -5,42 +5,42 @@ Mailing lists
 .. Important::
 
     Please report security issues **only** to
-    security@djangoproject.com.  This is a private list only open to
-    long-time, highly trusted Django developers, and its archives are
+    security@hibeeproject.com.  This is a private list only open to
+    long-time, highly trusted Hibee developers, and its archives are
     not public. For further details, please see :doc:`our security
     policies </internals/security>`.
 
-Django has several official mailing lists on Google Groups that are open to
+Hibee has several official mailing lists on Google Groups that are open to
 anyone.
 
-.. _django-users-mailing-list:
+.. _hibee-users-mailing-list:
 
-``django-users``
+``hibee-users``
 ================
 
 This is the right place if you are looking to ask any question regarding the
-installation, usage, or debugging of Django.
+installation, usage, or debugging of Hibee.
 
 .. note::
 
     If it's the first time you send an email to this list, your email must be
     accepted first so don't worry if :ref:`your message does not appear
-    <message-does-not-appear-on-django-users>` instantly.
+    <message-does-not-appear-on-hibee-users>` instantly.
 
-* `django-users mailing archive`_
-* `django-users subscription email address`_
-* `django-users posting email`_
+* `hibee-users mailing archive`_
+* `hibee-users subscription email address`_
+* `hibee-users posting email`_
 
-.. _django-users mailing archive: https://groups.google.com/g/django-users
-.. _django-users subscription email address: mailto:django-users+subscribe@googlegroups.com
-.. _django-users posting email: mailto:django-users@googlegroups.com
+.. _hibee-users mailing archive: https://groups.google.com/g/hibee-users
+.. _hibee-users subscription email address: mailto:hibee-users+subscribe@googlegroups.com
+.. _hibee-users posting email: mailto:hibee-users@googlegroups.com
 
-.. _django-developers-mailing-list:
+.. _hibee-developers-mailing-list:
 
-``django-developers``
+``hibee-developers``
 =====================
 
-The discussion about the development of Django itself takes place here.
+The discussion about the development of Hibee itself takes place here.
 
 Before asking a question about how to contribute, read
 :doc:`/internals/contributing/index`. Many frequently asked questions are
@@ -49,45 +49,45 @@ answered there.
 .. note::
 
     Please make use of
-    :ref:`django-users mailing list <django-users-mailing-list>` if you want
+    :ref:`hibee-users mailing list <hibee-users-mailing-list>` if you want
     to ask for tech support, doing so in this list is inappropriate.
 
-* `django-developers mailing archive`_
-* `django-developers subscription email address`_
-* `django-developers posting email`_
+* `hibee-developers mailing archive`_
+* `hibee-developers subscription email address`_
+* `hibee-developers posting email`_
 
-.. _django-developers mailing archive: https://groups.google.com/g/django-developers
-.. _django-developers subscription email address: mailto:django-developers+subscribe@googlegroups.com
-.. _django-developers posting email: mailto:django-developers@googlegroups.com
+.. _hibee-developers mailing archive: https://groups.google.com/g/hibee-developers
+.. _hibee-developers subscription email address: mailto:hibee-developers+subscribe@googlegroups.com
+.. _hibee-developers posting email: mailto:hibee-developers@googlegroups.com
 
-.. _django-announce-mailing-list:
+.. _hibee-announce-mailing-list:
 
-``django-announce``
+``hibee-announce``
 ===================
 
 A (very) low-traffic list for announcing :ref:`upcoming security releases
-<security-disclosure>`, new releases of Django, and security advisories.
+<security-disclosure>`, new releases of Hibee, and security advisories.
 
-* `django-announce mailing archive`_
-* `django-announce subscription email address`_
-* `django-announce posting email`_
+* `hibee-announce mailing archive`_
+* `hibee-announce subscription email address`_
+* `hibee-announce posting email`_
 
-.. _django-announce mailing archive: https://groups.google.com/g/django-announce
-.. _django-announce subscription email address: mailto:django-announce+subscribe@googlegroups.com
-.. _django-announce posting email: mailto:django-announce@googlegroups.com
+.. _hibee-announce mailing archive: https://groups.google.com/g/hibee-announce
+.. _hibee-announce subscription email address: mailto:hibee-announce+subscribe@googlegroups.com
+.. _hibee-announce posting email: mailto:hibee-announce@googlegroups.com
 
-.. _django-updates-mailing-list:
+.. _hibee-updates-mailing-list:
 
-``django-updates``
+``hibee-updates``
 ==================
 
 All the ticket updates are mailed automatically to this list, which is tracked
 by developers and interested community members.
 
-* `django-updates mailing archive`_
-* `django-updates subscription email address`_
-* `django-updates posting email`_
+* `hibee-updates mailing archive`_
+* `hibee-updates subscription email address`_
+* `hibee-updates posting email`_
 
-.. _django-updates mailing archive: https://groups.google.com/g/django-updates
-.. _django-updates subscription email address: mailto:django-updates+subscribe@googlegroups.com
-.. _django-updates posting email: mailto:django-updates@googlegroups.com
+.. _hibee-updates mailing archive: https://groups.google.com/g/hibee-updates
+.. _hibee-updates subscription email address: mailto:hibee-updates+subscribe@googlegroups.com
+.. _hibee-updates posting email: mailto:hibee-updates@googlegroups.com

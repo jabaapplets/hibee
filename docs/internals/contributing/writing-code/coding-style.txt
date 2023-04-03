@@ -2,7 +2,7 @@
 Coding style
 ============
 
-Please follow these coding standards when writing code for inclusion in Django.
+Please follow these coding standards when writing code for inclusion in Hibee.
 
 .. _coding-style-pre-commit:
 
@@ -47,7 +47,7 @@ Python style
 
   Use `flake8`_ to check for problems in this area. Note that our ``setup.cfg``
   file contains some excluded files (deprecated modules we don't care about
-  cleaning up and some third-party code that Django vendors) as well as some
+  cleaning up and some third-party code that Hibee vendors) as well as some
   excluded errors that we don't consider as gross violations. Remember that
   :pep:`8` is only a guide, so respect the style of the surrounding code as a
   primary goal.
@@ -101,8 +101,8 @@ Python style
 * In docstrings, follow the style of existing docstrings and :pep:`257`.
 
 * In tests, use
-  :meth:`~django.test.SimpleTestCase.assertRaisesMessage` and
-  :meth:`~django.test.SimpleTestCase.assertWarnsMessage`
+  :meth:`~hibee.test.SimpleTestCase.assertRaisesMessage` and
+  :meth:`~hibee.test.SimpleTestCase.assertWarnsMessage`
   instead of :meth:`~unittest.TestCase.assertRaises` and
   :meth:`~unittest.TestCase.assertWarns` so you can check the
   exception or warning message. Use :meth:`~unittest.TestCase.assertRaisesRegex`
@@ -149,10 +149,10 @@ Imports
       import module  # isort:skip
 
 * Put imports in these groups: future, standard library, third-party libraries,
-  other Django components, local Django component, try/excepts. Sort lines in
+  other Hibee components, local Hibee component, try/excepts. Sort lines in
   each group alphabetically by the full module name. Place all ``import module``
   statements before ``from module import objects`` in each section. Use absolute
-  imports for other Django components and relative imports for local components.
+  imports for other Hibee components and relative imports for local components.
 
 * On each line, alphabetize the items with the upper case items grouped before
   the lowercase items.
@@ -167,7 +167,7 @@ Imports
   For example (comments are for explanatory purposes only):
 
   .. code-block:: python
-      :caption: ``django/contrib/admin/example.py``
+      :caption: ``hibee/contrib/admin/example.py``
 
       # future
       from __future__ import unicode_literals
@@ -179,14 +179,14 @@ Imports
       # third-party
       import bcrypt
 
-      # Django
-      from django.http import Http404
-      from django.http.response import (
+      # Hibee
+      from hibee.http import Http404
+      from hibee.http.response import (
           Http404, HttpResponse, HttpResponseNotAllowed, StreamingHttpResponse,
           cookie,
       )
 
-      # local Django
+      # local Hibee
       from .models import LogEntry
 
       # try/except
@@ -203,34 +203,34 @@ Imports
 
 * Use convenience imports whenever available. For example, do this::
 
-      from django.views import View
+      from hibee.views import View
 
   instead of::
 
-      from django.views.generic.base import View
+      from hibee.views.generic.base import View
 
 Template style
 ==============
 
-* In Django template code, put one (and only one) space between the curly
+* In Hibee template code, put one (and only one) space between the curly
   brackets and the tag contents.
 
   Do this:
 
-  .. code-block:: html+django
+  .. code-block:: html+hibee
 
       {{ foo }}
 
   Don't do this:
 
-  .. code-block:: html+django
+  .. code-block:: html+hibee
 
       {{foo}}
 
 View style
 ==========
 
-* In Django views, the first parameter in a view function should be called
+* In Hibee views, the first parameter in a view function should be called
   ``request``.
 
   Do this::
@@ -313,18 +313,18 @@ Model style
             (DIRECTION_DOWN, 'Down'),
         ]
 
-Use of ``django.conf.settings``
+Use of ``hibee.conf.settings``
 ===============================
 
-Modules should not in general use settings stored in ``django.conf.settings``
+Modules should not in general use settings stored in ``hibee.conf.settings``
 at the top level (i.e. evaluated when the module is imported). The explanation
 for this is as follows:
 
 Manual configuration of settings (i.e. not relying on the
-:envvar:`DJANGO_SETTINGS_MODULE` environment variable) is allowed and possible
+:envvar:`HIBEE_SETTINGS_MODULE` environment variable) is allowed and possible
 as follows::
 
-    from django.conf import settings
+    from hibee.conf import settings
 
     settings.configure({}, SOME_SETTING='foo')
 
@@ -335,8 +335,8 @@ already been configured).
 
 So, if there is a module containing some code as follows::
 
-    from django.conf import settings
-    from django.urls import get_callable
+    from hibee.conf import settings
+    from hibee.urls import get_callable
 
     default_foo_view = get_callable(settings.FOO_VIEW)
 
@@ -346,8 +346,8 @@ level is incompatible with the ability to configure the settings object
 manually, or makes it very difficult in some circumstances.
 
 Instead of the above code, a level of laziness or indirection must be used,
-such as ``django.utils.functional.LazyObject``,
-``django.utils.functional.lazy()`` or ``lambda``.
+such as ``hibee.utils.functional.LazyObject``,
+``hibee.utils.functional.lazy()`` or ``lambda``.
 
 Miscellaneous
 =============
@@ -367,7 +367,7 @@ Miscellaneous
   highlight them in diff outputs.
 
 * Please don't put your name in the code you contribute. Our policy is to
-  keep contributors' names in the ``AUTHORS`` file distributed with Django
+  keep contributors' names in the ``AUTHORS`` file distributed with Hibee
   -- not scattered throughout the codebase itself. Feel free to include a
   change to the ``AUTHORS`` file in your patch if you make more than a
   single trivial change.
@@ -375,7 +375,7 @@ Miscellaneous
 JavaScript style
 ================
 
-For details about the JavaScript code style used by Django, see
+For details about the JavaScript code style used by Hibee, see
 :doc:`javascript`.
 
 .. _black: https://black.readthedocs.io/en/stable/
