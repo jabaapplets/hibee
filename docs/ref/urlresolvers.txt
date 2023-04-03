@@ -1,14 +1,14 @@
 =================================
-``django.urls`` utility functions
+``hibee.urls`` utility functions
 =================================
 
-.. module:: django.urls
+.. module:: hibee.urls
 
 ``reverse()``
 =============
 
 If you need to use something similar to the :ttag:`url` template tag in
-your code, Django provides the following function:
+your code, Hibee provides the following function:
 
 .. function:: reverse(viewname, urlconf=None, args=None, kwargs=None, current_app=None)
 
@@ -31,7 +31,7 @@ you can use any of the following to reverse the URL::
 
 If the URL accepts arguments, you may pass them in ``args``. For example::
 
-    from django.urls import reverse
+    from hibee.urls import reverse
 
     def myview(request):
         return HttpResponseRedirect(reverse('arch-summary', args=[1945]))
@@ -46,7 +46,7 @@ You can also pass ``kwargs`` instead of ``args``. For example:
 ``args`` and ``kwargs`` cannot be passed to ``reverse()`` at the same time.
 
 If no match can be made, ``reverse()`` raises a
-:class:`~django.urls.NoReverseMatch` exception.
+:class:`~hibee.urls.NoReverseMatch` exception.
 
 The ``reverse()`` function can reverse a large variety of regular expression
 patterns for URLs, but not every possible one. The main restriction at the
@@ -91,7 +91,7 @@ URLConf is loaded. Some common cases where this function is necessary are:
   view.
 
 * providing a reversed URL to a decorator (such as the ``login_url`` argument
-  for the :func:`django.contrib.auth.decorators.permission_required`
+  for the :func:`hibee.contrib.auth.decorators.permission_required`
   decorator).
 
 * providing a reversed URL as a default value for a parameter in a function's
@@ -106,13 +106,13 @@ corresponding view functions. It has the following signature:
 .. function:: resolve(path, urlconf=None)
 
 ``path`` is the URL path you want to resolve. As with
-:func:`~django.urls.reverse`, you don't need to worry about the ``urlconf``
+:func:`~hibee.urls.reverse`, you don't need to worry about the ``urlconf``
 parameter. The function returns a :class:`ResolverMatch` object that allows you
 to access various metadata about the resolved URL.
 
 If the URL does not resolve, the function raises a
-:exc:`~django.urls.Resolver404` exception (a subclass of
-:class:`~django.http.Http404`) .
+:exc:`~hibee.urls.Resolver404` exception (a subclass of
+:class:`~hibee.http.Http404`) .
 
 .. class:: ResolverMatch
 
@@ -198,12 +198,12 @@ A :class:`ResolverMatch` object can also be assigned to a triple::
 
     func, args, kwargs = resolve('/some/path/')
 
-One possible use of :func:`~django.urls.resolve` would be to test whether a
+One possible use of :func:`~hibee.urls.resolve` would be to test whether a
 view would raise a ``Http404`` error before redirecting to it::
 
     from urllib.parse import urlparse
-    from django.urls import resolve
-    from django.http import Http404, HttpResponseRedirect
+    from hibee.urls import resolve
+    from hibee.http import Http404, HttpResponseRedirect
 
     def myview(request):
         next = request.META.get('HTTP_REFERER', None) or '/'
@@ -225,11 +225,11 @@ view would raise a ``Http404`` error before redirecting to it::
 
 .. function:: get_script_prefix()
 
-Normally, you should always use :func:`~django.urls.reverse` to define URLs
+Normally, you should always use :func:`~hibee.urls.reverse` to define URLs
 within your application. However, if your application constructs part of the
 URL hierarchy itself, you may occasionally need to generate URLs. In that
-case, you need to be able to find the base URL of the Django project within
-its web server (normally, :func:`~django.urls.reverse` takes care of this for
+case, you need to be able to find the base URL of the Hibee project within
+its web server (normally, :func:`~hibee.urls.reverse` takes care of this for
 you). In that case, you can call ``get_script_prefix()``, which will return
-the script prefix portion of the URL for your Django project. If your Django
+the script prefix portion of the URL for your Hibee project. If your Hibee
 project is at the root of its web server, this is always ``"/"``.

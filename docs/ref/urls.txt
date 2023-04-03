@@ -1,11 +1,11 @@
 =============================================
-``django.urls`` functions for use in URLconfs
+``hibee.urls`` functions for use in URLconfs
 =============================================
 
-.. module:: django.urls.conf
+.. module:: hibee.urls.conf
     :synopsis: Functions for use in URLconfs.
 
-.. currentmodule:: django.urls
+.. currentmodule:: hibee.urls
 
 ``path()``
 ==========
@@ -14,7 +14,7 @@
 
 Returns an element for inclusion in ``urlpatterns``. For example::
 
-    from django.urls import include, path
+    from hibee.urls import include, path
 
     urlpatterns = [
         path('index/', views.index, name='main-view'),
@@ -26,7 +26,7 @@ Returns an element for inclusion in ``urlpatterns``. For example::
     ]
 
 The ``route`` argument should be a string or
-:func:`~django.utils.translation.gettext_lazy()` (see
+:func:`~hibee.utils.translation.gettext_lazy()` (see
 :ref:`translating-urlpatterns`) that contains a URL pattern. The string
 may contain angle brackets (like ``<username>`` above) to capture part of the
 URL and send it as a keyword argument to the view. The angle brackets may
@@ -34,11 +34,11 @@ include a converter specification (like the ``int`` part of ``<int:section>``)
 which limits the characters matched and may also change the type of the
 variable passed to the view. For example, ``<int:section>`` matches a string
 of decimal digits and converts the value to an ``int``. See
-:ref:`how-django-processes-a-request` for more details.
+:ref:`how-hibee-processes-a-request` for more details.
 
 The ``view`` argument is a view function or the result of
-:meth:`~django.views.generic.base.View.as_view` for class-based views. It can
-also be an :func:`django.urls.include`.
+:meth:`~hibee.views.generic.base.View.as_view` for class-based views. It can
+also be an :func:`hibee.urls.include`.
 
 The ``kwargs`` argument allows you to pass additional arguments to the view
 function or method. See :ref:`views-extra-options` for an example.
@@ -53,7 +53,7 @@ argument is useful.
 
 Returns an element for inclusion in ``urlpatterns``. For example::
 
-    from django.urls import include, re_path
+    from hibee.urls import include, re_path
 
     urlpatterns = [
         re_path(r'^index/$', views.index, name='index'),
@@ -63,7 +63,7 @@ Returns an element for inclusion in ``urlpatterns``. For example::
     ]
 
 The ``route`` argument should be a string or
-:func:`~django.utils.translation.gettext_lazy()` (see
+:func:`~hibee.utils.translation.gettext_lazy()` (see
 :ref:`translating-urlpatterns`) that contains a regular expression compatible
 with Python's :py:mod:`re` module. Strings typically use raw string syntax
 (``r''``) so that they can contain sequences like ``\d`` without the need to
@@ -73,11 +73,11 @@ if the groups are named, and as positional arguments otherwise. The values are
 passed as strings, without any type conversion.
 
 When a ``route`` ends with ``$`` the whole requested URL, matching against
-:attr:`~django.http.HttpRequest.path_info`, must match the regular expression
+:attr:`~hibee.http.HttpRequest.path_info`, must match the regular expression
 pattern (:py:func:`re.fullmatch` is used).
 
 The ``view``, ``kwargs`` and ``name`` arguments are the same as for
-:func:`~django.urls.path()`.
+:func:`~hibee.urls.path()`.
 
 .. versionchanged:: 2.2.25
 
@@ -107,7 +107,7 @@ The ``view``, ``kwargs`` and ``name`` arguments are the same as for
     :arg module: URLconf module (or module name)
     :arg namespace: Instance namespace for the URL entries being included
     :type namespace: str
-    :arg pattern_list: Iterable of :func:`~django.urls.path` and/or :func:`~django.urls.re_path` instances.
+    :arg pattern_list: Iterable of :func:`~hibee.urls.path` and/or :func:`~hibee.urls.re_path` instances.
     :arg app_namespace: Application namespace for the URL entries being included
     :type app_namespace: str
 
@@ -118,7 +118,7 @@ See :ref:`including-other-urlconfs` and :ref:`namespaces-and-include`.
 
 .. function:: register_converter(converter, type_name)
 
-The function for registering a converter for use in :func:`~django.urls.path()`
+The function for registering a converter for use in :func:`~hibee.urls.path()`
 ``route``\s.
 
 The ``converter`` argument is a converter class, and ``type_name`` is the
@@ -126,20 +126,20 @@ converter name to use in path patterns. See
 :ref:`registering-custom-path-converters` for an example.
 
 ==================================================
-``django.conf.urls`` functions for use in URLconfs
+``hibee.conf.urls`` functions for use in URLconfs
 ==================================================
 
-.. module:: django.conf.urls
+.. module:: hibee.conf.urls
 
 ``static()``
 ============
 
-.. function:: static.static(prefix, view=django.views.static.serve, **kwargs)
+.. function:: static.static(prefix, view=hibee.views.static.serve, **kwargs)
 
 Helper function to return a URL pattern for serving files in debug mode::
 
-    from django.conf import settings
-    from django.conf.urls.static import static
+    from hibee.conf import settings
+    from hibee.conf.urls.static import static
 
     urlpatterns = [
         # ... the rest of your URLconf goes here ...
@@ -154,9 +154,9 @@ A callable, or a string representing the full Python import path to the view
 that should be called if the HTTP client has sent a request that caused an error
 condition and a response with a status code of 400.
 
-By default, this is :func:`django.views.defaults.bad_request`. If you
+By default, this is :func:`hibee.views.defaults.bad_request`. If you
 implement a custom view, be sure it accepts ``request`` and ``exception``
-arguments and returns an :class:`~django.http.HttpResponseBadRequest`.
+arguments and returns an :class:`~hibee.http.HttpResponseBadRequest`.
 
 ``handler403``
 ==============
@@ -167,9 +167,9 @@ A callable, or a string representing the full Python import path to the view
 that should be called if the user doesn't have the permissions required to
 access a resource.
 
-By default, this is :func:`django.views.defaults.permission_denied`. If you
+By default, this is :func:`hibee.views.defaults.permission_denied`. If you
 implement a custom view, be sure it accepts ``request`` and ``exception``
-arguments and returns an :class:`~django.http.HttpResponseForbidden`.
+arguments and returns an :class:`~hibee.http.HttpResponseForbidden`.
 
 ``handler404``
 ==============
@@ -179,9 +179,9 @@ arguments and returns an :class:`~django.http.HttpResponseForbidden`.
 A callable, or a string representing the full Python import path to the view
 that should be called if none of the URL patterns match.
 
-By default, this is :func:`django.views.defaults.page_not_found`. If you
+By default, this is :func:`hibee.views.defaults.page_not_found`. If you
 implement a custom view, be sure it accepts ``request`` and ``exception``
-arguments and returns an :class:`~django.http.HttpResponseNotFound`.
+arguments and returns an :class:`~hibee.http.HttpResponseNotFound`.
 
 ``handler500``
 ==============
@@ -192,6 +192,6 @@ A callable, or a string representing the full Python import path to the view
 that should be called in case of server errors. Server errors happen when you
 have runtime errors in view code.
 
-By default, this is :func:`django.views.defaults.server_error`. If you
+By default, this is :func:`hibee.views.defaults.server_error`. If you
 implement a custom view, be sure it accepts a ``request`` argument and returns
-an :class:`~django.http.HttpResponseServerError`.
+an :class:`~hibee.http.HttpResponseServerError`.
