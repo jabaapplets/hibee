@@ -1,9 +1,9 @@
 ======================
-GeoDjango's admin site
+GeoHibee's admin site
 ======================
 
-.. module:: django.contrib.gis.admin
-    :synopsis: GeoDjango's extensions to the admin site.
+.. module:: hibee.contrib.gis.admin
+    :synopsis: GeoHibee's extensions to the admin site.
 
 ``GISModelAdmin``
 =================
@@ -13,8 +13,8 @@ GeoDjango's admin site
     .. attribute:: gis_widget
 
         The widget class to be used for
-        :class:`~django.contrib.gis.db.models.GeometryField`. Defaults to
-        :class:`~django.contrib.gis.forms.widgets.OSMWidget`.
+        :class:`~hibee.contrib.gis.db.models.GeometryField`. Defaults to
+        :class:`~hibee.contrib.gis.forms.widgets.OSMWidget`.
 
     .. attribute:: gis_widget_kwargs
 

@@ -2,9 +2,9 @@
 Generic date views
 ==================
 
-.. module:: django.views.generic.dates
+.. module:: hibee.views.generic.dates
 
-Date-based generic views, provided in :mod:`django.views.generic.dates`, are
+Date-based generic views, provided in :mod:`hibee.views.generic.dates`, are
 views for displaying drilldown pages for date-based data.
 
 .. note::
@@ -12,8 +12,8 @@ views for displaying drilldown pages for date-based data.
     Some of the examples on this page assume that an ``Article`` model has been
     defined as follows in ``myapp/models.py``::
 
-        from django.db import models
-        from django.urls import reverse
+        from hibee.db import models
+        from hibee.urls import reverse
 
         class Article(models.Model):
             title = models.CharField(max_length=200)
@@ -33,22 +33,22 @@ views for displaying drilldown pages for date-based data.
 
     **Ancestors (MRO)**
 
-    * :class:`django.views.generic.list.MultipleObjectTemplateResponseMixin`
-    * :class:`django.views.generic.base.TemplateResponseMixin`
-    * :class:`django.views.generic.dates.BaseArchiveIndexView`
-    * :class:`django.views.generic.dates.BaseDateListView`
-    * :class:`django.views.generic.list.MultipleObjectMixin`
-    * :class:`django.views.generic.dates.DateMixin`
-    * :class:`django.views.generic.base.View`
+    * :class:`hibee.views.generic.list.MultipleObjectTemplateResponseMixin`
+    * :class:`hibee.views.generic.base.TemplateResponseMixin`
+    * :class:`hibee.views.generic.dates.BaseArchiveIndexView`
+    * :class:`hibee.views.generic.dates.BaseDateListView`
+    * :class:`hibee.views.generic.list.MultipleObjectMixin`
+    * :class:`hibee.views.generic.dates.DateMixin`
+    * :class:`hibee.views.generic.base.View`
 
     **Context**
 
     In addition to the context provided by
-    :class:`django.views.generic.list.MultipleObjectMixin` (via
-    :class:`django.views.generic.dates.BaseDateListView`), the template's
+    :class:`hibee.views.generic.list.MultipleObjectMixin` (via
+    :class:`hibee.views.generic.dates.BaseDateListView`), the template's
     context will be:
 
-    * ``date_list``: A :meth:`QuerySet <django.db.models.query.QuerySet.dates>`
+    * ``date_list``: A :meth:`QuerySet <hibee.db.models.query.QuerySet.dates>`
       object containing all years that have objects available according to
       ``queryset``, represented as :class:`datetime.datetime` objects, in
       descending order.
@@ -63,8 +63,8 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/urls.py**::
 
-        from django.urls import path
-        from django.views.generic.dates import ArchiveIndexView
+        from hibee.urls import path
+        from hibee.views.generic.dates import ArchiveIndexView
 
         from myapp.models import Article
 
@@ -76,7 +76,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/article_archive.html**:
 
-    .. code-block:: html+django
+    .. code-block:: html+hibee
 
         <ul>
             {% for article in latest %}
@@ -97,14 +97,14 @@ views for displaying drilldown pages for date-based data.
 
     **Ancestors (MRO)**
 
-    * :class:`django.views.generic.list.MultipleObjectTemplateResponseMixin`
-    * :class:`django.views.generic.base.TemplateResponseMixin`
-    * :class:`django.views.generic.dates.BaseYearArchiveView`
-    * :class:`django.views.generic.dates.YearMixin`
-    * :class:`django.views.generic.dates.BaseDateListView`
-    * :class:`django.views.generic.list.MultipleObjectMixin`
-    * :class:`django.views.generic.dates.DateMixin`
-    * :class:`django.views.generic.base.View`
+    * :class:`hibee.views.generic.list.MultipleObjectTemplateResponseMixin`
+    * :class:`hibee.views.generic.base.TemplateResponseMixin`
+    * :class:`hibee.views.generic.dates.BaseYearArchiveView`
+    * :class:`hibee.views.generic.dates.YearMixin`
+    * :class:`hibee.views.generic.dates.BaseDateListView`
+    * :class:`hibee.views.generic.list.MultipleObjectMixin`
+    * :class:`hibee.views.generic.dates.DateMixin`
+    * :class:`hibee.views.generic.base.View`
 
     .. attribute:: make_object_list
 
@@ -122,11 +122,11 @@ views for displaying drilldown pages for date-based data.
     **Context**
 
     In addition to the context provided by
-    :class:`django.views.generic.list.MultipleObjectMixin` (via
-    :class:`django.views.generic.dates.BaseDateListView`), the template's
+    :class:`hibee.views.generic.list.MultipleObjectMixin` (via
+    :class:`hibee.views.generic.dates.BaseDateListView`), the template's
     context will be:
 
-    * ``date_list``: A :meth:`QuerySet <django.db.models.query.QuerySet.dates>`
+    * ``date_list``: A :meth:`QuerySet <hibee.db.models.query.QuerySet.dates>`
       object containing all months that have objects available according to
       ``queryset``, represented as :class:`datetime.datetime` objects, in
       ascending order.
@@ -150,7 +150,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/views.py**::
 
-        from django.views.generic.dates import YearArchiveView
+        from hibee.views.generic.dates import YearArchiveView
 
         from myapp.models import Article
 
@@ -162,7 +162,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/urls.py**::
 
-        from django.urls import path
+        from hibee.urls import path
 
         from myapp.views import ArticleYearArchiveView
 
@@ -174,7 +174,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/article_archive_year.html**:
 
-    .. code-block:: html+django
+    .. code-block:: html+hibee
 
         <ul>
             {% for date in date_list %}
@@ -202,24 +202,24 @@ views for displaying drilldown pages for date-based data.
 
     **Ancestors (MRO)**
 
-    * :class:`django.views.generic.list.MultipleObjectTemplateResponseMixin`
-    * :class:`django.views.generic.base.TemplateResponseMixin`
-    * :class:`django.views.generic.dates.BaseMonthArchiveView`
-    * :class:`django.views.generic.dates.YearMixin`
-    * :class:`django.views.generic.dates.MonthMixin`
-    * :class:`django.views.generic.dates.BaseDateListView`
-    * :class:`django.views.generic.list.MultipleObjectMixin`
-    * :class:`django.views.generic.dates.DateMixin`
-    * :class:`django.views.generic.base.View`
+    * :class:`hibee.views.generic.list.MultipleObjectTemplateResponseMixin`
+    * :class:`hibee.views.generic.base.TemplateResponseMixin`
+    * :class:`hibee.views.generic.dates.BaseMonthArchiveView`
+    * :class:`hibee.views.generic.dates.YearMixin`
+    * :class:`hibee.views.generic.dates.MonthMixin`
+    * :class:`hibee.views.generic.dates.BaseDateListView`
+    * :class:`hibee.views.generic.list.MultipleObjectMixin`
+    * :class:`hibee.views.generic.dates.DateMixin`
+    * :class:`hibee.views.generic.base.View`
 
     **Context**
 
     In addition to the context provided by
-    :class:`~django.views.generic.list.MultipleObjectMixin` (via
-    :class:`~django.views.generic.dates.BaseDateListView`), the template's
+    :class:`~hibee.views.generic.list.MultipleObjectMixin` (via
+    :class:`~hibee.views.generic.dates.BaseDateListView`), the template's
     context will be:
 
-    * ``date_list``: A :meth:`QuerySet <django.db.models.query.QuerySet.dates>`
+    * ``date_list``: A :meth:`QuerySet <hibee.db.models.query.QuerySet.dates>`
       object containing all days that have objects available in the given month,
       according to ``queryset``, represented as :class:`datetime.datetime`
       objects, in ascending order.
@@ -243,7 +243,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/views.py**::
 
-        from django.views.generic.dates import MonthArchiveView
+        from hibee.views.generic.dates import MonthArchiveView
 
         from myapp.models import Article
 
@@ -254,7 +254,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/urls.py**::
 
-        from django.urls import path
+        from hibee.urls import path
 
         from myapp.views import ArticleMonthArchiveView
 
@@ -271,7 +271,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/article_archive_month.html**:
 
-    .. code-block:: html+django
+    .. code-block:: html+hibee
 
         <ul>
             {% for article in object_list %}
@@ -299,21 +299,21 @@ views for displaying drilldown pages for date-based data.
 
     **Ancestors (MRO)**
 
-    * :class:`django.views.generic.list.MultipleObjectTemplateResponseMixin`
-    * :class:`django.views.generic.base.TemplateResponseMixin`
-    * :class:`django.views.generic.dates.BaseWeekArchiveView`
-    * :class:`django.views.generic.dates.YearMixin`
-    * :class:`django.views.generic.dates.WeekMixin`
-    * :class:`django.views.generic.dates.BaseDateListView`
-    * :class:`django.views.generic.list.MultipleObjectMixin`
-    * :class:`django.views.generic.dates.DateMixin`
-    * :class:`django.views.generic.base.View`
+    * :class:`hibee.views.generic.list.MultipleObjectTemplateResponseMixin`
+    * :class:`hibee.views.generic.base.TemplateResponseMixin`
+    * :class:`hibee.views.generic.dates.BaseWeekArchiveView`
+    * :class:`hibee.views.generic.dates.YearMixin`
+    * :class:`hibee.views.generic.dates.WeekMixin`
+    * :class:`hibee.views.generic.dates.BaseDateListView`
+    * :class:`hibee.views.generic.list.MultipleObjectMixin`
+    * :class:`hibee.views.generic.dates.DateMixin`
+    * :class:`hibee.views.generic.base.View`
 
     **Context**
 
     In addition to the context provided by
-    :class:`~django.views.generic.list.MultipleObjectMixin` (via
-    :class:`~django.views.generic.dates.BaseDateListView`), the template's
+    :class:`~hibee.views.generic.list.MultipleObjectMixin` (via
+    :class:`~hibee.views.generic.dates.BaseDateListView`), the template's
     context will be:
 
     * ``week``: A :class:`~datetime.date` object
@@ -346,7 +346,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/views.py**::
 
-        from django.views.generic.dates import WeekArchiveView
+        from hibee.views.generic.dates import WeekArchiveView
 
         from myapp.models import Article
 
@@ -358,7 +358,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/urls.py**::
 
-        from django.urls import path
+        from hibee.urls import path
 
         from myapp.views import ArticleWeekArchiveView
 
@@ -371,7 +371,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/article_archive_week.html**:
 
-    .. code-block:: html+django
+    .. code-block:: html+hibee
 
         <h1>Week {{ week|date:'W' }}</h1>
 
@@ -412,22 +412,22 @@ views for displaying drilldown pages for date-based data.
 
     **Ancestors (MRO)**
 
-    * :class:`django.views.generic.list.MultipleObjectTemplateResponseMixin`
-    * :class:`django.views.generic.base.TemplateResponseMixin`
-    * :class:`django.views.generic.dates.BaseDayArchiveView`
-    * :class:`django.views.generic.dates.YearMixin`
-    * :class:`django.views.generic.dates.MonthMixin`
-    * :class:`django.views.generic.dates.DayMixin`
-    * :class:`django.views.generic.dates.BaseDateListView`
-    * :class:`django.views.generic.list.MultipleObjectMixin`
-    * :class:`django.views.generic.dates.DateMixin`
-    * :class:`django.views.generic.base.View`
+    * :class:`hibee.views.generic.list.MultipleObjectTemplateResponseMixin`
+    * :class:`hibee.views.generic.base.TemplateResponseMixin`
+    * :class:`hibee.views.generic.dates.BaseDayArchiveView`
+    * :class:`hibee.views.generic.dates.YearMixin`
+    * :class:`hibee.views.generic.dates.MonthMixin`
+    * :class:`hibee.views.generic.dates.DayMixin`
+    * :class:`hibee.views.generic.dates.BaseDateListView`
+    * :class:`hibee.views.generic.list.MultipleObjectMixin`
+    * :class:`hibee.views.generic.dates.DateMixin`
+    * :class:`hibee.views.generic.base.View`
 
     **Context**
 
     In addition to the context provided by
-    :class:`~django.views.generic.list.MultipleObjectMixin` (via
-    :class:`~django.views.generic.dates.BaseDateListView`), the template's
+    :class:`~hibee.views.generic.list.MultipleObjectMixin` (via
+    :class:`~hibee.views.generic.dates.BaseDateListView`), the template's
     context will be:
 
     * ``day``: A :class:`~datetime.date` object
@@ -459,7 +459,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/views.py**::
 
-        from django.views.generic.dates import DayArchiveView
+        from hibee.views.generic.dates import DayArchiveView
 
         from myapp.models import Article
 
@@ -470,7 +470,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/urls.py**::
 
-        from django.urls import path
+        from hibee.urls import path
 
         from myapp.views import ArticleDayArchiveView
 
@@ -483,7 +483,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/article_archive_day.html**:
 
-    .. code-block:: html+django
+    .. code-block:: html+hibee
 
         <h1>{{ day }}</h1>
 
@@ -509,22 +509,22 @@ views for displaying drilldown pages for date-based data.
 .. class:: TodayArchiveView
 
     A day archive page showing all objects for *today*. This is exactly the
-    same as :class:`django.views.generic.dates.DayArchiveView`, except today's
+    same as :class:`hibee.views.generic.dates.DayArchiveView`, except today's
     date is used instead of the ``year``/``month``/``day`` arguments.
 
     **Ancestors (MRO)**
 
-    * :class:`django.views.generic.list.MultipleObjectTemplateResponseMixin`
-    * :class:`django.views.generic.base.TemplateResponseMixin`
-    * :class:`django.views.generic.dates.BaseTodayArchiveView`
-    * :class:`django.views.generic.dates.BaseDayArchiveView`
-    * :class:`django.views.generic.dates.YearMixin`
-    * :class:`django.views.generic.dates.MonthMixin`
-    * :class:`django.views.generic.dates.DayMixin`
-    * :class:`django.views.generic.dates.BaseDateListView`
-    * :class:`django.views.generic.list.MultipleObjectMixin`
-    * :class:`django.views.generic.dates.DateMixin`
-    * :class:`django.views.generic.base.View`
+    * :class:`hibee.views.generic.list.MultipleObjectTemplateResponseMixin`
+    * :class:`hibee.views.generic.base.TemplateResponseMixin`
+    * :class:`hibee.views.generic.dates.BaseTodayArchiveView`
+    * :class:`hibee.views.generic.dates.BaseDayArchiveView`
+    * :class:`hibee.views.generic.dates.YearMixin`
+    * :class:`hibee.views.generic.dates.MonthMixin`
+    * :class:`hibee.views.generic.dates.DayMixin`
+    * :class:`hibee.views.generic.dates.BaseDateListView`
+    * :class:`hibee.views.generic.list.MultipleObjectMixin`
+    * :class:`hibee.views.generic.dates.DateMixin`
+    * :class:`hibee.views.generic.base.View`
 
     **Notes**
 
@@ -532,7 +532,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/views.py**::
 
-        from django.views.generic.dates import TodayArchiveView
+        from hibee.views.generic.dates import TodayArchiveView
 
         from myapp.models import Article
 
@@ -543,7 +543,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/urls.py**::
 
-        from django.urls import path
+        from hibee.urls import path
 
         from myapp.views import ArticleTodayArchiveView
 
@@ -571,16 +571,16 @@ views for displaying drilldown pages for date-based data.
 
     **Ancestors (MRO)**
 
-    * :class:`django.views.generic.detail.SingleObjectTemplateResponseMixin`
-    * :class:`django.views.generic.base.TemplateResponseMixin`
-    * :class:`django.views.generic.dates.BaseDateDetailView`
-    * :class:`django.views.generic.dates.YearMixin`
-    * :class:`django.views.generic.dates.MonthMixin`
-    * :class:`django.views.generic.dates.DayMixin`
-    * :class:`django.views.generic.dates.DateMixin`
-    * :class:`django.views.generic.detail.BaseDetailView`
-    * :class:`django.views.generic.detail.SingleObjectMixin`
-    * :class:`django.views.generic.base.View`
+    * :class:`hibee.views.generic.detail.SingleObjectTemplateResponseMixin`
+    * :class:`hibee.views.generic.base.TemplateResponseMixin`
+    * :class:`hibee.views.generic.dates.BaseDateDetailView`
+    * :class:`hibee.views.generic.dates.YearMixin`
+    * :class:`hibee.views.generic.dates.MonthMixin`
+    * :class:`hibee.views.generic.dates.DayMixin`
+    * :class:`hibee.views.generic.dates.DateMixin`
+    * :class:`hibee.views.generic.detail.BaseDetailView`
+    * :class:`hibee.views.generic.detail.SingleObjectMixin`
+    * :class:`hibee.views.generic.base.View`
 
     **Context**
 
@@ -593,8 +593,8 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/urls.py**::
 
-        from django.urls import path
-        from django.views.generic.dates import DateDetailView
+        from hibee.urls import path
+        from hibee.views.generic.dates import DateDetailView
 
         urlpatterns = [
             path('<int:year>/<str:month>/<int:day>/<int:pk>/',
@@ -604,7 +604,7 @@ views for displaying drilldown pages for date-based data.
 
     **Example myapp/article_detail.html**:
 
-    .. code-block:: html+django
+    .. code-block:: html+hibee
 
         <h1>{{ object.title }}</h1>
 
@@ -612,9 +612,9 @@ views for displaying drilldown pages for date-based data.
 
     All of the generic views listed above have matching ``Base`` views that
     only differ in that they do not include the
-    :class:`~django.views.generic.list.MultipleObjectTemplateResponseMixin`
+    :class:`~hibee.views.generic.list.MultipleObjectTemplateResponseMixin`
     (for the archive views) or
-    :class:`~django.views.generic.detail.SingleObjectTemplateResponseMixin`
+    :class:`~hibee.views.generic.detail.SingleObjectTemplateResponseMixin`
     (for the :class:`DateDetailView`):
 
     .. class:: BaseArchiveIndexView

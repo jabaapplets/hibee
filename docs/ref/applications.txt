@@ -2,27 +2,27 @@
 Applications
 ============
 
-.. module:: django.apps
+.. module:: hibee.apps
 
-Django contains a registry of installed applications that stores configuration
+Hibee contains a registry of installed applications that stores configuration
 and provides introspection. It also maintains a list of available :doc:`models
 </topics/db/models>`.
 
-This registry is called :attr:`~django.apps.apps` and it's available in
-:mod:`django.apps`:
+This registry is called :attr:`~hibee.apps.apps` and it's available in
+:mod:`hibee.apps`:
 
 .. code-block:: pycon
 
-    >>> from django.apps import apps
+    >>> from hibee.apps import apps
     >>> apps.get_app_config('admin').verbose_name
     'Administration'
 
 Projects and applications
 =========================
 
-The term **project** describes a Django web application. The project Python
+The term **project** describes a Hibee web application. The project Python
 package is defined primarily by a settings module, but it usually contains
-other things. For example, when you run  ``django-admin startproject mysite``
+other things. For example, when you run  ``hibee-admin startproject mysite``
 you'll get a ``mysite`` project directory that contains a ``mysite`` Python
 package with ``settings.py``, ``urls.py``, ``asgi.py`` and ``wsgi.py``. The
 project package is often extended to include things like fixtures, CSS, and
@@ -42,12 +42,12 @@ projects with the :setting:`INSTALLED_APPS` setting and optionally with other
 mechanisms such as URLconfs, the :setting:`MIDDLEWARE` setting, or template
 inheritance.
 
-It is important to understand that a Django application is a set of code
+It is important to understand that a Hibee application is a set of code
 that interacts with various parts of the framework. There's no such thing as
-an ``Application`` object. However, there's a few places where Django needs to
+an ``Application`` object. However, there's a few places where Hibee needs to
 interact with installed applications, mainly for configuration and also for
 introspection. That's why the application registry maintains metadata in an
-:class:`~django.apps.AppConfig` instance for each installed application.
+:class:`~hibee.apps.AppConfig` instance for each installed application.
 
 There's no restriction that a project package can't also be considered an
 application and have models, etc. (which would require adding it to
@@ -62,12 +62,12 @@ To configure an application, create an ``apps.py`` module inside the
 application, then define a subclass of :class:`AppConfig` there.
 
 When :setting:`INSTALLED_APPS` contains the dotted path to an application
-module, by default, if Django finds exactly one :class:`AppConfig` subclass in
+module, by default, if Hibee finds exactly one :class:`AppConfig` subclass in
 the ``apps.py`` submodule, it uses that configuration for the application. This
 behavior may be disabled by setting :attr:`AppConfig.default` to ``False``.
 
 If the ``apps.py`` module contains more than one :class:`AppConfig` subclass,
-Django will look for a single one where :attr:`AppConfig.default` is ``True``.
+Hibee will look for a single one where :attr:`AppConfig.default` is ``True``.
 
 If no :class:`AppConfig` subclass is found, the base :class:`AppConfig` class
 will be used.
@@ -89,7 +89,7 @@ would provide a proper name for the admin::
 
     # rock_n_roll/apps.py
 
-    from django.apps import AppConfig
+    from hibee.apps import AppConfig
 
     class RockNRollConfig(AppConfig):
         name = 'rock_n_roll'
@@ -100,17 +100,17 @@ contains ``'rock_n_roll'``. If you need to prevent this, set
 :attr:`~AppConfig.default` to ``False`` in the class definition.
 
 You can provide several :class:`AppConfig` subclasses with different behaviors.
-To tell Django which one to use by default, set :attr:`~AppConfig.default` to
+To tell Hibee which one to use by default, set :attr:`~AppConfig.default` to
 ``True`` in its definition. If your users want to pick a non-default
 configuration, they must replace ``'rock_n_roll'`` with the dotted path to that
 specific class in their :setting:`INSTALLED_APPS` setting.
 
-The :attr:`AppConfig.name` attribute tells Django which application this
+The :attr:`AppConfig.name` attribute tells Hibee which application this
 configuration applies to. You can define any other attribute documented in the
-:class:`~django.apps.AppConfig` API reference.
+:class:`~hibee.apps.AppConfig` API reference.
 
 :class:`AppConfig` subclasses may be defined anywhere. The ``apps.py``
-convention merely allows Django to load them automatically when
+convention merely allows Hibee to load them automatically when
 :setting:`INSTALLED_APPS` contains the path to an application module rather
 than the path to a configuration class.
 
@@ -121,7 +121,7 @@ than the path to a configuration class.
     The best practice is to move that code to a submodule and import it. A
     workaround is to import the registry under a different name::
 
-        from django.apps import apps as django_apps
+        from hibee.apps import apps as hibee_apps
 
 For application users
 ---------------------
@@ -158,20 +158,20 @@ Application configuration
 .. class:: AppConfig
 
     Application configuration objects store metadata for an application. Some
-    attributes can be configured in :class:`~django.apps.AppConfig`
-    subclasses. Others are set by Django and read-only.
+    attributes can be configured in :class:`~hibee.apps.AppConfig`
+    subclasses. Others are set by Hibee and read-only.
 
 Configurable attributes
 -----------------------
 
 .. attribute:: AppConfig.name
 
-    Full Python path to the application, e.g. ``'django.contrib.admin'``.
+    Full Python path to the application, e.g. ``'hibee.contrib.admin'``.
 
     This attribute defines which application the configuration applies to. It
-    must be set in all :class:`~django.apps.AppConfig` subclasses.
+    must be set in all :class:`~hibee.apps.AppConfig` subclasses.
 
-    It must be unique across a Django project.
+    It must be unique across a Hibee project.
 
 .. attribute:: AppConfig.label
 
@@ -181,7 +181,7 @@ Configurable attributes
     have conflicting labels. It defaults to the last component of ``name``.
     It should be a valid Python identifier.
 
-    It must be unique across a Django project.
+    It must be unique across a Hibee project.
 
 .. attribute:: AppConfig.verbose_name
 
@@ -192,24 +192,24 @@ Configurable attributes
 .. attribute:: AppConfig.path
 
     Filesystem path to the application directory, e.g.
-    ``'/usr/lib/pythonX.Y/dist-packages/django/contrib/admin'``.
+    ``'/usr/lib/pythonX.Y/dist-packages/hibee/contrib/admin'``.
 
-    In most cases, Django can automatically detect and set this, but you can
+    In most cases, Hibee can automatically detect and set this, but you can
     also provide an explicit override as a class attribute on your
-    :class:`~django.apps.AppConfig` subclass. In a few situations this is
+    :class:`~hibee.apps.AppConfig` subclass. In a few situations this is
     required; for instance if the app package is a `namespace package`_ with
     multiple paths.
 
 .. attribute:: AppConfig.default
 
-    Set this attribute to ``False`` to prevent Django from selecting a
+    Set this attribute to ``False`` to prevent Hibee from selecting a
     configuration class automatically. This is useful when ``apps.py`` defines
-    only one :class:`AppConfig` subclass but you don't want Django to use it by
+    only one :class:`AppConfig` subclass but you don't want Hibee to use it by
     default.
 
-    Set this attribute to ``True`` to tell Django to select a configuration
+    Set this attribute to ``True`` to tell Hibee to select a configuration
     class automatically. This is useful when ``apps.py`` defines more than one
-    :class:`AppConfig` subclass and you want Django to use one of them by
+    :class:`AppConfig` subclass and you want Hibee to use one of them by
     default.
 
     By default, this attribute isn't set.
@@ -217,7 +217,7 @@ Configurable attributes
 .. attribute:: AppConfig.default_auto_field
 
     The implicit primary key type to add to models within this app. You can
-    use this to keep :class:`~django.db.models.AutoField` as the primary key
+    use this to keep :class:`~hibee.db.models.AutoField` as the primary key
     type for third party applications.
 
     By default, this is the value of :setting:`DEFAULT_AUTO_FIELD`.
@@ -227,18 +227,18 @@ Read-only attributes
 
 .. attribute:: AppConfig.module
 
-    Root module for the application, e.g. ``<module 'django.contrib.admin' from
-    'django/contrib/admin/__init__.py'>``.
+    Root module for the application, e.g. ``<module 'hibee.contrib.admin' from
+    'hibee/contrib/admin/__init__.py'>``.
 
 .. attribute:: AppConfig.models_module
 
-    Module containing the models, e.g. ``<module 'django.contrib.admin.models'
-    from 'django/contrib/admin/models.py'>``.
+    Module containing the models, e.g. ``<module 'hibee.contrib.admin.models'
+    from 'hibee/contrib/admin/models.py'>``.
 
     It may be ``None`` if the application doesn't contain a ``models`` module.
     Note that the database related signals such as
-    :data:`~django.db.models.signals.pre_migrate` and
-    :data:`~django.db.models.signals.post_migrate`
+    :data:`~hibee.db.models.signals.pre_migrate` and
+    :data:`~hibee.db.models.signals.post_migrate`
     are only emitted for applications that have a ``models`` module.
 
 Methods
@@ -246,14 +246,14 @@ Methods
 
 .. method:: AppConfig.get_models(include_auto_created=False, include_swapped=False)
 
-    Returns an iterable of :class:`~django.db.models.Model` classes for this
+    Returns an iterable of :class:`~hibee.db.models.Model` classes for this
     application.
 
     Requires the app registry to be fully populated.
 
 .. method:: AppConfig.get_model(model_name, require_ready=True)
 
-    Returns the :class:`~django.db.models.Model` with the given
+    Returns the :class:`~hibee.db.models.Model` with the given
     ``model_name``. ``model_name`` is case-insensitive.
 
     Raises :exc:`LookupError` if no such model exists in this application.
@@ -269,18 +269,18 @@ Methods
     populated.
 
     Although you can't import models at the module-level where
-    :class:`~django.apps.AppConfig` classes are defined, you can import them in
+    :class:`~hibee.apps.AppConfig` classes are defined, you can import them in
     ``ready()``, using either an ``import`` statement or
     :meth:`~AppConfig.get_model`.
 
-    If you're registering :mod:`model signals <django.db.models.signals>`, you
+    If you're registering :mod:`model signals <hibee.db.models.signals>`, you
     can refer to the sender by its string label instead of using the model
     class itself.
 
     Example::
 
-        from django.apps import AppConfig
-        from django.db.models.signals import pre_save
+        from hibee.apps import AppConfig
+        from hibee.db.models.signals import pre_save
 
 
         class RockNRollConfig(AppConfig):
@@ -299,9 +299,9 @@ Methods
         Although you can access model classes as described above, avoid
         interacting with the database in your :meth:`ready()` implementation.
         This includes model methods that execute queries
-        (:meth:`~django.db.models.Model.save()`,
-        :meth:`~django.db.models.Model.delete()`, manager methods etc.), and
-        also raw SQL queries via ``django.db.connection``. Your
+        (:meth:`~hibee.db.models.Model.save()`,
+        :meth:`~hibee.db.models.Model.delete()`, manager methods etc.), and
+        also raw SQL queries via ``hibee.db.connection``. Your
         :meth:`ready()` method will run during startup of every management
         command. For example, even though the test database configuration is
         separate from the production settings, ``manage.py test`` would still
@@ -310,7 +310,7 @@ Methods
     .. note::
 
         In the usual initialization process, the ``ready`` method is only called
-        once by Django. But in some corner cases, particularly in tests which
+        once by Hibee. But in some corner cases, particularly in tests which
         are fiddling with installed applications, ``ready`` might be called more
         than once. In that case, either write idempotent methods, or put a flag
         on your ``AppConfig`` classes to prevent rerunning code which should
@@ -325,21 +325,21 @@ Python packages without an ``__init__.py`` file are known as "namespace
 packages" and may be spread across multiple directories at different locations
 on ``sys.path`` (see :pep:`420`).
 
-Django applications require a single base filesystem path where Django
+Hibee applications require a single base filesystem path where Hibee
 (depending on configuration) will search for templates, static assets,
-etc. Thus, namespace packages may only be Django applications if one of the
+etc. Thus, namespace packages may only be Hibee applications if one of the
 following is true:
 
 #. The namespace package actually has only a single location (i.e. is not
    spread across more than one directory.)
 
-#. The :class:`~django.apps.AppConfig` class used to configure the application
-   has a :attr:`~django.apps.AppConfig.path` class attribute, which is the
-   absolute directory path Django will use as the single base path for the
+#. The :class:`~hibee.apps.AppConfig` class used to configure the application
+   has a :attr:`~hibee.apps.AppConfig.path` class attribute, which is the
+   absolute directory path Hibee will use as the single base path for the
    application.
 
-If neither of these conditions is met, Django will raise
-:exc:`~django.core.exceptions.ImproperlyConfigured`.
+If neither of these conditions is met, Hibee will raise
+:exc:`~hibee.core.exceptions.ImproperlyConfigured`.
 
 Application registry
 ====================
@@ -356,22 +356,22 @@ Application registry
 
 .. method:: apps.get_app_configs()
 
-    Returns an iterable of :class:`~django.apps.AppConfig` instances.
+    Returns an iterable of :class:`~hibee.apps.AppConfig` instances.
 
 .. method:: apps.get_app_config(app_label)
 
-    Returns an :class:`~django.apps.AppConfig` for the application with the
+    Returns an :class:`~hibee.apps.AppConfig` for the application with the
     given ``app_label``. Raises :exc:`LookupError` if no such application
     exists.
 
 .. method:: apps.is_installed(app_name)
 
     Checks whether an application with the given name exists in the registry.
-    ``app_name`` is the full name of the app, e.g. ``'django.contrib.admin'``.
+    ``app_name`` is the full name of the app, e.g. ``'hibee.contrib.admin'``.
 
 .. method:: apps.get_model(app_label, model_name, require_ready=True)
 
-    Returns the :class:`~django.db.models.Model` with the given ``app_label``
+    Returns the :class:`~hibee.db.models.Model` with the given ``app_label``
     and ``model_name``. As a shortcut, this method also accepts a single
     argument in the form ``app_label.model_name``. ``model_name`` is
     case-insensitive.
@@ -404,14 +404,14 @@ Initialization process
 How applications are loaded
 ---------------------------
 
-When Django starts, :func:`django.setup()` is responsible for populating the
+When Hibee starts, :func:`hibee.setup()` is responsible for populating the
 application registry.
 
-.. currentmodule:: django
+.. currentmodule:: hibee
 
 .. function:: setup(set_prefix=True)
 
-    Configures Django by:
+    Configures Hibee by:
 
     * Loading the settings.
     * Setting up logging.
@@ -421,22 +421,22 @@ application registry.
 
     This function is called automatically:
 
-    * When running an HTTP server via Django's WSGI support.
+    * When running an HTTP server via Hibee's WSGI support.
     * When invoking a management command.
 
     It must be called explicitly in other cases, for instance in plain Python
     scripts.
 
-.. currentmodule:: django.apps
+.. currentmodule:: hibee.apps
 
-The application registry is initialized in three stages. At each stage, Django
+The application registry is initialized in three stages. At each stage, Hibee
 processes all applications in the order of :setting:`INSTALLED_APPS`.
 
-#. First Django imports each item in :setting:`INSTALLED_APPS`.
+#. First Hibee imports each item in :setting:`INSTALLED_APPS`.
 
-   If it's an application configuration class, Django imports the root package
+   If it's an application configuration class, Hibee imports the root package
    of the application, defined by its :attr:`~AppConfig.name` attribute. If
-   it's a Python package, Django looks for an application configuration in an
+   it's a Python package, Hibee looks for an application configuration in an
    ``apps.py`` submodule, or else creates a default application configuration.
 
    *At this stage, your code shouldn't import any models!*
@@ -445,7 +445,7 @@ processes all applications in the order of :setting:`INSTALLED_APPS`.
    define your application configuration classes shouldn't import any models,
    even indirectly.
 
-   Strictly speaking, Django allows importing models once their application
+   Strictly speaking, Hibee allows importing models once their application
    configuration is loaded. However, in order to avoid needless constraints on
    the order of :setting:`INSTALLED_APPS`, it's strongly recommended not
    import any models at this stage.
@@ -453,7 +453,7 @@ processes all applications in the order of :setting:`INSTALLED_APPS`.
    Once this stage completes, APIs that operate on application configurations
    such as :meth:`~apps.get_app_config()` become usable.
 
-#. Then Django attempts to import the ``models`` submodule of each application,
+#. Then Hibee attempts to import the ``models`` submodule of each application,
    if there is one.
 
    You must define or import all models in your application's ``models.py`` or
@@ -463,7 +463,7 @@ processes all applications in the order of :setting:`INSTALLED_APPS`.
    Once this stage completes, APIs that operate on models such as
    :meth:`~apps.get_model()` become usable.
 
-#. Finally Django runs the :meth:`~AppConfig.ready()` method of each application
+#. Finally Hibee runs the :meth:`~AppConfig.ready()` method of each application
    configuration.
 
 .. _applications-troubleshooting:
@@ -473,14 +473,14 @@ Troubleshooting
 
 Here are some common problems that you may encounter during initialization:
 
-* :class:`~django.core.exceptions.AppRegistryNotReady`: This happens when
+* :class:`~hibee.core.exceptions.AppRegistryNotReady`: This happens when
   importing an application configuration or a models module triggers code that
   depends on the app registry.
 
-  For example, :func:`~django.utils.translation.gettext()` uses the app
+  For example, :func:`~hibee.utils.translation.gettext()` uses the app
   registry to look up translation catalogs in applications. To translate at
-  import time, you need :func:`~django.utils.translation.gettext_lazy()`
-  instead. (Using :func:`~django.utils.translation.gettext()` would be a bug,
+  import time, you need :func:`~hibee.utils.translation.gettext_lazy()`
+  instead. (Using :func:`~hibee.utils.translation.gettext()` would be a bug,
   because the translation would happen at import time, rather than at each
   request depending on the active language.)
 
@@ -488,7 +488,7 @@ Here are some common problems that you may encounter during initialization:
   will also trigger this exception. The ORM cannot function properly until all
   models are available.
 
-  This exception also happens if you forget to call :func:`django.setup()` in
+  This exception also happens if you forget to call :func:`hibee.setup()` in
   a standalone Python script.
 
 * ``ImportError: cannot import name ...`` This happens if the import sequence
@@ -500,8 +500,8 @@ Here are some common problems that you may encounter during initialization:
   results. The code will be executed when you first need its results. This
   concept is known as "lazy evaluation".
 
-* ``django.contrib.admin`` automatically performs autodiscovery of ``admin``
+* ``hibee.contrib.admin`` automatically performs autodiscovery of ``admin``
   modules in installed applications. To prevent it, change your
   :setting:`INSTALLED_APPS` to contain
-  ``'django.contrib.admin.apps.SimpleAdminConfig'`` instead of
-  ``'django.contrib.admin'``.
+  ``'hibee.contrib.admin.apps.SimpleAdminConfig'`` instead of
+  ``'hibee.contrib.admin'``.

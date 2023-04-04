@@ -2,10 +2,10 @@
 PostgreSQL specific aggregation functions
 =========================================
 
-.. module:: django.contrib.postgres.aggregates
+.. module:: hibee.contrib.postgres.aggregates
    :synopsis: PostgreSQL specific aggregation functions
 
-These functions are available from the ``django.contrib.postgres.aggregates``
+These functions are available from the ``hibee.contrib.postgres.aggregates``
 module. They are described in more detail in the `PostgreSQL docs
 <https://www.postgresql.org/docs/current/functions-aggregate.html>`_.
 
@@ -51,7 +51,7 @@ General-purpose aggregation functions
 
             'some_field'
             '-some_field'
-            from django.db.models import F
+            from hibee.db.models import F
             F('some_field').desc()
 
     .. versionchanged:: 5.0
@@ -101,8 +101,8 @@ General-purpose aggregation functions
 
     .. code-block:: pycon
 
-        >>> from django.db.models import Q
-        >>> from django.contrib.postgres.aggregates import BoolAnd
+        >>> from hibee.db.models import Q
+        >>> from hibee.contrib.postgres.aggregates import BoolAnd
         >>> Comment.objects.aggregate(booland=BoolAnd('published'))
         {'booland': False}
         >>> Comment.objects.aggregate(booland=BoolAnd(Q(rank__lt=100)))
@@ -125,8 +125,8 @@ General-purpose aggregation functions
 
     .. code-block:: pycon
 
-        >>> from django.db.models import Q
-        >>> from django.contrib.postgres.aggregates import BoolOr
+        >>> from hibee.db.models import Q
+        >>> from hibee.contrib.postgres.aggregates import BoolOr
         >>> Comment.objects.aggregate(boolor=BoolOr('published'))
         {'boolor': True}
         >>> Comment.objects.aggregate(boolor=BoolOr(Q(rank__gt=2)))
@@ -168,7 +168,7 @@ General-purpose aggregation functions
 
     .. code-block:: pycon
 
-        >>> from django.contrib.postgres.aggregates import JSONBAgg
+        >>> from hibee.contrib.postgres.aggregates import JSONBAgg
         >>> Room.objects.annotate(
         ...     requirements=JSONBAgg(
         ...         'hotelreservation__requirements',
@@ -228,7 +228,7 @@ General-purpose aggregation functions
         <Publication: Publication object (1)>
         >>> article.publications.create(title="Science News")
         <Publication: Publication object (2)>
-        >>> from django.contrib.postgres.aggregates import StringAgg
+        >>> from hibee.contrib.postgres.aggregates import StringAgg
         >>> Article.objects.annotate(
         ...     publication_names=StringAgg(
         ...         "publications__title",

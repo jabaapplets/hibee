@@ -1,11 +1,11 @@
 ===================
-GeoDjango Utilities
+GeoHibee Utilities
 ===================
 
-.. module:: django.contrib.gis.utils
-    :synopsis: GeoDjango's collection of utilities.
+.. module:: hibee.contrib.gis.utils
+    :synopsis: GeoHibee's collection of utilities.
 
-The :mod:`django.contrib.gis.utils` module contains various utilities that are
+The :mod:`hibee.contrib.gis.utils` module contains various utilities that are
 useful in creating geospatial web applications.
 
 .. toctree::

@@ -7,22 +7,22 @@ Logging
 .. seealso::
 
     * :ref:`logging-how-to`
-    * :ref:`Django logging overview <logging-explanation>`
+    * :ref:`Hibee logging overview <logging-explanation>`
 
-.. module:: django.utils.log
-   :synopsis: Logging tools for Django applications
+.. module:: hibee.utils.log
+   :synopsis: Logging tools for Hibee applications
 
-Django's logging module extends Python's builtin :mod:`logging`.
+Hibee's logging module extends Python's builtin :mod:`logging`.
 
-Logging is configured as part of the general Django :func:`django.setup`
+Logging is configured as part of the general Hibee :func:`hibee.setup`
 function, so it's always available unless explicitly disabled.
 
 .. _default-logging-configuration:
 
-Django's default logging configuration
+Hibee's default logging configuration
 ======================================
 
-By default, Django uses Python's :ref:`logging.config.dictConfig format
+By default, Hibee uses Python's :ref:`logging.config.dictConfig format
 <logging-config-dictschema>`.
 
 Default logging conditions
@@ -32,22 +32,22 @@ The full set of default logging conditions are:
 
 When :setting:`DEBUG` is ``True``:
 
-* The ``django`` logger sends messages in the ``django`` hierarchy (except
-  ``django.server``) at the ``INFO`` level or higher to the console.
+* The ``hibee`` logger sends messages in the ``hibee`` hierarchy (except
+  ``hibee.server``) at the ``INFO`` level or higher to the console.
 
 When :setting:`DEBUG` is ``False``:
 
-* The ``django`` logger sends messages in the ``django`` hierarchy (except
-  ``django.server``)  with ``ERROR`` or ``CRITICAL`` level to
+* The ``hibee`` logger sends messages in the ``hibee`` hierarchy (except
+  ``hibee.server``)  with ``ERROR`` or ``CRITICAL`` level to
   :class:`AdminEmailHandler`.
 
 Independently of the value of :setting:`DEBUG`:
 
-* The :ref:`django-server-logger` logger sends messages at the ``INFO`` level
+* The :ref:`hibee-server-logger` logger sends messages at the ``INFO`` level
   or higher to the console.
 
-All loggers except :ref:`django-server-logger` propagate logging to their
-parents, up to the root ``django`` logger. The ``console`` and ``mail_admins``
+All loggers except :ref:`hibee-server-logger` propagate logging to their
+parents, up to the root ``hibee`` logger. The ``console`` and ``mail_admins``
 handlers are attached to the root logger to provide the behavior described
 above.
 
@@ -59,24 +59,24 @@ to the console.
 Default logging definition
 --------------------------
 
-Django's default logging configuration inherits Python's defaults. It's
-available as ``django.utils.log.DEFAULT_LOGGING`` and defined in
-:source:`django/utils/log.py`::
+Hibee's default logging configuration inherits Python's defaults. It's
+available as ``hibee.utils.log.DEFAULT_LOGGING`` and defined in
+:source:`hibee/utils/log.py`::
 
     {
         'version': 1,
         'disable_existing_loggers': False,
         'filters': {
             'require_debug_false': {
-                '()': 'django.utils.log.RequireDebugFalse',
+                '()': 'hibee.utils.log.RequireDebugFalse',
             },
             'require_debug_true': {
-                '()': 'django.utils.log.RequireDebugTrue',
+                '()': 'hibee.utils.log.RequireDebugTrue',
             },
         },
         'formatters': {
-            'django.server': {
-                '()': 'django.utils.log.ServerFormatter',
+            'hibee.server': {
+                '()': 'hibee.utils.log.ServerFormatter',
                 'format': '[{server_time}] {message}',
                 'style': '{',
             }
@@ -87,24 +87,24 @@ available as ``django.utils.log.DEFAULT_LOGGING`` and defined in
                 'filters': ['require_debug_true'],
                 'class': 'logging.StreamHandler',
             },
-            'django.server': {
+            'hibee.server': {
                 'level': 'INFO',
                 'class': 'logging.StreamHandler',
-                'formatter': 'django.server',
+                'formatter': 'hibee.server',
             },
             'mail_admins': {
                 'level': 'ERROR',
                 'filters': ['require_debug_false'],
-                'class': 'django.utils.log.AdminEmailHandler'
+                'class': 'hibee.utils.log.AdminEmailHandler'
             }
         },
         'loggers': {
-            'django': {
+            'hibee': {
                 'handlers': ['console', 'mail_admins'],
                 'level': 'INFO',
             },
-            'django.server': {
-                'handlers': ['django.server'],
+            'hibee.server': {
+                'handlers': ['hibee.server'],
                 'level': 'INFO',
                 'propagate': False,
             },
@@ -114,35 +114,35 @@ available as ``django.utils.log.DEFAULT_LOGGING`` and defined in
 See :ref:`configuring-logging` on how to complement or replace this default
 logging configuration.
 
-Django logging extensions
+Hibee logging extensions
 =========================
 
-Django provides a number of utilities to handle the particular requirements of
+Hibee provides a number of utilities to handle the particular requirements of
 logging in a web server environment.
 
 Loggers
 -------
 
-Django provides several built-in loggers.
+Hibee provides several built-in loggers.
 
-.. _django-logger:
+.. _hibee-logger:
 
-``django``
+``hibee``
 ~~~~~~~~~~
 
-The parent logger for messages in the ``django`` :ref:`named logger hierarchy
-<naming-loggers-hierarchy>`. Django does not post messages using this name.
+The parent logger for messages in the ``hibee`` :ref:`named logger hierarchy
+<naming-loggers-hierarchy>`. Hibee does not post messages using this name.
 Instead, it uses one of the loggers below.
 
-.. _django-request-logger:
+.. _hibee-request-logger:
 
-``django.request``
+``hibee.request``
 ~~~~~~~~~~~~~~~~~~
 
 Log messages related to the handling of requests. 5XX responses are
 raised as ``ERROR`` messages; 4XX responses are raised as ``WARNING``
-messages. Requests that are logged to the ``django.security`` logger aren't
-logged to ``django.request``.
+messages. Requests that are logged to the ``hibee.security`` logger aren't
+logged to ``hibee.request``.
 
 Messages to this logger have the following extra context:
 
@@ -150,9 +150,9 @@ Messages to this logger have the following extra context:
 
 * ``request``: The request object that generated the logging message.
 
-.. _django-server-logger:
+.. _hibee-server-logger:
 
-``django.server``
+``hibee.server``
 ~~~~~~~~~~~~~~~~~
 
 Log messages related to the handling of requests received by the server invoked
@@ -166,18 +166,18 @@ Messages to this logger have the following extra context:
 
 * ``request``: The request object that generated the logging message.
 
-.. _django-template-logger:
+.. _hibee-template-logger:
 
-``django.template``
+``hibee.template``
 ~~~~~~~~~~~~~~~~~~~
 
 Log messages related to the rendering of templates.
 
 * Missing context variables are logged as ``DEBUG`` messages.
 
-.. _django-db-logger:
+.. _hibee-db-logger:
 
-``django.db.backends``
+``hibee.db.backends``
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Messages relating to the interaction of code with the database. For example,
@@ -204,26 +204,26 @@ all database queries.
     Support for logging transaction management queries (``BEGIN``, ``COMMIT``,
     and ``ROLLBACK``) was added.
 
-.. _django-security-logger:
+.. _hibee-security-logger:
 
-``django.security.*``
+``hibee.security.*``
 ~~~~~~~~~~~~~~~~~~~~~
 
 The security loggers will receive messages on any occurrence of
-:exc:`~django.core.exceptions.SuspiciousOperation` and other security-related
+:exc:`~hibee.core.exceptions.SuspiciousOperation` and other security-related
 errors. There is a sub-logger for each subtype of security error, including all
 ``SuspiciousOperation``\s. The level of the log event depends on where the
 exception is handled.  Most occurrences are logged as a warning, while
 any ``SuspiciousOperation`` that reaches the WSGI handler will be logged as an
 error. For example, when an HTTP ``Host`` header is included in a request from
-a client that does not match :setting:`ALLOWED_HOSTS`, Django will return a 400
+a client that does not match :setting:`ALLOWED_HOSTS`, Hibee will return a 400
 response, and an error message will be logged to the
-``django.security.DisallowedHost`` logger.
+``hibee.security.DisallowedHost`` logger.
 
-These log events will reach the ``django`` logger by default, which mails error
+These log events will reach the ``hibee`` logger by default, which mails error
 events to admins when ``DEBUG=False``. Requests resulting in a 400 response due
-to a ``SuspiciousOperation`` will not be logged to the ``django.request``
-logger, but only to the ``django.security`` logger.
+to a ``SuspiciousOperation`` will not be logged to the ``hibee.request``
+logger, but only to the ``hibee.security`` logger.
 
 To silence a particular type of ``SuspiciousOperation``, you can override that
 specific logger following this example::
@@ -234,30 +234,30 @@ specific logger following this example::
         },
     },
     'loggers': {
-        'django.security.DisallowedHost': {
+        'hibee.security.DisallowedHost': {
             'handlers': ['null'],
             'propagate': False,
         },
     },
 
-Other ``django.security`` loggers not based on ``SuspiciousOperation`` are:
+Other ``hibee.security`` loggers not based on ``SuspiciousOperation`` are:
 
-* ``django.security.csrf``: For :ref:`CSRF failures <csrf-rejected-requests>`.
+* ``hibee.security.csrf``: For :ref:`CSRF failures <csrf-rejected-requests>`.
 
-``django.db.backends.schema``
+``hibee.db.backends.schema``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Logs the SQL queries that are executed during schema changes to the database by
 the :doc:`migrations framework </topics/migrations>`. Note that it won't log the
-queries executed by :class:`~django.db.migrations.operations.RunPython`.
+queries executed by :class:`~hibee.db.migrations.operations.RunPython`.
 Messages to this logger have ``params`` and ``sql`` in their extra context (but
-unlike ``django.db.backends``, not duration). The values have the same meaning
-as explained in :ref:`django-db-logger`.
+unlike ``hibee.db.backends``, not duration). The values have the same meaning
+as explained in :ref:`hibee-db-logger`.
 
 Handlers
 --------
 
-Django provides one log handler in addition to :mod:`those provided by the
+Hibee provides one log handler in addition to :mod:`those provided by the
 Python logging module <python:logging.handlers>`.
 
 .. class:: AdminEmailHandler(include_html=False, email_backend=None, reporter_class=None)
@@ -278,12 +278,12 @@ Python logging module <python:logging.handlers>`.
     containing the full content of the debug web page that would have been
     produced if :setting:`DEBUG` were ``True``. To set this value in your
     configuration, include it in the handler definition for
-    ``django.utils.log.AdminEmailHandler``, like this::
+    ``hibee.utils.log.AdminEmailHandler``, like this::
 
         'handlers': {
             'mail_admins': {
                 'level': 'ERROR',
-                'class': 'django.utils.log.AdminEmailHandler',
+                'class': 'hibee.utils.log.AdminEmailHandler',
                 'include_html': True,
             },
         },
@@ -298,8 +298,8 @@ Python logging module <python:logging.handlers>`.
         'handlers': {
             'mail_admins': {
                 'level': 'ERROR',
-                'class': 'django.utils.log.AdminEmailHandler',
-                'email_backend': 'django.core.mail.backends.filebased.EmailBackend',
+                'class': 'hibee.utils.log.AdminEmailHandler',
+                'email_backend': 'hibee.core.mail.backends.filebased.EmailBackend',
             },
         },
 
@@ -307,14 +307,14 @@ Python logging module <python:logging.handlers>`.
     :setting:`EMAIL_BACKEND` will be used.
 
     The ``reporter_class`` argument of ``AdminEmailHandler`` allows providing
-    an ``django.views.debug.ExceptionReporter`` subclass to customize the
+    an ``hibee.views.debug.ExceptionReporter`` subclass to customize the
     traceback text sent in the email body. You provide a string import path to
     the class you wish to use, like this::
 
         'handlers': {
             'mail_admins': {
                 'level': 'ERROR',
-                'class': 'django.utils.log.AdminEmailHandler',
+                'class': 'hibee.utils.log.AdminEmailHandler',
                 'include_html': True,
                 'reporter_class': 'somepackage.error_reporter.CustomErrorReporter',
             },
@@ -323,13 +323,13 @@ Python logging module <python:logging.handlers>`.
     .. method:: send_mail(subject, message, *args, **kwargs)
 
         Sends emails to admin users. To customize this behavior, you can
-        subclass the :class:`~django.utils.log.AdminEmailHandler` class and
+        subclass the :class:`~hibee.utils.log.AdminEmailHandler` class and
         override this method.
 
 Filters
 -------
 
-Django provides some log filters in addition to those provided by the Python
+Hibee provides some log filters in addition to those provided by the Python
 logging module.
 
 .. class:: CallbackFilter(callback)
@@ -339,11 +339,11 @@ logging module.
     passes through the filter. Handling of that record will not proceed if the
     callback returns False.
 
-    For instance, to filter out :exc:`~django.http.UnreadablePostError`
+    For instance, to filter out :exc:`~hibee.http.UnreadablePostError`
     (raised when a user cancels an upload) from the admin emails, you would
     create a filter function::
 
-        from django.http import UnreadablePostError
+        from hibee.http import UnreadablePostError
 
         def skip_unreadable_post(record):
             if record.exc_info:
@@ -356,7 +356,7 @@ logging module.
 
         'filters': {
             'skip_unreadable_posts': {
-                '()': 'django.utils.log.CallbackFilter',
+                '()': 'hibee.utils.log.CallbackFilter',
                 'callback': skip_unreadable_post,
             },
         },
@@ -364,7 +364,7 @@ logging module.
             'mail_admins': {
                 'level': 'ERROR',
                 'filters': ['skip_unreadable_posts'],
-                'class': 'django.utils.log.AdminEmailHandler',
+                'class': 'hibee.utils.log.AdminEmailHandler',
             },
         },
 
@@ -378,14 +378,14 @@ logging module.
 
         'filters': {
             'require_debug_false': {
-                '()': 'django.utils.log.RequireDebugFalse',
+                '()': 'hibee.utils.log.RequireDebugFalse',
             },
         },
         'handlers': {
             'mail_admins': {
                 'level': 'ERROR',
                 'filters': ['require_debug_false'],
-                'class': 'django.utils.log.AdminEmailHandler',
+                'class': 'hibee.utils.log.AdminEmailHandler',
             },
         },
 

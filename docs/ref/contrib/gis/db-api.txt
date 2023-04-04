@@ -1,5 +1,5 @@
 ======================
-GeoDjango Database API
+GeoHibee Database API
 ======================
 
 .. _spatial-backends:
@@ -7,22 +7,22 @@ GeoDjango Database API
 Spatial Backends
 ================
 
-.. module:: django.contrib.gis.db.backends
-    :synopsis: GeoDjango's spatial database backends.
+.. module:: hibee.contrib.gis.db.backends
+    :synopsis: GeoHibee's spatial database backends.
 
-GeoDjango currently provides the following spatial database backends:
+GeoHibee currently provides the following spatial database backends:
 
-* ``django.contrib.gis.db.backends.postgis``
-* ``django.contrib.gis.db.backends.mysql``
-* ``django.contrib.gis.db.backends.oracle``
-* ``django.contrib.gis.db.backends.spatialite``
+* ``hibee.contrib.gis.db.backends.postgis``
+* ``hibee.contrib.gis.db.backends.mysql``
+* ``hibee.contrib.gis.db.backends.oracle``
+* ``hibee.contrib.gis.db.backends.spatialite``
 
 .. _mysql-spatial-limitations:
 
 MySQL Spatial Limitations
 -------------------------
 
-Django supports spatial functions operating on real geometries available in
+Hibee supports spatial functions operating on real geometries available in
 modern MySQL versions. However, the spatial functions are not as rich as other
 backends like PostGIS.
 
@@ -45,11 +45,11 @@ model):
     >>> z = Zipcode(code=77096, poly='POLYGON(( 10 10, 10 20, 20 20, 20 15, 10 10))')
     >>> z.save()
 
-:class:`~django.contrib.gis.geos.GEOSGeometry` objects may also be used to save geometric models:
+:class:`~hibee.contrib.gis.geos.GEOSGeometry` objects may also be used to save geometric models:
 
 .. code-block:: pycon
 
-    >>> from django.contrib.gis.geos import GEOSGeometry
+    >>> from hibee.contrib.gis.geos import GEOSGeometry
     >>> poly = GEOSGeometry('POLYGON(( 10 10, 10 20, 20 20, 20 15, 10 10))')
     >>> z = Zipcode(code=77096, poly=poly)
     >>> z.save()
@@ -64,7 +64,7 @@ transform procedure:
     >>> poly_3084 = GEOSGeometry('POLYGON(( 10 10, 10 20, 20 20, 20 15, 10 10))', srid=3084)  # SRID 3084 is 'NAD83(HARN) / Texas Centric Lambert Conformal'
     >>> z = Zipcode(code=78212, poly=poly_3084)
     >>> z.save()
-    >>> from django.db import connection
+    >>> from hibee.db import connection
     >>> print(connection.queries[-1]['sql']) # printing the last SQL statement executed (requires DEBUG=True)
     INSERT INTO "geoapp_zipcode" ("code", "poly") VALUES (78212, ST_Transform(ST_GeomFromWKB('\\001 ... ', 3084), 4326))
 
@@ -74,7 +74,7 @@ hexadecimal [#fnewkb]_), and GeoJSON (see :rfc:`7946`). Essentially, if the
 input is not a ``GEOSGeometry`` object, the geometry field will attempt to
 create a ``GEOSGeometry`` instance from the input.
 
-For more information creating :class:`~django.contrib.gis.geos.GEOSGeometry`
+For more information creating :class:`~hibee.contrib.gis.geos.GEOSGeometry`
 objects, refer to the :ref:`GEOS tutorial <geos-tutorial>`.
 
 .. _creating-and-saving-raster-models:
@@ -83,9 +83,9 @@ Creating and Saving Models with Raster Fields
 =============================================
 
 When creating raster models, the raster field will implicitly convert the input
-into a :class:`~django.contrib.gis.gdal.GDALRaster` using lazy-evaluation.
+into a :class:`~hibee.contrib.gis.gdal.GDALRaster` using lazy-evaluation.
 The raster field will therefore accept any input that is accepted by the
-:class:`~django.contrib.gis.gdal.GDALRaster` constructor.
+:class:`~hibee.contrib.gis.gdal.GDALRaster` constructor.
 
 Here is an example of how to create a raster object from a raster file
 ``volcano.tif`` (assuming the ``Elevation`` model):
@@ -96,12 +96,12 @@ Here is an example of how to create a raster object from a raster file
     >>> dem = Elevation(name='Volcano', rast='/path/to/raster/volcano.tif')
     >>> dem.save()
 
-:class:`~django.contrib.gis.gdal.GDALRaster` objects may also be used to save
+:class:`~hibee.contrib.gis.gdal.GDALRaster` objects may also be used to save
 raster models:
 
 .. code-block:: pycon
 
-    >>> from django.contrib.gis.gdal import GDALRaster
+    >>> from hibee.contrib.gis.gdal import GDALRaster
     >>> rast = GDALRaster({'width': 10, 'height': 10, 'name': 'Canyon', 'srid': 4326,
     ...                    'scale': [0.1, -0.1], 'bands': [{"data": range(100)}]})
     >>> dem = Elevation(name='Canyon', rast=rast)
@@ -122,11 +122,11 @@ Note that this equivalent to:
 Spatial Lookups
 ===============
 
-GeoDjango's lookup types may be used with any manager method like
+GeoHibee's lookup types may be used with any manager method like
 ``filter()``, ``exclude()``, etc.  However, the lookup types unique to
-GeoDjango are only available on spatial fields.
+GeoHibee are only available on spatial fields.
 
-Filters on 'normal' fields (e.g. :class:`~django.db.models.CharField`)
+Filters on 'normal' fields (e.g. :class:`~hibee.db.models.CharField`)
 may be chained with those on geographic fields. Geographic lookups accept
 geometry and raster input on both sides and input types can be mixed freely.
 
@@ -153,9 +153,9 @@ For example:
 
 In this case, ``poly`` is the geographic field, :lookup:`contains <gis-contains>`
 is the spatial lookup type, ``pnt`` is the parameter (which may be a
-:class:`~django.contrib.gis.geos.GEOSGeometry` object or a string of
+:class:`~hibee.contrib.gis.geos.GEOSGeometry` object or a string of
 GeoJSON , WKT, or HEXEWKB), and ``rst`` is a
-:class:`~django.contrib.gis.gdal.GDALRaster` object.
+:class:`~hibee.contrib.gis.gdal.GDALRaster` object.
 
 .. _spatial-lookup-raster:
 
@@ -194,7 +194,7 @@ For example:
 On the left hand side of the example, ``rast`` is the geographic raster field
 and :lookup:`contains <gis-contains>` is the spatial lookup type. On the right
 hand side, ``geom`` is a geometry input and ``rst`` is a
-:class:`~django.contrib.gis.gdal.GDALRaster` object. The band index defaults to
+:class:`~hibee.contrib.gis.gdal.GDALRaster` object. The band index defaults to
 ``0`` in the first two queries and is set to ``1`` on the others.
 
 While all spatial lookups can be used with raster objects on both sides, not all
@@ -238,14 +238,14 @@ The following distance lookups are available:
 .. note::
 
     For *measuring*, rather than querying on distances, use the
-    :class:`~django.contrib.gis.db.models.functions.Distance` function.
+    :class:`~hibee.contrib.gis.db.models.functions.Distance` function.
 
 Distance lookups take a tuple parameter comprising:
 
 #. A geometry or raster to base calculations from; and
-#. A number or :class:`~django.contrib.gis.measure.Distance` object containing the distance.
+#. A number or :class:`~hibee.contrib.gis.measure.Distance` object containing the distance.
 
-If a :class:`~django.contrib.gis.measure.Distance` object is used,
+If a :class:`~hibee.contrib.gis.measure.Distance` object is used,
 it may be expressed in any units (the SQL generated will use units
 converted to those of the field); otherwise, numeric parameters are assumed
 to be in the units of the field.
@@ -261,14 +261,14 @@ to be in the units of the field.
     For much better performance on WGS84 distance queries, consider using
     :ref:`geography columns <geography-type>` in your database instead because
     they are able to use their spatial index in distance queries.
-    You can tell GeoDjango to use a geography column by setting ``geography=True``
+    You can tell GeoHibee to use a geography column by setting ``geography=True``
     in your field definition.
 
 For example, let's say we have a ``SouthTexasCity`` model (from the
-:source:`GeoDjango distance tests <tests/gis_tests/distapp/models.py>` ) on a
+:source:`GeoHibee distance tests <tests/gis_tests/distapp/models.py>` ) on a
 *projected* coordinate system valid for cities in southern Texas::
 
-    from django.contrib.gis.db import models
+    from hibee.contrib.gis.db import models
 
     class SouthTexasCity(models.Model):
         name = models.CharField(max_length=30)
@@ -280,8 +280,8 @@ Then distance queries may be performed as follows:
 
 .. code-block:: pycon
 
-    >>> from django.contrib.gis.geos import GEOSGeometry
-    >>> from django.contrib.gis.measure import D # ``D`` is a shortcut for ``Distance``
+    >>> from hibee.contrib.gis.geos import GEOSGeometry
+    >>> from hibee.contrib.gis.measure import D # ``D`` is a shortcut for ``Distance``
     >>> from geoapp.models import SouthTexasCity
     # Distances will be calculated from this point, which does not have to be projected.
     >>> pnt = GEOSGeometry('POINT(-96.876369 29.905320)', srid=4326)
@@ -365,7 +365,7 @@ Database functions
 The following table provides a summary of what geography-specific database
 functions are available on each spatial backend.
 
-.. currentmodule:: django.contrib.gis.db.models.functions
+.. currentmodule:: hibee.contrib.gis.db.models.functions
 
 ====================================  =======  ============== ============ =========== =================
 Function                              PostGIS  Oracle         MariaDB      MySQL       SpatiaLite
@@ -415,7 +415,7 @@ The following table provides a summary of what GIS-specific aggregate functions
 are available on each spatial backend. Please note that MySQL does not
 support any of these aggregates, and is thus excluded from the table.
 
-.. currentmodule:: django.contrib.gis.db.models
+.. currentmodule:: hibee.contrib.gis.db.models
 
 =======================  =======  ======  ==========
 Aggregate                PostGIS  Oracle  SpatiaLite

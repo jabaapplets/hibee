@@ -3,9 +3,9 @@ PostgreSQL specific form fields and widgets
 ===========================================
 
 All of these fields and widgets are available from the
-``django.contrib.postgres.forms`` module.
+``hibee.contrib.postgres.forms`` module.
 
-.. currentmodule:: django.contrib.postgres.forms
+.. currentmodule:: hibee.contrib.postgres.forms
 
 Fields
 ======
@@ -27,8 +27,8 @@ Fields
 
         .. code-block:: pycon
 
-            >>> from django import forms
-            >>> from django.contrib.postgres.forms import SimpleArrayField
+            >>> from hibee import forms
+            >>> from hibee.contrib.postgres.forms import SimpleArrayField
 
             >>> class NumberListForm(forms.Form):
             ...     numbers = SimpleArrayField(forms.IntegerField())
@@ -51,8 +51,8 @@ Fields
 
         .. code-block:: pycon
 
-            >>> from django import forms
-            >>> from django.contrib.postgres.forms import SimpleArrayField
+            >>> from hibee import forms
+            >>> from hibee.contrib.postgres.forms import SimpleArrayField
 
             >>> class GridForm(forms.Form):
             ...     places = SimpleArrayField(SimpleArrayField(IntegerField()), delimiter='|')
@@ -147,7 +147,7 @@ Fields
 .. class:: HStoreField
 
     A field which accepts JSON encoded data for an
-    :class:`~django.contrib.postgres.fields.HStoreField`. It casts all values
+    :class:`~hibee.contrib.postgres.fields.HStoreField`. It casts all values
     (except nulls) to strings. It is represented by an HTML ``<textarea>``.
 
     .. admonition:: User friendly forms
@@ -160,53 +160,53 @@ Fields
 
         On occasions it may be useful to require or restrict the keys which are
         valid for a given field. This can be done using the
-        :class:`~django.contrib.postgres.validators.KeysValidator`.
+        :class:`~hibee.contrib.postgres.validators.KeysValidator`.
 
 Range Fields
 ------------
 
 This group of fields all share similar functionality for accepting range data.
-They are based on :class:`~django.forms.MultiValueField`. They treat one
+They are based on :class:`~hibee.forms.MultiValueField`. They treat one
 omitted value as an unbounded range. They also validate that the lower bound is
 not greater than the upper bound. All of these fields use
-:class:`~django.contrib.postgres.forms.RangeWidget`.
+:class:`~hibee.contrib.postgres.forms.RangeWidget`.
 
 ``IntegerRangeField``
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. class:: IntegerRangeField
 
-    Based on :class:`~django.forms.IntegerField` and translates its input into
-    ``django.db.backends.postgresql.psycopg_any.NumericRange``. Default for
-    :class:`~django.contrib.postgres.fields.IntegerRangeField` and
-    :class:`~django.contrib.postgres.fields.BigIntegerRangeField`.
+    Based on :class:`~hibee.forms.IntegerField` and translates its input into
+    ``hibee.db.backends.postgresql.psycopg_any.NumericRange``. Default for
+    :class:`~hibee.contrib.postgres.fields.IntegerRangeField` and
+    :class:`~hibee.contrib.postgres.fields.BigIntegerRangeField`.
 
 ``DecimalRangeField``
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. class:: DecimalRangeField
 
-    Based on :class:`~django.forms.DecimalField` and translates its input into
-    ``django.db.backends.postgresql.psycopg_any.NumericRange``. Default for
-    :class:`~django.contrib.postgres.fields.DecimalRangeField`.
+    Based on :class:`~hibee.forms.DecimalField` and translates its input into
+    ``hibee.db.backends.postgresql.psycopg_any.NumericRange``. Default for
+    :class:`~hibee.contrib.postgres.fields.DecimalRangeField`.
 
 ``DateTimeRangeField``
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. class:: DateTimeRangeField
 
-    Based on :class:`~django.forms.DateTimeField` and translates its input into
-    ``django.db.backends.postgresql.psycopg_any.DateTimeTZRange``. Default for
-    :class:`~django.contrib.postgres.fields.DateTimeRangeField`.
+    Based on :class:`~hibee.forms.DateTimeField` and translates its input into
+    ``hibee.db.backends.postgresql.psycopg_any.DateTimeTZRange``. Default for
+    :class:`~hibee.contrib.postgres.fields.DateTimeRangeField`.
 
 ``DateRangeField``
 ~~~~~~~~~~~~~~~~~~
 
 .. class:: DateRangeField
 
-    Based on :class:`~django.forms.DateField` and translates its input into
-    ``django.db.backends.postgresql.psycopg_any.DateRange``. Default for
-    :class:`~django.contrib.postgres.fields.DateRangeField`.
+    Based on :class:`~hibee.forms.DateField` and translates its input into
+    ``hibee.db.backends.postgresql.psycopg_any.DateRange``. Default for
+    :class:`~hibee.contrib.postgres.fields.DateRangeField`.
 
 Widgets
 =======
@@ -217,7 +217,7 @@ Widgets
 .. class:: RangeWidget(base_widget, attrs=None)
 
     Widget used by all of the range fields.
-    Based on :class:`~django.forms.MultiWidget`.
+    Based on :class:`~hibee.forms.MultiWidget`.
 
     :class:`~RangeWidget` has one required argument:
 
@@ -228,5 +228,5 @@ Widgets
     .. method:: decompress(value)
 
         Takes a single "compressed" value of a field, for example a
-        :class:`~django.contrib.postgres.fields.DateRangeField`,
+        :class:`~hibee.contrib.postgres.fields.DateRangeField`,
         and returns a tuple representing a lower and upper bound.

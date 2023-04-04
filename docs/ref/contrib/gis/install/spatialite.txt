@@ -111,7 +111,7 @@ including SQLite, SpatiaLite, PROJ, and GEOS. Install them like this:
     $ brew install spatialite-tools
     $ brew install gdal
 
-Finally, for GeoDjango to be able to find the SpatiaLite library, add the
+Finally, for GeoHibee to be able to find the SpatiaLite library, add the
 following to your ``settings.py``::
 
     SPATIALITE_LIBRARY_PATH='/usr/local/lib/mod_spatialite.dylib'
