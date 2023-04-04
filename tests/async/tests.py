@@ -4,12 +4,12 @@ from unittest import mock
 
 from asgiref.sync import async_to_sync, iscoroutinefunction
 
-from django.core.cache import DEFAULT_CACHE_ALIAS, caches
-from django.core.exceptions import ImproperlyConfigured, SynchronousOnlyOperation
-from django.http import HttpResponse, HttpResponseNotAllowed
-from django.test import RequestFactory, SimpleTestCase
-from django.utils.asyncio import async_unsafe
-from django.views.generic.base import View
+from hibeecore.cache import DEFAULT_CACHE_ALIAS, caches
+from hibeecore.exceptions import ImproperlyConfigured, SynchronousOnlyOperation
+from hibeehttp import HttpResponse, HttpResponseNotAllowed
+from hibeetest import RequestFactory, SimpleTestCase
+from hibeeutils.asyncio import async_unsafe
+from hibeeviews.generic.base import View
 
 from .models import SimpleModel
 
@@ -53,7 +53,7 @@ class AsyncUnsafeTest(SimpleTestCase):
         with self.assertRaisesMessage(SynchronousOnlyOperation, msg):
             self.dangerous_method()
 
-    @mock.patch.dict(os.environ, {"DJANGO_ALLOW_ASYNC_UNSAFE": "true"})
+    @mock.patch.dict(os.environ, {"HIBEEALLOW_ASYNC_UNSAFE": "true"})
     @async_to_sync  # mock.patch() is not async-aware.
     async def test_async_unsafe_suppressed(self):
         # Decorator doesn't trigger check when the environment variable to

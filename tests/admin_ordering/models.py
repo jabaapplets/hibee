@@ -1,5 +1,5 @@
-from django.contrib import admin
-from django.db import models
+from hibeecontrib import admin
+from hibeedb import models
 
 
 class Band(models.Model):

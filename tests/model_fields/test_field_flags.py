@@ -1,6 +1,6 @@
-from django import test
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.db import models
+from hibeeimport test
+from hibeecontrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from hibeedb import models
 
 from .models import AllFieldsModel
 

@@ -1,10 +1,10 @@
 from datetime import date, datetime, time
 
-from django import forms
-from django.core.exceptions import ValidationError
-from django.test import SimpleTestCase, override_settings
-from django.utils import translation
-from django.utils.translation import activate, deactivate
+from hibeeimport forms
+from hibeecore.exceptions import ValidationError
+from hibeetest import SimpleTestCase, override_settings
+from hibeeutils import translation
+from hibeeutils.translation import activate, deactivate
 
 
 class LocalizedTimeTests(SimpleTestCase):

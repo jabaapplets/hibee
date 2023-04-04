@@ -1,6 +1,6 @@
-from django.db.models import ProtectedError, Q, Sum
-from django.forms.models import modelform_factory
-from django.test import TestCase, skipIfDBFeature
+from hibeedb.models import ProtectedError, Q, Sum
+from hibeeforms.models import modelform_factory
+from hibeetest import TestCase, skipIfDBFeature
 
 from .models import (
     A,

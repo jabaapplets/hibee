@@ -1,11 +1,11 @@
 """
 A second, custom AdminSite -- see tests.CustomAdminSiteTests.
 """
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.urls import path
+from hibeecontrib import admin
+from hibeecontrib.auth.admin import UserAdmin
+from hibeecontrib.auth.models import User
+from hibeehttp import HttpResponse
+from hibeeurls import path
 
 from . import admin as base_admin
 from . import forms, models
@@ -30,7 +30,7 @@ class Admin2(admin.AdminSite):
         ] + super().get_urls()
 
     def my_view(self, request):
-        return HttpResponse("Django is a magical pony!")
+        return HttpResponse("Hibeeis a magical pony!")
 
     def password_change(self, request, extra_context=None):
         return super().password_change(request, {"spam": "eggs"})

@@ -1,4 +1,4 @@
-from django.test import SimpleTestCase
+from hibeetest import SimpleTestCase
 
 from ..utils import setup
 

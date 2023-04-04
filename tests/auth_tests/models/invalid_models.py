@@ -1,5 +1,5 @@
-from django.contrib.auth.models import AbstractBaseUser, UserManager
-from django.db import models
+from hibeecontrib.auth.models import AbstractBaseUser, UserManager
+from hibeedb import models
 
 
 class CustomUserNonUniqueUsername(AbstractBaseUser):

@@ -1,6 +1,6 @@
-from django.contrib import admin
-from django.db import models
-from django.utils.translation import gettext_lazy as _
+from hibeecontrib import admin
+from hibeedb import models
+from hibeeutils.translation import gettext_lazy as _
 
 
 class Site(models.Model):

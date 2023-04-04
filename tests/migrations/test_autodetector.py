@@ -2,19 +2,19 @@ import functools
 import re
 from unittest import mock
 
-from django.apps import apps
-from django.conf import settings
-from django.contrib.auth.models import AbstractBaseUser
-from django.core.validators import RegexValidator, validate_slug
-from django.db import connection, migrations, models
-from django.db.migrations.autodetector import MigrationAutodetector
-from django.db.migrations.graph import MigrationGraph
-from django.db.migrations.loader import MigrationLoader
-from django.db.migrations.questioner import MigrationQuestioner
-from django.db.migrations.state import ModelState, ProjectState
-from django.test import SimpleTestCase, TestCase, ignore_warnings, override_settings
-from django.test.utils import isolate_lru_cache
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibeeapps import apps
+from hibeeconf import settings
+from hibeecontrib.auth.models import AbstractBaseUser
+from hibeecore.validators import RegexValidator, validate_slug
+from hibeedb import connection, migrations, models
+from hibeedb.migrations.autodetector import MigrationAutodetector
+from hibeedb.migrations.graph import MigrationGraph
+from hibeedb.migrations.loader import MigrationLoader
+from hibeedb.migrations.questioner import MigrationQuestioner
+from hibeedb.migrations.state import ModelState, ProjectState
+from hibeetest import SimpleTestCase, TestCase, ignore_warnings, override_settings
+from hibeetest.utils import isolate_lru_cache
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 from .models import FoodManager, FoodQuerySet
 
@@ -1290,7 +1290,7 @@ class AutodetectorTests(BaseAutodetectorTests):
         self.assertOperationAttributes(changes, "testapp", 0, 0, name="name")
 
     @mock.patch(
-        "django.db.migrations.questioner.MigrationQuestioner.ask_not_null_addition",
+        "hibeedb.migrations.questioner.MigrationQuestioner.ask_not_null_addition",
         side_effect=AssertionError("Should not have prompted for not null addition"),
     )
     def test_add_date_fields_with_auto_now_not_asking_for_default(
@@ -1309,7 +1309,7 @@ class AutodetectorTests(BaseAutodetectorTests):
         self.assertOperationFieldAttributes(changes, "testapp", 0, 2, auto_now=True)
 
     @mock.patch(
-        "django.db.migrations.questioner.MigrationQuestioner.ask_not_null_addition",
+        "hibeedb.migrations.questioner.MigrationQuestioner.ask_not_null_addition",
         side_effect=AssertionError("Should not have prompted for not null addition"),
     )
     def test_add_date_fields_with_auto_now_add_not_asking_for_null_addition(
@@ -1328,7 +1328,7 @@ class AutodetectorTests(BaseAutodetectorTests):
         self.assertOperationFieldAttributes(changes, "testapp", 0, 2, auto_now_add=True)
 
     @mock.patch(
-        "django.db.migrations.questioner.MigrationQuestioner.ask_auto_now_add_addition"
+        "hibeedb.migrations.questioner.MigrationQuestioner.ask_auto_now_add_addition"
     )
     def test_add_date_fields_with_auto_now_add_asking_for_default(
         self, mocked_ask_method
@@ -1460,7 +1460,7 @@ class AutodetectorTests(BaseAutodetectorTests):
         )
 
     @mock.patch(
-        "django.db.migrations.questioner.MigrationQuestioner.ask_not_null_alteration",
+        "hibeedb.migrations.questioner.MigrationQuestioner.ask_not_null_alteration",
         side_effect=AssertionError("Should not have prompted for not null addition"),
     )
     def test_alter_field_to_not_null_with_default(self, mocked_ask_method):
@@ -1479,7 +1479,7 @@ class AutodetectorTests(BaseAutodetectorTests):
         )
 
     @mock.patch(
-        "django.db.migrations.questioner.MigrationQuestioner.ask_not_null_alteration",
+        "hibeedb.migrations.questioner.MigrationQuestioner.ask_not_null_alteration",
         return_value=models.NOT_PROVIDED,
     )
     def test_alter_field_to_not_null_without_default(self, mocked_ask_method):
@@ -1499,7 +1499,7 @@ class AutodetectorTests(BaseAutodetectorTests):
         )
 
     @mock.patch(
-        "django.db.migrations.questioner.MigrationQuestioner.ask_not_null_alteration",
+        "hibeedb.migrations.questioner.MigrationQuestioner.ask_not_null_alteration",
         return_value="Some Name",
     )
     def test_alter_field_to_not_null_oneoff_default(self, mocked_ask_method):
@@ -1815,7 +1815,7 @@ class AutodetectorTests(BaseAutodetectorTests):
             changes["app"][0].operations[0].field.deconstruct(),
             (
                 "field",
-                "django.db.models.IntegerField",
+                "hibeedb.models.IntegerField",
                 [],
                 {"db_column": "field"},
             ),
@@ -1887,7 +1887,7 @@ class AutodetectorTests(BaseAutodetectorTests):
             changes["app"][0].operations[0].field.deconstruct(),
             (
                 "foo",
-                "django.db.models.ForeignKey",
+                "hibeedb.models.ForeignKey",
                 [],
                 {"to": "app.foo", "on_delete": models.CASCADE, "db_column": "foo_id"},
             ),
@@ -3594,7 +3594,7 @@ class AutodetectorTests(BaseAutodetectorTests):
         self.assertOperationAttributes(changes, "testapp", 0, 1, name="Publisher")
 
     @mock.patch(
-        "django.db.migrations.questioner.MigrationQuestioner.ask_not_null_addition",
+        "hibeedb.migrations.questioner.MigrationQuestioner.ask_not_null_addition",
         side_effect=AssertionError("Should not have prompted for not null addition"),
     )
     def test_add_many_to_many(self, mocked_ask_method):
@@ -4561,7 +4561,7 @@ class AutodetectorTests(BaseAutodetectorTests):
         )
 
     @mock.patch(
-        "django.db.migrations.questioner.MigrationQuestioner.ask_not_null_addition",
+        "hibeedb.migrations.questioner.MigrationQuestioner.ask_not_null_addition",
         side_effect=AssertionError("Should not have prompted for not null addition"),
     )
     def test_add_blank_textfield_and_charfield(self, mocked_ask_method):
@@ -4578,7 +4578,7 @@ class AutodetectorTests(BaseAutodetectorTests):
         self.assertOperationAttributes(changes, "testapp", 0, 0)
 
     @mock.patch(
-        "django.db.migrations.questioner.MigrationQuestioner.ask_not_null_addition"
+        "hibeedb.migrations.questioner.MigrationQuestioner.ask_not_null_addition"
     )
     def test_add_non_blank_textfield_and_charfield(self, mocked_ask_method):
         """
@@ -4695,7 +4695,7 @@ class AutodetectorTests(BaseAutodetectorTests):
         self.assertOperationAttributes(changes, "testapp", 0, 0, name="Book")
 
 
-@ignore_warnings(category=RemovedInDjango51Warning)
+@ignore_warnings(category=RemovedInHibee1Warning)
 class AutodetectorIndexTogetherTests(BaseAutodetectorTests):
     book_index_together = ModelState(
         "otherapp",

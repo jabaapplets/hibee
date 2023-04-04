@@ -1,8 +1,8 @@
-from django.contrib.gis.db.models import F, GeometryField, Value, functions
-from django.contrib.gis.geos import Point, Polygon
-from django.db import connection
-from django.db.models import Count, Min
-from django.test import TestCase, skipUnlessDBFeature
+from hibeecontrib.gis.db.models import F, GeometryField, Value, functions
+from hibeecontrib.gis.geos import Point, Polygon
+from hibeedb import connection
+from hibeedb.models import Count, Min
+from hibeetest import TestCase, skipUnlessDBFeature
 
 from .models import City, ManyPointModel, MultiFields
 

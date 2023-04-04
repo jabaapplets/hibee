@@ -1,7 +1,7 @@
-from django.db.models import CharField
-from django.db.models.functions import LTrim, RTrim, Trim
-from django.test import TestCase
-from django.test.utils import register_lookup
+from hibeedb.models import CharField
+from hibeedb.models.functions import LTrim, RTrim, Trim
+from hibeetest import TestCase
+from hibeetest.utils import register_lookup
 
 from ..models import Author
 

@@ -1,4 +1,4 @@
-from django.urls import path
+from hibeeurls import path
 
 from .models import site
 

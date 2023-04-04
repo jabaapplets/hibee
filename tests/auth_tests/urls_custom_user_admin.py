@@ -1,7 +1,7 @@
-from django.contrib import admin
-from django.contrib.auth import get_user_model
-from django.contrib.auth.admin import UserAdmin
-from django.urls import path
+from hibeecontrib import admin
+from hibeecontrib.auth import get_user_model
+from hibeecontrib.auth.admin import UserAdmin
+from hibeeurls import path
 
 site = admin.AdminSite(name="custom_user_admin")
 

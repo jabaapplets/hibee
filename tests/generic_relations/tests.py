@@ -1,7 +1,7 @@
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import FieldError
-from django.db.models import Q
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore.exceptions import FieldError
+from hibeedb.models import Q
+from hibeetest import SimpleTestCase, TestCase, skipUnlessDBFeature
 
 from .models import (
     AllowsNullGFK,

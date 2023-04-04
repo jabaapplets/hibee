@@ -1,5 +1,5 @@
-from django.forms import SlugField
-from django.test import SimpleTestCase
+from hibeeforms import SlugField
+from hibeetest import SimpleTestCase
 
 
 class SlugFieldTest(SimpleTestCase):

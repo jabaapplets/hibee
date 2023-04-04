@@ -1,8 +1,8 @@
 from operator import attrgetter
 
-from django.db import models
-from django.test import SimpleTestCase, TestCase
-from django.test.utils import isolate_apps
+from hibeedb import models
+from hibeetest import SimpleTestCase, TestCase
+from hibeetest.utils import isolate_apps
 
 from .base_tests import BaseOrderWithRespectToTests
 from .models import Answer, Dimension, Entity, Post, Question

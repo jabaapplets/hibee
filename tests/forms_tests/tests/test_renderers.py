@@ -1,16 +1,16 @@
 import os
 import unittest
 
-from django.forms.renderers import (
+from hibeeforms.renderers import (
     BaseRenderer,
-    DjangoDivFormRenderer,
-    DjangoTemplates,
+    HibeeivFormRenderer,
+    Hibeeemplates,
     Jinja2,
     Jinja2DivFormRenderer,
     TemplatesSetting,
 )
-from django.test import SimpleTestCase
-from django.utils.deprecation import RemovedInDjango60Warning
+from hibeetest import SimpleTestCase
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 try:
     import jinja2
@@ -44,8 +44,8 @@ class BaseTemplateRendererTests(SimpleTestCase):
             BaseRenderer().get_template("")
 
 
-class DjangoTemplatesTests(SharedTests, SimpleTestCase):
-    renderer = DjangoTemplates
+class HibeeemplatesTests(SharedTests, SimpleTestCase):
+    renderer = Hibeeemplates
 
 
 @unittest.skipIf(jinja2 is None, "jinja2 required")
@@ -59,18 +59,18 @@ class TemplatesSettingTests(SharedTests, SimpleTestCase):
 
 
 class DeprecationTests(SimpleTestCase):
-    def test_django_div_renderer_warning(self):
+    def test_hibeediv_renderer_warning(self):
         msg = (
-            "The DjangoDivFormRenderer transitional form renderer is deprecated. Use "
-            "DjangoTemplates instead."
+            "The HibeeivFormRenderer transitional form renderer is deprecated. Use "
+            "Hibeeemplates instead."
         )
-        with self.assertRaisesMessage(RemovedInDjango60Warning, msg):
-            DjangoDivFormRenderer()
+        with self.assertRaisesMessage(RemovedInHibee0Warning, msg):
+            HibeeivFormRenderer()
 
     def test_jinja2_div_renderer_warning(self):
         msg = (
             "The Jinja2DivFormRenderer transitional form renderer is deprecated. Use "
             "Jinja2 instead."
         )
-        with self.assertRaisesMessage(RemovedInDjango60Warning, msg):
+        with self.assertRaisesMessage(RemovedInHibee0Warning, msg):
             Jinja2DivFormRenderer()

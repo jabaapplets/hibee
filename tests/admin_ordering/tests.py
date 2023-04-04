@@ -1,8 +1,8 @@
-from django.contrib import admin
-from django.contrib.admin.options import ModelAdmin
-from django.contrib.auth.models import User
-from django.db.models import F
-from django.test import RequestFactory, TestCase
+from hibeecontrib import admin
+from hibeecontrib.admin.options import ModelAdmin
+from hibeecontrib.auth.models import User
+from hibeedb.models import F
+from hibeetest import RequestFactory, TestCase
 
 from .models import (
     Band,

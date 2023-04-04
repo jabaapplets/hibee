@@ -1,5 +1,5 @@
-from django.db import models
-from django.utils import timezone
+from hibeedb import models
+from hibeeutils import timezone
 
 
 class Article(models.Model):

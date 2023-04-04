@@ -1,5 +1,5 @@
-from django.contrib import admin
-from django.test import SimpleTestCase
+from hibeecontrib import admin
+from hibeetest import SimpleTestCase
 
 
 class AdminAutoDiscoverTests(SimpleTestCase):

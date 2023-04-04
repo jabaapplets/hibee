@@ -1,7 +1,7 @@
 import os
 
-from django.urls import path
-from django.views.static import serve
+from hibeeurls import path
+from hibeeviews.static import serve
 
 here = os.path.dirname(__file__)
 

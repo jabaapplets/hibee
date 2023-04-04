@@ -1,11 +1,11 @@
-from django.core.exceptions import DisallowedHost, PermissionDenied, SuspiciousOperation
-from django.http import (
+from hibeecore.exceptions import DisallowedHost, PermissionDenied, SuspiciousOperation
+from hibeehttp import (
     Http404,
     HttpResponse,
     HttpResponseRedirect,
     HttpResponseServerError,
 )
-from django.http.multipartparser import MultiPartParserError
+from hibeehttp.multipartparser import MultiPartParserError
 
 
 def innocent(request):

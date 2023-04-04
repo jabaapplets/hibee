@@ -1,20 +1,20 @@
 import unittest
 from decimal import Decimal
 
-from django.db import connection
-from django.db.backends.signals import connection_created
-from django.db.migrations.writer import MigrationWriter
-from django.test import TestCase
-from django.test.utils import modify_settings
+from hibeedb import connection
+from hibeedb.backends.signals import connection_created
+from hibeedb.migrations.writer import MigrationWriter
+from hibeetest import TestCase
+from hibeetest.utils import modify_settings
 
 try:
-    from django.contrib.postgres.fields import (
+    from hibeecontrib.postgres.fields import (
         DateRangeField,
         DateTimeRangeField,
         DecimalRangeField,
         IntegerRangeField,
     )
-    from django.db.backends.postgresql.psycopg_any import (
+    from hibeedb.backends.postgresql.psycopg_any import (
         DateRange,
         DateTimeRange,
         DateTimeTZRange,
@@ -28,12 +28,12 @@ except ImportError:
 @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL specific tests")
 class PostgresConfigTests(TestCase):
     def test_register_type_handlers_connection(self):
-        from django.contrib.postgres.signals import register_type_handlers
+        from hibeecontrib.postgres.signals import register_type_handlers
 
         self.assertNotIn(
             register_type_handlers, connection_created._live_receivers(None)
         )
-        with modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"}):
+        with modify_settings(INSTALLED_APPS={"append": "hibeecontrib.postgres"}):
             self.assertIn(
                 register_type_handlers, connection_created._live_receivers(None)
             )
@@ -61,7 +61,7 @@ class PostgresConfigTests(TestCase):
 
         assertNotSerializable()
         import_name = "psycopg.types.range" if is_psycopg3 else "psycopg2.extras"
-        with self.modify_settings(INSTALLED_APPS={"append": "django.contrib.postgres"}):
+        with self.modify_settings(INSTALLED_APPS={"append": "hibeecontrib.postgres"}):
             for default, test_field in tests:
                 with self.subTest(default=default):
                     field = test_field(default=default)
@@ -69,7 +69,7 @@ class PostgresConfigTests(TestCase):
                     self.assertEqual(
                         imports,
                         {
-                            "import django.contrib.postgres.fields.ranges",
+                            "import hibeecontrib.postgres.fields.ranges",
                             f"import {import_name}",
                         },
                     )

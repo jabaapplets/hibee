@@ -1,5 +1,5 @@
-from django.db import models
-from django.test import SimpleTestCase
+from hibeedb import models
+from hibeetest import SimpleTestCase
 
 from .models import AutoModel, BigAutoModel, SmallAutoModel
 from .test_integerfield import (

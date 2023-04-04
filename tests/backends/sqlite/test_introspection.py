@@ -2,8 +2,8 @@ import unittest
 
 import sqlparse
 
-from django.db import connection
-from django.test import TestCase
+from hibeedb import connection
+from hibeetest import TestCase
 
 
 @unittest.skipUnless(connection.vendor == "sqlite", "SQLite tests")

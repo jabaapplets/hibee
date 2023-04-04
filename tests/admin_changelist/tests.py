@@ -1,12 +1,12 @@
 import datetime
 from unittest import mock
 
-from django.contrib import admin
-from django.contrib.admin.models import LogEntry
-from django.contrib.admin.options import IncorrectLookupParameters
-from django.contrib.admin.templatetags.admin_list import pagination
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.admin.views.main import (
+from hibeecontrib import admin
+from hibeecontrib.admin.models import LogEntry
+from hibeecontrib.admin.options import IncorrectLookupParameters
+from hibeecontrib.admin.templatetags.admin_list import pagination
+from hibeecontrib.admin.tests import AdminSeleniumTestCase
+from hibeecontrib.admin.views.main import (
     ALL_VAR,
     IS_POPUP_VAR,
     ORDER_VAR,
@@ -14,19 +14,19 @@ from django.contrib.admin.views.main import (
     SEARCH_VAR,
     TO_FIELD_VAR,
 )
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.messages.storage.cookie import CookieStorage
-from django.db import DatabaseError, connection, models
-from django.db.models import F, Field, IntegerField
-from django.db.models.functions import Upper
-from django.db.models.lookups import Contains, Exact
-from django.template import Context, Template, TemplateSyntaxError
-from django.test import TestCase, override_settings, skipUnlessDBFeature
-from django.test.client import RequestFactory
-from django.test.utils import CaptureQueriesContext, isolate_apps, register_lookup
-from django.urls import reverse
-from django.utils import formats
+from hibeecontrib.auth.models import User
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecontrib.messages.storage.cookie import CookieStorage
+from hibeedb import DatabaseError, connection, models
+from hibeedb.models import F, Field, IntegerField
+from hibeedb.models.functions import Upper
+from hibeedb.models.lookups import Contains, Exact
+from hibeetemplate import Context, Template, TemplateSyntaxError
+from hibeetest import TestCase, override_settings, skipUnlessDBFeature
+from hibeetest.client import RequestFactory
+from hibeetest.utils import CaptureQueriesContext, isolate_apps, register_lookup
+from hibeeurls import reverse
+from hibeeutils import formats
 
 from .admin import (
     BandAdmin,
@@ -427,7 +427,7 @@ class ChangeListTests(TestCase):
             "_save": "Save",
         }
         with mock.patch(
-            "django.contrib.admin.ModelAdmin.log_change", side_effect=DatabaseError
+            "hibeecontrib.admin.ModelAdmin.log_change", side_effect=DatabaseError
         ):
             with self.assertRaises(DatabaseError):
                 self.client.post(changelist_url, data)
@@ -440,7 +440,7 @@ class ChangeListTests(TestCase):
         self.assertEqual(b.speed, 2)
 
         with mock.patch(
-            "django.contrib.admin.ModelAdmin.log_change",
+            "hibeecontrib.admin.ModelAdmin.log_change",
             side_effect=[None, DatabaseError],
         ):
             with self.assertRaises(DatabaseError):

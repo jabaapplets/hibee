@@ -1,8 +1,8 @@
 from datetime import datetime
 from operator import attrgetter
 
-from django.core.exceptions import FieldError
-from django.db.models import (
+from hibeecore.exceptions import FieldError
+from hibeedb.models import (
     CharField,
     Count,
     DateTimeField,
@@ -13,8 +13,8 @@ from django.db.models import (
     Subquery,
     Value,
 )
-from django.db.models.functions import Length, Upper
-from django.test import TestCase
+from hibeedb.models.functions import Length, Upper
+from hibeetest import TestCase
 
 from .models import (
     Article,

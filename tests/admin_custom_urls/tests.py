@@ -1,9 +1,9 @@
-from django.contrib.admin.utils import quote
-from django.contrib.admin.views.main import IS_POPUP_VAR
-from django.contrib.auth.models import User
-from django.template.response import TemplateResponse
-from django.test import TestCase, override_settings
-from django.urls import reverse
+from hibeecontrib.admin.utils import quote
+from hibeecontrib.admin.views.main import IS_POPUP_VAR
+from hibeecontrib.auth.models import User
+from hibeetemplate.response import TemplateResponse
+from hibeetest import TestCase, override_settings
+from hibeeurls import reverse
 
 from .models import Action, Car, Person
 

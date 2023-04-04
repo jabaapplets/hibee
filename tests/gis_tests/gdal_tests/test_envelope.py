@@ -1,6 +1,6 @@
 import unittest
 
-from django.contrib.gis.gdal import Envelope, GDALException
+from hibeecontrib.gis.gdal import Envelope, GDALException
 
 
 class TestPoint:

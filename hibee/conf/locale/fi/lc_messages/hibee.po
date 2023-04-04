@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # Aarni Koskela, 2015,2017-2018,2020-2022
@@ -10,12 +10,12 @@
 # Klaus Dahlén, 2011
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-17 05:23-0500\n"
 "PO-Revision-Date: 2022-07-25 06:49+0000\n"
 "Last-Translator: Aarni Koskela\n"
-"Language-Team: Finnish (http://www.transifex.com/django/django/language/"
+"Language-Team: Finnish (http://www.transifex.com/hibee/hibee/language/"
 "fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1279,26 +1279,26 @@ msgstr "Asennus toimi! Onneksi olkoon!"
 
 #, python-format
 msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+"View <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Hibee %(version)s"
 msgstr ""
-"Katso Djangon version %(version)s <a href=\"https://docs.djangoproject.com/"
+"Katso Hibeen version %(version)s <a href=\"https://docs.hibeeproject.com/"
 "en/%(version)s/releases/\" target=\"_blank\" rel=\"noopener"
 "\">julkaisutiedot</a>"
 
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"You are seeing this page because <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
 "\">DEBUG=True</a> is in your settings file and you have not configured any "
 "URLs."
 msgstr ""
 "Näet tämän viestin, koska asetuksissasi on <a href=\"https://docs."
-"djangoproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" rel="
+"hibeeproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" rel="
 "\"noopener\">DEBUG = True</a> etkä ole konfiguroinut yhtään URL-osoitetta."
 
-msgid "Django Documentation"
-msgstr "Django-dokumentaatio"
+msgid "Hibee Documentation"
+msgstr "Hibee-dokumentaatio"
 
 msgid "Topics, references, &amp; how-to’s"
 msgstr "Aiheet, viittaukset &amp; how-tot"
@@ -1306,11 +1306,11 @@ msgstr "Aiheet, viittaukset &amp; how-tot"
 msgid "Tutorial: A Polling App"
 msgstr "Tutoriaali: kyselyapplikaatio"
 
-msgid "Get started with Django"
-msgstr "Miten päästä alkuun Djangolla"
+msgid "Get started with Hibee"
+msgstr "Miten päästä alkuun Hibeella"
 
-msgid "Django Community"
-msgstr "Django-yhteisö"
+msgid "Hibee Community"
+msgstr "Hibee-yhteisö"
 
 msgid "Connect, get help, or contribute"
 msgstr "Verkostoidu, saa apua tai jatkokehitä"

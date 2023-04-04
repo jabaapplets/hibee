@@ -1,3 +1,3 @@
-from django.template import Library
+from hibeetemplate import Library
 
 register = Library()

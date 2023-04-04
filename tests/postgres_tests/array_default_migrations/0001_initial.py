@@ -1,5 +1,5 @@
-import django.contrib.postgres.fields
-from django.db import migrations, models
+import hibeecontrib.postgres.fields
+from hibeedb import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "field",
-                    django.contrib.postgres.fields.ArrayField(
+                    hibeecontrib.postgres.fields.ArrayField(
                         models.IntegerField(), size=None
                     ),
                 ),

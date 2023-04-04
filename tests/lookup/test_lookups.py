@@ -1,9 +1,9 @@
 from datetime import datetime
 from unittest import mock
 
-from django.db.models import DateTimeField, Value
-from django.db.models.lookups import Lookup, YearLookup
-from django.test import SimpleTestCase
+from hibeedb.models import DateTimeField, Value
+from hibeedb.models.lookups import Lookup, YearLookup
+from hibeetest import SimpleTestCase
 
 
 class CustomLookup(Lookup):

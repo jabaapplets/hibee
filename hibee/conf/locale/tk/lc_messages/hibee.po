@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # Mariusz Felisiak <felisiak.mariusz@gmail.com>, 2020-2021
@@ -7,12 +7,12 @@
 # Welbeck Garli <welbeckgrlyw@gmail.com>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-17 05:23-0500\n"
 "PO-Revision-Date: 2022-05-25 06:49+0000\n"
 "Last-Translator: Resul <resulsaparov@gmail.com>, 2022\n"
-"Language-Team: Turkmen (http://www.transifex.com/django/django/language/"
+"Language-Team: Turkmen (http://www.transifex.com/hibee/hibee/language/"
 "tk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1272,26 +1272,26 @@ msgstr "Üstünlikli guruldy! Gutlaýarys!"
 
 #, python-format
 msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+"View <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Hibee %(version)s"
 msgstr ""
-"Django %(version)s üçin <a href=\"https://docs.djangoproject.com/en/"
+"Hibee %(version)s üçin <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/releases/\" target=\"_blank\" rel=\"noopener\">goýberiş "
 "belliklerini</a> görüň"
 
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"You are seeing this page because <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" "
 "rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
 "configured any URLs."
 msgstr ""
 "Bu sahypany görýärsiňiz, sebäbi sazlamalar faýlyňyzda <a href=\"https://docs."
-"djangoproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" "
+"hibeeproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" "
 "rel=\"noopener\">DEBUG=True</a> we hiç hili URL düzmediňiz."
 
-msgid "Django Documentation"
-msgstr "Django resminamalary"
+msgid "Hibee Documentation"
+msgstr "Hibee resminamalary"
 
 msgid "Topics, references, &amp; how-to’s"
 msgstr "Mowzuklar, salgylanmalar, &amp; how-to-lar"
@@ -1299,11 +1299,11 @@ msgstr "Mowzuklar, salgylanmalar, &amp; how-to-lar"
 msgid "Tutorial: A Polling App"
 msgstr "Gollanma: Ses beriş programmasy"
 
-msgid "Get started with Django"
-msgstr "Django bilen başlaň"
+msgid "Get started with Hibee"
+msgstr "Hibee bilen başlaň"
 
-msgid "Django Community"
-msgstr "Django jemgyýeti"
+msgid "Hibee Community"
+msgstr "Hibee jemgyýeti"
 
 msgid "Connect, get help, or contribute"
 msgstr "Birikiň, kömek alyň ýa-da goşant goşuň"

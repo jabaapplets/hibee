@@ -1,9 +1,9 @@
-# Unit tests for typecast functions in django.db.backends.util
+# Unit tests for typecast functions in hibeedb.backends.util
 
 import datetime
 import unittest
 
-from django.db.backends import utils as typecasts
+from hibeedb.backends import utils as typecasts
 
 TEST_CASES = {
     "typecast_date": (

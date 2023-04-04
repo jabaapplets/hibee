@@ -1,6 +1,6 @@
 import datetime
 
-from django.test import TestCase
+from hibeetest import TestCase
 
 from .models import Person
 

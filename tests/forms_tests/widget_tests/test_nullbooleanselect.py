@@ -1,5 +1,5 @@
-from django.forms import Form, NullBooleanField, NullBooleanSelect
-from django.utils import translation
+from hibeeforms import Form, NullBooleanField, NullBooleanSelect
+from hibeeutils import translation
 
 from .base import WidgetTest
 

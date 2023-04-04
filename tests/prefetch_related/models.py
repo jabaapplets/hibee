@@ -1,10 +1,10 @@
 import uuid
 
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.db import models
-from django.db.models.query import ModelIterable
-from django.utils.functional import cached_property
+from hibeecontrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from hibeecontrib.contenttypes.models import ContentType
+from hibeedb import models
+from hibeedb.models.query import ModelIterable
+from hibeeutils.functional import cached_property
 
 
 class Author(models.Model):

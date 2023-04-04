@@ -5,35 +5,35 @@ from importlib import import_module
 from unittest import mock
 from urllib.parse import quote, urljoin
 
-from django.apps import apps
-from django.conf import settings
-from django.contrib.admin.models import LogEntry
-from django.contrib.auth import BACKEND_SESSION_KEY, REDIRECT_FIELD_NAME, SESSION_KEY
-from django.contrib.auth.forms import (
+from hibeeapps import apps
+from hibeeconf import settings
+from hibeecontrib.admin.models import LogEntry
+from hibeecontrib.auth import BACKEND_SESSION_KEY, REDIRECT_FIELD_NAME, SESSION_KEY
+from hibeecontrib.auth.forms import (
     AuthenticationForm,
     PasswordChangeForm,
     SetPasswordForm,
 )
-from django.contrib.auth.models import Permission, User
-from django.contrib.auth.views import (
+from hibeecontrib.auth.models import Permission, User
+from hibeecontrib.auth.views import (
     INTERNAL_RESET_SESSION_TOKEN,
     LoginView,
     RedirectURLMixin,
     logout_then_login,
     redirect_to_login,
 )
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sessions.middleware import SessionMiddleware
-from django.contrib.sites.requests import RequestSite
-from django.core import mail
-from django.core.exceptions import ImproperlyConfigured
-from django.db import connection
-from django.http import HttpRequest, HttpResponse
-from django.middleware.csrf import CsrfViewMiddleware, get_token
-from django.test import Client, TestCase, override_settings
-from django.test.client import RedirectCycleError
-from django.urls import NoReverseMatch, reverse, reverse_lazy
-from django.utils.http import urlsafe_base64_encode
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecontrib.sessions.middleware import SessionMiddleware
+from hibeecontrib.sites.requests import RequestSite
+from hibeecore import mail
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeedb import connection
+from hibeehttp import HttpRequest, HttpResponse
+from hibeemiddleware.csrf import CsrfViewMiddleware, get_token
+from hibeetest import Client, TestCase, override_settings
+from hibeetest.client import RedirectCycleError
+from hibeeurls import NoReverseMatch, reverse, reverse_lazy
+from hibeeutils.http import urlsafe_base64_encode
 
 from .client import PasswordResetConfirmClient
 from .models import CustomUser, UUIDUser
@@ -96,7 +96,7 @@ class AuthViewsTestCase(TestCase):
         self.assertIn(str(error), form_errors)
 
 
-@override_settings(ROOT_URLCONF="django.contrib.auth.urls")
+@override_settings(ROOT_URLCONF="hibeecontrib.auth.urls")
 class AuthViewNamedURLTests(AuthViewsTestCase):
     def test_named_urls(self):
         "Named URLs should be reversible"
@@ -209,7 +209,7 @@ class PasswordResetTest(AuthViewsTestCase):
         # produce a meaningful reset URL, we need to be certain that the
         # HTTP_HOST header isn't poisoned. This is done as a check when get_host()
         # is invoked, but we check here as a practical consequence.
-        with self.assertLogs("django.security.DisallowedHost", "ERROR"):
+        with self.assertLogs("hibeesecurity.DisallowedHost", "ERROR"):
             response = self.client.post(
                 "/password_reset/",
                 {"email": "staffmember@example.com"},
@@ -222,7 +222,7 @@ class PasswordResetTest(AuthViewsTestCase):
     @override_settings(DEBUG_PROPAGATE_EXCEPTIONS=True)
     def test_poisoned_http_host_admin_site(self):
         "Poisoned HTTP_HOST headers can't be used for reset emails on admin views"
-        with self.assertLogs("django.security.DisallowedHost", "ERROR"):
+        with self.assertLogs("hibeesecurity.DisallowedHost", "ERROR"):
             response = self.client.post(
                 "/admin_password_reset/",
                 {"email": "staffmember@example.com"},
@@ -396,13 +396,13 @@ class PasswordResetTest(AuthViewsTestCase):
 
     @override_settings(
         AUTHENTICATION_BACKENDS=[
-            "django.contrib.auth.backends.ModelBackend",
-            "django.contrib.auth.backends.AllowAllUsersModelBackend",
+            "hibeecontrib.auth.backends.ModelBackend",
+            "hibeecontrib.auth.backends.AllowAllUsersModelBackend",
         ]
     )
     def test_confirm_login_post_reset_custom_backend(self):
         # This backend is specified in the URL pattern.
-        backend = "django.contrib.auth.backends.AllowAllUsersModelBackend"
+        backend = "hibeecontrib.auth.backends.AllowAllUsersModelBackend"
         url, path = self._test_confirm_start()
         path = path.replace("/reset/", "/reset/post_reset_login_custom_backend/")
         response = self.client.post(
@@ -686,7 +686,7 @@ class LoginTest(AuthViewsTestCase):
     def test_current_site_in_context_after_login(self):
         response = self.client.get(reverse("login"))
         self.assertEqual(response.status_code, 200)
-        if apps.is_installed("django.contrib.sites"):
+        if apps.is_installed("hibeecontrib.sites"):
             Site = apps.get_model("sites.Site")
             site = Site.objects.get_current()
             self.assertEqual(response.context["site"], site)
@@ -861,7 +861,7 @@ class LoginTest(AuthViewsTestCase):
 
     def test_login_session_without_hash_session_key(self):
         """
-        Session without django.contrib.auth.HASH_SESSION_KEY should login
+        Session without hibeecontrib.auth.HASH_SESSION_KEY should login
         without an exception.
         """
         user = User.objects.get(username="testclient")
@@ -1400,7 +1400,7 @@ class ChangelistTests(AuthViewsTestCase):
     # repeated password__startswith queries.
     def test_changelist_disallows_password_lookups(self):
         # A lookup that tries to filter on password isn't OK
-        with self.assertLogs("django.security.DisallowedModelAdminLookup", "ERROR"):
+        with self.assertLogs("hibeesecurity.DisallowedModelAdminLookup", "ERROR"):
             response = self.client.get(
                 reverse("auth_test_admin:auth_user_changelist")
                 + "?password__startswith=sha1$"
@@ -1478,7 +1478,7 @@ class ChangelistTests(AuthViewsTestCase):
         )
         self.assertEqual(response.status_code, 404)
 
-    @mock.patch("django.contrib.auth.admin.UserAdmin.has_change_permission")
+    @mock.patch("hibeecontrib.auth.admin.UserAdmin.has_change_permission")
     def test_user_change_password_passes_user_to_has_change_permission(
         self, has_change_permission
     ):

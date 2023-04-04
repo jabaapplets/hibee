@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from django.db.backends.sqlite3.client import DatabaseClient
-from django.test import SimpleTestCase
+from hibeedb.backends.sqlite3.client import DatabaseClient
+from hibeetest import SimpleTestCase
 
 
 class SqliteDbshellCommandTestCase(SimpleTestCase):

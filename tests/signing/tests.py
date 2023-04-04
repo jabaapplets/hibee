@@ -1,10 +1,10 @@
 import datetime
 
-from django.core import signing
-from django.test import SimpleTestCase, override_settings
-from django.test.utils import freeze_time, ignore_warnings
-from django.utils.crypto import InvalidAlgorithm
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibeecore import signing
+from hibeetest import SimpleTestCase, override_settings
+from hibeetest.utils import freeze_time, ignore_warnings
+from hibeeutils.crypto import InvalidAlgorithm
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 
 class TestSigner(SimpleTestCase):
@@ -245,13 +245,13 @@ class TestBase62(SimpleTestCase):
 class SignerPositionalArgumentsDeprecationTests(SimpleTestCase):
     def test_deprecation(self):
         msg = "Passing positional arguments to Signer is deprecated."
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
+        with self.assertRaisesMessage(RemovedInHibee1Warning, msg):
             signing.Signer("predictable-secret")
         msg = "Passing positional arguments to TimestampSigner is deprecated."
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
+        with self.assertRaisesMessage(RemovedInHibee1Warning, msg):
             signing.TimestampSigner("predictable-secret")
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_positional_arguments(self):
         signer = signing.Signer("secret", "/", "somesalt", "sha1", ["oldsecret"])
         signed = signer.sign("xyz")

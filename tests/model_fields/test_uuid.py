@@ -1,11 +1,11 @@
 import json
 import uuid
 
-from django.core import exceptions, serializers
-from django.db import IntegrityError, connection, models
-from django.db.models import CharField, F, Value
-from django.db.models.functions import Concat, Repeat
-from django.test import (
+from hibeecore import exceptions, serializers
+from hibeedb import IntegrityError, connection, models
+from hibeedb.models import CharField, F, Value
+from hibeedb.models.functions import Concat, Repeat
+from hibeetest import (
     SimpleTestCase,
     TestCase,
     TransactionTestCase,

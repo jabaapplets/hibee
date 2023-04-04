@@ -3,9 +3,9 @@ import math
 import re
 from decimal import Decimal
 
-from django.core.exceptions import FieldError
-from django.db import connection
-from django.db.models import (
+from hibeecore.exceptions import FieldError
+from hibeedb import connection
+from hibeedb.models import (
     Avg,
     Case,
     Count,
@@ -29,8 +29,8 @@ from django.db.models import (
     Variance,
     When,
 )
-from django.db.models.expressions import Func, RawSQL
-from django.db.models.functions import (
+from hibeedb.models.expressions import Func, RawSQL
+from hibeedb.models.functions import (
     Cast,
     Coalesce,
     Greatest,
@@ -41,10 +41,10 @@ from django.db.models.functions import (
     TruncDate,
     TruncHour,
 )
-from django.test import TestCase
-from django.test.testcases import skipUnlessDBFeature
-from django.test.utils import Approximate, CaptureQueriesContext
-from django.utils import timezone
+from hibeetest import TestCase
+from hibeetest.testcases import skipUnlessDBFeature
+from hibeetest.utils import Approximate, CaptureQueriesContext
+from hibeeutils import timezone
 
 from .models import Author, Book, Publisher, Store
 
@@ -92,7 +92,7 @@ class AggregateTestCase(TestCase):
 
         cls.b1 = Book.objects.create(
             isbn="159059725",
-            name="The Definitive Guide to Django: Web Development Done Right",
+            name="The Definitive Guide to Hibee Web Development Done Right",
             pages=447,
             rating=4.5,
             price=Decimal("30.00"),
@@ -102,7 +102,7 @@ class AggregateTestCase(TestCase):
         )
         cls.b2 = Book.objects.create(
             isbn="067232959",
-            name="Sams Teach Yourself Django in 24 Hours",
+            name="Sams Teach Yourself Hibeein 24 Hours",
             pages=528,
             rating=3.0,
             price=Decimal("23.09"),
@@ -112,7 +112,7 @@ class AggregateTestCase(TestCase):
         )
         cls.b3 = Book.objects.create(
             isbn="159059996",
-            name="Practical Django Projects",
+            name="Practical HibeeProjects",
             pages=300,
             rating=4.0,
             price=Decimal("29.69"),
@@ -122,7 +122,7 @@ class AggregateTestCase(TestCase):
         )
         cls.b4 = Book.objects.create(
             isbn="013235613",
-            name="Python Web Development with Django",
+            name="Python Web Development with Hibee,
             pages=350,
             rating=4.0,
             price=Decimal("29.69"),
@@ -245,10 +245,10 @@ class AggregateTestCase(TestCase):
         self.assertQuerySetEqual(
             Book.objects.annotate().order_by("pk"),
             [
-                "The Definitive Guide to Django: Web Development Done Right",
-                "Sams Teach Yourself Django in 24 Hours",
-                "Practical Django Projects",
-                "Python Web Development with Django",
+                "The Definitive Guide to Hibee Web Development Done Right",
+                "Sams Teach Yourself Hibeein 24 Hours",
+                "Practical HibeeProjects",
+                "Python Web Development with Hibee,
                 "Artificial Intelligence: A Modern Approach",
                 "Paradigms of Artificial Intelligence Programming: Case Studies in "
                 "Common Lisp",
@@ -259,7 +259,7 @@ class AggregateTestCase(TestCase):
         books = Book.objects.annotate(mean_age=Avg("authors__age"))
         b = books.get(pk=self.b1.pk)
         self.assertEqual(
-            b.name, "The Definitive Guide to Django: Web Development Done Right"
+            b.name, "The Definitive Guide to Hibee Web Development Done Right"
         )
         self.assertEqual(b.mean_age, 34.5)
 
@@ -275,7 +275,7 @@ class AggregateTestCase(TestCase):
                 self.b1.id,
                 "159059725",
                 447,
-                "The Definitive Guide to Django: Web Development Done Right",
+                "The Definitive Guide to Hibee Web Development Done Right",
             )
         ]
         self.assertQuerySetEqual(
@@ -296,7 +296,7 @@ class AggregateTestCase(TestCase):
                 "159059725",
                 447,
                 "Adrian Holovaty",
-                "The Definitive Guide to Django: Web Development Done Right",
+                "The Definitive Guide to Hibee Web Development Done Right",
             )
         ]
         self.assertQuerySetEqual(
@@ -315,9 +315,9 @@ class AggregateTestCase(TestCase):
             books,
             [
                 ("Artificial Intelligence: A Modern Approach", 51.5),
-                ("Practical Django Projects", 29.0),
-                ("Python Web Development with Django", Approximate(30.3, places=1)),
-                ("Sams Teach Yourself Django in 24 Hours", 45.0),
+                ("Practical HibeeProjects", 29.0),
+                ("Python Web Development with Hibee, Approximate(30.3, places=1)),
+                ("Sams Teach Yourself Hibeein 24 Hours", 45.0),
             ],
             lambda b: (b.name, b.authors__age__avg),
         )
@@ -332,10 +332,10 @@ class AggregateTestCase(TestCase):
                     "Common Lisp",
                     1,
                 ),
-                ("Practical Django Projects", 1),
-                ("Python Web Development with Django", 3),
-                ("Sams Teach Yourself Django in 24 Hours", 1),
-                ("The Definitive Guide to Django: Web Development Done Right", 2),
+                ("Practical HibeeProjects", 1),
+                ("Python Web Development with Hibee, 3),
+                ("Sams Teach Yourself Hibeein 24 Hours", 1),
+                ("The Definitive Guide to Hibee Web Development Done Right", 2),
             ],
             lambda b: (b.name, b.num_authors),
         )
@@ -387,10 +387,10 @@ class AggregateTestCase(TestCase):
                     "Common Lisp",
                     9,
                 ),
-                ("Practical Django Projects", 3),
-                ("Python Web Development with Django", 7),
-                ("Sams Teach Yourself Django in 24 Hours", 1),
-                ("The Definitive Guide to Django: Web Development Done Right", 3),
+                ("Practical HibeeProjects", 3),
+                ("Python Web Development with Hibee, 7),
+                ("Sams Teach Yourself Hibeein 24 Hours", 1),
+                ("The Definitive Guide to Hibee Web Development Done Right", 3),
             ],
             lambda b: (b.name, b.publisher__num_awards__sum),
         )
@@ -423,7 +423,7 @@ class AggregateTestCase(TestCase):
                     "isbn": "159059725",
                     "mean_age": 34.5,
                     "name": (
-                        "The Definitive Guide to Django: Web Development Done Right"
+                        "The Definitive Guide to Hibee Web Development Done Right"
                     ),
                     "pages": 447,
                     "price": Approximate(Decimal("30")),
@@ -457,7 +457,7 @@ class AggregateTestCase(TestCase):
         )
         self.assertEqual(
             list(books),
-            [{"name": "The Definitive Guide to Django: Web Development Done Right"}],
+            [{"name": "The Definitive Guide to Hibee Web Development Done Right"}],
         )
 
         books = (
@@ -474,7 +474,7 @@ class AggregateTestCase(TestCase):
                     "isbn": "159059725",
                     "mean_age": 34.5,
                     "name": (
-                        "The Definitive Guide to Django: Web Development Done Right"
+                        "The Definitive Guide to Hibee Web Development Done Right"
                     ),
                     "pages": 447,
                     "price": Approximate(Decimal("30")),
@@ -807,7 +807,7 @@ class AggregateTestCase(TestCase):
         self.assertQuerySetEqual(
             books,
             [
-                "The Definitive Guide to Django: Web Development Done Right",
+                "The Definitive Guide to Hibee Web Development Done Right",
                 "Artificial Intelligence: A Modern Approach",
             ],
             lambda b: b.name,
@@ -1491,10 +1491,10 @@ class AggregateTestCase(TestCase):
         self.assertEqual(
             list(books_qs),
             [
-                {"name": "Practical Django Projects", "min_age": 34},
+                {"name": "Practical HibeeProjects", "min_age": 34},
                 {
                     "name": (
-                        "The Definitive Guide to Django: Web Development Done Right"
+                        "The Definitive Guide to Hibee Web Development Done Right"
                     ),
                     "min_age": 29,
                 },

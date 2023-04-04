@@ -1,5 +1,5 @@
-from django.contrib.gis.db import models
-from django.db import connection, migrations
+from hibeecontrib.gis.db import models
+from hibeedb import connection, migrations
 
 ops = [
     migrations.CreateModel(

@@ -1,9 +1,9 @@
-from django.db import NotSupportedError
-from django.db.models import F, Value
-from django.db.models.functions import JSONObject, Lower
-from django.test import TestCase
-from django.test.testcases import skipIfDBFeature, skipUnlessDBFeature
-from django.utils import timezone
+from hibeedb import NotSupportedError
+from hibeedb.models import F, Value
+from hibeedb.models.functions import JSONObject, Lower
+from hibeetest import TestCase
+from hibeetest.testcases import skipIfDBFeature, skipUnlessDBFeature
+from hibeeutils import timezone
 
 from ..models import Article, Author
 

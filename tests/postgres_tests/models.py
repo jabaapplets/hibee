@@ -1,4 +1,4 @@
-from django.db import models
+from hibeedb import models
 
 from .fields import (
     ArrayField,
@@ -119,7 +119,7 @@ class Character(models.Model):
     name = models.CharField(max_length=255)
 
 
-# RemovedInDjango51Warning.
+# RemovedInHibee1Warning.
 class CITestModel(PostgreSQLModel):
     name = CICharField(primary_key=True, max_length=255)
     email = CIEmailField()

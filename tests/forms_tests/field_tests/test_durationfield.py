@@ -1,10 +1,10 @@
 import datetime
 
-from django.core.exceptions import ValidationError
-from django.forms import DurationField
-from django.test import SimpleTestCase
-from django.utils import translation
-from django.utils.duration import duration_string
+from hibeecore.exceptions import ValidationError
+from hibeeforms import DurationField
+from hibeetest import SimpleTestCase
+from hibeeutils import translation
+from hibeeutils.duration import duration_string
 
 from . import FormFieldAssertionsMixin
 

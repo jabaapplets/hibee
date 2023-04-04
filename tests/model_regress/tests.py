@@ -2,12 +2,12 @@ import copy
 import datetime
 from operator import attrgetter
 
-from django.core.exceptions import ValidationError
-from django.db import models, router
-from django.db.models.sql import InsertQuery
-from django.test import TestCase, skipUnlessDBFeature
-from django.test.utils import isolate_apps
-from django.utils.timezone import get_fixed_timezone
+from hibeecore.exceptions import ValidationError
+from hibeedb import models, router
+from hibeedb.models.sql import InsertQuery
+from hibeetest import TestCase, skipUnlessDBFeature
+from hibeetest.utils import isolate_apps
+from hibeeutils.timezone import get_fixed_timezone
 
 from .models import (
     Article,

@@ -813,8 +813,8 @@ class SelectMultiple(Select):
 
 class RadioSelect(ChoiceWidget):
     input_type = "radio"
-    template_name = "django/forms/widgets/radio.html"
-    option_template_name = "django/forms/widgets/radio_option.html"
+    template_name = "hibeeforms/widgets/radio.html"
+    option_template_name = "hibeeforms/widgets/radio_option.html"
     use_fieldset = True
 
     def id_for_label(self, id_, index=None):
@@ -831,8 +831,8 @@ class RadioSelect(ChoiceWidget):
 class CheckboxSelectMultiple(RadioSelect):
     allow_multiple_selected = True
     input_type = "checkbox"
-    template_name = "django/forms/widgets/checkbox_select.html"
-    option_template_name = "django/forms/widgets/checkbox_option.html"
+    template_name = "hibeeforms/widgets/checkbox_select.html"
+    option_template_name = "hibeeforms/widgets/checkbox_option.html"
 
     def use_required_attribute(self, initial):
         # Don't use the 'required' attribute because browser validation would
@@ -856,7 +856,7 @@ class MultiWidget(Widget):
     You'll probably want to use this class with MultiValueField.
     """
 
-    template_name = "django/forms/widgets/multiwidget.html"
+    template_name = "hibeeforms/widgets/multiwidget.html"
     use_fieldset = True
 
     def __init__(self, widgets, attrs=None):
@@ -958,7 +958,7 @@ class SplitDateTimeWidget(MultiWidget):
     """
 
     supports_microseconds = False
-    template_name = "django/forms/widgets/splitdatetime.html"
+    template_name = "hibeeforms/widgets/splitdatetime.html"
 
     def __init__(
         self,
@@ -992,7 +992,7 @@ class SplitHiddenDateTimeWidget(SplitDateTimeWidget):
     A widget that splits datetime input into two <input type="hidden"> inputs.
     """
 
-    template_name = "django/forms/widgets/splithiddendatetime.html"
+    template_name = "hibeeforms/widgets/splithiddendatetime.html"
 
     def __init__(
         self,
@@ -1019,7 +1019,7 @@ class SelectDateWidget(Widget):
     month_field = "%s_month"
     day_field = "%s_day"
     year_field = "%s_year"
-    template_name = "django/forms/widgets/select_date.html"
+    template_name = "hibeeforms/widgets/select_date.html"
     input_type = "select"
     select_widget = Select
     date_re = _lazy_re_compile(r"(\d{4}|0)-(\d\d?)-(\d\d?)$")

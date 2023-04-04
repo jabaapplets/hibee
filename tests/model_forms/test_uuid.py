@@ -1,6 +1,6 @@
-from django import forms
-from django.core.exceptions import ValidationError
-from django.test import TestCase
+from hibeeimport forms
+from hibeecore.exceptions import ValidationError
+from hibeetest import TestCase
 
 from .models import UUIDPK
 

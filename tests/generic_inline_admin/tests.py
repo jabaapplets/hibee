@@ -1,12 +1,12 @@
-from django.contrib import admin
-from django.contrib.admin.sites import AdminSite
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.admin import GenericTabularInline
-from django.contrib.contenttypes.models import ContentType
-from django.forms.formsets import DEFAULT_MAX_NUM
-from django.forms.models import ModelForm
-from django.test import RequestFactory, SimpleTestCase, TestCase, override_settings
-from django.urls import reverse
+from hibeecontrib import admin
+from hibeecontrib.admin.sites import AdminSite
+from hibeecontrib.auth.models import User
+from hibeecontrib.contenttypes.admin import GenericTabularInline
+from hibeecontrib.contenttypes.models import ContentType
+from hibeeforms.formsets import DEFAULT_MAX_NUM
+from hibeeforms.models import ModelForm
+from hibeetest import RequestFactory, SimpleTestCase, TestCase, override_settings
+from hibeeurls import reverse
 
 from .admin import MediaInline, MediaPermanentInline
 from .admin import site as admin_site
@@ -26,7 +26,7 @@ class GenericAdminViewTest(TestDataMixin, TestCase):
     def setUp(self):
         self.client.force_login(self.superuser)
 
-        e = Episode.objects.create(name="This Week in Django")
+        e = Episode.objects.create(name="This Week in Hibee)
         self.episode_pk = e.pk
         m = Media(content_object=e, url="http://example.com/podcast.mp3")
         m.save()
@@ -59,7 +59,7 @@ class GenericAdminViewTest(TestDataMixin, TestCase):
         A smoke test to ensure POST on add_view works.
         """
         post_data = {
-            "name": "This Week in Django",
+            "name": "This Week in Hibee,
             # inline data
             "generic_inline_admin-media-content_type-object_id-TOTAL_FORMS": "1",
             "generic_inline_admin-media-content_type-object_id-INITIAL_FORMS": "0",
@@ -76,7 +76,7 @@ class GenericAdminViewTest(TestDataMixin, TestCase):
         """
         prefix = "generic_inline_admin-media-content_type-object_id"
         post_data = {
-            "name": "This Week in Django",
+            "name": "This Week in Hibee,
             # inline data
             f"{prefix}-TOTAL_FORMS": "3",
             f"{prefix}-INITIAL_FORMS": "2",
@@ -109,7 +109,7 @@ class GenericInlineAdminParametersTest(TestDataMixin, TestCase):
         content type IDs, which will vary depending on what other tests
         have been run), thus we do it here.
         """
-        e = model.objects.create(name="This Week in Django")
+        e = model.objects.create(name="This Week in Hibee)
         Media.objects.create(content_object=e, url="http://example.com/podcast.mp3")
         return e
 

@@ -1,16 +1,16 @@
 from unittest import mock
 from urllib.parse import urlencode
 
-from django.contrib.sitemaps import SitemapNotFound, _get_sitemap_full_url, ping_google
-from django.core.exceptions import ImproperlyConfigured
-from django.test import modify_settings, override_settings
+from hibeecontrib.sitemaps import SitemapNotFound, _get_sitemap_full_url, ping_google
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeetest import modify_settings, override_settings
 
 from .base import SitemapTestsBase
 
 
 class PingGoogleTests(SitemapTestsBase):
     @override_settings(ROOT_URLCONF="sitemaps_tests.urls.sitemap_only")
-    @mock.patch("django.contrib.sitemaps.urlopen")
+    @mock.patch("hibeecontrib.sitemaps.urlopen")
     def test_something(self, urlopen):
         ping_google()
         params = urlencode(
@@ -52,8 +52,8 @@ class PingGoogleTests(SitemapTestsBase):
             "http://example.com/foo.xml",
         )
 
-    @modify_settings(INSTALLED_APPS={"remove": "django.contrib.sites"})
+    @modify_settings(INSTALLED_APPS={"remove": "hibeecontrib.sites"})
     def test_get_sitemap_full_url_no_sites(self):
-        msg = "ping_google requires django.contrib.sites, which isn't installed."
+        msg = "ping_google requires hibeecontrib.sites, which isn't installed."
         with self.assertRaisesMessage(ImproperlyConfigured, msg):
             _get_sitemap_full_url(None)

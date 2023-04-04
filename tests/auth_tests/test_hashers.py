@@ -1,7 +1,7 @@
 from unittest import mock, skipUnless
 
-from django.conf.global_settings import PASSWORD_HASHERS
-from django.contrib.auth.hashers import (
+from hibeeconf.global_settings import PASSWORD_HASHERS
+from hibeecontrib.auth.hashers import (
     UNUSABLE_PASSWORD_PREFIX,
     UNUSABLE_PASSWORD_SUFFIX_LENGTH,
     BasePasswordHasher,
@@ -17,9 +17,9 @@ from django.contrib.auth.hashers import (
     is_password_usable,
     make_password,
 )
-from django.test import SimpleTestCase, ignore_warnings
-from django.test.utils import override_settings
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibeetest import SimpleTestCase, ignore_warnings
+from hibeetest.utils import override_settings
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 try:
     import bcrypt
@@ -93,9 +93,9 @@ class TestUtilsHashPass(SimpleTestCase):
         self.assertIs(hasher.must_update(encoded_weak_salt), True)
         self.assertIs(hasher.must_update(encoded_strong_salt), False)
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.SHA1PasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.SHA1PasswordHasher"]
     )
     def test_sha1(self):
         encoded = make_password("lètmein", "seasalt", "sha1")
@@ -120,15 +120,15 @@ class TestUtilsHashPass(SimpleTestCase):
         self.assertIs(hasher.must_update(encoded_strong_salt), False)
 
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.SHA1PasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.SHA1PasswordHasher"]
     )
     def test_sha1_deprecation_warning(self):
-        msg = "django.contrib.auth.hashers.SHA1PasswordHasher is deprecated."
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
+        msg = "hibeecontrib.auth.hashers.SHA1PasswordHasher is deprecated."
+        with self.assertRaisesMessage(RemovedInHibee1Warning, msg):
             get_hasher("sha1")
 
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.MD5PasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.MD5PasswordHasher"]
     )
     def test_md5(self):
         encoded = make_password("lètmein", "seasalt", "md5")
@@ -150,9 +150,9 @@ class TestUtilsHashPass(SimpleTestCase):
         self.assertIs(hasher.must_update(encoded_weak_salt), True)
         self.assertIs(hasher.must_update(encoded_strong_salt), False)
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.UnsaltedMD5PasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.UnsaltedMD5PasswordHasher"]
     )
     def test_unsalted_md5(self):
         encoded = make_password("lètmein", "", "unsalted_md5")
@@ -172,9 +172,9 @@ class TestUtilsHashPass(SimpleTestCase):
         self.assertTrue(check_password("", blank_encoded))
         self.assertFalse(check_password(" ", blank_encoded))
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.UnsaltedMD5PasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.UnsaltedMD5PasswordHasher"]
     )
     def test_unsalted_md5_encode_invalid_salt(self):
         hasher = get_hasher("unsalted_md5")
@@ -183,16 +183,16 @@ class TestUtilsHashPass(SimpleTestCase):
             hasher.encode("password", salt="salt")
 
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.UnsaltedMD5PasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.UnsaltedMD5PasswordHasher"]
     )
     def test_unsalted_md5_deprecation_warning(self):
-        msg = "django.contrib.auth.hashers.UnsaltedMD5PasswordHasher is deprecated."
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
+        msg = "hibeecontrib.auth.hashers.UnsaltedMD5PasswordHasher is deprecated."
+        with self.assertRaisesMessage(RemovedInHibee1Warning, msg):
             get_hasher("unsalted_md5")
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.UnsaltedSHA1PasswordHasher"]
     )
     def test_unsalted_sha1(self):
         encoded = make_password("lètmein", "", "unsalted_sha1")
@@ -211,9 +211,9 @@ class TestUtilsHashPass(SimpleTestCase):
         self.assertTrue(check_password("", blank_encoded))
         self.assertFalse(check_password(" ", blank_encoded))
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.UnsaltedSHA1PasswordHasher"]
     )
     def test_unsalted_sha1_encode_invalid_salt(self):
         hasher = get_hasher("unsalted_sha1")
@@ -222,11 +222,11 @@ class TestUtilsHashPass(SimpleTestCase):
             hasher.encode("password", salt="salt")
 
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.UnsaltedSHA1PasswordHasher"]
     )
     def test_unsalted_sha1_deprecation_warning(self):
-        msg = "django.contrib.auth.hashers.UnsaltedSHA1PasswordHasher is deprecated."
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
+        msg = "hibeecontrib.auth.hashers.UnsaltedSHA1PasswordHasher is deprecated."
+        with self.assertRaisesMessage(RemovedInHibee1Warning, msg):
             get_hasher("unsalted_sha1")
 
     @skipUnless(bcrypt, "bcrypt not installed")
@@ -255,7 +255,7 @@ class TestUtilsHashPass(SimpleTestCase):
 
     @skipUnless(bcrypt, "bcrypt not installed")
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.BCryptPasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.BCryptPasswordHasher"]
     )
     def test_bcrypt(self):
         encoded = make_password("lètmein", hasher="bcrypt")
@@ -273,7 +273,7 @@ class TestUtilsHashPass(SimpleTestCase):
 
     @skipUnless(bcrypt, "bcrypt not installed")
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.BCryptPasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.BCryptPasswordHasher"]
     )
     def test_bcrypt_upgrade(self):
         hasher = get_hasher("bcrypt")
@@ -308,7 +308,7 @@ class TestUtilsHashPass(SimpleTestCase):
 
     @skipUnless(bcrypt, "bcrypt not installed")
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.BCryptPasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.BCryptPasswordHasher"]
     )
     def test_bcrypt_harden_runtime(self):
         hasher = get_hasher("bcrypt")
@@ -406,9 +406,9 @@ class TestUtilsHashPass(SimpleTestCase):
 
     @override_settings(
         PASSWORD_HASHERS=[
-            "django.contrib.auth.hashers.PBKDF2PasswordHasher",
-            "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
-            "django.contrib.auth.hashers.MD5PasswordHasher",
+            "hibeecontrib.auth.hashers.PBKDF2PasswordHasher",
+            "hibeecontrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+            "hibeecontrib.auth.hashers.MD5PasswordHasher",
         ],
     )
     def test_upgrade(self):
@@ -436,9 +436,9 @@ class TestUtilsHashPass(SimpleTestCase):
 
     @override_settings(
         PASSWORD_HASHERS=[
-            "django.contrib.auth.hashers.PBKDF2PasswordHasher",
-            "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
-            "django.contrib.auth.hashers.MD5PasswordHasher",
+            "hibeecontrib.auth.hashers.PBKDF2PasswordHasher",
+            "hibeecontrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+            "hibeecontrib.auth.hashers.MD5PasswordHasher",
         ],
     )
     def test_no_upgrade_on_incorrect_pass(self):
@@ -530,7 +530,7 @@ class TestUtilsHashPass(SimpleTestCase):
         # updated to the new iteration count.
         with self.settings(
             PASSWORD_HASHERS=[
-                "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+                "hibeecontrib.auth.hashers.PBKDF2PasswordHasher",
                 "auth_tests.test_hashers.PBKDF2SingleIterationHasher",
             ]
         ):

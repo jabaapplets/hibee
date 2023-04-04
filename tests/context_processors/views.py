@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from hibeeshortcuts import render
 
 from .models import DebugObject
 

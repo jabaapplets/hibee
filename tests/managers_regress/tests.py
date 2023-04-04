@@ -1,7 +1,7 @@
-from django.db import models
-from django.template import Context, Template
-from django.test import SimpleTestCase, TestCase, override_settings
-from django.test.utils import isolate_apps
+from hibeedb import models
+from hibeetemplate import Context, Template
+from hibeetest import SimpleTestCase, TestCase, override_settings
+from hibeetest.utils import isolate_apps
 
 from .models import (
     AbstractBase1,

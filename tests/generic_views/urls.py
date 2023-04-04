@@ -1,8 +1,8 @@
-from django.contrib.auth import views as auth_views
-from django.contrib.auth.decorators import login_required
-from django.urls import path, re_path
-from django.views.decorators.cache import cache_page
-from django.views.generic import TemplateView, dates
+from hibeecontrib.auth import views as auth_views
+from hibeecontrib.auth.decorators import login_required
+from hibeeurls import path, re_path
+from hibeeviews.decorators.cache import cache_page
+from hibeeviews.generic import TemplateView, dates
 
 from . import views
 from .models import Book

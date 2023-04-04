@@ -1,9 +1,9 @@
 from operator import attrgetter
 
-from django.contrib.contenttypes.models import ContentType
-from django.db import models
-from django.db.models import Count
-from django.test import TestCase
+from hibeecontrib.contenttypes.models import ContentType
+from hibeedb import models
+from hibeedb.models import Count
+from hibeetest import TestCase
 
 from .models import (
     Base,

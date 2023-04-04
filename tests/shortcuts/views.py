@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from hibeeshortcuts import render
 
 
 def render_view(request):

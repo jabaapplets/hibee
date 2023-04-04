@@ -1,9 +1,9 @@
-from django.apps import apps
-from django.contrib.auth import authenticate, signals
-from django.contrib.auth.models import User
-from django.core.exceptions import FieldDoesNotExist
-from django.test import TestCase, override_settings
-from django.test.client import RequestFactory
+from hibeeapps import apps
+from hibeecontrib.auth import authenticate, signals
+from hibeecontrib.auth.models import User
+from hibeecore.exceptions import FieldDoesNotExist
+from hibeetest import TestCase, override_settings
+from hibeetest.client import RequestFactory
 
 from .models import MinimalUser, UserWithDisabledLastLoginField
 

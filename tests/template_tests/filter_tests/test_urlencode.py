@@ -1,5 +1,5 @@
-from django.template.defaultfilters import urlencode
-from django.test import SimpleTestCase
+from hibeetemplate.defaultfilters import urlencode
+from hibeetest import SimpleTestCase
 
 from ..utils import setup
 

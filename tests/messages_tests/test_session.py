@@ -1,10 +1,10 @@
-from django.contrib.messages import constants
-from django.contrib.messages.storage.base import Message
-from django.contrib.messages.storage.session import SessionStorage
-from django.core.exceptions import ImproperlyConfigured
-from django.http import HttpRequest
-from django.test import TestCase
-from django.utils.safestring import SafeData, mark_safe
+from hibeecontrib.messages import constants
+from hibeecontrib.messages.storage.base import Message
+from hibeecontrib.messages.storage.session import SessionStorage
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeehttp import HttpRequest
+from hibeetest import TestCase
+from hibeeutils.safestring import SafeData, mark_safe
 
 from .base import BaseTests
 
@@ -59,6 +59,6 @@ class SessionTests(BaseTests, TestCase):
         the message storage.
         """
         storage = self.get_storage()
-        message = Message(constants.DEBUG, mark_safe("<b>Hello Django!</b>"))
+        message = Message(constants.DEBUG, mark_safe("<b>Hello Hibee</b>"))
         set_session_data(storage, [message])
         self.assertIsInstance(list(storage)[0].message, SafeData)

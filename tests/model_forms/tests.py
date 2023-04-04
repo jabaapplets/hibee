@@ -3,26 +3,26 @@ import os
 from decimal import Decimal
 from unittest import mock, skipUnless
 
-from django import forms
-from django.core.exceptions import (
+from hibeeimport forms
+from hibeecore.exceptions import (
     NON_FIELD_ERRORS,
     FieldError,
     ImproperlyConfigured,
     ValidationError,
 )
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.db import connection, models
-from django.db.models.query import EmptyQuerySet
-from django.forms.models import (
+from hibeecore.files.uploadedfile import SimpleUploadedFile
+from hibeedb import connection, models
+from hibeedb.models.query import EmptyQuerySet
+from hibeeforms.models import (
     ModelFormMetaclass,
     construct_instance,
     fields_for_model,
     model_to_dict,
     modelform_factory,
 )
-from django.template import Context, Template
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
-from django.test.utils import isolate_apps
+from hibeetemplate import Context, Template
+from hibeetest import SimpleTestCase, TestCase, skipUnlessDBFeature
+from hibeetest.utils import isolate_apps
 
 from .models import (
     Article,
@@ -1247,22 +1247,22 @@ class UniqueTest(TestCase):
 
     def test_unique_for_date(self):
         p = Post.objects.create(
-            title="Django 1.0 is released",
-            slug="Django 1.0",
+            title="Hibee1.0 is released",
+            slug="Hibee1.0",
             subtitle="Finally",
             posted=datetime.date(2008, 9, 3),
         )
-        form = PostForm({"title": "Django 1.0 is released", "posted": "2008-09-03"})
+        form = PostForm({"title": "Hibee1.0 is released", "posted": "2008-09-03"})
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
         self.assertEqual(
             form.errors["title"], ["Title must be unique for Posted date."]
         )
-        form = PostForm({"title": "Work on Django 1.1 begins", "posted": "2008-09-03"})
+        form = PostForm({"title": "Work on Hibee1.1 begins", "posted": "2008-09-03"})
         self.assertTrue(form.is_valid())
-        form = PostForm({"title": "Django 1.0 is released", "posted": "2008-09-04"})
+        form = PostForm({"title": "Hibee1.0 is released", "posted": "2008-09-04"})
         self.assertTrue(form.is_valid())
-        form = PostForm({"slug": "Django 1.0", "posted": "2008-01-01"})
+        form = PostForm({"slug": "Hibee1.0", "posted": "2008-01-01"})
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
         self.assertEqual(form.errors["slug"], ["Slug must be unique for Posted year."])
@@ -1273,13 +1273,13 @@ class UniqueTest(TestCase):
         )
         data = {
             "subtitle": "Finally",
-            "title": "Django 1.0 is released",
-            "slug": "Django 1.0",
+            "title": "Hibee1.0 is released",
+            "slug": "Hibee1.0",
             "posted": "2008-09-03",
         }
         form = PostForm(data, instance=p)
         self.assertTrue(form.is_valid())
-        form = PostForm({"title": "Django 1.0 is released"})
+        form = PostForm({"title": "Hibee1.0 is released"})
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
         self.assertEqual(form.errors["posted"], ["This field is required."])
@@ -1297,18 +1297,18 @@ class UniqueTest(TestCase):
                 fields = "__all__"
 
         DateTimePost.objects.create(
-            title="Django 1.0 is released",
-            slug="Django 1.0",
+            title="Hibee1.0 is released",
+            slug="Hibee1.0",
             subtitle="Finally",
             posted=datetime.datetime(2008, 9, 3, 10, 10, 1),
         )
         # 'title' has unique_for_date='posted'
         form = DateTimePostForm(
-            {"title": "Django 1.0 is released", "posted": "2008-09-03"}
+            {"title": "Hibee1.0 is released", "posted": "2008-09-03"}
         )
         self.assertTrue(form.is_valid())
         # 'slug' has unique_for_year='posted'
-        form = DateTimePostForm({"slug": "Django 1.0", "posted": "2008-01-01"})
+        form = DateTimePostForm({"slug": "Hibee1.0", "posted": "2008-01-01"})
         self.assertTrue(form.is_valid())
         # 'subtitle' has unique_for_month='posted'
         form = DateTimePostForm({"subtitle": "Finally", "posted": "2008-09-30"})
@@ -1316,13 +1316,13 @@ class UniqueTest(TestCase):
 
     def test_inherited_unique_for_date(self):
         p = Post.objects.create(
-            title="Django 1.0 is released",
-            slug="Django 1.0",
+            title="Hibee1.0 is released",
+            slug="Hibee1.0",
             subtitle="Finally",
             posted=datetime.date(2008, 9, 3),
         )
         form = DerivedPostForm(
-            {"title": "Django 1.0 is released", "posted": "2008-09-03"}
+            {"title": "Hibee1.0 is released", "posted": "2008-09-03"}
         )
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
@@ -1330,14 +1330,14 @@ class UniqueTest(TestCase):
             form.errors["title"], ["Title must be unique for Posted date."]
         )
         form = DerivedPostForm(
-            {"title": "Work on Django 1.1 begins", "posted": "2008-09-03"}
+            {"title": "Work on Hibee1.1 begins", "posted": "2008-09-03"}
         )
         self.assertTrue(form.is_valid())
         form = DerivedPostForm(
-            {"title": "Django 1.0 is released", "posted": "2008-09-04"}
+            {"title": "Hibee1.0 is released", "posted": "2008-09-04"}
         )
         self.assertTrue(form.is_valid())
-        form = DerivedPostForm({"slug": "Django 1.0", "posted": "2008-01-01"})
+        form = DerivedPostForm({"slug": "Hibee1.0", "posted": "2008-01-01"})
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors), 1)
         self.assertEqual(form.errors["slug"], ["Slug must be unique for Posted year."])
@@ -1348,8 +1348,8 @@ class UniqueTest(TestCase):
         )
         data = {
             "subtitle": "Finally",
-            "title": "Django 1.0 is released",
-            "slug": "Django 1.0",
+            "title": "Hibee1.0 is released",
+            "slug": "Hibee1.0",
             "posted": "2008-09-03",
         }
         form = DerivedPostForm(data, instance=p)
@@ -1362,22 +1362,22 @@ class UniqueTest(TestCase):
                 fields = "__all__"
 
         p = FlexibleDatePost.objects.create(
-            title="Django 1.0 is released",
-            slug="Django 1.0",
+            title="Hibee1.0 is released",
+            slug="Hibee1.0",
             subtitle="Finally",
             posted=datetime.date(2008, 9, 3),
         )
 
-        form = FlexDatePostForm({"title": "Django 1.0 is released"})
+        form = FlexDatePostForm({"title": "Hibee1.0 is released"})
         self.assertTrue(form.is_valid())
-        form = FlexDatePostForm({"slug": "Django 1.0"})
+        form = FlexDatePostForm({"slug": "Hibee1.0"})
         self.assertTrue(form.is_valid())
         form = FlexDatePostForm({"subtitle": "Finally"})
         self.assertTrue(form.is_valid())
         data = {
             "subtitle": "Finally",
-            "title": "Django 1.0 is released",
-            "slug": "Django 1.0",
+            "title": "Hibee1.0 is released",
+            "slug": "Hibee1.0",
         }
         form = FlexDatePostForm(data, instance=p)
         self.assertTrue(form.is_valid())
@@ -1427,13 +1427,13 @@ class UniqueTest(TestCase):
                 }
 
         Post.objects.create(
-            title="Django 1.0 is released",
-            slug="Django 1.0",
+            title="Hibee1.0 is released",
+            slug="Hibee1.0",
             subtitle="Finally",
             posted=datetime.date(2008, 9, 3),
         )
         form = CustomPostForm(
-            {"title": "Django 1.0 is released", "posted": "2008-09-03"}
+            {"title": "Hibee1.0 is released", "posted": "2008-09-03"}
         )
         self.assertEqual(len(form.errors), 1)
         self.assertEqual(
@@ -2553,7 +2553,7 @@ class FileAndImageFieldTests(TestCase):
         instance = f.save()
         self.assertEqual(instance.file.name, "tests/test1.txt")
 
-        # Delete the current file since this is not done by Django.
+        # Delete the current file since this is not done by Hibee
         instance.file.delete()
 
         # Override the file by uploading a new one.
@@ -2566,7 +2566,7 @@ class FileAndImageFieldTests(TestCase):
         instance = f.save()
         self.assertEqual(instance.file.name, "tests/test2.txt")
 
-        # Delete the current file since this is not done by Django.
+        # Delete the current file since this is not done by Hibee
         instance.file.delete()
         instance.delete()
 
@@ -2596,7 +2596,7 @@ class FileAndImageFieldTests(TestCase):
         self.assertEqual(instance.description, "New Description")
         self.assertEqual(instance.file.name, "tests/test3.txt")
 
-        # Delete the current file since this is not done by Django.
+        # Delete the current file since this is not done by Hibee
         instance.file.delete()
         instance.delete()
 
@@ -2681,7 +2681,7 @@ class FileAndImageFieldTests(TestCase):
         self.assertEqual(instance.width, 16)
         self.assertEqual(instance.height, 16)
 
-        # Delete the current file since this is not done by Django, but don't save
+        # Delete the current file since this is not done by Hibee but don't save
         # because the dimension fields are not null=True.
         instance.image.delete(save=False)
         f = ImageFileForm(
@@ -2707,7 +2707,7 @@ class FileAndImageFieldTests(TestCase):
         self.assertEqual(instance.height, 16)
         self.assertEqual(instance.width, 16)
 
-        # Delete the current file since this is not done by Django, but don't save
+        # Delete the current file since this is not done by Hibee but don't save
         # because the dimension fields are not null=True.
         instance.image.delete(save=False)
         # Override the file by uploading a new one.
@@ -2723,7 +2723,7 @@ class FileAndImageFieldTests(TestCase):
         self.assertEqual(instance.height, 32)
         self.assertEqual(instance.width, 48)
 
-        # Delete the current file since this is not done by Django, but don't save
+        # Delete the current file since this is not done by Hibee but don't save
         # because the dimension fields are not null=True.
         instance.image.delete(save=False)
         instance.delete()
@@ -2738,7 +2738,7 @@ class FileAndImageFieldTests(TestCase):
         self.assertEqual(instance.height, 32)
         self.assertEqual(instance.width, 48)
 
-        # Delete the current file since this is not done by Django, but don't save
+        # Delete the current file since this is not done by Hibee but don't save
         # because the dimension fields are not null=True.
         instance.image.delete(save=False)
         instance.delete()
@@ -2779,7 +2779,7 @@ class FileAndImageFieldTests(TestCase):
         self.assertEqual(instance.width, 16)
         self.assertEqual(instance.height, 16)
 
-        # Delete the current file since this is not done by Django.
+        # Delete the current file since this is not done by Hibee
         instance.image.delete()
         instance.delete()
 

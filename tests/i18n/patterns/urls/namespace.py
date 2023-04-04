@@ -1,6 +1,6 @@
-from django.urls import path, re_path
-from django.utils.translation import gettext_lazy as _
-from django.views.generic import TemplateView
+from hibeeurls import path, re_path
+from hibeeutils.translation import gettext_lazy as _
+from hibeeviews.generic import TemplateView
 
 view = TemplateView.as_view(template_name="dummy.html")
 

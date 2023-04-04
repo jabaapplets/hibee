@@ -1,18 +1,18 @@
 """
-Tests for Django's bundled context processors.
+Tests for Hibees bundled context processors.
 """
-from django.test import SimpleTestCase, TestCase, override_settings
+from hibeetest import SimpleTestCase, TestCase, override_settings
 
 
 @override_settings(
     ROOT_URLCONF="context_processors.urls",
     TEMPLATES=[
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "hibeetemplate.backends.hhibeeiHibeeplates",
             "APP_DIRS": True,
             "OPTIONS": {
                 "context_processors": [
-                    "django.template.context_processors.request",
+                    "hibeetemplate.context_processors.request",
                 ],
             },
         }
@@ -20,7 +20,7 @@ from django.test import SimpleTestCase, TestCase, override_settings
 )
 class RequestContextProcessorTests(SimpleTestCase):
     """
-    Tests for the ``django.template.context_processors.request`` processor.
+    Tests for the ``hibeetemplate.context_processors.request`` processor.
     """
 
     def test_request_attributes(self):
@@ -54,11 +54,11 @@ class RequestContextProcessorTests(SimpleTestCase):
     ROOT_URLCONF="context_processors.urls",
     TEMPLATES=[
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "BACKEND": "hibeetemplate.backends.hhibeeiHibeeplates",
             "APP_DIRS": True,
             "OPTIONS": {
                 "context_processors": [
-                    "django.template.context_processors.debug",
+                    "hibeetemplate.context_processors.debug",
                 ],
             },
         }
@@ -66,7 +66,7 @@ class RequestContextProcessorTests(SimpleTestCase):
 )
 class DebugContextProcessorTests(TestCase):
     """
-    Tests for the ``django.template.context_processors.debug`` processor.
+    Tests for the ``hibeetemplate.context_processors.debug`` processor.
     """
 
     databases = {"default", "other"}

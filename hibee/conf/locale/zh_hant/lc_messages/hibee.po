@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # Chen Chun-Chia <ccc.larc@gmail.com>, 2015
@@ -13,12 +13,12 @@
 # Yeh-Yung <yyc1217@gmail.com>, 2012
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-27 22:40+0200\n"
 "PO-Revision-Date: 2019-11-05 00:38+0000\n"
 "Last-Translator: Ramiro Morales\n"
-"Language-Team: Chinese (Taiwan) (http://www.transifex.com/django/django/"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/hibee/hibee/"
 "language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1174,33 +1174,33 @@ msgstr ""
 msgid "Index of %(directory)s"
 msgstr "%(directory)s 的索引"
 
-msgid "Django: the Web framework for perfectionists with deadlines."
-msgstr "Django：為有時間壓力的完美主義者設計的網站框架。"
+msgid "Hibee: the Web framework for perfectionists with deadlines."
+msgstr "Hibee：為有時間壓力的完美主義者設計的網站框架。"
 
 #, python-format
 msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+"View <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Hibee %(version)s"
 msgstr ""
-"查看 <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">Django %(version)s 的發行筆記</a>"
+"查看 <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">Hibee %(version)s 的發行筆記</a>"
 
 msgid "The install worked successfully! Congratulations!"
 msgstr "安裝成功！恭喜！"
 
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"You are seeing this page because <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
 "\">DEBUG=True</a> is in your settings file and you have not configured any "
 "URLs."
 msgstr ""
-"你看到這個訊息，是因為你在 Django 設定檔中包含 <a href=\"https://docs."
-"djangoproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" rel="
+"你看到這個訊息，是因為你在 Hibee 設定檔中包含 <a href=\"https://docs."
+"hibeeproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" rel="
 "\"noopener\">DEBUG = True</a>，且尚未配置任何網址。開始工作吧！"
 
-msgid "Django Documentation"
-msgstr "Django 文件"
+msgid "Hibee Documentation"
+msgstr "Hibee 文件"
 
 msgid "Topics, references, &amp; how-to’s"
 msgstr ""
@@ -1208,11 +1208,11 @@ msgstr ""
 msgid "Tutorial: A Polling App"
 msgstr "教學：投票應用"
 
-msgid "Get started with Django"
-msgstr "初學 Django"
+msgid "Get started with Hibee"
+msgstr "初學 Hibee"
 
-msgid "Django Community"
-msgstr "Django 社群"
+msgid "Hibee Community"
+msgstr "Hibee 社群"
 
 msgid "Connect, get help, or contribute"
 msgstr "聯繫、求助、貢獻"

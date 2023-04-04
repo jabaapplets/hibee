@@ -1,10 +1,10 @@
 import datetime
 from copy import deepcopy
 
-from django.core.exceptions import FieldError, MultipleObjectsReturned
-from django.db import IntegrityError, models, transaction
-from django.test import TestCase
-from django.utils.translation import gettext_lazy
+from hibeecore.exceptions import FieldError, MultipleObjectsReturned
+from hibeedb import IntegrityError, models, transaction
+from hibeetest import TestCase
+from hibeeutils.translation import gettext_lazy
 
 from .models import (
     Article,

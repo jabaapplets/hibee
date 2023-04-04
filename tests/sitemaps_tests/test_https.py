@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.test import override_settings
+from hibeetest import override_settings
 
 from .base import SitemapTestsBase
 

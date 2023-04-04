@@ -2,21 +2,21 @@ import datetime
 from io import StringIO
 from wsgiref.util import FileWrapper
 
-from django import forms
-from django.contrib import admin
-from django.contrib.admin import BooleanFieldListFilter
-from django.contrib.admin.views.main import ChangeList
-from django.contrib.auth.admin import GroupAdmin, UserAdmin
-from django.contrib.auth.models import Group, User
-from django.core.exceptions import ValidationError
-from django.core.mail import EmailMessage
-from django.db import models
-from django.forms.models import BaseModelFormSet
-from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
-from django.urls import path
-from django.utils.html import format_html
-from django.utils.safestring import mark_safe
-from django.views.decorators.common import no_append_slash
+from hibeeimport forms
+from hibeecontrib import admin
+from hibeecontrib.admin import BooleanFieldListFilter
+from hibeecontrib.admin.views.main import ChangeList
+from hibeecontrib.auth.admin import GroupAdmin, UserAdmin
+from hibeecontrib.auth.models import Group, User
+from hibeecore.exceptions import ValidationError
+from hibeecore.mail import EmailMessage
+from hibeedb import models
+from hibeeforms.models import BaseModelFormSet
+from hibeehttp import HttpResponse, JsonResponse, StreamingHttpResponse
+from hibeeurls import path
+from hibeeutils.html import format_html
+from hibeeutils.safestring import mark_safe
+from hibeeviews.decorators.common import no_append_slash
 
 from .forms import MediaActionForm
 from .models import (
@@ -402,7 +402,7 @@ def external_mail(modeladmin, request, selected):
 
 @admin.action(description="Redirect to (Awesome action)")
 def redirect_to(modeladmin, request, selected):
-    from django.http import HttpResponseRedirect
+    from hibeehttp import HttpResponseRedirect
 
     return HttpResponseRedirect("/some-where-else/")
 

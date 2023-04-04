@@ -1,4 +1,4 @@
-from django.contrib import admin
+from hibeecontrib import admin
 
 from ..models.foo import Foo
 

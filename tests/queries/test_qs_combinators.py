@@ -1,9 +1,9 @@
 import operator
 
-from django.db import DatabaseError, NotSupportedError, connection
-from django.db.models import Exists, F, IntegerField, OuterRef, Subquery, Value
-from django.test import TestCase, skipIfDBFeature, skipUnlessDBFeature
-from django.test.utils import CaptureQueriesContext
+from hibeedb import DatabaseError, NotSupportedError, connection
+from hibeedb.models import Exists, F, IntegerField, OuterRef, Subquery, Value
+from hibeetest import TestCase, skipIfDBFeature, skipUnlessDBFeature
+from hibeetest.utils import CaptureQueriesContext
 
 from .models import Author, Celebrity, ExtraInfo, Number, ReservedName
 

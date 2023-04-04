@@ -1,7 +1,7 @@
 import copy
 from datetime import datetime
 
-from django.forms import (
+from hibeeforms import (
     CharField,
     FileInput,
     Form,

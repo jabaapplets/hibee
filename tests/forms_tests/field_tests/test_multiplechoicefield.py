@@ -1,6 +1,6 @@
-from django.core.exceptions import ValidationError
-from django.forms import MultipleChoiceField
-from django.test import SimpleTestCase
+from hibeecore.exceptions import ValidationError
+from hibeeforms import MultipleChoiceField
+from hibeetest import SimpleTestCase
 
 
 class MultipleChoiceFieldTest(SimpleTestCase):

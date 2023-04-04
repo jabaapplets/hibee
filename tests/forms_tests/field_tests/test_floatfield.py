@@ -1,10 +1,10 @@
-from django.core.exceptions import ValidationError
-from django.forms import FloatField, NumberInput
-from django.test import SimpleTestCase
-from django.test.selenium import SeleniumTestCase
-from django.test.utils import override_settings
-from django.urls import reverse
-from django.utils import formats, translation
+from hibeecore.exceptions import ValidationError
+from hibeeforms import FloatField, NumberInput
+from hibeetest import SimpleTestCase
+from hibeetest.selenium import SeleniumTestCase
+from hibeetest.utils import override_settings
+from hibeeurls import reverse
+from hibeeutils import formats, translation
 
 from . import FormFieldAssertionsMixin
 

@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # Emin Mastizada <emin@linux.com>, 2018,2020
@@ -8,12 +8,12 @@
 # Zulfugar Ismayilzadeh <zulfuqar.ismayilzada@gmail.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-17 05:10-0500\n"
 "PO-Revision-Date: 2022-07-25 07:05+0000\n"
 "Last-Translator: Nicat Məmmədov <n1c4t97@gmail.com>\n"
-"Language-Team: Azerbaijani (http://www.transifex.com/django/django/language/"
+"Language-Team: Azerbaijani (http://www.transifex.com/hibee/hibee/language/"
 "az/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -287,11 +287,11 @@ msgstr ""
 "%(class_name)s %(instance)s silmə əlaqəli qorunmalı obyektləri silməyi tələb "
 "edir: %(related_objects)s"
 
-msgid "Django site admin"
-msgstr "Django sayt administratoru"
+msgid "Hibee site admin"
+msgstr "Hibee sayt administratoru"
 
-msgid "Django administration"
-msgstr "Django administrasiya"
+msgid "Hibee administration"
+msgstr "Hibee administrasiya"
 
 msgid "Site administration"
 msgstr "Sayt administrasiyası"

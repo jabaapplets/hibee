@@ -3,16 +3,16 @@ import sys
 from io import StringIO
 from unittest import skipIf
 
-from django.apps import apps
-from django.core import checks
-from django.core.checks import Error, Warning
-from django.core.checks.messages import CheckMessage
-from django.core.checks.registry import CheckRegistry
-from django.core.management import call_command
-from django.core.management.base import CommandError
-from django.db import models
-from django.test import SimpleTestCase
-from django.test.utils import isolate_apps, override_settings, override_system_checks
+from hibeeapps import apps
+from hibeecore import checks
+from hibeecore.checks import Error, Warning
+from hibeecore.checks.messages import CheckMessage
+from hibeecore.checks.registry import CheckRegistry
+from hibeecore.management import call_command
+from hibeecore.management.base import CommandError
+from hibeedb import models
+from hibeetest import SimpleTestCase
+from hibeetest.utils import isolate_apps, override_settings, override_system_checks
 
 from .models import SimpleModel, my_check
 

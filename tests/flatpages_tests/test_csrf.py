@@ -1,24 +1,24 @@
-from django.contrib.auth.models import User
-from django.contrib.flatpages.models import FlatPage
-from django.contrib.sites.models import Site
-from django.test import Client, TestCase, modify_settings, override_settings
+from hibeecontrib.auth.models import User
+from hibeecontrib.flatpages.models import FlatPage
+from hibeecontrib.sites.models import Site
+from hibeetest import Client, TestCase, modify_settings, override_settings
 
 from .settings import FLATPAGES_TEMPLATES
 
 
-@modify_settings(INSTALLED_APPS={"append": "django.contrib.flatpages"})
+@modify_settings(INSTALLED_APPS={"append": "hibeecontrib.flatpages"})
 @override_settings(
     LOGIN_URL="/accounts/login/",
     MIDDLEWARE=[
-        "django.middleware.common.CommonMiddleware",
-        "django.contrib.sessions.middleware.SessionMiddleware",
-        "django.middleware.csrf.CsrfViewMiddleware",
-        "django.contrib.auth.middleware.AuthenticationMiddleware",
-        "django.contrib.messages.middleware.MessageMiddleware",
-        "django.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
+        "hibeemiddleware.common.CommonMiddleware",
+        "hibeecontrib.sessions.middleware.SessionMiddleware",
+        "hibeemiddleware.csrf.CsrfViewMiddleware",
+        "hibeecontrib.auth.middleware.AuthenticationMiddleware",
+        "hibeecontrib.messages.middleware.MessageMiddleware",
+        "hibeecontrib.flatpages.middleware.FlatpageFallbackMiddleware",
     ],
     ROOT_URLCONF="flatpages_tests.urls",
-    CSRF_FAILURE_VIEW="django.views.csrf.csrf_failure",
+    CSRF_FAILURE_VIEW="hibeeviews.csrf.csrf_failure",
     TEMPLATES=FLATPAGES_TEMPLATES,
     SITE_ID=1,
 )

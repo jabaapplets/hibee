@@ -1,6 +1,6 @@
-from django.core.exceptions import ValidationError
-from django.forms import CharField, HiddenInput, PasswordInput, Textarea, TextInput
-from django.test import SimpleTestCase
+from hibeecore.exceptions import ValidationError
+from hibeeforms import CharField, HiddenInput, PasswordInput, Textarea, TextInput
+from hibeetest import SimpleTestCase
 
 from . import FormFieldAssertionsMixin
 

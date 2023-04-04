@@ -1,11 +1,11 @@
 from unittest import mock
 
-from django.apps.registry import Apps, apps
-from django.contrib.contenttypes import management as contenttypes_management
-from django.contrib.contenttypes.models import ContentType
-from django.core.management import call_command
-from django.test import TestCase, modify_settings
-from django.test.utils import captured_stdout
+from hibeeapps.registry import Apps, apps
+from hibeecontrib.contenttypes import management as contenttypes_management
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore.management import call_command
+from hibeetest import TestCase, modify_settings
+from hibeetest.utils import captured_stdout
 
 from .models import ModelWithNullFKToSite, Post
 
@@ -17,7 +17,7 @@ class RemoveStaleContentTypesTests(TestCase):
         "contenttypes_tests",
         "empty_models",
         "no_models",
-        "django.contrib.contenttypes",
+        "hibeecontrib.contenttypes",
     ]
 
     @classmethod

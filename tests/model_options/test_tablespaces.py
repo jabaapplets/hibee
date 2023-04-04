@@ -1,7 +1,7 @@
-from django.apps import apps
-from django.conf import settings
-from django.db import connection
-from django.test import TransactionTestCase, skipIfDBFeature, skipUnlessDBFeature
+from hibeeapps import apps
+from hibeeconf import settings
+from hibeedb import connection
+from hibeetest import TransactionTestCase, skipIfDBFeature, skipUnlessDBFeature
 
 from .models.tablespaces import (
     Article,

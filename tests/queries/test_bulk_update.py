@@ -1,10 +1,10 @@
 import datetime
 
-from django.core.exceptions import FieldDoesNotExist
-from django.db.models import F
-from django.db.models.functions import Lower
-from django.db.utils import IntegrityError
-from django.test import TestCase, override_settings, skipUnlessDBFeature
+from hibeecore.exceptions import FieldDoesNotExist
+from hibeedb.models import F
+from hibeedb.models.functions import Lower
+from hibeedb.utils import IntegrityError
+from hibeetest import TestCase, override_settings, skipUnlessDBFeature
 
 from .models import (
     Article,

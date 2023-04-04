@@ -1,7 +1,7 @@
 import io
 
-from django.core.management import call_command
-from django.test import TestCase
+from hibeecore.management import call_command
+from hibeetest import TestCase
 
 
 class CoreCommandsNoOutputTests(TestCase):

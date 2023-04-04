@@ -1,10 +1,10 @@
 import unittest
 
-from django.db import NotSupportedError, connection
-from django.db.models import CharField
-from django.db.models.functions import SHA224
-from django.test import TestCase
-from django.test.utils import register_lookup
+from hibeedb import NotSupportedError, connection
+from hibeedb.models import CharField
+from hibeedb.models.functions import SHA224
+from hibeetest import TestCase
+from hibeetest.utils import register_lookup
 
 from ..models import Author
 

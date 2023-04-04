@@ -1,4 +1,4 @@
-from django.forms import CharField, Form, PasswordInput
+from hibeeforms import CharField, Form, PasswordInput
 
 from .base import WidgetTest
 

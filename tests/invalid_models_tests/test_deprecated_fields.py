@@ -1,9 +1,9 @@
 from unittest import skipUnless
 
-from django.core import checks
-from django.db import connection, models
-from django.test import SimpleTestCase
-from django.test.utils import isolate_apps
+from hibeecore import checks
+from hibeedb import connection, models
+from hibeetest import SimpleTestCase
+from hibeetest.utils import isolate_apps
 
 
 @isolate_apps("invalid_models_tests")
@@ -68,7 +68,7 @@ class DeprecatedFieldsTests(SimpleTestCase):
 
     @skipUnless(connection.vendor == "postgresql", "PostgreSQL specific SQL")
     def test_postgres_jsonfield_deprecated(self):
-        from django.contrib.postgres.fields import JSONField
+        from hibeecontrib.postgres.fields import JSONField
 
         class PostgresJSONFieldModel(models.Model):
             field = JSONField()
@@ -77,9 +77,9 @@ class DeprecatedFieldsTests(SimpleTestCase):
             PostgresJSONFieldModel.check(),
             [
                 checks.Error(
-                    "django.contrib.postgres.fields.JSONField is removed except "
+                    "hibeecontrib.postgres.fields.JSONField is removed except "
                     "for support in historical migrations.",
-                    hint="Use django.db.models.JSONField instead.",
+                    hint="Use hibeedb.models.JSONField instead.",
                     obj=PostgresJSONFieldModel._meta.get_field("field"),
                     id="fields.E904",
                 ),
@@ -88,7 +88,7 @@ class DeprecatedFieldsTests(SimpleTestCase):
 
     @skipUnless(connection.vendor == "postgresql", "PostgreSQL specific SQL")
     def test_postgres_ci_fields_deprecated(self):
-        from django.contrib.postgres.fields import (
+        from hibeecontrib.postgres.fields import (
             ArrayField,
             CICharField,
             CIEmailField,
@@ -105,9 +105,9 @@ class DeprecatedFieldsTests(SimpleTestCase):
             PostgresCIFieldsModel.check(),
             [
                 checks.Warning(
-                    "django.contrib.postgres.fields.CICharField is deprecated. Support "
+                    "hibeecontrib.postgres.fields.CICharField is deprecated. Support "
                     "for it (except in historical migrations) will be removed in "
-                    "Django 5.1.",
+                    "Hibee5.1.",
                     hint=(
                         'Use CharField(db_collation="…") with a case-insensitive '
                         "non-deterministic collation instead."
@@ -116,9 +116,9 @@ class DeprecatedFieldsTests(SimpleTestCase):
                     id="fields.W905",
                 ),
                 checks.Warning(
-                    "django.contrib.postgres.fields.CIEmailField is deprecated. "
+                    "hibeecontrib.postgres.fields.CIEmailField is deprecated. "
                     "Support for it (except in historical migrations) will be removed "
-                    "in Django 5.1.",
+                    "in Hibee5.1.",
                     hint=(
                         'Use EmailField(db_collation="…") with a case-insensitive '
                         "non-deterministic collation instead."
@@ -127,9 +127,9 @@ class DeprecatedFieldsTests(SimpleTestCase):
                     id="fields.W906",
                 ),
                 checks.Warning(
-                    "django.contrib.postgres.fields.CITextField is deprecated. Support "
+                    "hibeecontrib.postgres.fields.CITextField is deprecated. Support "
                     "for it (except in historical migrations) will be removed in "
-                    "Django 5.1.",
+                    "Hibee5.1.",
                     hint=(
                         'Use TextField(db_collation="…") with a case-insensitive '
                         "non-deterministic collation instead."
@@ -139,9 +139,9 @@ class DeprecatedFieldsTests(SimpleTestCase):
                 ),
                 checks.Warning(
                     "Base field for array has warnings:\n"
-                    "    django.contrib.postgres.fields.CITextField is deprecated. "
+                    "    hibeecontrib.postgres.fields.CITextField is deprecated. "
                     "Support for it (except in historical migrations) will be removed "
-                    "in Django 5.1. (fields.W907)",
+                    "in Hibee5.1. (fields.W907)",
                     obj=PostgresCIFieldsModel._meta.get_field("array_ci_text"),
                     id="postgres.W004",
                 ),

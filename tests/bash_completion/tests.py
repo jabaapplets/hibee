@@ -5,9 +5,9 @@ import os
 import sys
 import unittest
 
-from django.apps import apps
-from django.core.management import ManagementUtility
-from django.test.utils import captured_stdout
+from hibeeapps import apps
+from hibeecore.management import ManagementUtility
+from hibeetest.utils import captured_stdout
 
 
 class BashCompletionTests(unittest.TestCase):
@@ -18,14 +18,14 @@ class BashCompletionTests(unittest.TestCase):
     """
 
     def setUp(self):
-        self.old_DJANGO_AUTO_COMPLETE = os.environ.get("DJANGO_AUTO_COMPLETE")
-        os.environ["DJANGO_AUTO_COMPLETE"] = "1"
+        self.old_HIBEEAUTO_COMPLETE = os.environ.get("HHIBEEUTO_COMPLETE")
+        os.environ["HIBEEAUTO_COMPLETE"] = "1"
 
     def tearDown(self):
-        if self.old_DJANGO_AUTO_COMPLETE:
-            os.environ["DJANGO_AUTO_COMPLETE"] = self.old_DJANGO_AUTO_COMPLETE
+        if self.old_HIBEEAUTO_COMPLETE:
+            os.environ["HIBEEAUTO_COMPLETE"] = self.old_HHIBEEUTO_COMPLETE
         else:
-            del os.environ["DJANGO_AUTO_COMPLETE"]
+            del os.environ["HIBEEAUTO_COMPLETE"]
 
     def _user_input(self, input_str):
         """
@@ -37,9 +37,9 @@ class BashCompletionTests(unittest.TestCase):
         case a word is completed and the cursor is placed after a whitespace,
         $COMP_CWORD must be incremented by 1:
 
-          * 'django-admin start' -> COMP_CWORD=1
-          * 'django-admin startproject' -> COMP_CWORD=1
-          * 'django-admin startproject ' -> COMP_CWORD=2
+          * 'hibeeadmin start' -> COMP_CWORD=1
+          * 'hibeeadmin startproject' -> COMP_CWORD=1
+          * 'hibeeadmin startproject ' -> COMP_CWORD=2
         """
         os.environ["COMP_WORDS"] = input_str
         idx = len(input_str.split(" ")) - 1  # Index of the last word
@@ -56,9 +56,9 @@ class BashCompletionTests(unittest.TestCase):
                 pass
         return stdout.getvalue().strip().split("\n")
 
-    def test_django_admin_py(self):
-        "django_admin.py will autocomplete option flags"
-        self._user_input("django-admin sqlmigrate --verb")
+    def test_hibeeadmin_py(self):
+        "hibeeadmin.py will autocomplete option flags"
+        self._user_input("hibeeadmin sqlmigrate --verb")
         output = self._run_autocomplete()
         self.assertEqual(output, ["--verbosity="])
 
@@ -70,32 +70,32 @@ class BashCompletionTests(unittest.TestCase):
 
     def test_custom_command(self):
         "A custom command can autocomplete option flags"
-        self._user_input("django-admin test_command --l")
+        self._user_input("hibeeadmin test_command --l")
         output = self._run_autocomplete()
         self.assertEqual(output, ["--list"])
 
     def test_subcommands(self):
         "Subcommands can be autocompleted"
-        self._user_input("django-admin sql")
+        self._user_input("hibeeadmin sql")
         output = self._run_autocomplete()
         self.assertEqual(output, ["sqlflush sqlmigrate sqlsequencereset"])
 
     def test_completed_subcommand(self):
         "Show option flags in case a subcommand is completed"
-        self._user_input("django-admin startproject ")  # Trailing whitespace
+        self._user_input("hibeeadmin startproject ")  # Trailing whitespace
         output = self._run_autocomplete()
         for item in output:
             self.assertTrue(item.startswith("--"))
 
     def test_help(self):
         "No errors, just an empty list if there are no autocomplete options"
-        self._user_input("django-admin help --")
+        self._user_input("hibeeadmin help --")
         output = self._run_autocomplete()
         self.assertEqual(output, [""])
 
     def test_app_completion(self):
         "Application names will be autocompleted for an AppCommand"
-        self._user_input("django-admin sqlmigrate a")
+        self._user_input("hibeeadmin sqlmigrate a")
         output = self._run_autocomplete()
         a_labels = sorted(
             app_config.label

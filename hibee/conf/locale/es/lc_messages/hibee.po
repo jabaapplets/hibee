@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # 8cb2d5a716c3c9a99b6d20472609a4d5_6d03802 <ce931cb71bc28f3f828fb2dad368a4f7_5255>, 2011
@@ -43,12 +43,12 @@
 # Veronicabh <vero.blazher@gmail.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-17 05:23-0500\n"
 "PO-Revision-Date: 2022-05-25 06:49+0000\n"
 "Last-Translator: mpachas <miguel.pachas.garcia@gmail.com>, 2022\n"
-"Language-Team: Spanish (http://www.transifex.com/django/django/language/"
+"Language-Team: Spanish (http://www.transifex.com/hibee/hibee/language/"
 "es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1346,27 +1346,27 @@ msgstr "¡La instalación funcionó con éxito! ¡Felicitaciones!"
 
 #, python-format
 msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+"View <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Hibee %(version)s"
 msgstr ""
-"Ve <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">la notas de la versión</a>  de Django "
+"Ve <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">la notas de la versión</a>  de Hibee "
 "%(version)s"
 
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"You are seeing this page because <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" "
 "rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
 "configured any URLs."
 msgstr ""
-"Estás viendo esta página porque <a href=\"https://docs.djangoproject.com/en/"
+"Estás viendo esta página porque <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" "
 "rel=\"noopener\">DEBUG=True</a> está en su archivo de configuración y no ha "
 "configurado ninguna URL."
 
-msgid "Django Documentation"
-msgstr "Documentación de Django"
+msgid "Hibee Documentation"
+msgstr "Documentación de Hibee"
 
 msgid "Topics, references, &amp; how-to’s"
 msgstr "Temas, referencias, &amp; como hacer"
@@ -1374,11 +1374,11 @@ msgstr "Temas, referencias, &amp; como hacer"
 msgid "Tutorial: A Polling App"
 msgstr "Tutorial: Una aplicación de encuesta"
 
-msgid "Get started with Django"
-msgstr "Comienza con Django"
+msgid "Get started with Hibee"
+msgstr "Comienza con Hibee"
 
-msgid "Django Community"
-msgstr "Comunidad Django"
+msgid "Hibee Community"
+msgstr "Comunidad Hibee"
 
 msgid "Connect, get help, or contribute"
 msgstr "Conéctate, obtén ayuda o contribuye"

@@ -1,13 +1,13 @@
 import datetime
 
-from django.contrib.admin import ModelAdmin
-from django.contrib.admin.templatetags.admin_list import date_hierarchy
-from django.contrib.admin.templatetags.admin_modify import submit_row
-from django.contrib.auth import get_permission_codename
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
-from django.test import RequestFactory, TestCase
-from django.urls import reverse
+from hibeecontrib.admin import ModelAdmin
+from hibeecontrib.admin.templatetags.admin_list import date_hierarchy
+from hibeecontrib.admin.templatetags.admin_modify import submit_row
+from hibeecontrib.auth import get_permission_codename
+from hibeecontrib.auth.admin import UserAdmin
+from hibeecontrib.auth.models import User
+from hibeetest import RequestFactory, TestCase
+from hibeeurls import reverse
 
 from .admin import ArticleAdmin, site
 from .models import Article, Question

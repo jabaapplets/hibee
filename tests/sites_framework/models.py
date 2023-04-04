@@ -1,6 +1,6 @@
-from django.contrib.sites.managers import CurrentSiteManager
-from django.contrib.sites.models import Site
-from django.db import models
+from hibeecontrib.sites.managers import CurrentSiteManager
+from hibeecontrib.sites.models import Site
+from hibeedb import models
 
 
 class AbstractArticle(models.Model):

@@ -1,9 +1,9 @@
 import decimal
 
-from django.core.exceptions import ValidationError
-from django.forms import DecimalField, NumberInput, Widget
-from django.test import SimpleTestCase, override_settings
-from django.utils import formats, translation
+from hibeecore.exceptions import ValidationError
+from hibeeforms import DecimalField, NumberInput, Widget
+from hibeetest import SimpleTestCase, override_settings
+from hibeeutils import formats, translation
 
 from . import FormFieldAssertionsMixin
 

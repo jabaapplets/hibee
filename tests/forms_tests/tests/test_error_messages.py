@@ -1,6 +1,6 @@
-from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.forms import (
+from hibeecore.exceptions import ValidationError
+from hibeecore.files.uploadedfile import SimpleUploadedFile
+from hibeeforms import (
     BooleanField,
     CharField,
     ChoiceField,
@@ -22,9 +22,9 @@ from django.forms import (
     URLField,
     utils,
 )
-from django.template import Context, Template
-from django.test import SimpleTestCase, TestCase
-from django.utils.safestring import mark_safe
+from hibeetemplate import Context, Template
+from hibeetest import SimpleTestCase, TestCase
+from hibeeutils.safestring import mark_safe
 
 from ..models import ChoiceModel
 
@@ -171,9 +171,9 @@ class FormsErrorMessagesTestCase(SimpleTestCase, AssertFormErrorsMixin):
         self.assertFormErrors(["REQUIRED"], f.clean, "")
         self.assertFormErrors(["INVALID"], f.clean, "abc.c")
         self.assertFormErrors(
-            ['"http://djangoproject.com" has more than 17 characters.'],
+            ['"http://hibeeroject.com" has more than 17 characters.'],
             f.clean,
-            "djangoproject.com",
+            "hibeeroject.com",
         )
 
     def test_booleanfield(self):

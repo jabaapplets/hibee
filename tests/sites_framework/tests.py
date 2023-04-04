@@ -1,10 +1,10 @@
-from django.conf import settings
-from django.contrib.sites.managers import CurrentSiteManager
-from django.contrib.sites.models import Site
-from django.core import checks
-from django.db import models
-from django.test import SimpleTestCase, TestCase
-from django.test.utils import isolate_apps
+from hibeeconf import settings
+from hibeecontrib.sites.managers import CurrentSiteManager
+from hibeecontrib.sites.models import Site
+from hibeecore import checks
+from hibeedb import models
+from hibeetest import SimpleTestCase, TestCase
+from hibeetest.utils import isolate_apps
 
 from .models import CustomArticle, ExclusiveArticle, SyndicatedArticle
 

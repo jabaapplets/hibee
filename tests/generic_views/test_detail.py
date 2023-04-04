@@ -1,11 +1,11 @@
 import datetime
 
-from django.core.exceptions import ImproperlyConfigured, ObjectDoesNotExist
-from django.test import TestCase, override_settings
-from django.test.client import RequestFactory
-from django.views.generic.base import View
-from django.views.generic.detail import SingleObjectTemplateResponseMixin
-from django.views.generic.edit import ModelFormMixin
+from hibeecore.exceptions import ImproperlyConfigured, ObjectDoesNotExist
+from hibeetest import TestCase, override_settings
+from hibeetest.client import RequestFactory
+from hibeeviews.generic.base import View
+from hibeeviews.generic.detail import SingleObjectTemplateResponseMixin
+from hibeeviews.generic.edit import ModelFormMixin
 
 from .models import Artist, Author, Book, Page
 

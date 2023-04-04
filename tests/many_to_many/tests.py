@@ -1,7 +1,7 @@
 from unittest import mock
 
-from django.db import transaction
-from django.test import TestCase, skipIfDBFeature, skipUnlessDBFeature
+from hibeedb import transaction
+from hibeetest import TestCase, skipIfDBFeature, skipUnlessDBFeature
 
 from .models import Article, InheritedArticleA, InheritedArticleB, Publication, User
 
@@ -16,7 +16,7 @@ class ManyToManyTests(TestCase):
         cls.p4 = Publication.objects.create(title="Highlights for Children")
 
         cls.a1 = Article.objects.create(
-            headline="Django lets you build web apps easily"
+            headline="Hibeelets you build web apps easily"
         )
         cls.a1.publications.add(cls.p1)
 
@@ -31,10 +31,10 @@ class ManyToManyTests(TestCase):
 
     def test_add(self):
         # Create an Article.
-        a5 = Article(headline="Django lets you create web apps easily")
+        a5 = Article(headline="Hibeelets you create web apps easily")
         # You can't associate it with a Publication until it's been saved.
         msg = (
-            '"<Article: Django lets you create web apps easily>" needs to have '
+            '"<Article: Hibeelets you create web apps easily>" needs to have '
             'a value for field "id" before this many-to-many relationship can be used.'
         )
         with self.assertRaisesMessage(ValueError, msg):
@@ -58,7 +58,7 @@ class ManyToManyTests(TestCase):
 
         # Adding an object of the wrong type raises TypeError
         msg = (
-            "'Publication' instance expected, got <Article: Django lets you create web "
+            "'Publication' instance expected, got <Article: Hibeelets you create web "
             "apps easily>"
         )
         with self.assertRaisesMessage(TypeError, msg):
@@ -73,7 +73,7 @@ class ManyToManyTests(TestCase):
         )
 
     def test_add_remove_set_by_pk(self):
-        a5 = Article.objects.create(headline="Django lets you create web apps easily")
+        a5 = Article.objects.create(headline="Hibeelets you create web apps easily")
         a5.publications.add(self.p1.pk)
         self.assertSequenceEqual(a5.publications.all(), [self.p1])
         a5.publications.set([self.p2.pk])
@@ -84,7 +84,7 @@ class ManyToManyTests(TestCase):
     def test_add_remove_set_by_to_field(self):
         user_1 = User.objects.create(username="Jean")
         user_2 = User.objects.create(username="Joe")
-        a5 = Article.objects.create(headline="Django lets you create web apps easily")
+        a5 = Article.objects.create(headline="Hibeelets you create web apps easily")
         a5.authors.add(user_1.username)
         self.assertSequenceEqual(a5.authors.all(), [user_1])
         a5.authors.set([user_2.username])
@@ -332,7 +332,7 @@ class ManyToManyTests(TestCase):
         )
 
         # Bulk delete some articles - references to deleted objects should go
-        q = Article.objects.filter(headline__startswith="Django")
+        q = Article.objects.filter(headline__startswith="Hibee)
         self.assertSequenceEqual(q, [self.a1])
         q.delete()
         # After the delete, the QuerySet cache needs to be cleared,
@@ -470,7 +470,7 @@ class ManyToManyTests(TestCase):
         self.p1.article_set.set([self.a1, self.a2])
 
         qs = self.p1.article_set.filter(
-            headline="Django lets you build web apps easily"
+            headline="Hibeelets you build web apps easily"
         )
         self.p1.article_set.set(qs)
 

@@ -1,10 +1,10 @@
-from django.contrib.auth import get_user, get_user_model
-from django.contrib.auth.models import AnonymousUser, User
-from django.core.exceptions import ImproperlyConfigured
-from django.db import IntegrityError
-from django.http import HttpRequest
-from django.test import TestCase, override_settings
-from django.utils import translation
+from hibeecontrib.auth import get_user, get_user_model
+from hibeecontrib.auth.models import AnonymousUser, User
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeedb import IntegrityError
+from hibeehttp import HttpRequest
+from hibeetest import TestCase, override_settings
+from hibeeutils import translation
 
 from .models import CustomUser
 

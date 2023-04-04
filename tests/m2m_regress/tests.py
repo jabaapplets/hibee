@@ -1,5 +1,5 @@
-from django.core.exceptions import FieldError
-from django.test import TestCase
+from hibeecore.exceptions import FieldError
+from hibeetest import TestCase
 
 from .models import (
     Entry,

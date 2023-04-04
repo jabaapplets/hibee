@@ -1,7 +1,7 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
-# The *_FORMAT strings use the Django date format syntax,
-# see https://docs.djangoproject.com/en/dev/ref/templates/builtins/#date
+# The *_FORMAT strings use the Hibee date format syntax,
+# see https://docs.hibeeproject.com/en/dev/ref/templates/builtins/#date
 DATE_FORMAT = "j F Y"  # '20 januari 2009'
 TIME_FORMAT = "H:i"  # '15:23'
 DATETIME_FORMAT = "j F Y H:i"  # '20 januari 2009 15:23'

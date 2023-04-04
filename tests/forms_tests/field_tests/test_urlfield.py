@@ -1,6 +1,6 @@
-from django.core.exceptions import ValidationError
-from django.forms import URLField
-from django.test import SimpleTestCase
+from hibeecore.exceptions import ValidationError
+from hibeeforms import URLField
+from hibeetest import SimpleTestCase
 
 from . import FormFieldAssertionsMixin
 
@@ -48,8 +48,8 @@ class URLFieldTest(FormFieldAssertionsMixin, SimpleTestCase):
                 "http://some.idn.xyz\xe4\xf6\xfc\xdfabc.domain.com:123/blah",
             ),
             (
-                "www.example.com/s/http://code.djangoproject.com/ticket/13804",
-                "http://www.example.com/s/http://code.djangoproject.com/ticket/13804",
+                "www.example.com/s/http://code.hibeeroject.com/ticket/13804",
+                "http://www.example.com/s/http://code.hibeeroject.com/ticket/13804",
             ),
             # Normalization.
             ("http://example.com/     ", "http://example.com/"),

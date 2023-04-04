@@ -1,7 +1,7 @@
-from django.db.models import Q
-from django.http import Http404
-from django.shortcuts import get_list_or_404, get_object_or_404
-from django.test import TestCase
+from hibeedb.models import Q
+from hibeehttp import Http404
+from hibeeshortcuts import get_list_or_404, get_object_or_404
+from hibeetest import TestCase
 
 from .models import Article, Author
 

@@ -1,5 +1,5 @@
-from django.urls import path
-from django.views.generic import TemplateView
+from hibeeurls import path
+from hibeeviews.generic import TemplateView
 
 view = TemplateView.as_view(template_name="dummy.html")
 

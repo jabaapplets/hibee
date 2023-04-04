@@ -1,7 +1,7 @@
-from django.template.defaultfilters import unordered_list
-from django.test import SimpleTestCase
-from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy
+from hibeetemplate.defaultfilters import unordered_list
+from hibeetest import SimpleTestCase
+from hibeeutils.safestring import mark_safe
+from hibeeutils.translation import gettext_lazy
 
 from ..utils import setup
 

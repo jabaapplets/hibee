@@ -1,11 +1,11 @@
 from datetime import datetime
 from decimal import Decimal
 
-from django import forms
-from django.conf import settings
-from django.contrib import admin
-from django.contrib.admin import helpers
-from django.contrib.admin.utils import (
+from hibeeimport forms
+from hibeeconf import settings
+from hibeecontrib import admin
+from hibeecontrib.admin import helpers
+from hibeecontrib.admin.utils import (
     NestedObjects,
     display_for_field,
     display_for_value,
@@ -16,10 +16,10 @@ from django.contrib.admin.utils import (
     lookup_field,
     quote,
 )
-from django.db import DEFAULT_DB_ALIAS, models
-from django.test import SimpleTestCase, TestCase, override_settings
-from django.utils.formats import localize
-from django.utils.safestring import mark_safe
+from hibeedb import DEFAULT_DB_ALIAS, models
+from hibeetest import SimpleTestCase, TestCase, override_settings
+from hibeeutils.formats import localize
+from hibeeutils.safestring import mark_safe
 
 from .models import Article, Car, Count, Event, EventGuide, Location, Site, Vehicle
 

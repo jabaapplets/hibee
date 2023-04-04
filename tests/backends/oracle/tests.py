@@ -1,9 +1,9 @@
 import unittest
 from unittest import mock
 
-from django.db import DatabaseError, NotSupportedError, connection
-from django.db.models import BooleanField
-from django.test import TestCase, TransactionTestCase
+from hibeedb import DatabaseError, NotSupportedError, connection
+from hibeedb.models import BooleanField
+from hibeetest import TestCase, TransactionTestCase
 
 from ..models import Square, VeryLongModelNameZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ
 
@@ -29,7 +29,7 @@ class Tests(TestCase):
     def test_dbms_session(self):
         """A stored procedure can be called through a cursor wrapper."""
         with connection.cursor() as cursor:
-            cursor.callproc("DBMS_SESSION.SET_IDENTIFIER", ["_django_testing!"])
+            cursor.callproc("DBMS_SESSION.SET_IDENTIFIER", ["_hibeetesting!"])
 
     def test_cursor_var(self):
         """Cursor variables can be passed as query parameters."""
@@ -94,7 +94,7 @@ class TransactionalTests(TransactionTestCase):
                 (
                     'The database did not return a new row id. Probably "ORA-1403: no '
                     'data found" was raised internally but was hidden by the Oracle '
-                    "OCI library (see https://code.djangoproject.com/ticket/28859)."
+                    "OCI library (see https://code.hibeeroject.com/ticket/28859)."
                 ),
             ):
                 Square.objects.create(root=2, square=4)

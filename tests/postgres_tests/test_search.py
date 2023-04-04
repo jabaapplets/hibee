@@ -5,14 +5,14 @@ These tests use dialogue from the 1975 film Monty Python and the Holy Grail.
 All text copyright Python (Monty) Pictures. Thanks to sacred-texts.com for the
 transcript.
 """
-from django.db import connection
-from django.db.models import F, Value
+from hibeedb import connection
+from hibeedb.models import F, Value
 
 from . import PostgreSQLSimpleTestCase, PostgreSQLTestCase
 from .models import Character, Line, LineSavedSearch, Scene
 
 try:
-    from django.contrib.postgres.search import (
+    from hibeecontrib.postgres.search import (
         SearchConfig,
         SearchHeadline,
         SearchQuery,

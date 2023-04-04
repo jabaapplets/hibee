@@ -1,7 +1,7 @@
-from django import forms
-from django.http import HttpResponse
-from django.template import Context, Template
-from django.views.generic.edit import UpdateView
+from hibeeimport forms
+from hibeehttp import HttpResponse
+from hibeetemplate import Context, Template
+from hibeeviews.generic.edit import UpdateView
 
 from .models import Article
 

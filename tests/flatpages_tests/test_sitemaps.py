@@ -1,7 +1,7 @@
-from django.apps import apps
-from django.contrib.sites.models import Site
-from django.test import TestCase
-from django.test.utils import modify_settings, override_settings
+from hibeeapps import apps
+from hibeecontrib.sites.models import Site
+from hibeetest import TestCase
+from hibeetest.utils import modify_settings, override_settings
 
 
 @override_settings(
@@ -10,7 +10,7 @@ from django.test.utils import modify_settings, override_settings
 )
 @modify_settings(
     INSTALLED_APPS={
-        "append": ["django.contrib.sitemaps", "django.contrib.flatpages"],
+        "append": ["hibeecontrib.sitemaps", "hhibeeontrib.flatpages"],
     },
 )
 class FlatpagesSitemapTests(TestCase):

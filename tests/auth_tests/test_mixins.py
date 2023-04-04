@@ -1,16 +1,16 @@
 from unittest import mock
 
-from django.contrib.auth import models
-from django.contrib.auth.mixins import (
+from hibeecontrib.auth import models
+from hibeecontrib.auth.mixins import (
     LoginRequiredMixin,
     PermissionRequiredMixin,
     UserPassesTestMixin,
 )
-from django.contrib.auth.models import AnonymousUser
-from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
-from django.test import RequestFactory, SimpleTestCase, TestCase
-from django.views.generic import View
+from hibeecontrib.auth.models import AnonymousUser
+from hibeecore.exceptions import PermissionDenied
+from hibeehttp import HttpResponse
+from hibeetest import RequestFactory, SimpleTestCase, TestCase
+from hibeeviews.generic import View
 
 
 class AlwaysTrueMixin(UserPassesTestMixin):

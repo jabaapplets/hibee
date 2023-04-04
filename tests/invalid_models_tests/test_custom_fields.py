@@ -1,6 +1,6 @@
-from django.db import models
-from django.test import SimpleTestCase
-from django.test.utils import isolate_apps
+from hibeedb import models
+from hibeetest import SimpleTestCase
+from hibeetest.utils import isolate_apps
 
 
 @isolate_apps("invalid_models_tests")

@@ -1,15 +1,15 @@
 """
 A subset of the tests in tests/servers/tests exercising
-django.contrib.staticfiles.testing.StaticLiveServerTestCase instead of
-django.test.LiveServerTestCase.
+hibeecontrib.staticfiles.testing.StaticLiveServerTestCase instead of
+hibeetest.LiveServerTestCase.
 """
 
 import os
 from urllib.request import urlopen
 
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.core.exceptions import ImproperlyConfigured
-from django.test import modify_settings, override_settings
+from hibeecontrib.staticfiles.testing import StaticLiveServerTestCase
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeetest import modify_settings, override_settings
 
 TEST_ROOT = os.path.dirname(__file__)
 TEST_SETTINGS = {

@@ -1,8 +1,8 @@
-from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
-from django.urls import reverse, reverse_lazy
-from django.utils.decorators import method_decorator
-from django.views import generic
+from hibeecontrib.auth.decorators import login_required
+from hibeecore.paginator import Paginator
+from hibeeurls import reverse, reverse_lazy
+from hibeeutils.decorators import method_decorator
+from hibeeviews import generic
 
 from .forms import AuthorForm, ConfirmDeleteForm, ContactForm
 from .models import Artist, Author, Book, BookSigning, Page

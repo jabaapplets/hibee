@@ -1,7 +1,7 @@
 import datetime
 
-from django import forms
-from django.test import TestCase
+from hibeeimport forms
+from hibeetest import TestCase
 
 from .models import Article
 

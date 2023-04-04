@@ -1,5 +1,5 @@
-from django.core.exceptions import FieldDoesNotExist, FieldError
-from django.test import SimpleTestCase, TestCase
+from hibeecore.exceptions import FieldDoesNotExist, FieldError
+from hibeetest import SimpleTestCase, TestCase
 
 from .models import (
     BigChild,

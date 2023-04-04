@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from django.core.exceptions import FieldError
-from django.db import DEFAULT_DB_ALIAS, connection
-from django.db.models import BooleanField, CharField, F, Q
-from django.db.models.expressions import (
+from hibeecore.exceptions import FieldError
+from hibeedb import DEFAULT_DB_ALIAS, connection
+from hibeedb.models import BooleanField, CharField, F, Q
+from hibeedb.models.expressions import (
     Col,
     Exists,
     ExpressionWrapper,
@@ -11,14 +11,14 @@ from django.db.models.expressions import (
     RawSQL,
     Value,
 )
-from django.db.models.fields.related_lookups import RelatedIsNull
-from django.db.models.functions import Lower
-from django.db.models.lookups import Exact, GreaterThan, IsNull, LessThan
-from django.db.models.sql.constants import SINGLE
-from django.db.models.sql.query import JoinPromoter, Query, get_field_names_from_opts
-from django.db.models.sql.where import AND, OR
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
-from django.test.utils import register_lookup
+from hibeedb.models.fields.related_lookups import RelatedIsNull
+from hibeedb.models.functions import Lower
+from hibeedb.models.lookups import Exact, GreaterThan, IsNull, LessThan
+from hibeedb.models.sql.constants import SINGLE
+from hibeedb.models.sql.query import JoinPromoter, Query, get_field_names_from_opts
+from hibeedb.models.sql.where import AND, OR
+from hibeetest import SimpleTestCase, TestCase, skipUnlessDBFeature
+from hibeetest.utils import register_lookup
 
 from .models import Author, Item, ObjectC, Ranking
 

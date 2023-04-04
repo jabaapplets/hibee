@@ -1,9 +1,9 @@
 from datetime import date
 
-from django.forms import DateField, Form, SelectDateWidget
-from django.test import override_settings
-from django.utils import translation
-from django.utils.dates import MONTHS_AP
+from hibeeforms import DateField, Form, SelectDateWidget
+from hibeetest import override_settings
+from hibeeutils import translation
+from hibeeutils.dates import MONTHS_AP
 
 from .base import WidgetTest
 

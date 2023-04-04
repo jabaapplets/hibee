@@ -1,5 +1,5 @@
-from django.contrib.auth.models import User
-from django.db import models
+from hibeecontrib.auth.models import User
+from hibeedb import models
 
 
 class Band(models.Model):

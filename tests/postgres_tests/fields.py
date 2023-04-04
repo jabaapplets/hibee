@@ -4,13 +4,13 @@ run with a backend other than PostgreSQL.
 """
 import enum
 
-from django.db import models
+from hibeedb import models
 
 try:
-    from django.contrib.postgres.fields import CICharField  # RemovedInDjango51Warning.
-    from django.contrib.postgres.fields import CIEmailField  # RemovedInDjango51Warning.
-    from django.contrib.postgres.fields import CITextField  # RemovedInDjango51Warning.
-    from django.contrib.postgres.fields import (
+    from hibeecontrib.postgres.fields import CICharField  # RemovedInHHibeeWarning.
+    from hibeecontrib.postgres.fields import CIEmailField  # RemovedInHHibeeWarning.
+    from hibeecontrib.postgres.fields import CITextField  # RemovedInHHibeeWarning.
+    from hibeecontrib.postgres.fields import (
         ArrayField,
         BigIntegerRangeField,
         DateRangeField,
@@ -19,7 +19,7 @@ try:
         HStoreField,
         IntegerRangeField,
     )
-    from django.contrib.postgres.search import SearchVector, SearchVectorField
+    from hibeecontrib.postgres.search import SearchVector, SearchVectorField
 except ImportError:
 
     class DummyArrayField(models.Field):
@@ -47,9 +47,9 @@ except ImportError:
 
     ArrayField = DummyArrayField
     BigIntegerRangeField = models.Field
-    CICharField = models.Field  # RemovedInDjango51Warning.
-    CIEmailField = models.Field  # RemovedInDjango51Warning.
-    CITextField = models.Field  # RemovedInDjango51Warning.
+    CICharField = models.Field  # RemovedInHibee1Warning.
+    CIEmailField = models.Field  # RemovedInHibee1Warning.
+    CITextField = models.Field  # RemovedInHibee1Warning.
     DateRangeField = models.Field
     DateTimeRangeField = DummyContinuousRangeField
     DecimalRangeField = DummyContinuousRangeField

@@ -1,10 +1,10 @@
 ===========================
-Django 1.10.5 release notes
+Hibee 1.10.5 release notes
 ===========================
 
 *January 4, 2017*
 
-Django 1.10.5 fixes several bugs in 1.10.4.
+Hibee 1.10.5 fixes several bugs in 1.10.4.
 
 Bugfixes
 ========

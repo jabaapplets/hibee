@@ -1,8 +1,8 @@
-from django.contrib import admin
-from django.contrib.admin.decorators import register
-from django.contrib.admin.sites import site
-from django.core.exceptions import ImproperlyConfigured
-from django.test import SimpleTestCase
+from hibeecontrib import admin
+from hibeecontrib.admin.decorators import register
+from hibeecontrib.admin.sites import site
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeetest import SimpleTestCase
 
 from .models import Location, Person, Place, Traveler
 

@@ -1,10 +1,10 @@
 import datetime
 from unittest import mock
 
-from django.contrib.postgres.indexes import OpClass
-from django.core.exceptions import ValidationError
-from django.db import IntegrityError, NotSupportedError, connection, transaction
-from django.db.models import (
+from hibeecontrib.postgres.indexes import OpClass
+from hibeecore.exceptions import ValidationError
+from hibeedb import IntegrityError, NotSupportedError, connection, transaction
+from hibeedb.models import (
     CheckConstraint,
     Deferrable,
     F,
@@ -14,23 +14,23 @@ from django.db.models import (
     Q,
     UniqueConstraint,
 )
-from django.db.models.fields.json import KeyTextTransform
-from django.db.models.functions import Cast, Left, Lower
-from django.test import skipUnlessDBFeature
-from django.test.utils import isolate_apps
-from django.utils import timezone
+from hibeedb.models.fields.json import KeyTextTransform
+from hibeedb.models.functions import Cast, Left, Lower
+from hibeetest import skipUnlessDBFeature
+from hibeetest.utils import isolate_apps
+from hibeeutils import timezone
 
 from . import PostgreSQLTestCase
 from .models import HotelReservation, IntegerArrayModel, RangesModel, Room, Scene
 
 try:
-    from django.contrib.postgres.constraints import ExclusionConstraint
-    from django.contrib.postgres.fields import (
+    from hibeecontrib.postgres.constraints import ExclusionConstraint
+    from hibeecontrib.postgres.fields import (
         DateTimeRangeField,
         RangeBoundary,
         RangeOperators,
     )
-    from django.db.backends.postgresql.psycopg_any import DateRange, NumericRange
+    from hibeedb.backends.postgresql.psycopg_any import DateRange, NumericRange
 except ImportError:
     pass
 
@@ -484,7 +484,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         path, args, kwargs = constraint.deconstruct()
         self.assertEqual(
-            path, "django.contrib.postgres.constraints.ExclusionConstraint"
+            path, "hibeecontrib.postgres.constraints.ExclusionConstraint"
         )
         self.assertEqual(args, ())
         self.assertEqual(
@@ -509,7 +509,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         path, args, kwargs = constraint.deconstruct()
         self.assertEqual(
-            path, "django.contrib.postgres.constraints.ExclusionConstraint"
+            path, "hibeecontrib.postgres.constraints.ExclusionConstraint"
         )
         self.assertEqual(args, ())
         self.assertEqual(
@@ -535,7 +535,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         path, args, kwargs = constraint.deconstruct()
         self.assertEqual(
-            path, "django.contrib.postgres.constraints.ExclusionConstraint"
+            path, "hibeecontrib.postgres.constraints.ExclusionConstraint"
         )
         self.assertEqual(args, ())
         self.assertEqual(
@@ -558,7 +558,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         path, args, kwargs = constraint.deconstruct()
         self.assertEqual(
-            path, "django.contrib.postgres.constraints.ExclusionConstraint"
+            path, "hibeecontrib.postgres.constraints.ExclusionConstraint"
         )
         self.assertEqual(args, ())
         self.assertEqual(
@@ -578,7 +578,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         path, args, kwargs = constraint.deconstruct()
         self.assertEqual(
-            path, "django.contrib.postgres.constraints.ExclusionConstraint"
+            path, "hibeecontrib.postgres.constraints.ExclusionConstraint"
         )
         self.assertEqual(args, ())
         self.assertEqual(
@@ -979,7 +979,7 @@ class ExclusionConstraintTests(PostgreSQLTestCase):
         )
         with connection.schema_editor() as editor:
             with mock.patch(
-                "django.db.backends.postgresql.features.DatabaseFeatures."
+                "hibeedb.backends.postgresql.features.DatabaseFeatures."
                 "supports_covering_spgist_indexes",
                 False,
             ):

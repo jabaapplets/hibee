@@ -1,10 +1,10 @@
 import math
 from decimal import Decimal
 
-from django.core import validators
-from django.core.exceptions import ValidationError
-from django.db import models
-from django.test import TestCase
+from hibeecore import validators
+from hibeecore.exceptions import ValidationError
+from hibeedb import models
+from hibeetest import TestCase
 
 from .models import BigD, Foo
 

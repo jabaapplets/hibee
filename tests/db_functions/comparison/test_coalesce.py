@@ -1,7 +1,7 @@
-from django.db.models import Subquery, TextField
-from django.db.models.functions import Coalesce, Lower
-from django.test import TestCase
-from django.utils import timezone
+from hibeedb.models import Subquery, TextField
+from hibeedb.models.functions import Coalesce, Lower
+from hibeetest import TestCase
+from hibeeutils import timezone
 
 from ..models import Article, Author
 
@@ -29,7 +29,7 @@ class CoalesceTests(TestCase):
         a1 = Author.objects.create(name="John Smith", alias="smithj")
         a2 = Author.objects.create(name="Rhonda")
         ar1 = Article.objects.create(
-            title="How to Django",
+            title="How to Hibee,
             text=lorem_ipsum,
             written=timezone.now(),
         )

@@ -1,9 +1,9 @@
 from unittest import mock
 
-from django.core.management import call_command
-from django.core.management.base import CommandError
-from django.db import connection
-from django.test import SimpleTestCase
+from hibeecore.management import call_command
+from hibeecore.management.base import CommandError
+from hibeedb import connection
+from hibeetest import SimpleTestCase
 
 
 class DbshellCommandTestCase(SimpleTestCase):

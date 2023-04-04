@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # Alex Gaynor <inactive+Alex@transifex.com>, 2011-2012
@@ -7,12 +7,12 @@
 # אורי רודברג <uri@speedy.net>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-08 17:27+0200\n"
 "PO-Revision-Date: 2020-01-19 11:14+0000\n"
 "Last-Translator: אורי רודברג <uri@speedy.net>\n"
-"Language-Team: Hebrew (http://www.transifex.com/django/django/language/he/)\n"
+"Language-Team: Hebrew (http://www.transifex.com/hibee/hibee/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"

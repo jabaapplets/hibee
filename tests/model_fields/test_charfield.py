@@ -1,6 +1,6 @@
-from django.core.exceptions import ValidationError
-from django.db import models
-from django.test import SimpleTestCase, TestCase
+from hibeecore.exceptions import ValidationError
+from hibeedb import models
+from hibeetest import SimpleTestCase, TestCase
 
 from .models import Post
 

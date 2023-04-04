@@ -1,6 +1,6 @@
-from django.core.exceptions import ValidationError
-from django.forms import EmailField
-from django.test import SimpleTestCase
+from hibeecore.exceptions import ValidationError
+from hibeeforms import EmailField
+from hibeetest import SimpleTestCase
 
 from . import FormFieldAssertionsMixin
 

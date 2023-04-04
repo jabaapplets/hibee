@@ -1,8 +1,8 @@
 import decimal
 
-from django.core.exceptions import ValidationError
-from django.forms import TypedChoiceField
-from django.test import SimpleTestCase
+from hibeecore.exceptions import ValidationError
+from hibeeforms import TypedChoiceField
+from hibeetest import SimpleTestCase
 
 
 class TypedChoiceFieldTest(SimpleTestCase):

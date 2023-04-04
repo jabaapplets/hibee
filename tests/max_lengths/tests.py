@@ -1,6 +1,6 @@
 import unittest
 
-from django.test import TestCase
+from hibeetest import TestCase
 
 from .models import PersonWithCustomMaxLengths, PersonWithDefaultMaxLengths
 

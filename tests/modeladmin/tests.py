@@ -1,26 +1,26 @@
 from datetime import date
 
-from django import forms
-from django.contrib.admin.models import ADDITION, CHANGE, DELETION, LogEntry
-from django.contrib.admin.options import (
+from hibeeimport forms
+from hibeecontrib.admin.models import ADDITION, CHANGE, DELETION, LogEntry
+from hibeecontrib.admin.options import (
     HORIZONTAL,
     VERTICAL,
     ModelAdmin,
     TabularInline,
     get_content_type_for_model,
 )
-from django.contrib.admin.sites import AdminSite
-from django.contrib.admin.widgets import (
+from hibeecontrib.admin.sites import AdminSite
+from hibeecontrib.admin.widgets import (
     AdminDateWidget,
     AdminRadioSelect,
     AutocompleteSelect,
     AutocompleteSelectMultiple,
 )
-from django.contrib.auth.models import User
-from django.db import models
-from django.forms.widgets import Select
-from django.test import SimpleTestCase, TestCase
-from django.test.utils import isolate_apps
+from hibeecontrib.auth.models import User
+from hibeedb import models
+from hibeeforms.widgets import Select
+from hibeetest import SimpleTestCase, TestCase
+from hibeetest.utils import isolate_apps
 
 from .models import Band, Concert, Song
 

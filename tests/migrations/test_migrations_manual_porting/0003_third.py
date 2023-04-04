@@ -1,4 +1,4 @@
-from django.db import migrations
+from hibeedb import migrations
 
 
 def forwards(apps, schema_editor):

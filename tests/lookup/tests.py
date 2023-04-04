@@ -4,9 +4,9 @@ from math import ceil
 from operator import attrgetter
 from unittest import skipUnless
 
-from django.core.exceptions import FieldError
-from django.db import connection, models
-from django.db.models import (
+from hibeecore.exceptions import FieldError
+from hibeedb import connection, models
+from hibeedb.models import (
     BooleanField,
     Case,
     Exists,
@@ -19,8 +19,8 @@ from django.db.models import (
     Value,
     When,
 )
-from django.db.models.functions import Cast, Substr
-from django.db.models.lookups import (
+from hibeedb.models.functions import Cast, Substr
+from hibeedb.models.lookups import (
     Exact,
     GreaterThan,
     GreaterThanOrEqual,
@@ -28,8 +28,8 @@ from django.db.models.lookups import (
     LessThan,
     LessThanOrEqual,
 )
-from django.test import TestCase, skipUnlessDBFeature
-from django.test.utils import isolate_apps
+from hibeetest import TestCase, skipUnlessDBFeature
+from hibeetest.utils import isolate_apps
 
 from .models import (
     Article,
@@ -629,7 +629,7 @@ class LookupTests(TestCase):
 
     def test_escaping(self):
         # Underscores, percent signs and backslashes have special meaning in the
-        # underlying SQL code, but Django handles the quoting of them automatically.
+        # underlying SQL code, but Hibeehandles the quoting of them automatically.
         a8 = Article.objects.create(
             headline="Article_ with underscore", pub_date=datetime(2005, 11, 20)
         )

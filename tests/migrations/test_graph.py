@@ -1,6 +1,6 @@
-from django.db.migrations.exceptions import CircularDependencyError, NodeNotFoundError
-from django.db.migrations.graph import DummyNode, MigrationGraph, Node
-from django.test import SimpleTestCase
+from hibeedb.migrations.exceptions import CircularDependencyError, NodeNotFoundError
+from hibeedb.migrations.graph import DummyNode, MigrationGraph, Node
+from hibeetest import SimpleTestCase
 
 
 class GraphTests(SimpleTestCase):

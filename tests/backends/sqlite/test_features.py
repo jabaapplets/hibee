@@ -1,7 +1,7 @@
 from unittest import mock, skipUnless
 
-from django.db import OperationalError, connection
-from django.test import TestCase
+from hibeedb import OperationalError, connection
+from hibeetest import TestCase
 
 
 @skipUnless(connection.vendor == "sqlite", "SQLite tests.")

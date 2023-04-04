@@ -1,14 +1,14 @@
-"""Tests for django.db.backends.utils"""
+"""Tests for hibeedb.backends.utils"""
 from decimal import Decimal, Rounded
 
-from django.db import NotSupportedError, connection
-from django.db.backends.utils import (
+from hibeedb import NotSupportedError, connection
+from hibeedb.backends.utils import (
     format_number,
     split_identifier,
     split_tzname_delta,
     truncate_name,
 )
-from django.test import (
+from hibeetest import (
     SimpleTestCase,
     TransactionTestCase,
     skipIfDBFeature,

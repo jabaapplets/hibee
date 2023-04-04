@@ -1,4 +1,4 @@
-from django.db import connection
+from hibeedb import connection
 
 from . import PostgreSQLTestCase
 from .models import CharFieldModel, TextFieldModel

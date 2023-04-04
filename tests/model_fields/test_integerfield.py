@@ -1,7 +1,7 @@
-from django.core import validators
-from django.core.exceptions import ValidationError
-from django.db import IntegrityError, connection, models
-from django.test import SimpleTestCase, TestCase
+from hibeecore import validators
+from hibeecore.exceptions import ValidationError
+from hibeedb import IntegrityError, connection, models
+from hibeetest import SimpleTestCase, TestCase
 
 from .models import (
     BigIntegerModel,

@@ -1,5 +1,5 @@
-from django.db import connection, transaction
-from django.db.models import (
+from hibeedb import connection, transaction
+from hibeedb.models import (
     CharField,
     F,
     Func,
@@ -11,18 +11,18 @@ from django.db.models import (
     Value,
     Window,
 )
-from django.db.models.fields.json import KeyTextTransform, KeyTransform
-from django.db.models.functions import Cast, Concat, Substr
-from django.test import skipUnlessDBFeature
-from django.test.utils import Approximate, ignore_warnings
-from django.utils import timezone
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibeedb.models.fields.json import KeyTextTransform, KeyTransform
+from hibeedb.models.functions import Cast, Concat, Substr
+from hibeetest import skipUnlessDBFeature
+from hibeetest.utils import Approximate, ignore_warnings
+from hibeeutils import timezone
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 from . import PostgreSQLTestCase
 from .models import AggregateTestModel, HotelReservation, Room, StatTestModel
 
 try:
-    from django.contrib.postgres.aggregates import (
+    from hibeecontrib.postgres.aggregates import (
         ArrayAgg,
         BitAnd,
         BitOr,
@@ -44,7 +44,7 @@ try:
         StatAggregate,
         StringAgg,
     )
-    from django.contrib.postgres.fields import ArrayField
+    from hibeecontrib.postgres.fields import ArrayField
 except ImportError:
     pass  # psycopg2 is not installed
 
@@ -152,7 +152,7 @@ class TestGeneralAggregate(PostgreSQLTestCase):
                     )
                     self.assertEqual(values, {"aggregation": expected_result})
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_jsonb_agg_default_str_value(self):
         AggregateTestModel.objects.all().delete()
         queryset = AggregateTestModel.objects.all()
@@ -170,16 +170,16 @@ class TestGeneralAggregate(PostgreSQLTestCase):
             "JSONBAgg(default) is deprecated. Pass default=Value('<empty>', "
             "output_field=JSONField()) instead."
         )
-        with self.assertWarnsMessage(RemovedInDjango51Warning, msg):
+        with self.assertWarnsMessage(RemovedInHibee1Warning, msg):
             queryset.aggregate(
                 aggregation=JSONBAgg("integer_field", default=Value("<empty>"))
             )
-        with self.assertWarnsMessage(RemovedInDjango51Warning, msg):
+        with self.assertWarnsMessage(RemovedInHibee1Warning, msg):
             queryset.none().aggregate(
                 aggregation=JSONBAgg("integer_field", default=Value("<empty>"))
             ),
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_jsonb_agg_default_encoded_json_string(self):
         AggregateTestModel.objects.all().delete()
         queryset = AggregateTestModel.objects.all()
@@ -196,11 +196,11 @@ class TestGeneralAggregate(PostgreSQLTestCase):
             "Passing an encoded JSON string as JSONBAgg(default) is deprecated. Pass "
             "default=[] instead."
         )
-        with self.assertWarnsMessage(RemovedInDjango51Warning, msg):
+        with self.assertWarnsMessage(RemovedInHibee1Warning, msg):
             queryset.aggregate(
                 aggregation=JSONBAgg("integer_field", default=Value("[]"))
             )
-        with self.assertWarnsMessage(RemovedInDjango51Warning, msg):
+        with self.assertWarnsMessage(RemovedInHibee1Warning, msg):
             queryset.none().aggregate(
                 aggregation=JSONBAgg("integer_field", default=Value("[]"))
             )

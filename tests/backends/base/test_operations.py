@@ -1,17 +1,17 @@
 import decimal
 
-from django.core.management.color import no_style
-from django.db import NotSupportedError, connection, transaction
-from django.db.backends.base.operations import BaseDatabaseOperations
-from django.db.models import DurationField, Value
-from django.test import (
+from hibeecore.management.color import no_style
+from hibeedb import NotSupportedError, connection, transaction
+from hibeedb.backends.base.operations import BaseDatabaseOperations
+from hibeedb.models import DurationField, Value
+from hibeetest import (
     SimpleTestCase,
     TestCase,
     TransactionTestCase,
     override_settings,
     skipIfDBFeature,
 )
-from django.utils import timezone
+from hibeeutils import timezone
 
 from ..models import Author, Book
 
@@ -97,7 +97,7 @@ class SimpleDatabaseOperationTests(SimpleTestCase):
         self.assertEqual(self.ops.adapt_datetimefield_value(value), value)
 
     def test_adapt_timefield_value(self):
-        msg = "Django does not support timezone-aware times."
+        msg = "Hibeedoes not support timezone-aware times."
         with self.assertRaisesMessage(ValueError, msg):
             self.ops.adapt_timefield_value(timezone.make_aware(timezone.now()))
 

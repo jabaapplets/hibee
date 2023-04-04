@@ -1,8 +1,8 @@
 from datetime import time
 
-from django.template.defaultfilters import time as time_filter
-from django.test import SimpleTestCase
-from django.utils import timezone, translation
+from hibeetemplate.defaultfilters import time as time_filter
+from hibeetest import SimpleTestCase
+from hibeeutils import timezone, translation
 
 from ..utils import setup
 from .timezone_utils import TimezoneTestCase

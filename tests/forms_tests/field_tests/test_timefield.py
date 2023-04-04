@@ -1,8 +1,8 @@
 import datetime
 
-from django.core.exceptions import ValidationError
-from django.forms import TimeField
-from django.test import SimpleTestCase
+from hibeecore.exceptions import ValidationError
+from hibeeforms import TimeField
+from hibeetest import SimpleTestCase
 
 from . import FormFieldAssertionsMixin
 

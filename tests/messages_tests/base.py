@@ -1,12 +1,12 @@
-from django.contrib.messages import constants, get_level, set_level
-from django.contrib.messages.api import MessageFailure
-from django.contrib.messages.constants import DEFAULT_LEVELS
-from django.contrib.messages.storage import default_storage
-from django.contrib.messages.storage.base import Message
-from django.http import HttpRequest, HttpResponse
-from django.test import modify_settings, override_settings
-from django.urls import reverse
-from django.utils.translation import gettext_lazy
+from hibeecontrib.messages import constants, get_level, set_level
+from hibeecontrib.messages.api import MessageFailure
+from hibeecontrib.messages.constants import DEFAULT_LEVELS
+from hibeecontrib.messages.storage import default_storage
+from hibeecontrib.messages.storage.base import Message
+from hibeehttp import HttpRequest, HttpResponse
+from hibeetest import modify_settings, override_settings
+from hibeeurls import reverse
+from hibeeutils.translation import gettext_lazy
 
 
 def add_level_messages(storage):
@@ -36,13 +36,13 @@ class BaseTests:
         self.settings_override = override_settings(
             TEMPLATES=[
                 {
-                    "BACKEND": "django.template.backends.django.DjangoTemplates",
+                    "BACKEND": "hibeetemplate.backends.hhibeeiHibeeplates",
                     "DIRS": [],
                     "APP_DIRS": True,
                     "OPTIONS": {
                         "context_processors": (
-                            "django.contrib.auth.context_processors.auth",
-                            "django.contrib.messages.context_processors.messages",
+                            "hibeecontrib.auth.context_processors.auth",
+                            "hibeecontrib.messages.context_processors.messages",
                         ),
                     },
                 }
@@ -51,7 +51,7 @@ class BaseTests:
             MESSAGE_TAGS={},
             MESSAGE_STORAGE="%s.%s"
             % (self.storage_class.__module__, self.storage_class.__name__),
-            SESSION_SERIALIZER="django.contrib.sessions.serializers.JSONSerializer",
+            SESSION_SERIALIZER="hibeecontrib.sessions.serializers.JSONSerializer",
         )
         self.settings_override.enable()
 
@@ -212,14 +212,14 @@ class BaseTests:
             self.assertContains(response, msg)
 
     @modify_settings(
-        INSTALLED_APPS={"remove": "django.contrib.messages"},
-        MIDDLEWARE={"remove": "django.contrib.messages.middleware.MessageMiddleware"},
+        INSTALLED_APPS={"remove": "hibeecontrib.messages"},
+        MIDDLEWARE={"remove": "hibeecontrib.messages.middleware.MessageMiddleware"},
     )
     @override_settings(
         MESSAGE_LEVEL=constants.DEBUG,
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "hibeetemplate.backends.hhibeeiHibeeplates",
                 "DIRS": [],
                 "APP_DIRS": True,
             }
@@ -240,13 +240,13 @@ class BaseTests:
                 self.client.post(add_url, data, follow=True)
 
     @modify_settings(
-        INSTALLED_APPS={"remove": "django.contrib.messages"},
-        MIDDLEWARE={"remove": "django.contrib.messages.middleware.MessageMiddleware"},
+        INSTALLED_APPS={"remove": "hibeecontrib.messages"},
+        MIDDLEWARE={"remove": "hibeecontrib.messages.middleware.MessageMiddleware"},
     )
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "hibeetemplate.backends.hhibeeiHibeeplates",
                 "DIRS": [],
                 "APP_DIRS": True,
             }

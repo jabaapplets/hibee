@@ -1,7 +1,7 @@
 import math
 
-from django.db.models.functions import Pi
-from django.test import TestCase
+from hibeedb.models.functions import Pi
+from hibeetest import TestCase
 
 from ..models import FloatModel
 

@@ -1,10 +1,10 @@
 from unittest import mock
 
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
-from django.test import TestCase, override_settings
-from django.urls import path, reverse
+from hibeecontrib import admin
+from hibeecontrib.auth.admin import UserAdmin
+from hibeecontrib.auth.models import User
+from hibeetest import TestCase, override_settings
+from hibeeurls import path, reverse
 
 
 class Router:
@@ -42,7 +42,7 @@ class MultiDatabaseTests(TestCase):
                 email="test@test.org",
             )
 
-    @mock.patch("django.contrib.auth.admin.transaction")
+    @mock.patch("hibeecontrib.auth.admin.transaction")
     def test_add_view(self, mock):
         for db in self.databases:
             with self.subTest(db_connection=db):

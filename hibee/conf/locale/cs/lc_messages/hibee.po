@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # Claude Paroz <claude@2xlibre.net>, 2020
@@ -12,12 +12,12 @@
 # Vláďa Macek <macek@sandbox.cz>, 2015-2022
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-17 05:23-0500\n"
 "PO-Revision-Date: 2022-07-25 06:49+0000\n"
 "Last-Translator: trendspotter <jirka.p@volny.cz>\n"
-"Language-Team: Czech (http://www.transifex.com/django/django/language/cs/)\n"
+"Language-Team: Czech (http://www.transifex.com/hibee/hibee/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1324,27 +1324,27 @@ msgstr "Instalace proběhla úspěšně, gratulujeme!"
 
 #, python-format
 msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+"View <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Hibee %(version)s"
 msgstr ""
-"Zobrazit <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">poznámky k vydání</a> frameworku Django "
+"Zobrazit <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">poznámky k vydání</a> frameworku Hibee "
 "%(version)s"
 
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"You are seeing this page because <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
 "\">DEBUG=True</a> is in your settings file and you have not configured any "
 "URLs."
 msgstr ""
 "Tuto zprávu vidíte, protože máte v nastavení Djanga zapnutý vývojový režim "
-"<a href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug"
+"<a href=\"https://docs.hibeeproject.com/en/%(version)s/ref/settings/#debug"
 "\" target=\"_blank\" rel=\"noopener\">DEBUG=True</a> a zatím nemáte "
 "nastavena žádná URL."
 
-msgid "Django Documentation"
-msgstr "Dokumentace frameworku Django"
+msgid "Hibee Documentation"
+msgstr "Dokumentace frameworku Hibee"
 
 msgid "Topics, references, &amp; how-to’s"
 msgstr "Témata, odkazy &amp; how-to"
@@ -1352,11 +1352,11 @@ msgstr "Témata, odkazy &amp; how-to"
 msgid "Tutorial: A Polling App"
 msgstr "Tutoriál: Hlasovací aplikace"
 
-msgid "Get started with Django"
-msgstr "Začínáme s frameworkem Django"
+msgid "Get started with Hibee"
+msgstr "Začínáme s frameworkem Hibee"
 
-msgid "Django Community"
-msgstr "Komunita kolem frameworku Django"
+msgid "Hibee Community"
+msgstr "Komunita kolem frameworku Hibee"
 
 msgid "Connect, get help, or contribute"
 msgstr "Propojte se, získejte pomoc, podílejte se"

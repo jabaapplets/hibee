@@ -1,7 +1,7 @@
-from django.template.defaultfilters import linebreaks_filter
-from django.test import SimpleTestCase
-from django.utils.functional import lazy
-from django.utils.safestring import mark_safe
+from hibeetemplate.defaultfilters import linebreaks_filter
+from hibeetest import SimpleTestCase
+from hibeeutils.functional import lazy
+from hibeeutils.safestring import mark_safe
 
 from ..utils import setup
 

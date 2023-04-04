@@ -1,5 +1,5 @@
-from django.core.serializers.base import DeserializedObject
-from django.test import SimpleTestCase
+from hibeecore.serializers.base import DeserializedObject
+from hibeetest import SimpleTestCase
 
 from .models import Author
 

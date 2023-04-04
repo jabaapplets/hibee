@@ -1,8 +1,8 @@
 from unittest import mock, skipUnless
 
-from django.db import connection
-from django.db.backends.oracle.client import DatabaseClient
-from django.test import SimpleTestCase
+from hibeedb import connection
+from hibeedb.backends.oracle.client import DatabaseClient
+from hibeetest import SimpleTestCase
 
 
 @skipUnless(connection.vendor == "oracle", "Requires cx_Oracle to be installed")

@@ -1,5 +1,5 @@
-from django.db import IntegrityError, connection, transaction
-from django.test import TestCase
+from hibeedb import IntegrityError, connection, transaction
+from hibeetest import TestCase
 
 from .models import (
     Bar,

@@ -3,18 +3,18 @@ from io import BytesIO
 from itertools import chain
 from urllib.parse import urlencode
 
-from django.core.exceptions import DisallowedHost
-from django.core.handlers.wsgi import LimitedStream, WSGIRequest
-from django.http import (
+from hibeecore.exceptions import DisallowedHost
+from hibeecore.handlers.wsgi import LimitedStream, WSGIRequest
+from hibeehttp import (
     HttpHeaders,
     HttpRequest,
     RawPostDataException,
     UnreadablePostError,
 )
-from django.http.multipartparser import MultiPartParserError
-from django.http.request import split_domain_port
-from django.test import RequestFactory, SimpleTestCase, override_settings
-from django.test.client import FakePayload
+from hibeehttp.multipartparser import MultiPartParserError
+from hibeehttp.request import split_domain_port
+from hibeetest import RequestFactory, SimpleTestCase, override_settings
+from hibeetest.client import FakePayload
 
 
 class RequestsTests(SimpleTestCase):

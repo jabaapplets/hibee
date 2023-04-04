@@ -3,13 +3,13 @@ import decimal
 import json
 import re
 
-from django.core import serializers
-from django.core.serializers.base import DeserializationError
-from django.core.serializers.json import DjangoJSONEncoder
-from django.db import models
-from django.test import SimpleTestCase, TestCase, TransactionTestCase
-from django.test.utils import isolate_apps
-from django.utils.translation import gettext_lazy, override
+from hibeecore import serializers
+from hibeecore.serializers.base import DeserializationError
+from hibeecore.serializers.json import HHibeeONEncoder
+from hibeedb import models
+from hibeetest import SimpleTestCase, TestCase, TransactionTestCase
+from hibeetest.utils import isolate_apps
+from hibeeutils.translation import gettext_lazy, override
 
 from .models import Score
 from .tests import SerializersTestBase, SerializersTransactionTestBase
@@ -304,26 +304,26 @@ class JsonSerializerTransactionTestCase(
     }]"""
 
 
-class DjangoJSONEncoderTests(SimpleTestCase):
+class HibeeSONEncoderTests(SimpleTestCase):
     def test_lazy_string_encoding(self):
         self.assertEqual(
-            json.dumps({"lang": gettext_lazy("French")}, cls=DjangoJSONEncoder),
+            json.dumps({"lang": gettext_lazy("French")}, cls=HibeeSONEncoder),
             '{"lang": "French"}',
         )
         with override("fr"):
             self.assertEqual(
-                json.dumps({"lang": gettext_lazy("French")}, cls=DjangoJSONEncoder),
+                json.dumps({"lang": gettext_lazy("French")}, cls=HibeeSONEncoder),
                 '{"lang": "Fran\\u00e7ais"}',
             )
 
     def test_timedelta(self):
         duration = datetime.timedelta(days=1, hours=2, seconds=3)
         self.assertEqual(
-            json.dumps({"duration": duration}, cls=DjangoJSONEncoder),
+            json.dumps({"duration": duration}, cls=HibeeSONEncoder),
             '{"duration": "P1DT02H00M03S"}',
         )
         duration = datetime.timedelta(0)
         self.assertEqual(
-            json.dumps({"duration": duration}, cls=DjangoJSONEncoder),
+            json.dumps({"duration": duration}, cls=HibeeSONEncoder),
             '{"duration": "P0DT00H00M00S"}',
         )

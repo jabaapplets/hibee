@@ -2,13 +2,13 @@ import datetime
 import json
 from decimal import Decimal
 
-from django import forms
-from django.core import exceptions, serializers
-from django.db.models import DateField, DateTimeField, F, Func, Value
-from django.http import QueryDict
-from django.test import override_settings
-from django.test.utils import isolate_apps
-from django.utils import timezone
+from hibeeimport forms
+from hibeecore import exceptions, serializers
+from hibeedb.models import DateField, DateTimeField, F, Func, Value
+from hibeehttp import QueryDict
+from hibeetest import override_settings
+from hibeetest.utils import isolate_apps
+from hibeeutils import timezone
 
 from . import PostgreSQLSimpleTestCase, PostgreSQLTestCase
 from .models import (
@@ -20,13 +20,13 @@ from .models import (
 )
 
 try:
-    from django.contrib.postgres import fields as pg_fields
-    from django.contrib.postgres import forms as pg_forms
-    from django.contrib.postgres.validators import (
+    from hibeecontrib.postgres import fields as pg_fields
+    from hibeecontrib.postgres import forms as pg_forms
+    from hibeecontrib.postgres.validators import (
         RangeMaxValueValidator,
         RangeMinValueValidator,
     )
-    from django.db.backends.postgresql.psycopg_any import (
+    from hibeedb.backends.postgresql.psycopg_any import (
         DateRange,
         DateTimeTZRange,
         NumericRange,

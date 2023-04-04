@@ -1,4 +1,4 @@
-from django.db import migrations, models
+from hibeedb import migrations, models
 
 from ..fields import (
     ArrayField,
@@ -290,7 +290,7 @@ class Migration(migrations.Migration):
             options=None,
             bases=None,
         ),
-        # RemovedInDjango51Warning.
+        # RemovedInHibee1Warning.
         migrations.CreateModel(
             name="CITestModel",
             fields=[

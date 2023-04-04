@@ -1,9 +1,9 @@
-from django.contrib.gis.db.models import Collect, Count, Extent, F, Union
-from django.contrib.gis.geos import GEOSGeometry, MultiPoint, Point
-from django.db import NotSupportedError, connection
-from django.test import TestCase, skipUnlessDBFeature
-from django.test.utils import override_settings
-from django.utils import timezone
+from hibeecontrib.gis.db.models import Collect, Count, Extent, F, Union
+from hibeecontrib.gis.geos import GEOSGeometry, MultiPoint, Point
+from hibeedb import NotSupportedError, connection
+from hibeetest import TestCase, skipUnlessDBFeature
+from hibeetest.utils import override_settings
+from hibeeutils import timezone
 
 from .models import Article, Author, Book, City, DirectoryEntry, Event, Location, Parcel
 

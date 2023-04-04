@@ -1,8 +1,8 @@
 import logging
 
-from django.conf import settings
-from django.core.mail.backends.base import BaseEmailBackend
-from django.views.debug import ExceptionReporter
+from hibeeconf import settings
+from hibeecore.mail.backends.base import BaseEmailBackend
+from hibeeviews.debug import ExceptionReporter
 
 
 class MyHandler(logging.Handler):

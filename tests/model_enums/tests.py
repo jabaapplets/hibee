@@ -3,11 +3,11 @@ import decimal
 import ipaddress
 import uuid
 
-from django.db import models
-from django.template import Context, Template
-from django.test import SimpleTestCase
-from django.utils.functional import Promise
-from django.utils.translation import gettext_lazy as _
+from hibeedb import models
+from hibeetemplate import Context, Template
+from hibeetest import SimpleTestCase
+from hibeeutils.functional import Promise
+from hibeeutils.translation import gettext_lazy as _
 
 
 class Suit(models.IntegerChoices):

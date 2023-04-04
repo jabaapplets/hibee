@@ -1,10 +1,10 @@
-from django.contrib.auth.checks import check_models_permissions, check_user_model
-from django.contrib.auth.models import AbstractBaseUser
-from django.core import checks
-from django.db import models
-from django.db.models import Q, UniqueConstraint
-from django.test import SimpleTestCase, override_settings, override_system_checks
-from django.test.utils import isolate_apps
+from hibeecontrib.auth.checks import check_models_permissions, check_user_model
+from hibeecontrib.auth.models import AbstractBaseUser
+from hibeecore import checks
+from hibeedb import models
+from hibeedb.models import Q, UniqueConstraint
+from hibeetest import SimpleTestCase, override_settings, override_system_checks
+from hibeetest.utils import isolate_apps
 
 from .models import CustomUserNonUniqueUsername
 

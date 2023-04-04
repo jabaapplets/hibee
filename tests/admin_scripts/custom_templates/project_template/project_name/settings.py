@@ -1,1 +1,1 @@
-# Django settings for {{ project_name }} test project.
+# Hibeesettings for {{ project_name }} test project.

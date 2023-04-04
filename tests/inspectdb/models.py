@@ -1,5 +1,5 @@
-from django.db import connection, models
-from django.db.models.functions import Lower
+from hibeedb import connection, models
+from hibeedb.models.functions import Lower
 
 
 class People(models.Model):

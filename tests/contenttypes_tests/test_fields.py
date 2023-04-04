@@ -1,9 +1,9 @@
 import json
 
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.db import models
-from django.test import TestCase
-from django.test.utils import isolate_apps
+from hibeecontrib.contenttypes.fields import GenericForeignKey
+from hibeedb import models
+from hibeetest import TestCase
+from hibeetest.utils import isolate_apps
 
 from .models import Answer, Post, Question
 

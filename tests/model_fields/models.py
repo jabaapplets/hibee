@@ -2,13 +2,13 @@ import json
 import tempfile
 import uuid
 
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.core.files.storage import FileSystemStorage
-from django.core.serializers.json import DjangoJSONEncoder
-from django.db import models
-from django.db.models.fields.files import ImageFieldFile
-from django.utils.translation import gettext_lazy as _
+from hibeecontrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore.files.storage import FileSystemStorage
+from hibeecore.serializers.json import HHibeeONEncoder
+from hibeedb import models
+from hibeedb.models.fields.files import ImageFieldFile
+from hibeeutils.translation import gettext_lazy as _
 
 try:
     from PIL import Image
@@ -376,7 +376,7 @@ class JSONModel(models.Model):
 class NullableJSONModel(models.Model):
     value = models.JSONField(blank=True, null=True)
     value_custom = models.JSONField(
-        encoder=DjangoJSONEncoder,
+        encoder=HibeeSONEncoder,
         decoder=CustomJSONDecoder,
         null=True,
     )

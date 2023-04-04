@@ -1,5 +1,5 @@
-from django.template.defaultfilters import truncatewords_html
-from django.test import SimpleTestCase
+from hibeetemplate.defaultfilters import truncatewords_html
+from hibeetest import SimpleTestCase
 
 
 class FunctionTests(SimpleTestCase):

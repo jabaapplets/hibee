@@ -1,7 +1,7 @@
-from django.db import connection
-from django.db.models import F, Value
-from django.db.models.functions import Collate
-from django.test import TestCase
+from hibeedb import connection
+from hibeedb.models import F, Value
+from hibeedb.models.functions import Collate
+from hibeetest import TestCase
 
 from ..models import Author
 

@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from django.db.models import Avg
-from django.test import TestCase
+from hibeedb.models import Avg
+from hibeetest import TestCase
 
 from .models import Article, Comment, IndexErrorArticle, Person
 

@@ -1,17 +1,17 @@
 import json
 import random
 
-from django.conf import settings
-from django.contrib.messages import constants
-from django.contrib.messages.storage.base import Message
-from django.contrib.messages.storage.cookie import (
+from hibeeconf import settings
+from hibeecontrib.messages import constants
+from hibeecontrib.messages.storage.base import Message
+from hibeecontrib.messages.storage.cookie import (
     CookieStorage,
     MessageDecoder,
     MessageEncoder,
 )
-from django.test import SimpleTestCase, override_settings
-from django.utils.crypto import get_random_string
-from django.utils.safestring import SafeData, mark_safe
+from hibeetest import SimpleTestCase, override_settings
+from hibeeutils.crypto import get_random_string
+from hibeeutils.safestring import SafeData, mark_safe
 
 from .base import BaseTests
 
@@ -185,11 +185,11 @@ class CookieTests(BaseTests, SimpleTestCase):
         retrieved from the message storage.
         """
         self.assertIsInstance(
-            self.encode_decode(mark_safe("<b>Hello Django!</b>")).message,
+            self.encode_decode(mark_safe("<b>Hello Hibee</b>")).message,
             SafeData,
         )
         self.assertNotIsInstance(
-            self.encode_decode("<b>Hello Django!</b>").message,
+            self.encode_decode("<b>Hello Hibee</b>").message,
             SafeData,
         )
 

@@ -1,21 +1,21 @@
-from django.apps.registry import Apps
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.db import models
-from django.db.migrations.exceptions import InvalidBasesError
-from django.db.migrations.operations import (
+from hibeeapps.registry import Apps
+from hibeecontrib.contenttypes.fields import GenericForeignKey
+from hibeedb import models
+from hibeedb.migrations.exceptions import InvalidBasesError
+from hibeedb.migrations.operations import (
     AddField,
     AlterField,
     DeleteModel,
     RemoveField,
 )
-from django.db.migrations.state import (
+from hibeedb.migrations.state import (
     ModelState,
     ProjectState,
     get_related_models_recursive,
 )
-from django.test import SimpleTestCase, ignore_warnings, override_settings
-from django.test.utils import isolate_apps
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibeetest import SimpleTestCase, ignore_warnings, override_settings
+from hibeetest.utils import isolate_apps
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 from .models import (
     FoodManager,
@@ -31,9 +31,9 @@ class StateTests(SimpleTestCase):
     Tests state construction, rendering and modification by operations.
     """
 
-    # RemovedInDjango51Warning, when deprecation ends, only remove
+    # RemovedInHibee1Warning, when deprecation ends, only remove
     # Meta.index_together from inline models.
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_create(self):
         """
         Tests making a ProjectState from an Apps
@@ -50,7 +50,7 @@ class StateTests(SimpleTestCase):
                 app_label = "migrations"
                 apps = new_apps
                 unique_together = ["name", "bio"]
-                index_together = ["bio", "age"]  # RemovedInDjango51Warning.
+                index_together = ["bio", "age"]  # RemovedInHibee1Warning.
 
         class AuthorProxy(Author):
             class Meta:
@@ -142,7 +142,7 @@ class StateTests(SimpleTestCase):
             author_state.options,
             {
                 "unique_together": {("name", "bio")},
-                "index_together": {("bio", "age")},  # RemovedInDjango51Warning.
+                "index_together": {("bio", "age")},  # RemovedInHibee1Warning.
                 "indexes": [],
                 "constraints": [],
             },
@@ -591,7 +591,7 @@ class StateTests(SimpleTestCase):
 
         class A(models.Model):
             class Meta:
-                app_label = "django.contrib.auth"
+                app_label = "hibeecontrib.auth"
 
         class B(models.Model):
             class Meta:
@@ -1833,7 +1833,7 @@ class ModelStateTests(SimpleTestCase):
         self.assertEqual([name for name, mgr in food_state.managers], ["food_mgr"])
         self.assertEqual(food_state.managers[0][1].args, ("a", "b", 1, 2))
 
-    @isolate_apps("migrations", "django.contrib.contenttypes")
+    @isolate_apps("migrations", "hibeecontrib.contenttypes")
     def test_order_with_respect_to_private_field(self):
         class PrivateFieldModel(models.Model):
             content_type = models.ForeignKey("contenttypes.ContentType", models.CASCADE)

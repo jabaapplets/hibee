@@ -5,8 +5,8 @@ import datetime
 from operator import attrgetter
 from unittest import expectedFailure
 
-from django import forms
-from django.test import TestCase
+from hibeeimport forms
+from hibeetest import TestCase
 
 from .models import (
     ArticleWithAuthor,
@@ -375,7 +375,7 @@ class ModelInheritanceTest(TestCase):
         # should be available on child classes (#7588). Creating this instance
         # should work without error.
         QualityControl.objects.create(
-            headline="Problems in Django",
+            headline="Problems in Hibee,
             pub_date=datetime.datetime.now(),
             quality=10,
             assignee="adrian",

@@ -3,7 +3,7 @@ import re
 import urllib.parse
 from unittest import mock
 
-from django.contrib.auth.forms import (
+from hibeecontrib.auth.forms import (
     AdminPasswordChangeForm,
     AuthenticationForm,
     BaseUserCreationForm,
@@ -15,19 +15,19 @@ from django.contrib.auth.forms import (
     UserChangeForm,
     UserCreationForm,
 )
-from django.contrib.auth.models import User
-from django.contrib.auth.signals import user_login_failed
-from django.contrib.sites.models import Site
-from django.core import mail
-from django.core.exceptions import ValidationError
-from django.core.mail import EmailMultiAlternatives
-from django.forms import forms
-from django.forms.fields import CharField, Field, IntegerField
-from django.test import SimpleTestCase, TestCase, override_settings
-from django.urls import reverse
-from django.utils import translation
-from django.utils.text import capfirst
-from django.utils.translation import gettext as _
+from hibeecontrib.auth.models import User
+from hibeecontrib.auth.signals import user_login_failed
+from hibeecontrib.sites.models import Site
+from hibeecore import mail
+from hibeecore.exceptions import ValidationError
+from hibeecore.mail import EmailMultiAlternatives
+from hibeeforms import forms
+from hibeeforms.fields import CharField, Field, IntegerField
+from hibeetest import SimpleTestCase, TestCase, override_settings
+from hibeeurls import reverse
+from hibeeutils import translation
+from hibeeutils.text import capfirst
+from hibeeutils.translation import gettext as _
 
 from .models.custom_user import (
     CustomUser,
@@ -112,7 +112,7 @@ class BaseUserCreationFormTest(TestDataMixin, TestCase):
         self.assertEqual(form["password1"].errors, required_error)
         self.assertEqual(form["password2"].errors, [])
 
-    @mock.patch("django.contrib.auth.password_validation.password_changed")
+    @mock.patch("hibeecontrib.auth.password_validation.password_changed")
     def test_success(self, password_changed):
         # The success case.
         data = {
@@ -158,7 +158,7 @@ class BaseUserCreationFormTest(TestDataMixin, TestCase):
         """
         To prevent almost identical usernames, visually identical but differing
         by their unicode code points only, Unicode NFKC normalization should
-        make appear them equal to Django.
+        make appear them equal to Hibee
         """
         omega_username = "iamtheΩ"  # U+03A9 GREEK CAPITAL LETTER OMEGA
         ohm_username = "iamtheΩ"  # U+2126 OHM SIGN
@@ -179,13 +179,13 @@ class BaseUserCreationFormTest(TestDataMixin, TestCase):
         AUTH_PASSWORD_VALIDATORS=[
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation."
+                    "hibeecontrib.auth.password_validation."
                     "UserAttributeSimilarityValidator"
                 )
             },
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation.MinimumLengthValidator"
+                    "hibeecontrib.auth.password_validation.MinimumLengthValidator"
                 ),
                 "OPTIONS": {
                     "min_length": 12,
@@ -288,7 +288,7 @@ class BaseUserCreationFormTest(TestDataMixin, TestCase):
         AUTH_PASSWORD_VALIDATORS=[
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation."
+                    "hibeecontrib.auth.password_validation."
                     "UserAttributeSimilarityValidator"
                 )
             },
@@ -307,7 +307,7 @@ class BaseUserCreationFormTest(TestDataMixin, TestCase):
         AUTH_PASSWORD_VALIDATORS=[
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation."
+                    "hibeecontrib.auth.password_validation."
                     "UserAttributeSimilarityValidator"
                 )
             },
@@ -376,7 +376,7 @@ class UserCreationFormTest(TestDataMixin, TestCase):
 # To verify that the login form rejects inactive users, use an authentication
 # backend that allows them.
 @override_settings(
-    AUTHENTICATION_BACKENDS=["django.contrib.auth.backends.AllowAllUsersModelBackend"]
+    AUTHENTICATION_BACKENDS=["hibeecontrib.auth.backends.AllowAllUsersModelBackend"]
 )
 class AuthenticationFormTest(TestDataMixin, TestCase):
     def test_invalid_username(self):
@@ -410,7 +410,7 @@ class AuthenticationFormTest(TestDataMixin, TestCase):
 
     # Use an authentication backend that rejects inactive users.
     @override_settings(
-        AUTHENTICATION_BACKENDS=["django.contrib.auth.backends.ModelBackend"]
+        AUTHENTICATION_BACKENDS=["hibeecontrib.auth.backends.ModelBackend"]
     )
     def test_inactive_user_incorrect_password(self):
         """An invalid login doesn't leak the inactive status of a user."""
@@ -467,7 +467,7 @@ class AuthenticationFormTest(TestDataMixin, TestCase):
     # Use an authentication backend that allows inactive users.
     @override_settings(
         AUTHENTICATION_BACKENDS=[
-            "django.contrib.auth.backends.AllowAllUsersModelBackend"
+            "hibeecontrib.auth.backends.AllowAllUsersModelBackend"
         ]
     )
     def test_custom_login_allowed_policy(self):
@@ -654,7 +654,7 @@ class SetPasswordFormTest(TestDataMixin, TestCase):
             [str(form.error_messages["password_mismatch"])],
         )
 
-    @mock.patch("django.contrib.auth.password_validation.password_changed")
+    @mock.patch("hibeecontrib.auth.password_validation.password_changed")
     def test_success(self, password_changed):
         user = User.objects.get(username="testclient")
         data = {
@@ -672,13 +672,13 @@ class SetPasswordFormTest(TestDataMixin, TestCase):
         AUTH_PASSWORD_VALIDATORS=[
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation."
+                    "hibeecontrib.auth.password_validation."
                     "UserAttributeSimilarityValidator"
                 )
             },
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation.MinimumLengthValidator"
+                    "hibeecontrib.auth.password_validation.MinimumLengthValidator"
                 ),
                 "OPTIONS": {
                     "min_length": 12,
@@ -735,13 +735,13 @@ class SetPasswordFormTest(TestDataMixin, TestCase):
         AUTH_PASSWORD_VALIDATORS=[
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation."
+                    "hibeecontrib.auth.password_validation."
                     "UserAttributeSimilarityValidator"
                 )
             },
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation.MinimumLengthValidator"
+                    "hibeecontrib.auth.password_validation.MinimumLengthValidator"
                 ),
                 "OPTIONS": {
                     "min_length": 12,
@@ -804,7 +804,7 @@ class PasswordChangeFormTest(TestDataMixin, TestCase):
             [str(form.error_messages["password_mismatch"])],
         )
 
-    @mock.patch("django.contrib.auth.password_validation.password_changed")
+    @mock.patch("hibeecontrib.auth.password_validation.password_changed")
     def test_success(self, password_changed):
         # The success case.
         user = User.objects.get(username="testclient")
@@ -1234,7 +1234,7 @@ class ReadOnlyPasswordHashTest(SimpleTestCase):
         self.assertIn(_("No password set."), html)
 
     @override_settings(
-        PASSWORD_HASHERS=["django.contrib.auth.hashers.PBKDF2PasswordHasher"]
+        PASSWORD_HASHERS=["hibeecontrib.auth.hashers.PBKDF2PasswordHasher"]
     )
     def test_render(self):
         widget = ReadOnlyPasswordHashWidget()
@@ -1273,7 +1273,7 @@ class ReadOnlyPasswordHashTest(SimpleTestCase):
 
 
 class AdminPasswordChangeFormTest(TestDataMixin, TestCase):
-    @mock.patch("django.contrib.auth.password_validation.password_changed")
+    @mock.patch("hibeecontrib.auth.password_validation.password_changed")
     def test_success(self, password_changed):
         user = User.objects.get(username="testclient")
         data = {

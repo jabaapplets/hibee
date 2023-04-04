@@ -1,12 +1,12 @@
 from unittest import skipUnless
 
-from django.contrib.gis.db.models import fields
-from django.contrib.gis.geos import MultiPolygon, Polygon
-from django.core.exceptions import ImproperlyConfigured
-from django.db import connection, migrations, models
-from django.db.migrations.migration import Migration
-from django.db.migrations.state import ProjectState
-from django.test import TransactionTestCase, skipIfDBFeature, skipUnlessDBFeature
+from hibeecontrib.gis.db.models import fields
+from hibeecontrib.gis.geos import MultiPolygon, Polygon
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeedb import connection, migrations, models
+from hibeedb.migrations.migration import Migration
+from hibeedb.migrations.state import ProjectState
+from hibeetest import TransactionTestCase, skipIfDBFeature, skipUnlessDBFeature
 
 try:
     GeometryColumns = connection.ops.geometry_columns()

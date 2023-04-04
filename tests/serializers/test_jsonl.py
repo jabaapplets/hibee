@@ -2,11 +2,11 @@ import decimal
 import json
 import re
 
-from django.core import serializers
-from django.core.serializers.base import DeserializationError
-from django.db import models
-from django.test import TestCase, TransactionTestCase
-from django.test.utils import isolate_apps
+from hibeecore import serializers
+from hibeecore.serializers.base import DeserializationError
+from hibeedb import models
+from hibeetest import TestCase, TransactionTestCase
+from hibeetest.utils import isolate_apps
 
 from .models import Score
 from .tests import SerializersTestBase, SerializersTransactionTestBase

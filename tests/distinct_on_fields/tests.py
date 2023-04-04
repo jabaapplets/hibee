@@ -1,8 +1,8 @@
-from django.db import connection
-from django.db.models import CharField, F, Max
-from django.db.models.functions import Lower
-from django.test import TestCase, skipUnlessDBFeature
-from django.test.utils import register_lookup
+from hibeedb import connection
+from hibeedb.models import CharField, F, Max
+from hibeedb.models.functions import Lower
+from hibeetest import TestCase, skipUnlessDBFeature
+from hibeetest.utils import register_lookup
 
 from .models import Celebrity, Fan, Staff, StaffTag, Tag
 

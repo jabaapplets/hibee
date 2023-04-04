@@ -2,14 +2,14 @@ import datetime
 from io import StringIO
 from unittest import mock
 
-from django.core.management.base import OutputWrapper
-from django.db.migrations.questioner import (
+from hibeecore.management.base import OutputWrapper
+from hibeedb.migrations.questioner import (
     InteractiveMigrationQuestioner,
     MigrationQuestioner,
 )
-from django.db.models import NOT_PROVIDED
-from django.test import SimpleTestCase
-from django.test.utils import override_settings
+from hibeedb.models import NOT_PROVIDED
+from hibeetest import SimpleTestCase
+from hibeetest.utils import override_settings
 
 
 class QuestionerTests(SimpleTestCase):

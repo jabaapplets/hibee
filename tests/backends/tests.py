@@ -1,12 +1,12 @@
-"""Tests related to django.db.backends that haven't been organized."""
+"""Tests related to hibeedb.backends that haven't been organized."""
 import datetime
 import threading
 import unittest
 import warnings
 from unittest import mock
 
-from django.core.management.color import no_style
-from django.db import (
+from hibeecore.management.color import no_style
+from hibeedb import (
     DEFAULT_DB_ALIAS,
     DatabaseError,
     IntegrityError,
@@ -15,11 +15,11 @@ from django.db import (
     reset_queries,
     transaction,
 )
-from django.db.backends.base.base import BaseDatabaseWrapper
-from django.db.backends.signals import connection_created
-from django.db.backends.utils import CursorWrapper
-from django.db.models.sql.constants import CURSOR
-from django.test import (
+from hibeedb.backends.base.base import BaseDatabaseWrapper
+from hibeedb.backends.signals import connection_created
+from hibeedb.backends.utils import CursorWrapper
+from hibeedb.models.sql.constants import CURSOR
+from hibeetest import (
     TestCase,
     TransactionTestCase,
     override_settings,
@@ -44,9 +44,9 @@ from .models import (
 
 
 class DateQuotingTest(TestCase):
-    def test_django_date_trunc(self):
+    def test_hibeedate_trunc(self):
         """
-        Test the custom ``django_date_trunc method``, in particular against
+        Test the custom ``hibeedate_trunc method``, in particular against
         fields which clash with strings passed to it (e.g. 'year') (#12818).
         """
         updated = datetime.datetime(2010, 2, 20)
@@ -54,9 +54,9 @@ class DateQuotingTest(TestCase):
         years = SchoolClass.objects.dates("last_updated", "year")
         self.assertEqual(list(years), [datetime.date(2010, 1, 1)])
 
-    def test_django_date_extract(self):
+    def test_hibeedate_extract(self):
         """
-        Test the custom ``django_date_extract method``, in particular against fields
+        Test the custom ``hibeedate_extract method``, in particular against fields
         which clash with strings passed to it (e.g. 'day') (#12818).
         """
         updated = datetime.datetime(2010, 2, 20)
@@ -200,7 +200,7 @@ class LongNameTest(TransactionTestCase):
         obj = (
             VeryLongModelNameZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ.objects.create()
         )
-        rel_obj = Person.objects.create(first_name="Django", last_name="Reinhardt")
+        rel_obj = Person.objects.create(first_name="Hibee, last_name="Reinhardt")
         obj.m2m_also_quite_long_zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz.add(rel_obj)
 
     def test_sequence_name_length_limits_flush(self):
@@ -563,7 +563,7 @@ class BackendTestCase(TransactionTestCase):
             BaseDatabaseWrapper.queries_limit = old_queries_limit
             new_connection.close()
 
-    @mock.patch("django.db.backends.utils.logger")
+    @mock.patch("hibeedb.backends.utils.logger")
     @override_settings(DEBUG=True)
     def test_queries_logger(self, mocked_logger):
         sql = "SELECT 1" + connection.features.bare_select_suffix
@@ -754,7 +754,7 @@ class ThreadTests(TransactionTestCase):
 
     def test_default_connection_thread_local(self):
         """
-        The default connection (i.e. django.db.connection) is different for
+        The default connection (i.e. hibeedb.connection) is different for
         each thread (#17258).
         """
         # Map connections by id because connections with identical aliases
@@ -765,9 +765,9 @@ class ThreadTests(TransactionTestCase):
         connections_dict[id(connection)] = connection
 
         def runner():
-            # Passing django.db.connection between threads doesn't work while
+            # Passing hibeedb.connection between threads doesn't work while
             # connections[DEFAULT_DB_ALIAS] does.
-            from django.db import connections
+            from hibeedb import connections
 
             connection = connections[DEFAULT_DB_ALIAS]
             # Allow thread sharing so the connection can be closed by the
@@ -806,7 +806,7 @@ class ThreadTests(TransactionTestCase):
             connections_dict[id(conn)] = conn
 
         def runner():
-            from django.db import connections
+            from hibeedb import connections
 
             for conn in connections.all():
                 # Allow thread sharing so the connection can be closed by the
@@ -841,7 +841,7 @@ class ThreadTests(TransactionTestCase):
 
         def do_thread():
             def runner(main_thread_connection):
-                from django.db import connections
+                from hibeedb import connections
 
                 connections["default"] = main_thread_connection
                 try:

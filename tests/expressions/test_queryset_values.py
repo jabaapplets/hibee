@@ -1,5 +1,5 @@
-from django.db.models import F, Sum
-from django.test import TestCase
+from hibeedb.models import F, Sum
+from hibeetest import TestCase
 
 from .models import Company, Employee
 

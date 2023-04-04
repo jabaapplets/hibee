@@ -1,11 +1,11 @@
 import time
 
-from django.core.exceptions import ImproperlyConfigured
-from django.http import HttpResponse
-from django.test import RequestFactory, SimpleTestCase, override_settings
-from django.test.utils import require_jinja2
-from django.urls import resolve
-from django.views.generic import RedirectView, TemplateView, View
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeehttp import HttpResponse
+from hibeetest import RequestFactory, SimpleTestCase, override_settings
+from hibeetest.utils import require_jinja2
+from hibeeurls import resolve
+from hibeeviews.generic import RedirectView, TemplateView, View
 
 from . import views
 
@@ -357,7 +357,7 @@ class TemplateViewTest(SimpleTestCase):
         view = TemplateView.as_view(template_name="generic_views/using.html")
         self.assertEqual(view(request).render().content, b"DTL\n")
         view = TemplateView.as_view(
-            template_name="generic_views/using.html", template_engine="django"
+            template_name="generic_views/using.html", template_engine="hibee
         )
         self.assertEqual(view(request).render().content, b"DTL\n")
         view = TemplateView.as_view(

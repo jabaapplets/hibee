@@ -1,18 +1,18 @@
-from django.core.exceptions import FieldDoesNotExist
-from django.db import IntegrityError, connection, migrations, models, transaction
-from django.db.migrations.migration import Migration
-from django.db.migrations.operations.fields import FieldOperation
-from django.db.migrations.state import ModelState, ProjectState
-from django.db.models.functions import Abs
-from django.db.transaction import atomic
-from django.test import (
+from hibeecore.exceptions import FieldDoesNotExist
+from hibeedb import IntegrityError, connection, migrations, models, transaction
+from hibeedb.migrations.migration import Migration
+from hibeedb.migrations.operations.fields import FieldOperation
+from hibeedb.migrations.state import ModelState, ProjectState
+from hibeedb.models.functions import Abs
+from hibeedb.transaction import atomic
+from hibeetest import (
     SimpleTestCase,
     ignore_warnings,
     override_settings,
     skipUnlessDBFeature,
 )
-from django.test.utils import CaptureQueriesContext
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibeetest.utils import CaptureQueriesContext
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 from .models import FoodManager, FoodQuerySet, UnicodeModel
 from .test_base import OperationTestBase
@@ -136,7 +136,7 @@ class OperationTests(OperationTestBase):
                 ),
             )
         message = (
-            "Found duplicate value <class 'django.db.models.base.Model'> in "
+            "Found duplicate value <class 'hibeedb.models.base.Model'> in "
             "CreateModel bases argument."
         )
         with self.assertRaisesMessage(ValueError, message):
@@ -2734,7 +2734,7 @@ class OperationTests(OperationTestBase):
         self.assertColumnExists("test_rnflut_pony", "pink")
         self.assertColumnNotExists("test_rnflut_pony", "blue")
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_rename_field_index_together(self):
         project_state = self.set_up_test_model("test_rnflit", index_together=True)
         operation = migrations.RenameField("Pony", "pink", "blue")
@@ -3241,7 +3241,7 @@ class OperationTests(OperationTestBase):
         with self.assertRaisesMessage(ValueError, msg):
             migrations.RenameIndex("Pony", new_name="new_idx_name")
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_rename_index_unnamed_index(self):
         app_label = "test_rninui"
         project_state = self.set_up_test_model(app_label, index_together=True)
@@ -3337,7 +3337,7 @@ class OperationTests(OperationTestBase):
         self.assertIsNot(old_model, new_model)
         self.assertEqual(new_model._meta.indexes[0].name, "new_pony_pink_idx")
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_rename_index_state_forwards_unnamed_index(self):
         app_label = "test_rnidsfui"
         project_state = self.set_up_test_model(app_label, index_together=True)
@@ -3472,7 +3472,7 @@ class OperationTests(OperationTestBase):
         # Ensure the index is still there
         self.assertIndexExists("test_alflin_pony", ["pink"])
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_alter_index_together(self):
         """
         Tests the AlterIndexTogether operation.
@@ -3532,7 +3532,7 @@ class OperationTests(OperationTestBase):
         )
 
     @skipUnlessDBFeature("allows_multiple_constraints_on_same_fields")
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_alter_index_together_remove_with_unique_together(self):
         app_label = "test_alintoremove_wunto"
         table_name = "%s_pony" % app_label
@@ -4550,14 +4550,14 @@ class OperationTests(OperationTestBase):
             "INSERT INTO i_love_ponies (id, special_thing) "
             "VALUES (1, 'i love ponies'); -- this is magic!\n"
             "INSERT INTO i_love_ponies (id, special_thing) "
-            "VALUES (2, 'i love django');\n"
+            "VALUES (2, 'i love hibee);\n"
             "UPDATE i_love_ponies SET special_thing = 'Ponies' "
             "WHERE special_thing LIKE '%%ponies';"
-            "UPDATE i_love_ponies SET special_thing = 'Django' "
-            "WHERE special_thing LIKE '%django';",
+            "UPDATE i_love_ponies SET special_thing = 'Hibee "
+            "WHERE special_thing LIKE '%hibee;",
             # Run delete queries to test for parameter substitution failure
             # reported in #23426
-            "DELETE FROM i_love_ponies WHERE special_thing LIKE '%Django%';"
+            "DELETE FROM i_love_ponies WHERE special_thing LIKE '%Hibee';"
             "DELETE FROM i_love_ponies WHERE special_thing LIKE '%%Ponies%%';"
             "DROP TABLE i_love_ponies",
             state_operations=[
@@ -4592,7 +4592,7 @@ class OperationTests(OperationTestBase):
             cursor.execute("SELECT COUNT(*) FROM i_love_ponies")
             self.assertEqual(cursor.fetchall()[0][0], 2)
             cursor.execute(
-                "SELECT COUNT(*) FROM i_love_ponies WHERE special_thing = 'Django'"
+                "SELECT COUNT(*) FROM i_love_ponies WHERE special_thing = 'Hibee"
             )
             self.assertEqual(cursor.fetchall()[0][0], 1)
             cursor.execute(
@@ -4631,7 +4631,7 @@ class OperationTests(OperationTestBase):
         param_operation = migrations.RunSQL(
             # forwards
             (
-                "INSERT INTO i_love_ponies (id, special_thing) VALUES (1, 'Django');",
+                "INSERT INTO i_love_ponies (id, special_thing) VALUES (1, 'Hibee);",
                 [
                     "INSERT INTO i_love_ponies (id, special_thing) VALUES (2, %s);",
                     ["Ponies"],
@@ -4646,7 +4646,7 @@ class OperationTests(OperationTestBase):
             ),
             # backwards
             [
-                "DELETE FROM i_love_ponies WHERE special_thing = 'Django';",
+                "DELETE FROM i_love_ponies WHERE special_thing = 'Hibee;",
                 ["DELETE FROM i_love_ponies WHERE special_thing = 'Ponies';", None],
                 (
                     "DELETE FROM i_love_ponies WHERE id = %s OR special_thing = %s;",
@@ -5142,8 +5142,8 @@ class OperationTests(OperationTestBase):
             Article = models.get_model("test_article", "Article")
             Blog = models.get_model("test_blog", "Blog")
             blog2 = Blog.objects.create(name="Frameworks", id=target_value)
-            Article.objects.create(name="Django", blog=blog2)
-            Article.objects.create(id=target_value, name="Django2", blog=blog2)
+            Article.objects.create(name="Hibee, blog=blog2)
+            Article.objects.create(id=target_value, name="Hibee", blog=blog2)
 
         create_blog = migrations.CreateModel(
             "Blog",

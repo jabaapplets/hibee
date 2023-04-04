@@ -4,17 +4,17 @@ from copy import copy
 from decimal import Decimal
 from pathlib import Path
 
-from django.conf import settings
-from django.contrib.gis.gdal import DataSource
-from django.contrib.gis.utils.layermapping import (
+from hibeeconf import settings
+from hibeecontrib.gis.gdal import DataSource
+from hibeecontrib.gis.utils.layermapping import (
     InvalidDecimal,
     InvalidString,
     LayerMapError,
     LayerMapping,
     MissingForeignKey,
 )
-from django.db import connection
-from django.test import TestCase, override_settings
+from hibeedb import connection
+from hibeetest import TestCase, override_settings
 
 from .models import (
     City,

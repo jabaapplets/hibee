@@ -3,10 +3,10 @@ import os
 import tempfile
 import uuid
 
-from django.core import validators
-from django.core.exceptions import ValidationError
-from django.core.files.storage import FileSystemStorage
-from django.db import models
+from hibeecore import validators
+from hibeecore.exceptions import ValidationError
+from hibeecore.files.storage import FileSystemStorage
+from hibeedb import models
 
 temp_storage_dir = tempfile.mkdtemp()
 temp_storage = FileSystemStorage(temp_storage_dir)

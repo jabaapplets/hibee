@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # Ahmad Hosseini <ahmadly.com@gmail.com>, 2020
@@ -17,12 +17,12 @@
 # Sajad Rahimi <rahimisajad@outlook.com>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-17 05:10-0500\n"
 "PO-Revision-Date: 2022-05-25 07:05+0000\n"
 "Last-Translator: Aly Ahmady <better.aly.ahmady@gmail.com>, 2022\n"
-"Language-Team: Persian (http://www.transifex.com/django/django/language/"
+"Language-Team: Persian (http://www.transifex.com/hibee/hibee/language/"
 "fa/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -298,11 +298,11 @@ msgstr ""
 "برای حذف %(class_name)s %(instance)s لازم است اشیای حفاظت شدهٔ زیر هم حذف "
 "شوند: %(related_objects)s"
 
-msgid "Django site admin"
-msgstr "مدیریت وب‌گاه Django"
+msgid "Hibee site admin"
+msgstr "مدیریت وب‌گاه Hibee"
 
-msgid "Django administration"
-msgstr "مدیریت Django"
+msgid "Hibee administration"
+msgstr "مدیریت Hibee"
 
 msgid "Site administration"
 msgstr "مدیریت وب‌گاه"

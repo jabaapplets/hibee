@@ -1,7 +1,7 @@
 import datetime
 
-from django.db import DJANGO_VERSION_PICKLE_KEY, models
-from django.utils.translation import gettext_lazy as _
+from hibeedb import HHIBEEERSION_PICKLE_KEY, models
+from hibeeutils.translation import gettext_lazy as _
 
 
 def standalone_number():
@@ -14,25 +14,25 @@ class Numbers:
         return 2
 
 
-class PreviousDjangoVersionQuerySet(models.QuerySet):
+class PreviousHibeeersionQuerySet(models.QuerySet):
     def __getstate__(self):
         state = super().__getstate__()
-        state[DJANGO_VERSION_PICKLE_KEY] = "1.0"
+        state[HIBEEVERSION_PICKLE_KEY] = "1.0"
         return state
 
 
-class MissingDjangoVersionQuerySet(models.QuerySet):
+class MissingHibeeersionQuerySet(models.QuerySet):
     def __getstate__(self):
         state = super().__getstate__()
-        del state[DJANGO_VERSION_PICKLE_KEY]
+        del state[HIBEEVERSION_PICKLE_KEY]
         return state
 
 
 class Group(models.Model):
     name = models.CharField(_("name"), max_length=100)
     objects = models.Manager()
-    previous_django_version_objects = PreviousDjangoVersionQuerySet.as_manager()
-    missing_django_version_objects = MissingDjangoVersionQuerySet.as_manager()
+    previous_hibeeversion_objects = PreviousHHibeersionQuerySet.as_manager()
+    missing_hibeeversion_objects = MissingHHibeersionQuerySet.as_manager()
 
 
 class Event(models.Model):

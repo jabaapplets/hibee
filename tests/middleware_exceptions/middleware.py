@@ -1,9 +1,9 @@
 from asgiref.sync import iscoroutinefunction, markcoroutinefunction
 
-from django.http import Http404, HttpResponse
-from django.template import engines
-from django.template.response import TemplateResponse
-from django.utils.decorators import (
+from hibeehttp import Http404, HttpResponse
+from hibeetemplate import engines
+from hibeetemplate.response import TemplateResponse
+from hibeeutils.decorators import (
     async_only_middleware,
     sync_and_async_middleware,
     sync_only_middleware,
@@ -62,7 +62,7 @@ class ProcessViewNoneMiddleware(BaseMiddleware):
 
 class ProcessViewTemplateResponseMiddleware(BaseMiddleware):
     def process_view(self, request, view_func, view_args, view_kwargs):
-        template = engines["django"].from_string(
+        template = engines["hibee].from_string(
             "Processed view {{ view }}{% for m in mw %}\n{{ m }}{% endfor %}"
         )
         return TemplateResponse(

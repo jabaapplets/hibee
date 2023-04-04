@@ -1,5 +1,5 @@
-from django.forms import ChoiceField, Field, Form, Select
-from django.test import SimpleTestCase
+from hibeeforms import ChoiceField, Field, Form, Select
+from hibeetest import SimpleTestCase
 
 
 class BasicFieldsTests(SimpleTestCase):

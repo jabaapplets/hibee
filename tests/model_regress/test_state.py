@@ -1,5 +1,5 @@
-from django.db.models.base import ModelState, ModelStateFieldsCacheDescriptor
-from django.test import SimpleTestCase
+from hibeedb.models.base import ModelState, ModelStateFieldsCacheDescriptor
+from hibeetest import SimpleTestCase
 
 
 class ModelStateTests(SimpleTestCase):

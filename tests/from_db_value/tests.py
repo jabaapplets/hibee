@@ -1,6 +1,6 @@
-from django.db import connection
-from django.db.models import Max
-from django.test import TestCase
+from hibeedb import connection
+from hibeedb.models import Max
+from hibeetest import TestCase
 
 from .models import Cash, CashModel
 

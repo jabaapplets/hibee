@@ -1,8 +1,8 @@
-from django.db import connection
-from django.db.models import CharField
-from django.db.models.functions import SHA384
-from django.test import TestCase
-from django.test.utils import register_lookup
+from hibeedb import connection
+from hibeedb.models import CharField
+from hibeedb.models.functions import SHA384
+from hibeetest import TestCase
+from hibeetest.utils import register_lookup
 
 from ..models import Author
 

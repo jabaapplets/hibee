@@ -2,13 +2,13 @@ import datetime
 import tempfile
 import uuid
 
-from django.contrib import admin
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ValidationError
-from django.core.files.storage import FileSystemStorage
-from django.db import models
+from hibeecontrib import admin
+from hibeecontrib.auth.models import User
+from hibeecontrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore.exceptions import ValidationError
+from hibeecore.files.storage import FileSystemStorage
+from hibeedb import models
 
 
 class Section(models.Model):

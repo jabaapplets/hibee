@@ -1,4 +1,4 @@
-from django.forms import FileField, FileInput, Form
+from hibeeforms import FileField, FileInput, Form
 
 from .base import WidgetTest
 

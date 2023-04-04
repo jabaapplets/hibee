@@ -1,4 +1,4 @@
-from django.test import TestCase
+from hibeetest import TestCase
 
 from .models import Article, Author, Comment, Forum, Post, SystemInfo
 

@@ -1,12 +1,12 @@
 from unittest import mock
 
-from django.contrib.contenttypes.checks import check_model_name_lengths
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.core import checks
-from django.db import models
-from django.test import SimpleTestCase, override_settings
-from django.test.utils import isolate_apps
+from hibeecontrib.contenttypes.checks import check_model_name_lengths
+from hibeecontrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore import checks
+from hibeedb import models
+from hibeetest import SimpleTestCase, override_settings
+from hibeetest.utils import isolate_apps
 
 
 @isolate_apps("contenttypes_tests", attr_name="apps")
@@ -111,8 +111,8 @@ class GenericForeignKeyTests(SimpleTestCase):
 
     @override_settings(
         INSTALLED_APPS=[
-            "django.contrib.auth",
-            "django.contrib.contenttypes",
+            "hibeecontrib.auth",
+            "hibeecontrib.contenttypes",
             "contenttypes_tests",
         ]
     )

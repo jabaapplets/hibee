@@ -1,14 +1,14 @@
 from unittest import mock
 
-from django.core.exceptions import ValidationError
-from django.db import IntegrityError, connection, models
-from django.db.models import F
-from django.db.models.constraints import BaseConstraint, UniqueConstraint
-from django.db.models.functions import Lower
-from django.db.transaction import atomic
-from django.test import SimpleTestCase, TestCase, skipIfDBFeature, skipUnlessDBFeature
-from django.test.utils import ignore_warnings
-from django.utils.deprecation import RemovedInDjango60Warning
+from hibeecore.exceptions import ValidationError
+from hibeedb import IntegrityError, connection, models
+from hibeedb.models import F
+from hibeedb.models.constraints import BaseConstraint, UniqueConstraint
+from hibeedb.models.functions import Lower
+from hibeedb.transaction import atomic
+from hibeetest import SimpleTestCase, TestCase, skipIfDBFeature, skipUnlessDBFeature
+from hibeetest.utils import ignore_warnings
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 from .models import (
     ChildModel,
@@ -83,7 +83,7 @@ class BaseConstraintTests(SimpleTestCase):
             violation_error_message="custom %(name)s message",
         )
         path, args, kwargs = constraint.deconstruct()
-        self.assertEqual(path, "django.db.models.BaseConstraint")
+        self.assertEqual(path, "hibeedb.models.BaseConstraint")
         self.assertEqual(args, ())
         self.assertEqual(
             kwargs,
@@ -92,7 +92,7 @@ class BaseConstraintTests(SimpleTestCase):
 
     def test_deprecation(self):
         msg = "Passing positional arguments to BaseConstraint is deprecated."
-        with self.assertRaisesMessage(RemovedInDjango60Warning, msg):
+        with self.assertRaisesMessage(RemovedInHibee0Warning, msg):
             BaseConstraint("name", "violation error message")
 
     def test_name_required(self):
@@ -102,7 +102,7 @@ class BaseConstraintTests(SimpleTestCase):
         with self.assertRaisesMessage(TypeError, msg):
             BaseConstraint()
 
-    @ignore_warnings(category=RemovedInDjango60Warning)
+    @ignore_warnings(category=RemovedInHibee0Warning)
     def test_positional_arguments(self):
         c = BaseConstraint("name", "custom %(name)s message")
         self.assertEqual(c.get_violation_error_message(), "custom name message")
@@ -170,7 +170,7 @@ class CheckConstraintTests(TestCase):
         name = "price_gt_discounted_price"
         constraint = models.CheckConstraint(check=check, name=name)
         path, args, kwargs = constraint.deconstruct()
-        self.assertEqual(path, "django.db.models.CheckConstraint")
+        self.assertEqual(path, "hibeedb.models.CheckConstraint")
         self.assertEqual(args, ())
         self.assertEqual(kwargs, {"check": check, "name": name})
 
@@ -491,7 +491,7 @@ class UniqueConstraintTests(TestCase):
         name = "unique_fields"
         constraint = models.UniqueConstraint(fields=fields, name=name)
         path, args, kwargs = constraint.deconstruct()
-        self.assertEqual(path, "django.db.models.UniqueConstraint")
+        self.assertEqual(path, "hibeedb.models.UniqueConstraint")
         self.assertEqual(args, ())
         self.assertEqual(kwargs, {"fields": tuple(fields), "name": name})
 
@@ -503,7 +503,7 @@ class UniqueConstraintTests(TestCase):
             fields=fields, name=name, condition=condition
         )
         path, args, kwargs = constraint.deconstruct()
-        self.assertEqual(path, "django.db.models.UniqueConstraint")
+        self.assertEqual(path, "hibeedb.models.UniqueConstraint")
         self.assertEqual(args, ())
         self.assertEqual(
             kwargs, {"fields": tuple(fields), "name": name, "condition": condition}
@@ -518,7 +518,7 @@ class UniqueConstraintTests(TestCase):
             deferrable=models.Deferrable.DEFERRED,
         )
         path, args, kwargs = constraint.deconstruct()
-        self.assertEqual(path, "django.db.models.UniqueConstraint")
+        self.assertEqual(path, "hibeedb.models.UniqueConstraint")
         self.assertEqual(args, ())
         self.assertEqual(
             kwargs,
@@ -535,7 +535,7 @@ class UniqueConstraintTests(TestCase):
         include = ["baz_1", "baz_2"]
         constraint = models.UniqueConstraint(fields=fields, name=name, include=include)
         path, args, kwargs = constraint.deconstruct()
-        self.assertEqual(path, "django.db.models.UniqueConstraint")
+        self.assertEqual(path, "hibeedb.models.UniqueConstraint")
         self.assertEqual(args, ())
         self.assertEqual(
             kwargs,
@@ -554,7 +554,7 @@ class UniqueConstraintTests(TestCase):
             fields=fields, name=name, opclasses=opclasses
         )
         path, args, kwargs = constraint.deconstruct()
-        self.assertEqual(path, "django.db.models.UniqueConstraint")
+        self.assertEqual(path, "hibeedb.models.UniqueConstraint")
         self.assertEqual(args, ())
         self.assertEqual(
             kwargs,
@@ -569,7 +569,7 @@ class UniqueConstraintTests(TestCase):
         name = "unique_fields"
         constraint = models.UniqueConstraint(Lower("title"), name=name)
         path, args, kwargs = constraint.deconstruct()
-        self.assertEqual(path, "django.db.models.UniqueConstraint")
+        self.assertEqual(path, "hibeedb.models.UniqueConstraint")
         self.assertEqual(args, (Lower("title"),))
         self.assertEqual(kwargs, {"name": name})
 
@@ -924,7 +924,7 @@ class UniqueConstraintTests(TestCase):
     def test_expressions_with_opclasses(self):
         msg = (
             "UniqueConstraint.opclasses cannot be used with expressions. Use "
-            "django.contrib.postgres.indexes.OpClass() instead."
+            "hibeecontrib.postgres.indexes.OpClass() instead."
         )
         with self.assertRaisesMessage(ValueError, msg):
             models.UniqueConstraint(

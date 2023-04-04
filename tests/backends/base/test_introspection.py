@@ -1,6 +1,6 @@
-from django.db import connection
-from django.db.backends.base.introspection import BaseDatabaseIntrospection
-from django.test import SimpleTestCase
+from hibeedb import connection
+from hibeedb.backends.base.introspection import BaseDatabaseIntrospection
+from hibeetest import SimpleTestCase
 
 
 class SimpleDatabaseIntrospectionTests(SimpleTestCase):

@@ -1,7 +1,7 @@
-from django.db.models import Value
-from django.db.models.functions import StrIndex
-from django.test import TestCase
-from django.utils import timezone
+from hibeedb.models import Value
+from hibeedb.models.functions import StrIndex
+from hibeetest import TestCase
+from hibeeutils import timezone
 
 from ..models import Article, Author
 
@@ -18,8 +18,8 @@ class StrIndexTests(TestCase):
 
     def test_annotate_textfield(self):
         Article.objects.create(
-            title="How to Django",
-            text="This is about How to Django.",
+            title="How to Hibee,
+            text="This is about How to Hibee",
             written=timezone.now(),
         )
         Article.objects.create(

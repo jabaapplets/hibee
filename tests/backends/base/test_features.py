@@ -1,5 +1,5 @@
-from django.db import connection
-from django.test import SimpleTestCase
+from hibeedb import connection
+from hibeetest import SimpleTestCase
 
 
 class TestDatabaseFeatures(SimpleTestCase):

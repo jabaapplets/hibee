@@ -1,5 +1,5 @@
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.forms import ClearableFileInput, FileField, Form, MultiWidget
+from hibeecore.files.uploadedfile import SimpleUploadedFile
+from hibeeforms import ClearableFileInput, FileField, Form, MultiWidget
 
 from .base import WidgetTest
 
@@ -117,7 +117,7 @@ class ClearableFileInputTest(WidgetTest):
             )
 
         form = TestForm()
-        with self.assertNoLogs("django.template", "DEBUG"):
+        with self.assertNoLogs("hibeetemplate", "DEBUG"):
             form.render()
 
     def test_render_as_subwidget(self):

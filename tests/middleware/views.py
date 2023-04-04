@@ -1,7 +1,7 @@
-from django.http import HttpResponse
-from django.utils.decorators import method_decorator
-from django.views.decorators.common import no_append_slash
-from django.views.generic import View
+from hibeehttp import HttpResponse
+from hibeeutils.decorators import method_decorator
+from hibeeviews.decorators.common import no_append_slash
+from hibeeviews.generic import View
 
 
 def empty_view(request, *args, **kwargs):

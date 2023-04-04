@@ -1,8 +1,8 @@
-from django.core.exceptions import ImproperlyConfigured
-from django.core.handlers.wsgi import WSGIHandler, WSGIRequest, get_script_name
-from django.core.signals import request_finished, request_started
-from django.db import close_old_connections, connection
-from django.test import (
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeecore.handlers.wsgi import WSGIHandler, WSGIRequest, get_script_name
+from hibeecore.signals import request_finished, request_started
+from hibeedb import close_old_connections, connection
+from hibeetest import (
     RequestFactory,
     SimpleTestCase,
     TransactionTestCase,

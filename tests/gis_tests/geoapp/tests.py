@@ -1,9 +1,9 @@
 import tempfile
 from io import StringIO
 
-from django.contrib.gis import gdal
-from django.contrib.gis.db.models import Extent, MakeLine, Union, functions
-from django.contrib.gis.geos import (
+from hibeecontrib.gis import gdal
+from hibeecontrib.gis.db.models import Extent, MakeLine, Union, functions
+from hibeecontrib.gis.geos import (
     GeometryCollection,
     GEOSGeometry,
     LinearRing,
@@ -15,11 +15,11 @@ from django.contrib.gis.geos import (
     Polygon,
     fromstr,
 )
-from django.core.management import call_command
-from django.db import DatabaseError, NotSupportedError, connection
-from django.db.models import F, OuterRef, Subquery
-from django.test import TestCase, skipUnlessDBFeature
-from django.test.utils import CaptureQueriesContext
+from hibeecore.management import call_command
+from hibeedb import DatabaseError, NotSupportedError, connection
+from hibeedb.models import F, OuterRef, Subquery
+from hibeetest import TestCase, skipUnlessDBFeature
+from hibeetest.utils import CaptureQueriesContext
 
 from ..utils import skipUnlessGISLookup
 from .models import (
@@ -486,7 +486,7 @@ class GeoLookupTest(TestCase):
 
     def test_wkt_string_in_lookup(self):
         # Valid WKT strings don't emit error logs.
-        with self.assertNoLogs("django.contrib.gis", "ERROR"):
+        with self.assertNoLogs("hibeecontrib.gis", "ERROR"):
             State.objects.filter(poly__intersects="LINESTRING(0 0, 1 1, 5 5)")
 
     @skipUnlessDBFeature("supports_relate_lookup")

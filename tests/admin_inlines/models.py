@@ -3,10 +3,10 @@ Testing of admin inline formsets.
 """
 import random
 
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ValidationError
-from django.db import models
+from hibeecontrib.contenttypes.fields import GenericForeignKey
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore.exceptions import ValidationError
+from hibeedb import models
 
 
 class Parent(models.Model):

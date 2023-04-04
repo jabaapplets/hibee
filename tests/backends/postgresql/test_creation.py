@@ -3,17 +3,17 @@ from contextlib import contextmanager
 from io import StringIO
 from unittest import mock
 
-from django.core.exceptions import ImproperlyConfigured
-from django.db import DatabaseError, connection
-from django.db.backends.base.creation import BaseDatabaseCreation
-from django.test import SimpleTestCase
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeedb import DatabaseError, connection
+from hibeedb.backends.base.creation import BaseDatabaseCreation
+from hibeetest import SimpleTestCase
 
 try:
-    from django.db.backends.postgresql.psycopg_any import errors
+    from hibeedb.backends.postgresql.psycopg_any import errors
 except ImportError:
     pass
 else:
-    from django.db.backends.postgresql.creation import DatabaseCreation
+    from hibeedb.backends.postgresql.creation import DatabaseCreation
 
 
 @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL tests")

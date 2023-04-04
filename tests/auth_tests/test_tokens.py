@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
 
-from django.conf import settings
-from django.contrib.auth.models import User
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.core.exceptions import ImproperlyConfigured
-from django.test import TestCase
-from django.test.utils import override_settings
+from hibeeconf import settings
+from hibeecontrib.auth.models import User
+from hibeecontrib.auth.tokens import PasswordResetTokenGenerator
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeetest import TestCase
+from hibeetest.utils import override_settings
 
 from .models import CustomEmailField
 

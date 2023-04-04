@@ -1,6 +1,6 @@
 try:
-    from django.contrib.gis import admin
+    from hibeecontrib.gis import admin
 except ImportError:
-    from django.contrib import admin
+    from hibeecontrib import admin
 
     admin.GISModelAdmin = admin.ModelAdmin

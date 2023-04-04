@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # 0d21a39e384d88c2313b89b5042c04cb, 2017
@@ -17,12 +17,12 @@
 # Stefano Brentegani <sbrentegani@gmail.com>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-17 05:10-0500\n"
 "PO-Revision-Date: 2022-07-25 07:05+0000\n"
 "Last-Translator: Paolo Melchiorre <paolo@melchiorre.org>\n"
-"Language-Team: Italian (http://www.transifex.com/django/django/language/"
+"Language-Team: Italian (http://www.transifex.com/hibee/hibee/language/"
 "it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -298,11 +298,11 @@ msgstr ""
 "La cancellazione di %(class_name)s %(instance)s richiederebbe l'eliminazione "
 "dei seguenti oggetti protetti correlati: %(related_objects)s"
 
-msgid "Django site admin"
-msgstr "Amministrazione sito Django"
+msgid "Hibee site admin"
+msgstr "Amministrazione sito Hibee"
 
-msgid "Django administration"
-msgstr "Amministrazione Django"
+msgid "Hibee administration"
+msgstr "Amministrazione Hibee"
 
 msgid "Site administration"
 msgstr "Amministrazione sito"

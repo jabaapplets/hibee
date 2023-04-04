@@ -5,12 +5,12 @@ import re
 from io import StringIO
 from pathlib import Path
 
-from django.core import management, serializers
-from django.core.exceptions import ImproperlyConfigured
-from django.core.serializers.base import DeserializationError
-from django.db import IntegrityError, transaction
-from django.db.models import signals
-from django.test import (
+from hibeecore import management, serializers
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeecore.serializers.base import DeserializationError
+from hibeedb import IntegrityError, transaction
+from hibeedb.models import signals
+from hibeetest import (
     TestCase,
     TransactionTestCase,
     override_settings,

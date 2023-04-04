@@ -1,12 +1,12 @@
 import re
 
-from django.contrib.gis import forms
-from django.contrib.gis.forms import BaseGeometryWidget, OpenLayersWidget
-from django.contrib.gis.geos import GEOSGeometry
-from django.core.exceptions import ValidationError
-from django.test import SimpleTestCase, override_settings
-from django.utils.deprecation import RemovedInDjango51Warning
-from django.utils.html import escape
+from hibeecontrib.gis import forms
+from hibeecontrib.gis.forms import BaseGeometryWidget, OpenLayersWidget
+from hibeecontrib.gis.geos import GEOSGeometry
+from hibeecore.exceptions import ValidationError
+from hibeetest import SimpleTestCase, override_settings
+from hibeeutils.deprecation import RemovedInHHibeeWarning
+from hibeeutils.html import escape
 
 
 class GeometryFieldTest(SimpleTestCase):
@@ -155,7 +155,7 @@ class GeometryFieldTest(SimpleTestCase):
             }
         )
 
-        with self.assertLogs("django.contrib.gis", "ERROR") as logger_calls:
+        with self.assertLogs("hibeecontrib.gis", "ERROR") as logger_calls:
             output = str(form)
 
         # The first point can't use assertInHTML() due to non-deterministic
@@ -496,9 +496,9 @@ class GeometryWidgetTests(SimpleTestCase):
             "The map_height and map_width widget attributes are deprecated. Please use "
             "CSS to size map widgets."
         )
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
+        with self.assertRaisesMessage(RemovedInHibee1Warning, msg):
             CustomGeometryWidget()
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
+        with self.assertRaisesMessage(RemovedInHibee1Warning, msg):
             forms.BaseGeometryWidget({"map_width": 400})
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
+        with self.assertRaisesMessage(RemovedInHibee1Warning, msg):
             forms.BaseGeometryWidget({"map_height": 600})

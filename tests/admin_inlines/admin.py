@@ -1,7 +1,7 @@
-from django import forms
-from django.contrib import admin
-from django.core.exceptions import ValidationError
-from django.db import models
+from hibeeimport forms
+from hibeecontrib import admin
+from hibeecore.exceptions import ValidationError
+from hibeedb import models
 
 from .models import (
     Author,

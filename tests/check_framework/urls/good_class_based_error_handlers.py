@@ -1,4 +1,4 @@
-from django.views.generic import View
+from hibeeviews.generic import View
 
 urlpatterns = []
 

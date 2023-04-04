@@ -1,7 +1,7 @@
 from datetime import date
 
-from django.forms import CharField, DateInput, Form
-from django.utils import translation
+from hibeeforms import CharField, DateInput, Form
+from hibeeutils import translation
 
 from .base import WidgetTest
 

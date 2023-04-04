@@ -1,11 +1,11 @@
-from django.http import HttpResponse
-from django.test import RequestFactory, SimpleTestCase
-from django.test.utils import override_settings
+from hibeehttp import HttpResponse
+from hibeetest import RequestFactory, SimpleTestCase
+from hibeetest.utils import override_settings
 
 
 class SecurityMiddlewareTest(SimpleTestCase):
     def middleware(self, *args, **kwargs):
-        from django.middleware.security import SecurityMiddleware
+        from hibeemiddleware.security import SecurityMiddleware
 
         return SecurityMiddleware(self.response(*args, **kwargs))
 

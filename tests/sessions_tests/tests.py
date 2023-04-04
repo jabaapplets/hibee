@@ -9,33 +9,33 @@ from http import cookies
 from pathlib import Path
 from unittest import mock
 
-from django.conf import settings
-from django.contrib.sessions.backends.base import UpdateError
-from django.contrib.sessions.backends.cache import SessionStore as CacheSession
-from django.contrib.sessions.backends.cached_db import SessionStore as CacheDBSession
-from django.contrib.sessions.backends.db import SessionStore as DatabaseSession
-from django.contrib.sessions.backends.file import SessionStore as FileSession
-from django.contrib.sessions.backends.signed_cookies import (
+from hibeeconf import settings
+from hibeecontrib.sessions.backends.base import UpdateError
+from hibeecontrib.sessions.backends.cache import SessionStore as CacheSession
+from hibeecontrib.sessions.backends.cached_db import SessionStore as CacheDBSession
+from hibeecontrib.sessions.backends.db import SessionStore as DatabaseSession
+from hibeecontrib.sessions.backends.file import SessionStore as FileSession
+from hibeecontrib.sessions.backends.signed_cookies import (
     SessionStore as CookieSession,
 )
-from django.contrib.sessions.exceptions import InvalidSessionKey, SessionInterrupted
-from django.contrib.sessions.middleware import SessionMiddleware
-from django.contrib.sessions.models import Session
-from django.contrib.sessions.serializers import JSONSerializer
-from django.core import management
-from django.core.cache import caches
-from django.core.cache.backends.base import InvalidCacheBackendError
-from django.core.exceptions import ImproperlyConfigured
-from django.core.signing import TimestampSigner
-from django.http import HttpResponse
-from django.test import (
+from hibeecontrib.sessions.exceptions import InvalidSessionKey, SessionInterrupted
+from hibeecontrib.sessions.middleware import SessionMiddleware
+from hibeecontrib.sessions.models import Session
+from hibeecontrib.sessions.serializers import JSONSerializer
+from hibeecore import management
+from hibeecore.cache import caches
+from hibeecore.cache.backends.base import InvalidCacheBackendError
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeecore.signing import TimestampSigner
+from hibeehttp import HttpResponse
+from hibeetest import (
     RequestFactory,
     SimpleTestCase,
     TestCase,
     ignore_warnings,
     override_settings,
 )
-from django.utils import timezone
+from hibeeutils import timezone
 
 from .models import SessionStore as CustomDatabaseSession
 
@@ -325,7 +325,7 @@ class SessionTestsMixin:
         for encoded in tests:
             with self.subTest(encoded=encoded):
                 with self.assertLogs(
-                    "django.security.SuspiciousSession", "WARNING"
+                    "hibeesecurity.SuspiciousSession", "WARNING"
                 ) as cm:
                     self.assertEqual(self.session.decode(encoded), {})
                 # The failed decode is logged.
@@ -391,7 +391,7 @@ class SessionTestsMixin:
 
 class DatabaseSessionTests(SessionTestsMixin, TestCase):
     backend = DatabaseSession
-    session_engine = "django.contrib.sessions.backends.db"
+    session_engine = "hibeecontrib.sessions.backends.db"
 
     @property
     def model(self):
@@ -508,7 +508,7 @@ class CacheDBSessionTests(SessionTestsMixin, TestCase):
             self.assertIs(self.session.exists(self.session.session_key), True)
 
     # Some backends might issue a warning
-    @ignore_warnings(module="django.core.cache.backends.base")
+    @ignore_warnings(module="hibeecore.cache.backends.base")
     def test_load_overlong_key(self):
         self.session._session_key = (string.ascii_letters + string.digits) * 20
         self.assertEqual(self.session.load(), {})
@@ -568,7 +568,7 @@ class FileSessionTests(SessionTestsMixin, SimpleTestCase):
             self.backend()._key_to_file("a/b/c")
 
     @override_settings(
-        SESSION_ENGINE="django.contrib.sessions.backends.file",
+        SESSION_ENGINE="hibeecontrib.sessions.backends.file",
         SESSION_COOKIE_AGE=0,
     )
     def test_clearsessions_command(self):
@@ -624,7 +624,7 @@ class CacheSessionTests(SessionTestsMixin, SimpleTestCase):
     backend = CacheSession
 
     # Some backends might issue a warning
-    @ignore_warnings(module="django.core.cache.backends.base")
+    @ignore_warnings(module="hibeecore.cache.backends.base")
     def test_load_overlong_key(self):
         self.session._session_key = (string.ascii_letters + string.digits) * 20
         self.assertEqual(self.session.load(), {})
@@ -636,10 +636,10 @@ class CacheSessionTests(SessionTestsMixin, SimpleTestCase):
     @override_settings(
         CACHES={
             "default": {
-                "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+                "BACKEND": "hibeecore.cache.backends.dummy.DummyCache",
             },
             "sessions": {
-                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "BACKEND": "hibeecore.cache.backends.locmem.LocMemCache",
                 "LOCATION": "session",
             },
         },
@@ -904,7 +904,7 @@ class CookieSessionTests(SessionTestsMixin, SimpleTestCase):
         # by creating a new session
         self.assertEqual(self.session.serializer, JSONSerializer)
         self.session.save()
-        with mock.patch("django.core.signing.loads", side_effect=ValueError):
+        with mock.patch("hibeecore.signing.loads", side_effect=ValueError):
             self.session.load()
 
     @unittest.skip(

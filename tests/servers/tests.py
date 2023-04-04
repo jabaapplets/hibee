@@ -1,5 +1,5 @@
 """
-Tests for django.core.servers.
+Tests for hibeecore.servers.
 """
 import errno
 import os
@@ -11,11 +11,11 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import urlopen
 
-from django.conf import settings
-from django.core.servers.basehttp import ThreadedWSGIServer, WSGIServer
-from django.db import DEFAULT_DB_ALIAS, connection, connections
-from django.test import LiveServerTestCase, override_settings
-from django.test.testcases import LiveServerThread, QuietWSGIRequestHandler
+from hibeeconf import settings
+from hibeecore.servers.basehttp import ThreadedWSGIServer, WSGIServer
+from hibeedb import DEFAULT_DB_ALIAS, connection, connections
+from hibeetest import LiveServerTestCase, override_settings
+from hibeetest.testcases import LiveServerThread, QuietWSGIRequestHandler
 
 from .models import Person
 
@@ -32,9 +32,9 @@ TEST_SETTINGS = {
 class LiveServerBase(LiveServerTestCase):
     available_apps = [
         "servers",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.sessions",
+        "hibeecontrib.auth",
+        "hibeecontrib.contenttypes",
+        "hibeecontrib.sessions",
     ]
     fixtures = ["testdata.json"]
 
@@ -71,7 +71,7 @@ class LiveServerTestCloseConnectionTest(LiveServerBase):
         cls.old_conn_max_age = conn.settings_dict["CONN_MAX_AGE"]
         # Set the connection's CONN_MAX_AGE to None to simulate the
         # CONN_MAX_AGE setting being set to None on the server. This prevents
-        # Django from closing the connection and allows testing that
+        # Hibeefrom closing the connection and allows testing that
         # ThreadedWSGIServer closes connections.
         conn.settings_dict["CONN_MAX_AGE"] = None
         # Pass a database connection through to the server to check it is being

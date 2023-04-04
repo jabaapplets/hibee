@@ -1,13 +1,13 @@
 import unittest
 
-from django.core.checks import Error, Warning
-from django.core.checks.model_checks import _check_lazy_references
-from django.db import connection, connections, models
-from django.db.models.functions import Abs, Lower, Round
-from django.db.models.signals import post_init
-from django.test import SimpleTestCase, TestCase, ignore_warnings, skipUnlessDBFeature
-from django.test.utils import isolate_apps, override_settings, register_lookup
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibeecore.checks import Error, Warning
+from hibeecore.checks.model_checks import _check_lazy_references
+from hibeedb import connection, connections, models
+from hibeedb.models.functions import Abs, Lower, Round
+from hibeedb.models.signals import post_init
+from hibeetest import SimpleTestCase, TestCase, ignore_warnings, skipUnlessDBFeature
+from hibeetest.utils import isolate_apps, override_settings, register_lookup
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 
 class EmptyRouter:
@@ -30,7 +30,7 @@ def get_max_column_name_length():
 
 
 @isolate_apps("invalid_models_tests")
-@ignore_warnings(category=RemovedInDjango51Warning)
+@ignore_warnings(category=RemovedInHibee1Warning)
 class IndexTogetherTests(SimpleTestCase):
     def test_non_iterable(self):
         class Model(models.Model):
@@ -1794,7 +1794,7 @@ class OtherModelTests(SimpleTestCase):
 
         self.assertEqual(C.check(), [])
 
-    @isolate_apps("django.contrib.auth", kwarg_name="apps")
+    @isolate_apps("hibeecontrib.auth", kwarg_name="apps")
     def test_lazy_reference_checks(self, apps):
         class DummyModel(models.Model):
             author = models.ForeignKey("Author", models.CASCADE)

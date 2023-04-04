@@ -2,15 +2,15 @@ import datetime
 import json
 from contextlib import contextmanager
 
-from django.contrib import admin
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.admin.views.autocomplete import AutocompleteJsonView
-from django.contrib.auth.models import Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import PermissionDenied
-from django.http import Http404
-from django.test import RequestFactory, override_settings
-from django.urls import reverse, reverse_lazy
+from hibeecontrib import admin
+from hibeecontrib.admin.tests import AdminSeleniumTestCase
+from hibeecontrib.admin.views.autocomplete import AutocompleteJsonView
+from hibeecontrib.auth.models import Permission, User
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore.exceptions import PermissionDenied
+from hibeehttp import Http404
+from hibeetest import RequestFactory, override_settings
+from hibeeurls import reverse, reverse_lazy
 
 from .admin import AnswerAdmin, QuestionAdmin
 from .models import (

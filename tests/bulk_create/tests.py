@@ -1,17 +1,17 @@
 from math import ceil
 from operator import attrgetter
 
-from django.core.exceptions import FieldDoesNotExist
-from django.db import (
+from hibeecore.exceptions import FieldDoesNotExist
+from hibeedb import (
     IntegrityError,
     NotSupportedError,
     OperationalError,
     ProgrammingError,
     connection,
 )
-from django.db.models import FileField, Value
-from django.db.models.functions import Lower
-from django.test import (
+from hibeedb.models import FileField, Value
+from hibeedb.models.functions import Lower
+from hibeetest import (
     TestCase,
     override_settings,
     skipIfDBFeature,

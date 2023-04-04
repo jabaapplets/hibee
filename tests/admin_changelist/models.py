@@ -1,7 +1,7 @@
 import uuid
 
-from django.contrib.auth.models import User
-from django.db import models
+from hibeecontrib.auth.models import User
+from hibeedb import models
 
 
 class Event(models.Model):

@@ -1,6 +1,6 @@
-from django.db import DEFAULT_DB_ALIAS, connection
-from django.db.models.sql import Query
-from django.test import SimpleTestCase
+from hibeedb import DEFAULT_DB_ALIAS, connection
+from hibeedb.models.sql import Query
+from hibeetest import SimpleTestCase
 
 from .models import Item
 

@@ -1,7 +1,7 @@
 import uuid
 
-from django.contrib.auth.models import AbstractUser
-from django.db import models
+from hibeecontrib.auth.models import AbstractUser
+from hibeedb import models
 
 from .custom_user import RemoveGroupsAndPermissions
 

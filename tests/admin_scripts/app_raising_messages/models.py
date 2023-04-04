@@ -1,5 +1,5 @@
-from django.core import checks
-from django.db import models
+from hibeecore import checks
+from hibeedb import models
 
 
 class ModelRaisingMessages(models.Model):

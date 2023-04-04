@@ -1,4 +1,4 @@
-from django.forms import BooleanField, CheckboxInput, Form
+from hibeeforms import BooleanField, CheckboxInput, Form
 
 from .base import WidgetTest
 

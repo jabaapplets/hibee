@@ -1,9 +1,9 @@
 import copy
 import datetime
 
-from django.forms import ChoiceField, Form, Select
-from django.test import override_settings
-from django.utils.safestring import mark_safe
+from hibeeforms import ChoiceField, Form, Select
+from hibeetest import override_settings
+from hibeeutils.safestring import mark_safe
 
 from .base import WidgetTest
 
@@ -377,7 +377,7 @@ class SelectTest(WidgetTest):
                     "attrs": {},
                     "index": "0_0",
                     "label": "Vinyl",
-                    "template_name": "django/forms/widgets/select_option.html",
+                    "template_name": "hibeeforms/widgets/select_option.html",
                     "name": "name",
                     "selected": False,
                     "wrap_label": True,
@@ -388,7 +388,7 @@ class SelectTest(WidgetTest):
                     "attrs": {},
                     "index": "0_1",
                     "label": "CD",
-                    "template_name": "django/forms/widgets/select_option.html",
+                    "template_name": "hibeeforms/widgets/select_option.html",
                     "name": "name",
                     "selected": False,
                     "wrap_label": True,
@@ -403,7 +403,7 @@ class SelectTest(WidgetTest):
             [
                 {
                     "value": "vhs",
-                    "template_name": "django/forms/widgets/select_option.html",
+                    "template_name": "hibeeforms/widgets/select_option.html",
                     "label": "VHS Tape",
                     "attrs": {"selected": True},
                     "index": "1_0",
@@ -414,7 +414,7 @@ class SelectTest(WidgetTest):
                 },
                 {
                     "value": "dvd",
-                    "template_name": "django/forms/widgets/select_option.html",
+                    "template_name": "hibeeforms/widgets/select_option.html",
                     "label": "DVD",
                     "attrs": {},
                     "index": "1_1",
@@ -434,7 +434,7 @@ class SelectTest(WidgetTest):
                 {
                     "value": "unknown",
                     "selected": False,
-                    "template_name": "django/forms/widgets/select_option.html",
+                    "template_name": "hibeeforms/widgets/select_option.html",
                     "label": "Unknown",
                     "attrs": {},
                     "index": "2",

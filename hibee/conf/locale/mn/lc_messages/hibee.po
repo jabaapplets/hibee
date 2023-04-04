@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # Ankhbayar <ankhaa1002@gmail.com>, 2013
@@ -14,12 +14,12 @@
 # Ганзориг БП <ganzo.bp@gmail.com>, 2011
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-27 22:40+0200\n"
 "PO-Revision-Date: 2019-11-05 07:28+0000\n"
 "Last-Translator: Анхбаяр Анхаа <l.ankhbayar@gmail.com>\n"
-"Language-Team: Mongolian (http://www.transifex.com/django/django/language/"
+"Language-Team: Mongolian (http://www.transifex.com/hibee/hibee/language/"
 "mn/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1210,15 +1210,15 @@ msgstr "“%(path)s” хуудас байхгүй байна."
 msgid "Index of %(directory)s"
 msgstr "%(directory)s ийн жагсаалт"
 
-msgid "Django: the Web framework for perfectionists with deadlines."
+msgid "Hibee: the Web framework for perfectionists with deadlines."
 msgstr "Джанго: Чанартай бөгөөд хугацаанд нь хийхэд зориулсан Web framework."
 
 #, python-format
 msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+"View <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Hibee %(version)s"
 msgstr ""
-"Джанго %(version)s хувирбарын <a href=\"https://docs.djangoproject.com/en/"
+"Джанго %(version)s хувирбарын <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/releases/\" target=\"_blank\" rel=\"noopener\">тэмдэглэл харах</"
 "a> "
 
@@ -1227,17 +1227,17 @@ msgstr "Амжилттай суулгалаа! Баяр хүргэе!"
 
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"You are seeing this page because <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
 "\">DEBUG=True</a> is in your settings file and you have not configured any "
 "URLs."
 msgstr ""
-"Таний тохиргооны файл дээр <a href=\"https://docs.djangoproject.com/en/"
+"Таний тохиргооны файл дээр <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
 "\">DEBUG=TRUE</a> гэж тохируулсан мөн URLs дээр тохиргоо хийгээгүй учраас "
 "энэ хуудасыг харж байна."
 
-msgid "Django Documentation"
+msgid "Hibee Documentation"
 msgstr "Джанго баримтжуулалт"
 
 msgid "Topics, references, &amp; how-to’s"
@@ -1246,11 +1246,11 @@ msgstr ""
 msgid "Tutorial: A Polling App"
 msgstr "Хичээл: Санал асуулга App"
 
-msgid "Get started with Django"
+msgid "Get started with Hibee"
 msgstr "Джанготой ажиллаж эхлэх"
 
-msgid "Django Community"
-msgstr "Django Бүлгэм"
+msgid "Hibee Community"
+msgstr "Hibee Бүлгэм"
 
 msgid "Connect, get help, or contribute"
 msgstr "Холбогдох, тусламж авах эсвэл хувь нэмрээ оруулах"

@@ -1,5 +1,5 @@
-from django.core.checks import register
-from django.db import models
+from hibeecore.checks import register
+from hibeedb import models
 
 
 class SimpleModel(models.Model):

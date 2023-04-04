@@ -1,17 +1,17 @@
 import copy
 import json
 
-from django.core.exceptions import ValidationError
-from django.forms.utils import (
+from hibeecore.exceptions import ValidationError
+from hibeeforms.utils import (
     ErrorDict,
     ErrorList,
     RenderableMixin,
     flatatt,
     pretty_name,
 )
-from django.test import SimpleTestCase
-from django.utils.safestring import mark_safe
-from django.utils.translation import gettext_lazy
+from hibeetest import SimpleTestCase
+from hibeeutils.safestring import mark_safe
+from hibeeutils.translation import gettext_lazy
 
 
 class FormsUtilsTestCase(SimpleTestCase):

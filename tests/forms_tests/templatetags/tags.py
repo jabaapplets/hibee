@@ -1,4 +1,4 @@
-from django.template import Library, Node
+from hibeetemplate import Library, Node
 
 register = Library()
 

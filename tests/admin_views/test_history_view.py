@@ -1,10 +1,10 @@
-from django.contrib.admin.models import CHANGE, LogEntry
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
-from django.core.paginator import Paginator
-from django.test import TestCase, override_settings
-from django.urls import reverse
+from hibeecontrib.admin.models import CHANGE, LogEntry
+from hibeecontrib.admin.tests import AdminSeleniumTestCase
+from hibeecontrib.auth.models import User
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore.paginator import Paginator
+from hibeetest import TestCase, override_settings
+from hibeeurls import reverse
 
 from .models import City, State
 

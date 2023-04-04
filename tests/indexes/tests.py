@@ -1,9 +1,9 @@
 import datetime
 from unittest import skipUnless
 
-from django.conf import settings
-from django.db import connection
-from django.db.models import (
+from hibeeconf import settings
+from hibeedb import connection
+from hibeedb.models import (
     CASCADE,
     CharField,
     DateTimeField,
@@ -12,17 +12,17 @@ from django.db.models import (
     Model,
     Q,
 )
-from django.db.models.functions import Lower
-from django.test import (
+from hibeedb.models.functions import Lower
+from hibeetest import (
     TestCase,
     TransactionTestCase,
     ignore_warnings,
     skipIfDBFeature,
     skipUnlessDBFeature,
 )
-from django.test.utils import isolate_apps, override_settings
-from django.utils import timezone
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibeetest.utils import isolate_apps, override_settings
+from hibeeutils import timezone
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 from .models import Article, ArticleTranslation, IndexedArticle2
 
@@ -80,7 +80,7 @@ class SchemaIndexesTests(TestCase):
             index_sql[0],
         )
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     @isolate_apps("indexes")
     def test_index_together_single_list(self):
         class IndexTogetherSingleList(Model):

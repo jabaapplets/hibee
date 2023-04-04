@@ -2,9 +2,9 @@ import datetime
 from decimal import Decimal
 from unittest import mock
 
-from django.core.exceptions import FieldError
-from django.db import NotSupportedError, connection
-from django.db.models import (
+from hibeecore.exceptions import FieldError
+from hibeedb import NotSupportedError, connection
+from hibeedb.models import (
     Avg,
     Case,
     Count,
@@ -23,8 +23,8 @@ from django.db.models import (
     Window,
     WindowFrame,
 )
-from django.db.models.fields.json import KeyTextTransform, KeyTransform
-from django.db.models.functions import (
+from hibeedb.models.fields.json import KeyTextTransform, KeyTransform
+from hibeedb.models.functions import (
     Cast,
     CumeDist,
     DenseRank,
@@ -40,9 +40,9 @@ from django.db.models.functions import (
     RowNumber,
     Upper,
 )
-from django.db.models.lookups import Exact
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
-from django.test.utils import CaptureQueriesContext
+from hibeedb.models.lookups import Exact
+from hibeetest import SimpleTestCase, TestCase, skipUnlessDBFeature
+from hibeetest.utils import CaptureQueriesContext
 
 from .models import Classification, Detail, Employee, PastEmployeeDepartment
 

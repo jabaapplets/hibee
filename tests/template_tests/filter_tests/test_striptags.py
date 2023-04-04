@@ -1,7 +1,7 @@
-from django.template.defaultfilters import striptags
-from django.test import SimpleTestCase
-from django.utils.functional import lazystr
-from django.utils.safestring import mark_safe
+from hibeetemplate.defaultfilters import striptags
+from hibeetest import SimpleTestCase
+from hibeeutils.functional import lazystr
+from hibeeutils.safestring import mark_safe
 
 from ..utils import setup
 

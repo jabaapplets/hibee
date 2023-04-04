@@ -1,6 +1,6 @@
-from django import forms
-from django.db import models
-from django.test import SimpleTestCase, TestCase
+from hibeeimport forms
+from hibeedb import models
+from hibeetest import SimpleTestCase, TestCase
 
 from .models import Post
 

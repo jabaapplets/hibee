@@ -1,8 +1,8 @@
-from django.contrib.auth.models import AnonymousUser, User
-from django.contrib.flatpages.models import FlatPage
-from django.contrib.sites.models import Site
-from django.template import Context, Template, TemplateSyntaxError
-from django.test import TestCase
+from hibeecontrib.auth.models import AnonymousUser, User
+from hibeecontrib.flatpages.models import FlatPage
+from hibeecontrib.sites.models import Site
+from hibeetemplate import Context, Template, TemplateSyntaxError
+from hibeetest import TestCase
 
 
 class FlatpageTemplateTagTests(TestCase):

@@ -1,8 +1,8 @@
 import datetime
 
-from django.db import connection
-from django.test import TestCase, skipUnlessDBFeature
-from django.test.utils import CaptureQueriesContext
+from hibeedb import connection
+from hibeetest import TestCase, skipUnlessDBFeature
+from hibeetest.utils import CaptureQueriesContext
 
 from .models import DumbCategory, NonIntegerPKReturningModel, ReturningModel
 

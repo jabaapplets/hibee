@@ -1,5 +1,5 @@
-from django.conf import settings
-from django.db import migrations, models
+from hibeeconf import settings
+from hibeedb import migrations, models
 
 
 class Migration(migrations.Migration):

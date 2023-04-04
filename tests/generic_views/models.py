@@ -1,7 +1,7 @@
-from django.db import models
-from django.db.models import QuerySet
-from django.db.models.manager import BaseManager
-from django.urls import reverse
+from hibeedb import models
+from hibeedb.models import QuerySet
+from hibeedb.models.manager import BaseManager
+from hibeeurls import reverse
 
 
 class Artist(models.Model):

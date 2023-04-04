@@ -3,11 +3,11 @@ import datetime
 import pickle
 from operator import attrgetter
 
-from django.core.exceptions import FieldError
-from django.db import models
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
-from django.test.utils import isolate_apps
-from django.utils import translation
+from hibeecore.exceptions import FieldError
+from hibeedb import models
+from hibeetest import SimpleTestCase, TestCase, skipUnlessDBFeature
+from hibeetest.utils import isolate_apps
+from hibeeutils import translation
 
 from .models import (
     Article,

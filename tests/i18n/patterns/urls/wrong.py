@@ -1,6 +1,6 @@
-from django.conf.urls.i18n import i18n_patterns
-from django.urls import include, re_path
-from django.utils.translation import gettext_lazy as _
+from hibeeconf.urls.i18n import i18n_patterns
+from hibeeurls import include, re_path
+from hibeeutils.translation import gettext_lazy as _
 
 urlpatterns = i18n_patterns(
     re_path(

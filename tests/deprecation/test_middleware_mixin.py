@@ -2,33 +2,33 @@ import threading
 
 from asgiref.sync import async_to_sync, iscoroutinefunction
 
-from django.contrib.admindocs.middleware import XViewMiddleware
-from django.contrib.auth.middleware import (
+from hibeecontrib.admindocs.middleware import XViewMiddleware
+from hibeecontrib.auth.middleware import (
     AuthenticationMiddleware,
     RemoteUserMiddleware,
 )
-from django.contrib.flatpages.middleware import FlatpageFallbackMiddleware
-from django.contrib.messages.middleware import MessageMiddleware
-from django.contrib.redirects.middleware import RedirectFallbackMiddleware
-from django.contrib.sessions.middleware import SessionMiddleware
-from django.contrib.sites.middleware import CurrentSiteMiddleware
-from django.db import connection
-from django.http.request import HttpRequest
-from django.http.response import HttpResponse
-from django.middleware.cache import (
+from hibeecontrib.flatpages.middleware import FlatpageFallbackMiddleware
+from hibeecontrib.messages.middleware import MessageMiddleware
+from hibeecontrib.redirects.middleware import RedirectFallbackMiddleware
+from hibeecontrib.sessions.middleware import SessionMiddleware
+from hibeecontrib.sites.middleware import CurrentSiteMiddleware
+from hibeedb import connection
+from hibeehttp.request import HttpRequest
+from hibeehttp.response import HttpResponse
+from hibeemiddleware.cache import (
     CacheMiddleware,
     FetchFromCacheMiddleware,
     UpdateCacheMiddleware,
 )
-from django.middleware.clickjacking import XFrameOptionsMiddleware
-from django.middleware.common import BrokenLinkEmailsMiddleware, CommonMiddleware
-from django.middleware.csrf import CsrfViewMiddleware
-from django.middleware.gzip import GZipMiddleware
-from django.middleware.http import ConditionalGetMiddleware
-from django.middleware.locale import LocaleMiddleware
-from django.middleware.security import SecurityMiddleware
-from django.test import SimpleTestCase
-from django.utils.deprecation import MiddlewareMixin
+from hibeemiddleware.clickjacking import XFrameOptionsMiddleware
+from hibeemiddleware.common import BrokenLinkEmailsMiddleware, CommonMiddleware
+from hibeemiddleware.csrf import CsrfViewMiddleware
+from hibeemiddleware.gzip import GZipMiddleware
+from hibeemiddleware.http import ConditionalGetMiddleware
+from hibeemiddleware.locale import LocaleMiddleware
+from hibeemiddleware.security import SecurityMiddleware
+from hibeetest import SimpleTestCase
+from hibeeutils.deprecation import MiddlewareMixin
 
 
 class MiddlewareMixinTests(SimpleTestCase):

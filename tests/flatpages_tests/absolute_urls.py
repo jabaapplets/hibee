@@ -1,5 +1,5 @@
-from django.contrib.flatpages import views
-from django.urls import path
+from hibeecontrib.flatpages import views
+from hibeeurls import path
 
 urlpatterns = [
     path("flatpage/", views.flatpage, {"url": "/hardcoded/"}),

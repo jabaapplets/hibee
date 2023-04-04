@@ -1,6 +1,6 @@
-from django.db.models import IntegerField, Value
-from django.db.models.functions import Lower, Right
-from django.test import TestCase
+from hibeedb.models import IntegerField, Value
+from hibeedb.models.functions import Lower, Right
+from hibeetest import TestCase
 
 from ..models import Author
 

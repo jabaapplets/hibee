@@ -1,16 +1,16 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # Jafry Hisham, 2021
 # Mariusz Felisiak <felisiak.mariusz@gmail.com>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-21 10:22+0200\n"
 "PO-Revision-Date: 2021-12-06 07:43+0000\n"
 "Last-Translator: Mariusz Felisiak <felisiak.mariusz@gmail.com>\n"
-"Language-Team: Malay (http://www.transifex.com/django/django/language/ms/)\n"
+"Language-Team: Malay (http://www.transifex.com/hibee/hibee/language/ms/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1249,26 +1249,26 @@ msgstr "Pemasangan berjaya dilakukan! Tahniah!"
 
 #, python-format
 msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+"View <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Hibee %(version)s"
 msgstr ""
-"Lihat <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">nota pelepasan</a> bagi Django %(version)s"
+"Lihat <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">nota pelepasan</a> bagi Hibee %(version)s"
 
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"You are seeing this page because <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
 "\">DEBUG=True</a> is in your settings file and you have not configured any "
 "URLs."
 msgstr ""
-"Anda melihat ruangan ini kerana <a href=\"https://docs.djangoproject.com/en/"
+"Anda melihat ruangan ini kerana <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
 "\">DEBUG=True</a> terdapat didalam fail tetapan anda dan anda tidak "
 "menetapkan sebarang URL."
 
-msgid "Django Documentation"
-msgstr "Dokumentasi Django"
+msgid "Hibee Documentation"
+msgstr "Dokumentasi Hibee"
 
 msgid "Topics, references, &amp; how-to’s"
 msgstr "Topik, rujukan, & bagaimana-cara"
@@ -1276,11 +1276,11 @@ msgstr "Topik, rujukan, & bagaimana-cara"
 msgid "Tutorial: A Polling App"
 msgstr "Tutorial: App Soal-Selidik"
 
-msgid "Get started with Django"
-msgstr "Mulakan dengan Django"
+msgid "Get started with Hibee"
+msgstr "Mulakan dengan Hibee"
 
-msgid "Django Community"
-msgstr "Komuniti Django"
+msgid "Hibee Community"
+msgstr "Komuniti Hibee"
 
 msgid "Connect, get help, or contribute"
 msgstr "Sambung, minta bantuan, atau sumbang"

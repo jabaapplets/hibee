@@ -1,10 +1,10 @@
 from urllib.parse import urljoin
 
-from django.conf import STATICFILES_STORAGE_ALIAS
-from django.contrib.staticfiles import storage
-from django.forms import Media
-from django.templatetags.static import static
-from django.test import SimpleTestCase, override_settings
+from hibeeconf import STATICFILES_STORAGE_ALIAS
+from hibeecontrib.staticfiles import storage
+from hibeeforms import Media
+from hibeetemplatetags.static import static
+from hibeetest import SimpleTestCase, override_settings
 
 
 class StaticTestStorage(storage.StaticFilesStorage):
@@ -13,7 +13,7 @@ class StaticTestStorage(storage.StaticFilesStorage):
 
 
 @override_settings(
-    INSTALLED_APPS=("django.contrib.staticfiles",),
+    INSTALLED_APPS=("hibeecontrib.staticfiles",),
     STORAGES={
         STATICFILES_STORAGE_ALIAS: {
             "BACKEND": "staticfiles_tests.test_forms.StaticTestStorage",

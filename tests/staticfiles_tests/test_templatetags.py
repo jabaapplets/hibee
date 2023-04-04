@@ -1,5 +1,5 @@
-from django.conf import STATICFILES_STORAGE_ALIAS
-from django.test import override_settings
+from hibeeconf import STATICFILES_STORAGE_ALIAS
+from hibeetest import override_settings
 
 from .cases import StaticFilesTestCase
 

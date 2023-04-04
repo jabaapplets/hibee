@@ -1,15 +1,15 @@
 import unittest
 from unittest import mock
 
-from django.core.checks.database import check_database_backends
-from django.db import connection, connections
-from django.test import TestCase
+from hibeecore.checks.database import check_database_backends
+from hibeedb import connection, connections
+from hibeetest import TestCase
 
 
 class DatabaseCheckTests(TestCase):
     databases = {"default", "other"}
 
-    @mock.patch("django.db.backends.base.validation.BaseDatabaseValidation.check")
+    @mock.patch("hibeedb.backends.base.validation.BaseDatabaseValidation.check")
     def test_database_checks_called(self, mocked_check):
         check_database_backends()
         self.assertFalse(mocked_check.called)

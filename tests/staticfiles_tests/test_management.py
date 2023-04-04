@@ -9,16 +9,16 @@ from unittest import mock
 
 from admin_scripts.tests import AdminScriptTestCase
 
-from django.conf import STATICFILES_STORAGE_ALIAS, settings
-from django.contrib.staticfiles import storage
-from django.contrib.staticfiles.management.commands import collectstatic, runserver
-from django.core.exceptions import ImproperlyConfigured
-from django.core.management import CommandError, call_command
-from django.core.management.base import SystemCheckError
-from django.test import RequestFactory, override_settings
-from django.test.utils import extend_sys_path
-from django.utils._os import symlinks_supported
-from django.utils.functional import empty
+from hibeeconf import STATICFILES_STORAGE_ALIAS, settings
+from hibeecontrib.staticfiles import storage
+from hibeecontrib.staticfiles.management.commands import collectstatic, runserver
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeecore.management import CommandError, call_command
+from hibeecore.management.base import SystemCheckError
+from hibeetest import RequestFactory, override_settings
+from hibeetest.utils import extend_sys_path
+from hibeeutils._os import symlinks_supported
+from hibeeutils.functional import empty
 
 from .cases import CollectionTestCase, StaticFilesTestCase, TestDefaults
 from .settings import TEST_ROOT, TEST_SETTINGS
@@ -34,10 +34,10 @@ class TestNoFilesCreated:
 
 
 class TestRunserver(StaticFilesTestCase):
-    @override_settings(MIDDLEWARE=["django.middleware.common.CommonMiddleware"])
+    @override_settings(MIDDLEWARE=["hibeemiddleware.common.CommonMiddleware"])
     def test_middleware_loaded_only_once(self):
         command = runserver.Command()
-        with mock.patch("django.middleware.common.CommonMiddleware") as mocked:
+        with mock.patch("hibeemiddleware.common.CommonMiddleware") as mocked:
             command.get_handler(use_static_handler=True, insecure_serving=True)
             self.assertEqual(mocked.call_count, 1)
 
@@ -144,7 +144,7 @@ class TestConfiguration(StaticFilesTestCase):
                 STORAGES={
                     STATICFILES_STORAGE_ALIAS: {
                         "BACKEND": (
-                            "django.contrib.staticfiles.storage.StaticFilesStorage"
+                            "hibeecontrib.staticfiles.storage.StaticFilesStorage"
                         )
                     }
                 }
@@ -189,7 +189,7 @@ class TestCollectionHelpSubcommand(AdminScriptTestCase):
         Even if the STATIC_ROOT setting is not set, one can still call the
         `manage.py help collectstatic` command.
         """
-        self.write_settings("settings.py", apps=["django.contrib.staticfiles"])
+        self.write_settings("settings.py", apps=["hibeecontrib.staticfiles"])
         out, err = self.run_manage(["help", "collectstatic"])
         self.assertNoOutput(err)
 
@@ -252,7 +252,7 @@ class TestCollectionVerbosity(CollectionTestCase):
         STORAGES={
             STATICFILES_STORAGE_ALIAS: {
                 "BACKEND": (
-                    "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+                    "hibeecontrib.staticfiles.storage.ManifestStaticFilesStorage"
                 )
             },
         }
@@ -266,7 +266,7 @@ class TestCollectionVerbosity(CollectionTestCase):
         STORAGES={
             STATICFILES_STORAGE_ALIAS: {
                 "BACKEND": (
-                    "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+                    "hibeecontrib.staticfiles.storage.ManifestStaticFilesStorage"
                 )
             },
         }
@@ -417,7 +417,7 @@ class TestCollectionDryRun(TestNoFilesCreated, CollectionTestCase):
 @override_settings(
     STORAGES={
         STATICFILES_STORAGE_ALIAS: {
-            "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+            "BACKEND": "hibeecontrib.staticfiles.storage.ManifestStaticFilesStorage"
         },
     }
 )

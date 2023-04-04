@@ -1,9 +1,9 @@
 from datetime import date, datetime
 
-from django.core.exceptions import ValidationError
-from django.forms import DateField, Form, HiddenInput, SelectDateWidget
-from django.test import SimpleTestCase
-from django.utils import translation
+from hibeecore.exceptions import ValidationError
+from hibeeforms import DateField, Form, HiddenInput, SelectDateWidget
+from hibeetest import SimpleTestCase
+from hibeeutils import translation
 
 
 class GetDate(Form):

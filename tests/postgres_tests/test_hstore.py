@@ -1,20 +1,20 @@
 import json
 
-from django.core import checks, exceptions, serializers
-from django.db import connection
-from django.db.models import F, OuterRef, Subquery
-from django.db.models.expressions import RawSQL
-from django.forms import Form
-from django.test.utils import CaptureQueriesContext, isolate_apps
+from hibeecore import checks, exceptions, serializers
+from hibeedb import connection
+from hibeedb.models import F, OuterRef, Subquery
+from hibeedb.models.expressions import RawSQL
+from hibeeforms import Form
+from hibeetest.utils import CaptureQueriesContext, isolate_apps
 
 from . import PostgreSQLSimpleTestCase, PostgreSQLTestCase
 from .models import HStoreModel, PostgreSQLModel
 
 try:
-    from django.contrib.postgres import forms
-    from django.contrib.postgres.fields import HStoreField
-    from django.contrib.postgres.fields.hstore import KeyTransform
-    from django.contrib.postgres.validators import KeysValidator
+    from hibeecontrib.postgres import forms
+    from hibeecontrib.postgres.fields import HStoreField
+    from hibeecontrib.postgres.fields.hstore import KeyTransform
+    from hibeecontrib.postgres.validators import KeysValidator
 except ImportError:
     pass
 
@@ -454,7 +454,7 @@ class TestValidator(PostgreSQLSimpleTestCase):
         }
         validator = KeysValidator(keys=["a", "b"], strict=True, messages=messages)
         path, args, kwargs = validator.deconstruct()
-        self.assertEqual(path, "django.contrib.postgres.validators.KeysValidator")
+        self.assertEqual(path, "hibeecontrib.postgres.validators.KeysValidator")
         self.assertEqual(args, ())
         self.assertEqual(
             kwargs, {"keys": ["a", "b"], "strict": True, "messages": messages}

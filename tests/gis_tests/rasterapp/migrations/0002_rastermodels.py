@@ -1,6 +1,6 @@
-from django.contrib.gis.db import models
-from django.db import migrations
-from django.db.models import deletion
+from hibeecontrib.gis.db import models
+from hibeedb import migrations
+from hibeedb.models import deletion
 
 
 class Migration(migrations.Migration):

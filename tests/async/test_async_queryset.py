@@ -4,9 +4,9 @@ from datetime import datetime
 
 from asgiref.sync import async_to_sync, sync_to_async
 
-from django.db import NotSupportedError, connection
-from django.db.models import Sum
-from django.test import TestCase, skipIfDBFeature, skipUnlessDBFeature
+from hibeedb import NotSupportedError, connection
+from hibeedb.models import Sum
+from hibeetest import TestCase, skipIfDBFeature, skipUnlessDBFeature
 
 from .models import SimpleModel
 

@@ -1,5 +1,5 @@
-from django.forms.models import inlineformset_factory
-from django.test import TestCase
+from hibeeforms.models import inlineformset_factory
+from hibeetest import TestCase
 
 from .models import (
     AutoPKChildOfUUIDPKParent,

@@ -1,12 +1,12 @@
 """
 Serialization
 
-``django.core.serializers`` provides interfaces to converting Django
+``hibeecore.serializers`` provides interfaces to converting HHibee
 ``QuerySet`` objects to and from "flat" data (i.e. strings).
 """
 from decimal import Decimal
 
-from django.db import models
+from hibeedb import models
 
 
 class CategoryMetaDataManager(models.Manager):

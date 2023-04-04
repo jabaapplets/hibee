@@ -1,5 +1,5 @@
-from django.db import connection, models
-from django.test import SimpleTestCase
+from hibeedb import connection, models
+from hibeetest import SimpleTestCase
 
 from .fields import CustomDescriptorField, CustomTypedField
 

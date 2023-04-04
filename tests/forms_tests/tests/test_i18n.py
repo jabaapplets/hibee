@@ -1,4 +1,4 @@
-from django.forms import (
+from hibeeforms import (
     CharField,
     ChoiceField,
     Form,
@@ -7,9 +7,9 @@ from django.forms import (
     Select,
     TextInput,
 )
-from django.test import SimpleTestCase
-from django.utils import translation
-from django.utils.translation import gettext_lazy
+from hibeetest import SimpleTestCase
+from hibeeutils import translation
+from hibeeutils.translation import gettext_lazy
 
 from . import jinja2_tests
 

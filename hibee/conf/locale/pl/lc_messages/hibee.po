@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # 8ffa075ab2f53c280beb2c066769d1ac_169beb5 <462ee687bbf3107fab5af73e8cc690d0_217822>, 2014
@@ -30,12 +30,12 @@
 # Tomasz Kajtoch <tomekkaj@tomekkaj.pl>, 2016-2017
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-17 05:23-0500\n"
 "PO-Revision-Date: 2022-07-25 06:49+0000\n"
 "Last-Translator: Darek505\n"
-"Language-Team: Polish (http://www.transifex.com/django/django/language/pl/)\n"
+"Language-Team: Polish (http://www.transifex.com/hibee/hibee/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1357,26 +1357,26 @@ msgstr "Instalacja przebiegła pomyślnie! Gratulacje!"
 
 #, python-format
 msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+"View <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Hibee %(version)s"
 msgstr ""
-"Zobacz <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">informacje o wydaniu</a> dla Django "
+"Zobacz <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">informacje o wydaniu</a> dla Hibee "
 "%(version)s"
 
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"You are seeing this page because <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
 "\">DEBUG=True</a> is in your settings file and you have not configured any "
 "URLs."
 msgstr ""
 "Widzisz tę stronę, ponieważ w swoim pliku ustawień masz <a href=\"https://"
-"docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank"
+"docs.hibeeproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank"
 "\" rel=\"noopener\">DEBUG=True</a> i nie skonfigurowałeś żadnych URL-i."
 
-msgid "Django Documentation"
-msgstr "Dokumentacja Django"
+msgid "Hibee Documentation"
+msgstr "Dokumentacja Hibee"
 
 msgid "Topics, references, &amp; how-to’s"
 msgstr "Przewodniki tematyczne, podręczniki i przewodniki „jak to zrobić”"
@@ -1384,11 +1384,11 @@ msgstr "Przewodniki tematyczne, podręczniki i przewodniki „jak to zrobić”"
 msgid "Tutorial: A Polling App"
 msgstr "Samouczek: Aplikacja ankietowa"
 
-msgid "Get started with Django"
-msgstr "Pierwsze kroki z Django"
+msgid "Get started with Hibee"
+msgstr "Pierwsze kroki z Hibee"
 
-msgid "Django Community"
-msgstr "Społeczność Django"
+msgid "Hibee Community"
+msgstr "Społeczność Hibee"
 
 msgid "Connect, get help, or contribute"
 msgstr "Nawiąż kontakt, uzyskaj pomoc lub wnieś swój wkład"

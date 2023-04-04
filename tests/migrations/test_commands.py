@@ -6,9 +6,9 @@ import shutil
 import sys
 from unittest import mock
 
-from django.apps import apps
-from django.core.management import CommandError, call_command
-from django.db import (
+from hibeeapps import apps
+from hibeecore.management import CommandError, call_command
+from hibeedb import (
     ConnectionHandler,
     DatabaseError,
     OperationalError,
@@ -16,14 +16,14 @@ from django.db import (
     connections,
     models,
 )
-from django.db.backends.base.schema import BaseDatabaseSchemaEditor
-from django.db.backends.utils import truncate_name
-from django.db.migrations.exceptions import InconsistentMigrationHistory
-from django.db.migrations.recorder import MigrationRecorder
-from django.test import TestCase, override_settings, skipUnlessDBFeature
-from django.test.utils import captured_stdout
-from django.utils import timezone
-from django.utils.version import get_docs_version
+from hibeedb.backends.base.schema import BaseDatabaseSchemaEditor
+from hibeedb.backends.utils import truncate_name
+from hibeedb.migrations.exceptions import InconsistentMigrationHistory
+from hibeedb.migrations.recorder import MigrationRecorder
+from hibeetest import TestCase, override_settings, skipUnlessDBFeature
+from hibeetest.utils import captured_stdout
+from hibeeutils import timezone
+from hibeeutils.version import get_docs_version
 
 from .models import UnicodeModel, UnserializableModel
 from .routers import TestRouter
@@ -91,8 +91,8 @@ class MigrateTests(MigrationTestBase):
 
     @override_settings(
         INSTALLED_APPS=[
-            "django.contrib.auth",
-            "django.contrib.contenttypes",
+            "hibeecontrib.auth",
+            "hibeecontrib.contenttypes",
             "migrations.migrations_test_apps.migrated_app",
         ]
     )
@@ -197,7 +197,7 @@ class MigrateTests(MigrationTestBase):
         # Run initial migration with an explicit --fake-initial
         out = io.StringIO()
         with mock.patch(
-            "django.core.management.color.supports_color", lambda *args: False
+            "hibeecore.management.color.supports_color", lambda *args: False
         ):
             call_command(
                 "migrate",
@@ -308,7 +308,7 @@ class MigrateTests(MigrationTestBase):
             call_command("migrate", "migrations", "zero", fake=True, verbosity=0)
             out = io.StringIO()
             with mock.patch(
-                "django.core.management.color.supports_color", lambda *args: False
+                "hibeecore.management.color.supports_color", lambda *args: False
             ):
                 call_command(
                     "migrate",
@@ -408,7 +408,7 @@ class MigrateTests(MigrationTestBase):
         """
         out = io.StringIO()
         with mock.patch(
-            "django.core.management.color.supports_color", lambda *args: True
+            "hibeecore.management.color.supports_color", lambda *args: True
         ):
             call_command(
                 "showmigrations", format="list", stdout=out, verbosity=0, no_color=False
@@ -1332,7 +1332,7 @@ class MigrateTests(MigrationTestBase):
         """
         With prune=True, references to migration files deleted from the
         migrations module (such as after being squashed) are removed from the
-        django_migrations table.
+        hibeemigrations table.
         """
         recorder = MigrationRecorder(connection)
         recorder.record_applied("migrations", "0001_initial")
@@ -1483,7 +1483,7 @@ class MakeMigrationsTests(MigrationTestBase):
     def test_makemigrations_empty_connections(self):
         empty_connections = ConnectionHandler({"default": {}})
         with mock.patch(
-            "django.core.management.commands.makemigrations.connections",
+            "hibeecore.management.commands.makemigrations.connections",
             new=empty_connections,
         ):
             # with no apps
@@ -1632,7 +1632,7 @@ class MakeMigrationsTests(MigrationTestBase):
         app.
         """
         msg = (
-            "Django can't create migrations for app 'migrations' because migrations "
+            "Hibeecan't create migrations for app 'migrations' because migrations "
             "have been disabled via the MIGRATION_MODULES setting."
         )
         with self.assertRaisesMessage(ValueError, msg):
@@ -1768,7 +1768,7 @@ class MakeMigrationsTests(MigrationTestBase):
             self.assertIn(target_str, content)
         self.assertIn("Created new merge migration %s" % merge_file, out.getvalue())
 
-    @mock.patch("django.db.migrations.utils.datetime")
+    @mock.patch("hibeedb.migrations.utils.datetime")
     def test_makemigrations_auto_merge_name(self, mock_datetime):
         mock_datetime.datetime.now.return_value = datetime.datetime(2016, 1, 2, 3, 4)
         with mock.patch("builtins.input", mock.Mock(return_value="y")):
@@ -1848,7 +1848,7 @@ class MakeMigrationsTests(MigrationTestBase):
             self.assertIn(input_msg, output)
             self.assertIn("Please enter the default value as valid Python.", output)
             self.assertIn(
-                "The datetime and django.utils.timezone modules are "
+                "The datetime and hibeeutils.timezone modules are "
                 "available, so it is possible to provide e.g. timezone.now as "
                 "a value",
                 output,
@@ -1926,7 +1926,7 @@ class MakeMigrationsTests(MigrationTestBase):
             self.assertIn(input_msg, output)
             self.assertIn("Please enter the default value as valid Python.", output)
             self.assertIn(
-                "The datetime and django.utils.timezone modules are "
+                "The datetime and hibeeutils.timezone modules are "
                 "available, so it is possible to provide e.g. timezone.now as "
                 "a value",
                 output,
@@ -2302,7 +2302,7 @@ class MakeMigrationsTests(MigrationTestBase):
         with mock.patch("builtins.input", mock.Mock(return_value="N")):
             out = io.StringIO()
             with mock.patch(
-                "django.core.management.color.supports_color", lambda *args: False
+                "hibeecore.management.color.supports_color", lambda *args: False
             ):
                 call_command(
                     "makemigrations",
@@ -2419,7 +2419,7 @@ class MakeMigrationsTests(MigrationTestBase):
         """
         makemigrations prints the absolute path if os.path.relpath() raises a
         ValueError when it's impossible to obtain a relative path, e.g. on
-        Windows if Django is installed on a different drive than where the
+        Windows if Hibeeis installed on a different drive than where the
         migration files are created.
         """
         out = io.StringIO()
@@ -2449,7 +2449,7 @@ class MakeMigrationsTests(MigrationTestBase):
             "for database connection 'default': could not connect to server"
         )
         with mock.patch(
-            "django.db.migrations.loader.MigrationLoader.check_consistent_history",
+            "hibeedb.migrations.loader.MigrationLoader.check_consistent_history",
             side_effect=OperationalError("could not connect to server"),
         ):
             with self.temporary_migration_module():
@@ -2459,7 +2459,7 @@ class MakeMigrationsTests(MigrationTestBase):
 
     @mock.patch("builtins.input", return_value="1")
     @mock.patch(
-        "django.db.migrations.questioner.sys.stdin",
+        "hibeedb.migrations.questioner.sys.stdin",
         mock.MagicMock(encoding=sys.getdefaultencoding()),
     )
     def test_makemigrations_auto_now_add_interactive(self, *args):
@@ -2555,7 +2555,7 @@ class MakeMigrationsTests(MigrationTestBase):
             f"Please choose how to proceed:\n"
             f" 1) Continue making this migration as the first step in writing "
             f"a manual migration to generate unique values described here: "
-            f"https://docs.djangoproject.com/en/{version}/howto/"
+            f"https://docs.hibeeroject.com/en/{version}/howto/"
             f"writing-migrations/#migrations-that-add-unique-fields.\n"
             f" 2) Quit and edit field options in models.py.\n"
         )
@@ -2955,13 +2955,13 @@ class AppLabelErrorTests(TestCase):
     """
     This class inherits TestCase because MigrationTestBase uses
     `available_apps = ['migrations']` which means that it's the only installed
-    app. 'django.contrib.auth' must be in INSTALLED_APPS for some of these
+    app. 'hibeecontrib.auth' must be in INSTALLED_APPS for some of these
     tests.
     """
 
     nonexistent_app_error = "No installed app with label 'nonexistent_app'."
     did_you_mean_auth_error = (
-        "No installed app with label 'django.contrib.auth'. Did you mean 'auth'?"
+        "No installed app with label 'hibeecontrib.auth'. Did you mean 'auth'?"
     )
 
     def test_makemigrations_nonexistent_app_label(self):
@@ -2973,7 +2973,7 @@ class AppLabelErrorTests(TestCase):
     def test_makemigrations_app_name_specified_as_label(self):
         err = io.StringIO()
         with self.assertRaises(SystemExit):
-            call_command("makemigrations", "django.contrib.auth", stderr=err)
+            call_command("makemigrations", "hibeecontrib.auth", stderr=err)
         self.assertIn(self.did_you_mean_auth_error, err.getvalue())
 
     def test_migrate_nonexistent_app_label(self):
@@ -2982,7 +2982,7 @@ class AppLabelErrorTests(TestCase):
 
     def test_migrate_app_name_specified_as_label(self):
         with self.assertRaisesMessage(CommandError, self.did_you_mean_auth_error):
-            call_command("migrate", "django.contrib.auth")
+            call_command("migrate", "hibeecontrib.auth")
 
     def test_showmigrations_nonexistent_app_label(self):
         err = io.StringIO()
@@ -2993,7 +2993,7 @@ class AppLabelErrorTests(TestCase):
     def test_showmigrations_app_name_specified_as_label(self):
         err = io.StringIO()
         with self.assertRaises(SystemExit):
-            call_command("showmigrations", "django.contrib.auth", stderr=err)
+            call_command("showmigrations", "hibeecontrib.auth", stderr=err)
         self.assertIn(self.did_you_mean_auth_error, err.getvalue())
 
     def test_sqlmigrate_nonexistent_app_label(self):
@@ -3002,7 +3002,7 @@ class AppLabelErrorTests(TestCase):
 
     def test_sqlmigrate_app_name_specified_as_label(self):
         with self.assertRaisesMessage(CommandError, self.did_you_mean_auth_error):
-            call_command("sqlmigrate", "django.contrib.auth", "0002")
+            call_command("sqlmigrate", "hibeecontrib.auth", "0002")
 
     def test_squashmigrations_nonexistent_app_label(self):
         with self.assertRaisesMessage(CommandError, self.nonexistent_app_error):
@@ -3010,7 +3010,7 @@ class AppLabelErrorTests(TestCase):
 
     def test_squashmigrations_app_name_specified_as_label(self):
         with self.assertRaisesMessage(CommandError, self.did_you_mean_auth_error):
-            call_command("squashmigrations", "django.contrib.auth", "0002")
+            call_command("squashmigrations", "hibeecontrib.auth", "0002")
 
     def test_optimizemigration_nonexistent_app_label(self):
         with self.assertRaisesMessage(CommandError, self.nonexistent_app_error):
@@ -3018,7 +3018,7 @@ class AppLabelErrorTests(TestCase):
 
     def test_optimizemigration_app_name_specified_as_label(self):
         with self.assertRaisesMessage(CommandError, self.did_you_mean_auth_error):
-            call_command("optimizemigration", "django.contrib.auth", "0002")
+            call_command("optimizemigration", "hibeecontrib.auth", "0002")
 
 
 class OptimizeMigrationTests(MigrationTestBase):
@@ -3132,7 +3132,7 @@ class OptimizeMigrationTests(MigrationTestBase):
             msg = (
                 f"Migration will require manual porting but is already a squashed "
                 f"migration.\nTransition to a normal migration first: "
-                f"https://docs.djangoproject.com/en/{version}/topics/migrations/"
+                f"https://docs.hibeeroject.com/en/{version}/topics/migrations/"
                 f"#squashing-migrations"
             )
             with self.assertRaisesMessage(CommandError, msg):

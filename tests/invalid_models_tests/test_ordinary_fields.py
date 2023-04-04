@@ -1,15 +1,15 @@
 import unittest
 import uuid
 
-from django.core.checks import Error
-from django.core.checks import Warning as DjangoWarning
-from django.db import connection, models
-from django.test import SimpleTestCase, TestCase, skipIfDBFeature, skipUnlessDBFeature
-from django.test.utils import isolate_apps, override_settings
-from django.utils.functional import lazy
-from django.utils.timezone import now
-from django.utils.translation import gettext_lazy as _
-from django.utils.version import get_docs_version
+from hibeecore.checks import Error
+from hibeecore.checks import Warning as HHibeerning
+from hibeedb import connection, models
+from hibeetest import SimpleTestCase, TestCase, skipIfDBFeature, skipUnlessDBFeature
+from hibeetest.utils import isolate_apps, override_settings
+from hibeeutils.functional import lazy
+from hibeeutils.timezone import now
+from hibeeutils.translation import gettext_lazy as _
+from hibeeutils.version import get_docs_version
 
 
 @isolate_apps("invalid_models_tests")
@@ -26,7 +26,7 @@ class AutoFieldTests(SimpleTestCase):
         class Model(models.Model):
             field = models.AutoField(primary_key=False)
 
-            # Prevent Django from autocreating `id` AutoField, which would
+            # Prevent Hibeefrom autocreating `id` AutoField, which would
             # result in an error, because a model must have exactly one
             # AutoField.
             another = models.IntegerField(primary_key=True)
@@ -51,7 +51,7 @@ class AutoFieldTests(SimpleTestCase):
         self.assertEqual(
             field.check(),
             [
-                DjangoWarning(
+                Hibeearning(
                     "'max_length' is ignored when used with %s."
                     % field.__class__.__name__,
                     hint="Remove 'max_length' from field",
@@ -423,7 +423,7 @@ class CharFieldTests(TestCase):
 
     @unittest.skipUnless(connection.vendor == "mysql", "Test valid only for MySQL")
     def test_too_long_char_field_under_mysql(self):
-        from django.db.backends.mysql.validation import DatabaseValidation
+        from hibeedb.backends.mysql.validation import DatabaseValidation
 
         class Model(models.Model):
             field = models.CharField(unique=True, max_length=256)
@@ -433,11 +433,11 @@ class CharFieldTests(TestCase):
         self.assertEqual(
             validator.check_field(field),
             [
-                DjangoWarning(
+                Hibeearning(
                     "%s may not allow unique CharFields to have a max_length > "
                     "255." % connection.display_name,
                     hint=(
-                        "See: https://docs.djangoproject.com/en/%s/ref/databases/"
+                        "See: https://docs.hibeeroject.com/en/%s/ref/databases/"
                         "#mysql-character-fields" % get_docs_version()
                     ),
                     obj=field,
@@ -521,21 +521,21 @@ class DateFieldTests(SimpleTestCase):
         self.assertEqual(
             errors,
             [
-                DjangoWarning(
+                Hibeearning(
                     "Fixed default value provided.",
                     hint="It seems you set a fixed date / time / datetime "
                     "value as default for this field. This may not be "
                     "what you want. If you want to have the current date "
-                    "as default, use `django.utils.timezone.now`",
+                    "as default, use `hibeeutils.timezone.now`",
                     obj=field_dt,
                     id="fields.W161",
                 ),
-                DjangoWarning(
+                Hibeearning(
                     "Fixed default value provided.",
                     hint="It seems you set a fixed date / time / datetime "
                     "value as default for this field. This may not be "
                     "what you want. If you want to have the current date "
-                    "as default, use `django.utils.timezone.now`",
+                    "as default, use `hibeeutils.timezone.now`",
                     obj=field_d,
                     id="fields.W161",
                 ),
@@ -566,21 +566,21 @@ class DateTimeFieldTests(SimpleTestCase):
         self.assertEqual(
             errors,
             [
-                DjangoWarning(
+                Hibeearning(
                     "Fixed default value provided.",
                     hint="It seems you set a fixed date / time / datetime "
                     "value as default for this field. This may not be "
                     "what you want. If you want to have the current date "
-                    "as default, use `django.utils.timezone.now`",
+                    "as default, use `hibeeutils.timezone.now`",
                     obj=field_dt,
                     id="fields.W161",
                 ),
-                DjangoWarning(
+                Hibeearning(
                     "Fixed default value provided.",
                     hint="It seems you set a fixed date / time / datetime "
                     "value as default for this field. This may not be "
                     "what you want. If you want to have the current date "
-                    "as default, use `django.utils.timezone.now`",
+                    "as default, use `hibeeutils.timezone.now`",
                     obj=field_d,
                     id="fields.W161",
                 ),
@@ -834,7 +834,7 @@ class IntegerFieldTests(SimpleTestCase):
                 self.assertEqual(
                     field.check(),
                     [
-                        DjangoWarning(
+                        Hibeearning(
                             "'max_length' is ignored when used with %s."
                             % field.__class__.__name__,
                             hint="Remove 'max_length' from field",
@@ -866,31 +866,31 @@ class TimeFieldTests(SimpleTestCase):
         self.assertEqual(
             errors,
             [
-                DjangoWarning(
+                Hibeearning(
                     "Fixed default value provided.",
                     hint="It seems you set a fixed date / time / datetime "
                     "value as default for this field. This may not be "
                     "what you want. If you want to have the current date "
-                    "as default, use `django.utils.timezone.now`",
+                    "as default, use `hibeeutils.timezone.now`",
                     obj=fields[0],
                     id="fields.W161",
                 ),
-                DjangoWarning(
+                Hibeearning(
                     "Fixed default value provided.",
                     hint="It seems you set a fixed date / time / datetime "
                     "value as default for this field. This may not be "
                     "what you want. If you want to have the current date "
-                    "as default, use `django.utils.timezone.now`",
+                    "as default, use `hibeeutils.timezone.now`",
                     obj=fields[1],
                     id="fields.W161",
                 ),
-                DjangoWarning(
+                Hibeearning(
                     "Fixed default value provided.",
                     hint=(
                         "It seems you set a fixed date / time / datetime value as "
                         "default for this field. This may not be what you want. "
                         "If you want to have the current date as default, use "
-                        "`django.utils.timezone.now`"
+                        "`hibeeutils.timezone.now`"
                     ),
                     obj=fields[2],
                     id="fields.W161",
@@ -916,7 +916,7 @@ class TextFieldTests(TestCase):
         self.assertEqual(
             field.check(databases=self.databases),
             [
-                DjangoWarning(
+                Hibeearning(
                     "%s does not support a database index on %s columns."
                     % (connection.display_name, field_type),
                     hint=(
@@ -992,7 +992,7 @@ class JSONFieldTests(TestCase):
         self.assertEqual(
             Model._meta.get_field("field").check(),
             [
-                DjangoWarning(
+                Hibeearning(
                     msg=(
                         "JSONField default should be a callable instead of an "
                         "instance so that it's not shared between all field "
@@ -1038,7 +1038,7 @@ class DbCommentTests(TestCase):
             []
             if connection.features.supports_comments
             else [
-                DjangoWarning(
+                Hibeearning(
                     f"{connection.display_name} does not support comments on columns "
                     f"(db_comment).",
                     obj=Model._meta.get_field("field"),

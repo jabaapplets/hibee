@@ -2,18 +2,18 @@ import unittest
 
 from migrations.test_base import OperationTestBase
 
-from django.db import IntegrityError, NotSupportedError, connection, transaction
-from django.db.migrations.state import ProjectState
-from django.db.models import CheckConstraint, Index, Q, UniqueConstraint
-from django.db.utils import ProgrammingError
-from django.test import modify_settings, override_settings
-from django.test.utils import CaptureQueriesContext
+from hibeedb import IntegrityError, NotSupportedError, connection, transaction
+from hibeedb.migrations.state import ProjectState
+from hibeedb.models import CheckConstraint, Index, Q, UniqueConstraint
+from hibeedb.utils import ProgrammingError
+from hibeetest import modify_settings, override_settings
+from hibeetest.utils import CaptureQueriesContext
 
 from . import PostgreSQLTestCase
 
 try:
-    from django.contrib.postgres.indexes import BrinIndex, BTreeIndex
-    from django.contrib.postgres.operations import (
+    from hibeecontrib.postgres.indexes import BrinIndex, BTreeIndex
+    from hibeecontrib.postgres.operations import (
         AddConstraintNotValid,
         AddIndexConcurrently,
         BloomExtension,

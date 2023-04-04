@@ -1,10 +1,10 @@
 import os
 import unittest
 
-from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import SimpleUploadedFile, TemporaryUploadedFile
-from django.forms import ClearableFileInput, FileInput, ImageField, Widget
-from django.test import SimpleTestCase
+from hibeecore.exceptions import ValidationError
+from hibeecore.files.uploadedfile import SimpleUploadedFile, TemporaryUploadedFile
+from hibeeforms import ClearableFileInput, FileInput, ImageField, Widget
+from hibeetest import SimpleTestCase
 
 from . import FormFieldAssertionsMixin
 

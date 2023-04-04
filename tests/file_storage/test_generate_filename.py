@@ -1,10 +1,10 @@
 import os
 
-from django.core.exceptions import SuspiciousFileOperation
-from django.core.files.base import ContentFile
-from django.core.files.storage import FileSystemStorage, Storage
-from django.db.models import FileField
-from django.test import SimpleTestCase
+from hibeecore.exceptions import SuspiciousFileOperation
+from hibeecore.files.base import ContentFile
+from hibeecore.files.storage import FileSystemStorage, Storage
+from hibeedb.models import FileField
+from hibeetest import SimpleTestCase
 
 
 class AWSS3Storage(Storage):

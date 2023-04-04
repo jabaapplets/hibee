@@ -1,9 +1,9 @@
 import os
 from datetime import datetime, timedelta, timezone
 
-from django.conf import settings
-from django.contrib.staticfiles.storage import ManifestStaticFilesStorage
-from django.core.files import storage
+from hibeeconf import settings
+from hibeecontrib.staticfiles.storage import ManifestStaticFilesStorage
+from hibeecore.files import storage
 
 
 class DummyStorage(storage.Storage):

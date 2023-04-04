@@ -9,9 +9,9 @@ The canonical example is tags (although this example implementation is *far*
 from complete).
 """
 
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.db import models
+from hibeecontrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from hibeecontrib.contenttypes.models import ContentType
+from hibeedb import models
 
 
 class TaggedItem(models.Model):

@@ -1,10 +1,10 @@
 """
 A custom AdminSite for AdminViewPermissionsTest.test_login_has_permission().
 """
-from django.contrib import admin
-from django.contrib.auth import get_permission_codename
-from django.contrib.auth.forms import AuthenticationForm
-from django.core.exceptions import ValidationError
+from hibeecontrib import admin
+from hibeecontrib.auth import get_permission_codename
+from hibeecontrib.auth.forms import AuthenticationForm
+from hibeecore.exceptions import ValidationError
 
 from . import admin as base_admin
 from . import models

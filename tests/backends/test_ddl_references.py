@@ -1,5 +1,5 @@
-from django.db import connection
-from django.db.backends.ddl_references import (
+from hibeedb import connection
+from hibeedb.backends.ddl_references import (
     Columns,
     Expressions,
     ForeignKeyName,
@@ -7,11 +7,11 @@ from django.db.backends.ddl_references import (
     Statement,
     Table,
 )
-from django.db.models import ExpressionList, F
-from django.db.models.functions import Upper
-from django.db.models.indexes import IndexExpression
-from django.db.models.sql import Query
-from django.test import SimpleTestCase, TransactionTestCase
+from hibeedb.models import ExpressionList, F
+from hibeedb.models.functions import Upper
+from hibeedb.models.indexes import IndexExpression
+from hibeedb.models.sql import Query
+from hibeetest import SimpleTestCase, TransactionTestCase
 
 from .models import Person
 

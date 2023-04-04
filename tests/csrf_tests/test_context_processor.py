@@ -1,6 +1,6 @@
-from django.http import HttpRequest
-from django.template.context_processors import csrf
-from django.test import SimpleTestCase
+from hibeehttp import HttpRequest
+from hibeetemplate.context_processors import csrf
+from hibeetest import SimpleTestCase
 
 from .tests import CsrfFunctionTestMixin
 

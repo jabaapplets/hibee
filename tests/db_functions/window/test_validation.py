@@ -1,5 +1,5 @@
-from django.db.models.functions import Lag, Lead, NthValue, Ntile
-from django.test import SimpleTestCase
+from hibeedb.models.functions import Lag, Lead, NthValue, Ntile
+from hibeetest import SimpleTestCase
 
 
 class ValidationTests(SimpleTestCase):

@@ -2,8 +2,8 @@ import datetime
 from collections import Counter
 from unittest import mock
 
-from django.core.exceptions import ValidationError
-from django.forms import (
+from hibeecore.exceptions import ValidationError
+from hibeeforms import (
     BaseForm,
     CharField,
     DateField,
@@ -13,7 +13,7 @@ from django.forms import (
     SplitDateTimeField,
     formsets,
 )
-from django.forms.formsets import (
+from hibeeforms.formsets import (
     INITIAL_FORM_COUNT,
     MAX_NUM_FORM_COUNT,
     MIN_NUM_FORM_COUNT,
@@ -23,10 +23,10 @@ from django.forms.formsets import (
     all_valid,
     formset_factory,
 )
-from django.forms.renderers import TemplatesSetting
-from django.forms.utils import ErrorList
-from django.forms.widgets import HiddenInput
-from django.test import SimpleTestCase
+from hibeeforms.renderers import TemplatesSetting
+from hibeeforms.utils import ErrorList
+from hibeeforms.widgets import HiddenInput
+from hibeetest import SimpleTestCase
 
 from . import jinja2_tests
 
@@ -214,8 +214,8 @@ class FormsFormsetTestCase(SimpleTestCase):
         )
 
         with mock.patch(
-            "django.forms.formsets.ManagementForm.is_valid", mocked_is_valid
-        ), mock.patch("django.forms.forms.BaseForm.full_clean", mocked_full_clean):
+            "hibeeforms.formsets.ManagementForm.is_valid", mocked_is_valid
+        ), mock.patch("hibeeforms.forms.BaseForm.full_clean", mocked_full_clean):
             self.assertTrue(formset.is_valid())
         self.assertEqual(is_valid_counter.call_count, 1)
         self.assertEqual(full_clean_counter.call_count, 4)
@@ -1533,7 +1533,7 @@ class FormsFormsetTestCase(SimpleTestCase):
         A custom renderer passed to a formset_factory() is passed to all forms
         and ErrorList.
         """
-        from django.forms.renderers import Jinja2
+        from hibeeforms.renderers import Jinja2
 
         renderer = Jinja2()
         data = {

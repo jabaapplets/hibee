@@ -1,10 +1,10 @@
 """
 The CustomPermissionsUser users email as the identifier, but uses the normal
-Django permissions model. This allows us to check that the PermissionsMixin
+Hibeepermissions model. This allows us to check that the PermissionsMixin
 includes everything that is needed to interact with the ModelBackend.
 """
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.db import models
+from hibeecontrib.auth.models import AbstractBaseUser, PermissionsMixin
+from hibeedb import models
 
 from .custom_user import CustomUserManager, RemoveGroupsAndPermissions
 

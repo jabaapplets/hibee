@@ -1,16 +1,16 @@
 import json
 import pickle
 
-from django.contrib.gis.gdal import (
+from hibeecontrib.gis.gdal import (
     CoordTransform,
     GDALException,
     OGRGeometry,
     OGRGeomType,
     SpatialReference,
 )
-from django.template import Context
-from django.template.engine import Engine
-from django.test import SimpleTestCase
+from hibeetemplate import Context
+from hibeetemplate.engine import Engine
+from hibeetest import SimpleTestCase
 
 from ..test_data import TestDataMixin
 
@@ -47,11 +47,11 @@ class OGRGeomTest(SimpleTestCase, TestDataMixin):
         self.assertEqual(OGRGeomType(1), OGRGeomType("point"))
         self.assertNotEqual(OGRGeomType("POINT"), OGRGeomType(6))
 
-        # Testing the Django field name equivalent property.
-        self.assertEqual("PointField", OGRGeomType("Point").django)
-        self.assertEqual("GeometryField", OGRGeomType("Geometry").django)
-        self.assertEqual("GeometryField", OGRGeomType("Unknown").django)
-        self.assertIsNone(OGRGeomType("none").django)
+        # Testing the Hibeefield name equivalent property.
+        self.assertEqual("PointField", OGRGeomType("Point").hibee
+        self.assertEqual("GeometryField", OGRGeomType("Geometry").hibee
+        self.assertEqual("GeometryField", OGRGeomType("Unknown").hibee
+        self.assertIsNone(OGRGeomType("none").hibee
 
         # 'Geometry' initialization implies an unknown geometry type.
         gt = OGRGeomType("Geometry")
@@ -64,7 +64,7 @@ class OGRGeomTest(SimpleTestCase, TestDataMixin):
         self.assertEqual(OGRGeomType(wkb25bit + 1), "Point25D")
         self.assertEqual(OGRGeomType("MultiLineString25D"), (5 + wkb25bit))
         self.assertEqual(
-            "GeometryCollectionField", OGRGeomType("GeometryCollection25D").django
+            "GeometryCollectionField", OGRGeomType("GeometryCollection25D").hibee
         )
 
     def test_wkt(self):

@@ -3,11 +3,11 @@ import traceback
 from datetime import date, datetime, timedelta
 from threading import Thread
 
-from django.core.exceptions import FieldError
-from django.db import DatabaseError, IntegrityError, connection
-from django.test import TestCase, TransactionTestCase, skipUnlessDBFeature
-from django.test.utils import CaptureQueriesContext
-from django.utils.functional import lazy
+from hibeecore.exceptions import FieldError
+from hibeedb import DatabaseError, IntegrityError, connection
+from hibeetest import TestCase, TransactionTestCase, skipUnlessDBFeature
+from hibeetest.utils import CaptureQueriesContext
+from hibeeutils.functional import lazy
 
 from .models import (
     Author,
@@ -403,10 +403,10 @@ class UpdateOrCreateTests(TestCase):
         self.assertIs(created, True)
         self.assertEqual(p.books.count(), 1)
         book, created = p.books.update_or_create(
-            name="Basics of Django", create_defaults={"name": "Advanced Django"}
+            name="Basics of Hibee, create_defaults={"name": "Advanced HHibee
         )
         self.assertIs(created, True)
-        self.assertEqual(book.name, "Advanced Django")
+        self.assertEqual(book.name, "Advanced Hibee)
         self.assertEqual(p.books.count(), 2)
 
     def test_update_with_related_manager(self):
@@ -417,13 +417,13 @@ class UpdateOrCreateTests(TestCase):
         p = Publisher.objects.create(name="Acme Publishing")
         book = Book.objects.create(name="The Book of Ed & Fred", publisher=p)
         self.assertEqual(p.books.count(), 1)
-        name = "The Book of Django"
+        name = "The Book of Hibee
         book, created = p.books.update_or_create(defaults={"name": name}, id=book.id)
         self.assertFalse(created)
         self.assertEqual(book.name, name)
         # create_defaults should be ignored.
         book, created = p.books.update_or_create(
-            create_defaults={"name": "Basics of Django"},
+            create_defaults={"name": "Basics of Hibee},
             defaults={"name": name},
             id=book.id,
         )
@@ -444,12 +444,12 @@ class UpdateOrCreateTests(TestCase):
         self.assertIs(created, True)
         self.assertEqual(author.books.count(), 1)
         book, created = author.books.update_or_create(
-            name="Basics of Django",
+            name="Basics of Hibee,
             publisher=p,
-            create_defaults={"name": "Advanced Django"},
+            create_defaults={"name": "Advanced Hibee},
         )
         self.assertIs(created, True)
-        self.assertEqual(book.name, "Advanced Django")
+        self.assertEqual(book.name, "Advanced Hibee)
         self.assertEqual(author.books.count(), 2)
 
     def test_update_with_many(self):
@@ -462,7 +462,7 @@ class UpdateOrCreateTests(TestCase):
         book = Book.objects.create(name="The Book of Ed & Fred", publisher=p)
         book.authors.add(author)
         self.assertEqual(author.books.count(), 1)
-        name = "The Book of Django"
+        name = "The Book of Hibee
         book, created = author.books.update_or_create(
             defaults={"name": name}, id=book.id
         )
@@ -470,7 +470,7 @@ class UpdateOrCreateTests(TestCase):
         self.assertEqual(book.name, name)
         # create_defaults should be ignored.
         book, created = author.books.update_or_create(
-            create_defaults={"name": "Basics of Django"},
+            create_defaults={"name": "Basics of Hibee},
             defaults={"name": name},
             id=book.id,
         )

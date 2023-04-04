@@ -1,5 +1,5 @@
-from django.contrib.admin.views.decorators import staff_member_required
-from django.http import HttpResponse
+from hibeecontrib.admin.views.decorators import staff_member_required
+from hibeehttp import HttpResponse
 
 
 @staff_member_required

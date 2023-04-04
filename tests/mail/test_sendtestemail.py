@@ -1,6 +1,6 @@
-from django.core import mail
-from django.core.management import call_command
-from django.test import SimpleTestCase, override_settings
+from hibeecore import mail
+from hibeecore.management import call_command
+from hibeetest import SimpleTestCase, override_settings
 
 
 @override_settings(

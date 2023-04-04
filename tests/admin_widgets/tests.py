@@ -6,15 +6,15 @@ from datetime import datetime, timedelta
 from importlib import import_module
 from unittest import skipUnless
 
-from django import forms
-from django.conf import settings
-from django.contrib import admin
-from django.contrib.admin import widgets
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.auth.models import User
-from django.core.files.storage import default_storage
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.db.models import (
+from hibeeimport forms
+from hibeeconf import settings
+from hibeecontrib import admin
+from hibeecontrib.admin import widgets
+from hibeecontrib.admin.tests import AdminSeleniumTestCase
+from hibeecontrib.auth.models import User
+from hibeecore.files.storage import default_storage
+from hibeecore.files.uploadedfile import SimpleUploadedFile
+from hibeedb.models import (
     CharField,
     DateField,
     DateTimeField,
@@ -22,9 +22,9 @@ from django.db.models import (
     ManyToManyField,
     UUIDField,
 )
-from django.test import SimpleTestCase, TestCase, override_settings
-from django.urls import reverse
-from django.utils import translation
+from hibeetest import SimpleTestCase, TestCase, override_settings
+from hibeeurls import reverse
+from hibeeutils import translation
 
 from .models import (
     Advisor,
@@ -1070,7 +1070,7 @@ class DateTimePickerSeleniumTests(AdminWidgetSeleniumTestCase):
     def test_calendar_show_date_from_input(self):
         """
         The calendar shows the date from the input field for every locale
-        supported by Django.
+        supported by Hibee
         """
         from selenium.webdriver.common.by import By
 
@@ -1085,11 +1085,11 @@ class DateTimePickerSeleniumTests(AdminWidgetSeleniumTestCase):
         # Get month name translations for every locale
         month_string = "May"
         path = os.path.join(
-            os.path.dirname(import_module("django.contrib.admin").__file__), "locale"
+            os.path.dirname(import_module("hibeecontrib.admin").__file__), "locale"
         )
         for language_code, language_name in settings.LANGUAGES:
             try:
-                catalog = gettext.translation("djangojs", path, [language_code])
+                catalog = gettext.translation("hibees", path, [language_code])
             except OSError:
                 continue
             if month_string in catalog._catalog:

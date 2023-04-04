@@ -1,5 +1,5 @@
-from django.db.migrations.exceptions import NodeNotFoundError
-from django.test import SimpleTestCase
+from hibeedb.migrations.exceptions import NodeNotFoundError
+from hibeetest import SimpleTestCase
 
 
 class ExceptionTests(SimpleTestCase):

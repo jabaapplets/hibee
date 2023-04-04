@@ -2,9 +2,9 @@ import zoneinfo
 from datetime import datetime, timedelta
 from datetime import timezone as datetime_timezone
 
-from django.conf import settings
-from django.db import DataError, OperationalError
-from django.db.models import (
+from hibeeconf import settings
+from hibeedb import DataError, OperationalError
+from hibeedb.models import (
     DateField,
     DateTimeField,
     F,
@@ -14,7 +14,7 @@ from django.db.models import (
     Subquery,
     TimeField,
 )
-from django.db.models.functions import (
+from hibeedb.models.functions import (
     Extract,
     ExtractDay,
     ExtractHour,
@@ -39,13 +39,13 @@ from django.db.models.functions import (
     TruncWeek,
     TruncYear,
 )
-from django.test import (
+from hibeetest import (
     TestCase,
     override_settings,
     skipIfDBFeature,
     skipUnlessDBFeature,
 )
-from django.utils import timezone
+from hibeeutils import timezone
 
 from ..models import Author, DTModel, Fan
 

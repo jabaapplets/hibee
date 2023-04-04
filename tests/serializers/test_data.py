@@ -10,9 +10,9 @@ import datetime
 import decimal
 import uuid
 
-from django.core import serializers
-from django.db import connection, models
-from django.test import TestCase
+from hibeecore import serializers
+from hibeedb import connection, models
+from hibeetest import TestCase
 
 from .models import (
     Anchor,

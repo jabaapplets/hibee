@@ -1,5 +1,5 @@
-from django.template.defaultfilters import yesno
-from django.test import SimpleTestCase
+from hibeetemplate.defaultfilters import yesno
+from hibeetest import SimpleTestCase
 
 from ..utils import setup
 

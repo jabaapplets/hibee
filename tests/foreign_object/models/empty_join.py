@@ -1,7 +1,7 @@
-from django.db import models
-from django.db.models.fields.related import ReverseManyToOneDescriptor
-from django.db.models.lookups import StartsWith
-from django.db.models.query_utils import PathInfo
+from hibeedb import models
+from hibeedb.models.fields.related import ReverseManyToOneDescriptor
+from hibeedb.models.lookups import StartsWith
+from hibeedb.models.query_utils import PathInfo
 
 
 class CustomForeignObjectRel(models.ForeignObjectRel):

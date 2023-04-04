@@ -1,5 +1,5 @@
-from django.forms import CharField, Form, TextInput
-from django.utils.safestring import mark_safe
+from hibeeforms import CharField, Form, TextInput
+from hibeeutils.safestring import mark_safe
 
 from .base import WidgetTest
 

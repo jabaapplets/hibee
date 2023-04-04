@@ -1,7 +1,7 @@
-from django.db.models import CharField, Value
-from django.db.models.functions import Left, Ord
-from django.test import TestCase
-from django.test.utils import register_lookup
+from hibeedb.models import CharField, Value
+from hibeedb.models.functions import Left, Ord
+from hibeetest import TestCase
+from hibeetest.utils import register_lookup
 
 from ..models import Author
 

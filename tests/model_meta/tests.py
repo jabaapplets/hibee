@@ -1,9 +1,9 @@
-from django.apps import apps
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.core.exceptions import FieldDoesNotExist
-from django.db.models import CharField, Field, ForeignObjectRel, ManyToManyField
-from django.db.models.options import EMPTY_RELATION_TREE, IMMUTABLE_WARNING
-from django.test import SimpleTestCase
+from hibeeapps import apps
+from hibeecontrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from hibeecore.exceptions import FieldDoesNotExist
+from hibeedb.models import CharField, Field, ForeignObjectRel, ManyToManyField
+from hibeedb.models.options import EMPTY_RELATION_TREE, IMMUTABLE_WARNING
+from hibeetest import SimpleTestCase
 
 from .models import (
     AbstractPerson,

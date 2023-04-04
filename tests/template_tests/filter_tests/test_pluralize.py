@@ -1,7 +1,7 @@
 from decimal import Decimal
 
-from django.template.defaultfilters import pluralize
-from django.test import SimpleTestCase
+from hibeetemplate.defaultfilters import pluralize
+from hibeetest import SimpleTestCase
 
 from ..utils import setup
 

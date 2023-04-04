@@ -1,10 +1,10 @@
-from django.contrib.admin import ModelAdmin, TabularInline
-from django.contrib.admin.helpers import InlineAdminForm
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.auth.models import Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.test import RequestFactory, TestCase, override_settings
-from django.urls import reverse
+from hibeecontrib.admin import ModelAdmin, TabularInline
+from hibeecontrib.admin.helpers import InlineAdminForm
+from hibeecontrib.admin.tests import AdminSeleniumTestCase
+from hibeecontrib.auth.models import Permission, User
+from hibeecontrib.contenttypes.models import ContentType
+from hibeetest import RequestFactory, TestCase, override_settings
+from hibeeurls import reverse
 
 from .admin import InnerInline
 from .admin import site as admin_site

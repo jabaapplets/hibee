@@ -1,7 +1,7 @@
 import datetime
 from decimal import Decimal
 
-from django.db.models import (
+from hibeedb.models import (
     AutoField,
     BinaryField,
     BooleanField,
@@ -26,8 +26,8 @@ from django.db.models import (
     TimeField,
     URLField,
 )
-from django.test import SimpleTestCase
-from django.utils.functional import lazy
+from hibeetest import SimpleTestCase
+from hibeeutils.functional import lazy
 
 
 class PromiseTest(SimpleTestCase):

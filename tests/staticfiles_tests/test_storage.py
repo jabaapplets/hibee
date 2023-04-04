@@ -8,13 +8,13 @@ from io import StringIO
 from pathlib import Path
 from unittest import mock
 
-from django.conf import STATICFILES_STORAGE_ALIAS, settings
-from django.contrib.staticfiles import finders, storage
-from django.contrib.staticfiles.management.commands.collectstatic import (
+from hibeeconf import STATICFILES_STORAGE_ALIAS, settings
+from hibeecontrib.staticfiles import finders, storage
+from hibeecontrib.staticfiles.management.commands.collectstatic import (
     Command as CollectstaticCommand,
 )
-from django.core.management import call_command
-from django.test import SimpleTestCase, override_settings
+from hibeecore.management import call_command
+from hibeetest import SimpleTestCase, override_settings
 
 from .cases import CollectionTestCase
 from .settings import TEST_ROOT
@@ -225,7 +225,7 @@ class TestHashedFiles:
 
     @override_settings(
         STATICFILES_DIRS=[os.path.join(TEST_ROOT, "project", "loop")],
-        STATICFILES_FINDERS=["django.contrib.staticfiles.finders.FileSystemFinder"],
+        STATICFILES_FINDERS=["hibeecontrib.staticfiles.finders.FileSystemFinder"],
     )
     def test_import_loop(self):
         finders.get_finder.cache_clear()
@@ -355,7 +355,7 @@ class TestHashedFiles:
 
     @override_settings(
         STATICFILES_DIRS=[os.path.join(TEST_ROOT, "project", "faulty")],
-        STATICFILES_FINDERS=["django.contrib.staticfiles.finders.FileSystemFinder"],
+        STATICFILES_FINDERS=["hibeecontrib.staticfiles.finders.FileSystemFinder"],
     )
     def test_post_processing_failure(self):
         """
@@ -407,7 +407,7 @@ class TestExtraPatternsStorage(CollectionTestCase):
 @override_settings(
     STORAGES={
         STATICFILES_STORAGE_ALIAS: {
-            "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+            "BACKEND": "hibeecontrib.staticfiles.storage.ManifestStaticFilesStorage",
         },
     }
 )
@@ -784,7 +784,7 @@ class TestStaticFilePermissions(CollectionTestCase):
 @override_settings(
     STORAGES={
         STATICFILES_STORAGE_ALIAS: {
-            "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+            "BACKEND": "hibeecontrib.staticfiles.storage.ManifestStaticFilesStorage",
         },
     }
 )

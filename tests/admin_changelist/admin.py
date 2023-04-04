@@ -1,7 +1,7 @@
-from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
-from django.core.paginator import Paginator
+from hibeecontrib import admin
+from hibeecontrib.auth.admin import UserAdmin
+from hibeecontrib.auth.models import User
+from hibeecore.paginator import Paginator
 
 from .models import Band, Child, Event, Parent, ProxyUser, Swallow
 

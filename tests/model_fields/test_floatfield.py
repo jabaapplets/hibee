@@ -1,5 +1,5 @@
-from django.db import transaction
-from django.test import TestCase
+from hibeedb import transaction
+from hibeetest import TestCase
 
 from .models import FloatModel
 

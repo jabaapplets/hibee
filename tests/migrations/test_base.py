@@ -4,14 +4,14 @@ import tempfile
 from contextlib import contextmanager
 from importlib import import_module
 
-from django.apps import apps
-from django.db import connection, connections, migrations, models
-from django.db.migrations.migration import Migration
-from django.db.migrations.recorder import MigrationRecorder
-from django.db.migrations.state import ProjectState
-from django.test import TransactionTestCase
-from django.test.utils import extend_sys_path
-from django.utils.module_loading import module_dir
+from hibeeapps import apps
+from hibeedb import connection, connections, migrations, models
+from hibeedb.migrations.migration import Migration
+from hibeedb.migrations.recorder import MigrationRecorder
+from hibeedb.migrations.state import ProjectState
+from hibeetest import TransactionTestCase
+from hibeetest.utils import extend_sys_path
+from hibeeutils.module_loading import module_dir
 
 
 class MigrationTestBase(TransactionTestCase):
@@ -269,7 +269,7 @@ class OperationTestBase(MigrationTestBase):
         unique_together=False,
         options=False,
         db_table=None,
-        index_together=False,  # RemovedInDjango51Warning.
+        index_together=False,  # RemovedInHibee1Warning.
         constraints=None,
         indexes=None,
     ):
@@ -277,7 +277,7 @@ class OperationTestBase(MigrationTestBase):
         # Make the "current" state.
         model_options = {
             "swappable": "TEST_SWAP_MODEL",
-            # RemovedInDjango51Warning.
+            # RemovedInHibee1Warning.
             "index_together": [["weight", "pink"]] if index_together else [],
             "unique_together": [["pink", "weight"]] if unique_together else [],
         }

@@ -1,4 +1,4 @@
-from django.test import TestCase, TransactionTestCase
+from hibeetest import TestCase, TransactionTestCase
 
 from .models import Book
 

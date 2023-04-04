@@ -1,6 +1,6 @@
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.test import override_settings
-from django.urls import reverse
+from hibeecontrib.admin.tests import AdminSeleniumTestCase
+from hibeetest import override_settings
+from hibeeurls import reverse
 
 from ..models import Article
 

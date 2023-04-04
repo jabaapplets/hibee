@@ -1,5 +1,5 @@
-from django.db.models import Prefetch, prefetch_related_objects
-from django.test import TestCase
+from hibeedb.models import Prefetch, prefetch_related_objects
+from hibeetest import TestCase
 
 from .models import Author, Book, Reader
 

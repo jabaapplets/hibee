@@ -1,7 +1,7 @@
-from django.db import connection
-from django.db.models import Value
-from django.db.models.functions import Length, Repeat
-from django.test import TestCase
+from hibeedb import connection
+from hibeedb.models import Value
+from hibeedb.models.functions import Length, Repeat
+from hibeetest import TestCase
 
 from ..models import Author
 

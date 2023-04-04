@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from django.core.checks import Error
-from django.core.checks.files import check_setting_file_upload_temp_dir
-from django.test import SimpleTestCase
+from hibeecore.checks import Error
+from hibeecore.checks.files import check_setting_file_upload_temp_dir
+from hibeetest import SimpleTestCase
 
 
 class FilesCheckTests(SimpleTestCase):

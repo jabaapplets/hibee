@@ -1,8 +1,8 @@
-from django.db import migrations, models
-from django.db.migrations import operations
-from django.db.migrations.optimizer import MigrationOptimizer
-from django.db.migrations.serializer import serializer_factory
-from django.test import SimpleTestCase
+from hibeedb import migrations, models
+from hibeedb.migrations import operations
+from hibeedb.migrations.optimizer import MigrationOptimizer
+from hibeedb.migrations.serializer import serializer_factory
+from hibeetest import SimpleTestCase
 
 from .models import EmptyManager, UnicodeModel
 

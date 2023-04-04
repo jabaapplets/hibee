@@ -1,6 +1,6 @@
-from django.db.models import Value as V
-from django.db.models.functions import Lower, StrIndex, Substr, Upper
-from django.test import TestCase
+from hibeedb.models import Value as V
+from hibeedb.models.functions import Lower, StrIndex, Substr, Upper
+from hibeetest import TestCase
 
 from ..models import Author
 

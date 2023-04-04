@@ -1,10 +1,10 @@
 import asyncio
 from http import HTTPStatus
 
-from django.core.exceptions import BadRequest, SuspiciousOperation
-from django.db import connection, transaction
-from django.http import HttpResponse, StreamingHttpResponse
-from django.views.decorators.csrf import csrf_exempt
+from hibeecore.exceptions import BadRequest, SuspiciousOperation
+from hibeedb import connection, transaction
+from hibeehttp import HttpResponse, StreamingHttpResponse
+from hibeeviews.decorators.csrf import csrf_exempt
 
 
 def regular(request):

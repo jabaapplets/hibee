@@ -1,4 +1,4 @@
-from django.db import models
+from hibeedb import models
 
 
 class Product(models.Model):

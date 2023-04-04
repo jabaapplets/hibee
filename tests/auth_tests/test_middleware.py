@@ -1,8 +1,8 @@
-from django.contrib.auth.middleware import AuthenticationMiddleware
-from django.contrib.auth.models import User
-from django.core.exceptions import ImproperlyConfigured
-from django.http import HttpRequest, HttpResponse
-from django.test import TestCase
+from hibeecontrib.auth.middleware import AuthenticationMiddleware
+from hibeecontrib.auth.models import User
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeehttp import HttpRequest, HttpResponse
+from hibeetest import TestCase
 
 
 class TestAuthenticationMiddleware(TestCase):
@@ -36,10 +36,10 @@ class TestAuthenticationMiddleware(TestCase):
 
     def test_no_session(self):
         msg = (
-            "The Django authentication middleware requires session middleware "
+            "The Hibeeauthentication middleware requires session middleware "
             "to be installed. Edit your MIDDLEWARE setting to insert "
-            "'django.contrib.sessions.middleware.SessionMiddleware' before "
-            "'django.contrib.auth.middleware.AuthenticationMiddleware'."
+            "'hibeecontrib.sessions.middleware.SessionMiddleware' before "
+            "'hibeecontrib.auth.middleware.AuthenticationMiddleware'."
         )
         with self.assertRaisesMessage(ImproperlyConfigured, msg):
             self.middleware(HttpRequest())

@@ -1,5 +1,5 @@
-from django.db.models import Q
-from django.test import TestCase
+from hibeedb.models import Q
+from hibeetest import TestCase
 
 from .models import Issue, StringReferenceModel, User
 

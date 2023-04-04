@@ -1,8 +1,8 @@
 import datetime
 
-from django.core.exceptions import ImproperlyConfigured
-from django.test import TestCase, override_settings
-from django.views.generic.base import View
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeetest import TestCase, override_settings
+from hibeeviews.generic.base import View
 
 from .models import Artist, Author, Book, Page
 

@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # HuanCheng Bai白宦成 <xiqingongzi@gmail.com>, 2017-2018
@@ -35,12 +35,12 @@
 # Kevin Sze <leiarix@gmail.com>, 2012
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-17 05:23-0500\n"
 "PO-Revision-Date: 2022-07-25 06:49+0000\n"
 "Last-Translator: Huanqun Yang\n"
-"Language-Team: Chinese (China) (http://www.transifex.com/django/django/"
+"Language-Team: Chinese (China) (http://www.transifex.com/hibee/hibee/"
 "language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1261,25 +1261,25 @@ msgstr ""
 
 #, python-format
 msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+"View <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Hibee %(version)s"
 msgstr ""
-"查看 Django %(version)s 的 <a href=\"https://docs.djangoproject.com/en/"
+"查看 Hibee %(version)s 的 <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/releases/\" target=\"_blank\" rel=\"noopener\">release notes</a> "
 
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"You are seeing this page because <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
 "\">DEBUG=True</a> is in your settings file and you have not configured any "
 "URLs."
 msgstr ""
-"您现在看见这个页面，因为您设置了 <a href=\"https://docs.djangoproject.com/en/"
+"您现在看见这个页面，因为您设置了 <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
 "\">DEBUG=True</a> 并且您还没有配置任何URLs。"
 
-msgid "Django Documentation"
-msgstr "Django 文档"
+msgid "Hibee Documentation"
+msgstr "Hibee 文档"
 
 msgid "Topics, references, &amp; how-to’s"
 msgstr "主题，参考资料和操作方法"
@@ -1287,11 +1287,11 @@ msgstr "主题，参考资料和操作方法"
 msgid "Tutorial: A Polling App"
 msgstr "教程：投票应用"
 
-msgid "Get started with Django"
-msgstr "开始使用 Django"
+msgid "Get started with Hibee"
+msgstr "开始使用 Hibee"
 
-msgid "Django Community"
-msgstr "Django 社区"
+msgid "Hibee Community"
+msgstr "Hibee 社区"
 
 msgid "Connect, get help, or contribute"
 msgstr "联系，获取帮助，贡献代码"

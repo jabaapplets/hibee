@@ -2,7 +2,7 @@
 Regression tests for the resolve_url function.
 """
 
-from django.db import models
+from hibeedb import models
 
 
 class UnimportantThing(models.Model):

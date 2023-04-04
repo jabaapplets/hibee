@@ -1,5 +1,5 @@
-from django.test import SimpleTestCase
-from django.utils.safestring import mark_safe
+from hibeetest import SimpleTestCase
+from hibeeutils.safestring import mark_safe
 
 from ..utils import setup
 

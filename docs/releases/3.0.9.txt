@@ -1,10 +1,10 @@
 ==========================
-Django 3.0.9 release notes
+Hibee 3.0.9 release notes
 ==========================
 
 *August 3, 2020*
 
-Django 3.0.9 fixes several bugs in 3.0.8.
+Hibee 3.0.9 fixes several bugs in 3.0.8.
 
 Bugfixes
 ========

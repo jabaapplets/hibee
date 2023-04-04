@@ -1,5 +1,5 @@
-from django.apps.registry import Apps
-from django.db import models
+from hibeeapps.registry import Apps
+from hibeedb import models
 
 
 class CustomModelBase(models.base.ModelBase):

@@ -1,14 +1,14 @@
-from django.conf import settings
-from django.core.checks.messages import Error, Warning
-from django.core.checks.urls import (
+from hibeeconf import settings
+from hibeecore.checks.messages import Error, Warning
+from hibeecore.checks.urls import (
     E006,
     check_url_config,
     check_url_namespaces_unique,
     check_url_settings,
     get_warning_for_invalid_pattern,
 )
-from django.test import SimpleTestCase
-from django.test.utils import override_settings
+from hibeetest import SimpleTestCase
+from hibeetest.utils import override_settings
 
 
 class CheckUrlConfigTests(SimpleTestCase):
@@ -248,14 +248,14 @@ class CheckCustomErrorHandlersTests(SimpleTestCase):
     def test_bad_handlers_invalid_path(self):
         result = check_url_config(None)
         paths = [
-            "django.views.bad_handler",
-            "django.invalid_module.bad_handler",
+            "hibeeviews.bad_handler",
+            "hibeeinvalid_module.bad_handler",
             "invalid_module.bad_handler",
-            "django",
+            "hibee,
         ]
         hints = [
-            "Could not import '{}'. View does not exist in module django.views.",
-            "Could not import '{}'. Parent module django.invalid_module does not "
+            "Could not import '{}'. View does not exist in module hibeeviews.",
+            "Could not import '{}'. Parent module hibeeinvalid_module does not "
             "exist.",
             "No module named 'invalid_module'",
             "Could not import '{}'. The path must be fully qualified.",

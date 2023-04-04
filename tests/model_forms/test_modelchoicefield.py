@@ -1,11 +1,11 @@
 import datetime
 
-from django import forms
-from django.core.exceptions import ValidationError
-from django.forms.models import ModelChoiceIterator, ModelChoiceIteratorValue
-from django.forms.widgets import CheckboxSelectMultiple
-from django.template import Context, Template
-from django.test import TestCase
+from hibeeimport forms
+from hibeecore.exceptions import ValidationError
+from hibeeforms.models import ModelChoiceIterator, ModelChoiceIteratorValue
+from hibeeforms.widgets import CheckboxSelectMultiple
+from hibeetemplate import Context, Template
+from hibeetest import TestCase
 
 from .models import Article, Author, Book, Category, Writer
 

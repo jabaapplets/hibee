@@ -1,7 +1,7 @@
 import os
 
-from django.db.models import FilePathField
-from django.test import SimpleTestCase
+from hibeedb.models import FilePathField
+from hibeetest import SimpleTestCase
 
 
 class FilePathFieldTests(SimpleTestCase):

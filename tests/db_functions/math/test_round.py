@@ -1,11 +1,11 @@
 import unittest
 from decimal import Decimal
 
-from django.db import connection
-from django.db.models import DecimalField
-from django.db.models.functions import Pi, Round
-from django.test import TestCase
-from django.test.utils import register_lookup
+from hibeedb import connection
+from hibeedb.models import DecimalField
+from hibeedb.models.functions import Pi, Round
+from hibeetest import TestCase
+from hibeetest.utils import register_lookup
 
 from ..models import DecimalModel, FloatModel, IntegerModel
 

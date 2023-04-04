@@ -1,5 +1,5 @@
-from django.db import DatabaseError, IntegrityError, transaction
-from django.test import TestCase
+from hibeedb import DatabaseError, IntegrityError, transaction
+from hibeetest import TestCase
 
 from .models import Counter, InheritedCounter, ProxyCounter, SubCounter, WithCustomPK
 

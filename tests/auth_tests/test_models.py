@@ -1,25 +1,25 @@
 from unittest import mock
 
-from django.conf.global_settings import PASSWORD_HASHERS
-from django.contrib.auth import get_user_model
-from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.hashers import get_hasher
-from django.contrib.auth.models import (
+from hibeeconf.global_settings import PASSWORD_HASHERS
+from hibeecontrib.auth import get_user_model
+from hibeecontrib.auth.backends import ModelBackend
+from hibeecontrib.auth.base_user import AbstractBaseUser
+from hibeecontrib.auth.hashers import get_hasher
+from hibeecontrib.auth.models import (
     AnonymousUser,
     Group,
     Permission,
     User,
     UserManager,
 )
-from django.contrib.contenttypes.models import ContentType
-from django.core import mail
-from django.db import connection, migrations
-from django.db.migrations.state import ModelState, ProjectState
-from django.db.models.signals import post_save
-from django.test import SimpleTestCase, TestCase, TransactionTestCase, override_settings
-from django.test.utils import ignore_warnings
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore import mail
+from hibeedb import connection, migrations
+from hibeedb.migrations.state import ModelState, ProjectState
+from hibeedb.models.signals import post_save
+from hibeetest import SimpleTestCase, TestCase, TransactionTestCase, override_settings
+from hibeetest.utils import ignore_warnings
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 from .models import CustomEmailField, IntegerUsernameUser
 
@@ -110,8 +110,8 @@ class LoadDataWithNaturalKeysAndMultipleDatabasesTestCase(TestCase):
 class UserManagerTestCase(TransactionTestCase):
     available_apps = [
         "auth_tests",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
+        "hibeecontrib.auth",
+        "hibeecontrib.contenttypes",
     ]
 
     def test_create_user(self):
@@ -166,7 +166,7 @@ class UserManagerTestCase(TransactionTestCase):
                 is_staff=False,
             )
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_make_random_password(self):
         allowed_chars = "abcdefg"
         password = UserManager().make_random_password(5, allowed_chars)
@@ -176,7 +176,7 @@ class UserManagerTestCase(TransactionTestCase):
 
     def test_make_random_password_warning(self):
         msg = "BaseUserManager.make_random_password() is deprecated."
-        with self.assertWarnsMessage(RemovedInDjango51Warning, msg):
+        with self.assertWarnsMessage(RemovedInHibee1Warning, msg):
             UserManager().make_random_password()
 
     def test_runpython_manager_methods(self):
@@ -280,7 +280,7 @@ class AbstractUserTestCase(TestCase):
         user = User.objects.create_user(username="user", password="foo")
         user.set_password("bar")
         with mock.patch(
-            "django.contrib.auth.password_validation.password_changed"
+            "hibeecontrib.auth.password_validation.password_changed"
         ) as pw_changed:
             user.save()
             self.assertEqual(pw_changed.call_count, 1)
@@ -304,7 +304,7 @@ class AbstractUserTestCase(TestCase):
             # Upgrade the password iterations
             hasher.iterations = old_iterations + 1
             with mock.patch(
-                "django.contrib.auth.password_validation.password_changed"
+                "hibeecontrib.auth.password_validation.password_changed"
             ) as pw_changed:
                 user.check_password("foo")
                 self.assertEqual(pw_changed.call_count, 0)
@@ -408,7 +408,7 @@ class UserWithPermTestCase(TestCase):
                     )
 
     @override_settings(
-        AUTHENTICATION_BACKENDS=["django.contrib.auth.backends.BaseBackend"]
+        AUTHENTICATION_BACKENDS=["hibeecontrib.auth.backends.BaseBackend"]
     )
     def test_backend_without_with_perm(self):
         self.assertSequenceEqual(User.objects.with_perm("auth.test"), [])
@@ -448,7 +448,7 @@ class UserWithPermTestCase(TestCase):
     @override_settings(
         AUTHENTICATION_BACKENDS=[
             "auth_tests.test_models.CustomModelBackend",
-            "django.contrib.auth.backends.ModelBackend",
+            "hibeecontrib.auth.backends.ModelBackend",
         ]
     )
     def test_multiple_backends(self):
@@ -523,7 +523,7 @@ class TestCreateSuperUserSignals(TestCase):
 
 
 class AnonymousUserTests(SimpleTestCase):
-    no_repr_msg = "Django doesn't provide a DB representation for AnonymousUser."
+    no_repr_msg = "Hibeedoesn't provide a DB representation for AnonymousUser."
 
     def setUp(self):
         self.user = AnonymousUser()

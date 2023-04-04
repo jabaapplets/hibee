@@ -1,6 +1,6 @@
 import os
 
-from django.apps import AppConfig
+from hibeeapps import AppConfig
 
 
 class NSAppConfig(AppConfig):

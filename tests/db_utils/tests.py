@@ -1,11 +1,11 @@
-"""Tests for django.db.utils."""
+"""Tests for hibeedb.utils."""
 import unittest
 
-from django.core.exceptions import ImproperlyConfigured
-from django.db import DEFAULT_DB_ALIAS, ProgrammingError, connection
-from django.db.utils import ConnectionHandler, load_backend
-from django.test import SimpleTestCase, TestCase
-from django.utils.connection import ConnectionDoesNotExist
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeedb import DEFAULT_DB_ALIAS, ProgrammingError, connection
+from hibeedb.utils import ConnectionHandler, load_backend
+from hibeetest import SimpleTestCase, TestCase
+from hibeeutils.connection import ConnectionDoesNotExist
 
 
 class ConnectionHandlerTests(SimpleTestCase):
@@ -24,7 +24,7 @@ class ConnectionHandlerTests(SimpleTestCase):
     def assertImproperlyConfigured(self, DATABASES):
         conns = ConnectionHandler(DATABASES)
         self.assertEqual(
-            conns[DEFAULT_DB_ALIAS].settings_dict["ENGINE"], "django.db.backends.dummy"
+            conns[DEFAULT_DB_ALIAS].settings_dict["ENGINE"], "hibeedb.backends.dummy"
         )
         msg = (
             "settings.DATABASES is improperly configured. Please supply the "
@@ -52,7 +52,7 @@ class ConnectionHandlerTests(SimpleTestCase):
         msg = "The connection 'nonexistent' doesn't exist."
         conns = ConnectionHandler(
             {
-                DEFAULT_DB_ALIAS: {"ENGINE": "django.db.backends.dummy"},
+                DEFAULT_DB_ALIAS: {"ENGINE": "hibeedb.backends.dummy"},
             }
         )
         with self.assertRaisesMessage(ConnectionDoesNotExist, msg):
@@ -62,7 +62,7 @@ class ConnectionHandlerTests(SimpleTestCase):
 class DatabaseErrorWrapperTests(TestCase):
     @unittest.skipUnless(connection.vendor == "postgresql", "PostgreSQL test")
     def test_reraising_backend_specific_database_exception(self):
-        from django.db.backends.postgresql.psycopg_any import is_psycopg3
+        from hibeedb.backends.postgresql.psycopg_any import is_psycopg3
 
         with connection.cursor() as cursor:
             msg = 'table "X" does not exist'
@@ -83,7 +83,7 @@ class LoadBackendTests(SimpleTestCase):
         msg = (
             "'foo' isn't an available database backend or couldn't be "
             "imported. Check the above exception. To use one of the built-in "
-            "backends, use 'django.db.backends.XXX', where XXX is one of:\n"
+            "backends, use 'hibeedb.backends.XXX', where XXX is one of:\n"
             "    'mysql', 'oracle', 'postgresql', 'sqlite3'"
         )
         with self.assertRaisesMessage(ImproperlyConfigured, msg) as cm:

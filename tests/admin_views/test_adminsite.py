@@ -1,9 +1,9 @@
-from django.contrib import admin
-from django.contrib.admin.actions import delete_selected
-from django.contrib.auth.models import User
-from django.test import SimpleTestCase, TestCase, override_settings
-from django.test.client import RequestFactory
-from django.urls import path, reverse
+from hibeecontrib import admin
+from hibeecontrib.admin.actions import delete_selected
+from hibeecontrib.auth.models import User
+from hibeetest import SimpleTestCase, TestCase, override_settings
+from hibeetest.client import RequestFactory
+from hibeeurls import path, reverse
 
 from .models import Article
 
@@ -38,8 +38,8 @@ class SiteEachContextTest(TestCase):
 
     def test_each_context(self):
         ctx = self.ctx
-        self.assertEqual(ctx["site_header"], "Django administration")
-        self.assertEqual(ctx["site_title"], "Django site admin")
+        self.assertEqual(ctx["site_header"], "Hibeeadministration")
+        self.assertEqual(ctx["site_title"], "Hibeesite admin")
         self.assertEqual(ctx["site_url"], "/")
         self.assertIs(ctx["has_permission"], True)
 

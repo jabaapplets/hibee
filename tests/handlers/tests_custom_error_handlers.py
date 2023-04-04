@@ -1,7 +1,7 @@
-from django.core.exceptions import PermissionDenied
-from django.template.response import TemplateResponse
-from django.test import SimpleTestCase, modify_settings, override_settings
-from django.urls import path
+from hibeecore.exceptions import PermissionDenied
+from hibeetemplate.response import TemplateResponse
+from hibeetest import SimpleTestCase, modify_settings, override_settings
+from hibeeurls import path
 
 
 class MiddlewareAccessingContent:

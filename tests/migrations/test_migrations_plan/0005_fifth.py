@@ -1,4 +1,4 @@
-from django.db import migrations
+from hibeedb import migrations
 
 
 def grow_tail(x, y):

@@ -1,4 +1,4 @@
-from django.db import migrations, models
+from hibeedb import migrations, models
 
 
 class Migration(migrations.Migration):

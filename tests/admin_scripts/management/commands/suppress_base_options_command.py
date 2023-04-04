@@ -1,4 +1,4 @@
-from django.core.management import BaseCommand
+from hibeecore.management import BaseCommand
 
 
 class Command(BaseCommand):

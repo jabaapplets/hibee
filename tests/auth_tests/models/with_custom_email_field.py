@@ -1,6 +1,6 @@
-from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import BaseUserManager
-from django.db import models
+from hibeecontrib.auth.base_user import AbstractBaseUser
+from hibeecontrib.auth.models import BaseUserManager
+from hibeedb import models
 
 
 class CustomEmailFieldUserManager(BaseUserManager):

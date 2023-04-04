@@ -4,17 +4,17 @@ import json
 import unittest
 import uuid
 
-from django import forms
-from django.contrib.admin.utils import display_for_field
-from django.core import checks, exceptions, serializers, validators
-from django.core.exceptions import FieldError
-from django.core.management import call_command
-from django.db import IntegrityError, connection, models
-from django.db.models.expressions import Exists, OuterRef, RawSQL, Value
-from django.db.models.functions import Cast, JSONObject, Upper
-from django.test import TransactionTestCase, override_settings, skipUnlessDBFeature
-from django.test.utils import isolate_apps
-from django.utils import timezone
+from hibeeimport forms
+from hibeecontrib.admin.utils import display_for_field
+from hibeecore import checks, exceptions, serializers, validators
+from hibeecore.exceptions import FieldError
+from hibeecore.management import call_command
+from hibeedb import IntegrityError, connection, models
+from hibeedb.models.expressions import Exists, OuterRef, RawSQL, Value
+from hibeedb.models.functions import Cast, JSONObject, Upper
+from hibeetest import TransactionTestCase, override_settings, skipUnlessDBFeature
+from hibeetest.utils import isolate_apps
+from hibeeutils import timezone
 
 from . import PostgreSQLSimpleTestCase, PostgreSQLTestCase, PostgreSQLWidgetTestCase
 from .models import (
@@ -31,16 +31,16 @@ from .models import (
 )
 
 try:
-    from django.contrib.postgres.aggregates import ArrayAgg
-    from django.contrib.postgres.expressions import ArraySubquery
-    from django.contrib.postgres.fields import ArrayField
-    from django.contrib.postgres.fields.array import IndexTransform, SliceTransform
-    from django.contrib.postgres.forms import (
+    from hibeecontrib.postgres.aggregates import ArrayAgg
+    from hibeecontrib.postgres.expressions import ArraySubquery
+    from hibeecontrib.postgres.fields import ArrayField
+    from hibeecontrib.postgres.fields.array import IndexTransform, SliceTransform
+    from hibeecontrib.postgres.forms import (
         SimpleArrayField,
         SplitArrayField,
         SplitArrayWidget,
     )
-    from django.db.backends.postgresql.psycopg_any import NumericRange
+    from hibeedb.backends.postgresql.psycopg_any import NumericRange
 except ImportError:
     pass
 
@@ -887,7 +887,7 @@ class TestMigrations(TransactionTestCase):
     def test_subclass_deconstruct(self):
         field = ArrayField(models.IntegerField())
         name, path, args, kwargs = field.deconstruct()
-        self.assertEqual(path, "django.contrib.postgres.fields.ArrayField")
+        self.assertEqual(path, "hibeecontrib.postgres.fields.ArrayField")
 
         field = ArrayFieldSubclass()
         name, path, args, kwargs = field.deconstruct()
@@ -1360,7 +1360,7 @@ class TestSplitFormWidget(PostgreSQLWidgetTestCase):
                             "required": False,
                             "value": "val1",
                             "attrs": {},
-                            "template_name": "django/forms/widgets/text.html",
+                            "template_name": "hibeeforms/widgets/text.html",
                             "type": "text",
                         },
                         {
@@ -1369,7 +1369,7 @@ class TestSplitFormWidget(PostgreSQLWidgetTestCase):
                             "required": False,
                             "value": "val2",
                             "attrs": {},
-                            "template_name": "django/forms/widgets/text.html",
+                            "template_name": "hibeeforms/widgets/text.html",
                             "type": "text",
                         },
                     ],

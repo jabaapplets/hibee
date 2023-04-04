@@ -3,10 +3,10 @@ import re
 from datetime import datetime
 from pathlib import Path
 
-from django.contrib.gis.gdal import DataSource, Envelope, GDALException, OGRGeometry
-from django.contrib.gis.gdal.field import OFTDateTime, OFTInteger, OFTReal, OFTString
-from django.contrib.gis.geos import GEOSGeometry
-from django.test import SimpleTestCase
+from hibeecontrib.gis.gdal import DataSource, Envelope, GDALException, OGRGeometry
+from hibeecontrib.gis.gdal.field import OFTDateTime, OFTInteger, OFTReal, OFTString
+from hibeecontrib.gis.geos import GEOSGeometry
+from hibeetest import SimpleTestCase
 
 from ..test_data import TEST_DATA, TestDS, get_ds_file
 

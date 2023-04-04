@@ -5,9 +5,9 @@ import sys
 from pathlib import Path
 from unittest import mock, skipUnless
 
-from django.db import connection
-from django.db.backends.postgresql.client import DatabaseClient
-from django.test import SimpleTestCase
+from hibeedb import connection
+from hibeedb.backends.postgresql.client import DatabaseClient
+from hibeetest import SimpleTestCase
 
 
 class PostgreSqlDbshellCommandTestCase(SimpleTestCase):
@@ -78,8 +78,8 @@ class PostgreSqlDbshellCommandTestCase(SimpleTestCase):
 
     def test_service(self):
         self.assertEqual(
-            self.settings_to_cmd_args_env({"OPTIONS": {"service": "django_test"}}),
-            (["psql"], {"PGSERVICE": "django_test"}),
+            self.settings_to_cmd_args_env({"OPTIONS": {"service": "hibeetest"}}),
+            (["psql"], {"PGSERVICE": "hibeetest"}),
         )
 
     def test_passfile(self):
@@ -104,14 +104,14 @@ class PostgreSqlDbshellCommandTestCase(SimpleTestCase):
             self.settings_to_cmd_args_env(
                 {
                     "OPTIONS": {
-                        "service": "django_test",
+                        "service": "hibeetest",
                         "passfile": "~/.custompgpass",
                     },
                 }
             ),
             (
                 ["psql"],
-                {"PGSERVICE": "django_test", "PGPASSFILE": "~/.custompgpass"},
+                {"PGSERVICE": "hibeetest", "PGPASSFILE": "~/.custompgpass"},
             ),
         )
 

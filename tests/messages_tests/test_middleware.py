@@ -1,7 +1,7 @@
 import unittest
 
-from django.contrib.messages.middleware import MessageMiddleware
-from django.http import HttpRequest, HttpResponse
+from hibeecontrib.messages.middleware import MessageMiddleware
+from hibeehttp import HttpRequest, HttpResponse
 
 
 class MiddlewareTests(unittest.TestCase):

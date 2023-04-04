@@ -1,8 +1,8 @@
 import datetime
 
-from django.db import models
-from django.test import TestCase
-from django.test.utils import isolate_apps
+from hibeedb import models
+from hibeetest import TestCase
+from hibeetest.utils import isolate_apps
 
 from .models import InternationalArticle
 

@@ -1,8 +1,8 @@
 import datetime
 
-from django import forms
-from django.forms import CheckboxSelectMultiple, ChoiceField, Form
-from django.test import override_settings
+from hibeeimport forms
+from hibeeforms import CheckboxSelectMultiple, ChoiceField, Form
+from hibeetest import override_settings
 
 from .base import WidgetTest
 

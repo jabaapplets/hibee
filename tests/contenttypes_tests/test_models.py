@@ -1,9 +1,9 @@
-from django.apps import apps
-from django.contrib.contenttypes.models import ContentType, ContentTypeManager
-from django.db import models
-from django.db.migrations.state import ProjectState
-from django.test import TestCase, override_settings
-from django.test.utils import isolate_apps
+from hibeeapps import apps
+from hibeecontrib.contenttypes.models import ContentType, ContentTypeManager
+from hibeedb import models
+from hibeedb.migrations.state import ProjectState
+from hibeetest import TestCase, override_settings
+from hibeetest.utils import isolate_apps
 
 from .models import Author, ConcreteModel, FooWithUrl, ProxyModel
 

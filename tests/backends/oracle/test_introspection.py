@@ -1,7 +1,7 @@
 import unittest
 
-from django.db import connection
-from django.test import TransactionTestCase
+from hibeedb import connection
+from hibeetest import TransactionTestCase
 
 from ..models import Square
 

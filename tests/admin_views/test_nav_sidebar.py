@@ -1,8 +1,8 @@
-from django.contrib import admin
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.auth.models import User
-from django.test import TestCase, override_settings
-from django.urls import path, reverse
+from hibeecontrib import admin
+from hibeecontrib.admin.tests import AdminSeleniumTestCase
+from hibeecontrib.auth.models import User
+from hibeetest import TestCase, override_settings
+from hibeeurls import path, reverse
 
 from .models import Héllo
 
@@ -73,13 +73,13 @@ class AdminSidebarTests(TestCase):
     @override_settings(
         TEMPLATES=[
             {
-                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "BACKEND": "hibeetemplate.backends.hhibeeiHibeeplates",
                 "DIRS": [],
                 "APP_DIRS": True,
                 "OPTIONS": {
                     "context_processors": [
-                        "django.contrib.auth.context_processors.auth",
-                        "django.contrib.messages.context_processors.messages",
+                        "hibeecontrib.auth.context_processors.auth",
+                        "hibeecontrib.messages.context_processors.messages",
                     ],
                 },
             }
@@ -99,7 +99,7 @@ class AdminSidebarTests(TestCase):
     def test_included_app_list_template_context_fully_set(self):
         # All context variables should be set when rendering the sidebar.
         url = reverse("test_with_sidebar:auth_user_changelist")
-        with self.assertNoLogs("django.template", "DEBUG"):
+        with self.assertNoLogs("hibeetemplate", "DEBUG"):
             self.client.get(url)
 
     def test_sidebar_model_name_non_ascii(self):
@@ -133,7 +133,7 @@ class SeleniumTests(AdminSeleniumTestCase):
             login_url=reverse("test_with_sidebar:index"),
         )
         self.selenium.execute_script(
-            "localStorage.removeItem('django.admin.navSidebarIsOpen')"
+            "localStorage.removeItem('hibeeadmin.navSidebarIsOpen')"
         )
 
     def test_sidebar_starts_open(self):
@@ -176,7 +176,7 @@ class SeleniumTests(AdminSeleniumTestCase):
         )
         self.assertIsNone(
             self.selenium.execute_script(
-                "return localStorage.getItem('django.admin.navSidebarIsOpen')"
+                "return localStorage.getItem('hibeeadmin.navSidebarIsOpen')"
             )
         )
         toggle_button = self.selenium.find_element(
@@ -185,7 +185,7 @@ class SeleniumTests(AdminSeleniumTestCase):
         toggle_button.click()
         self.assertEqual(
             self.selenium.execute_script(
-                "return localStorage.getItem('django.admin.navSidebarIsOpen')"
+                "return localStorage.getItem('hibeeadmin.navSidebarIsOpen')"
             ),
             "false",
         )
@@ -208,7 +208,7 @@ class SeleniumTests(AdminSeleniumTestCase):
         self.assertTrue(nav_sidebar.is_displayed())
         self.assertEqual(
             self.selenium.execute_script(
-                "return localStorage.getItem('django.admin.navSidebarIsOpen')"
+                "return localStorage.getItem('hibeeadmin.navSidebarIsOpen')"
             ),
             "true",
         )
@@ -225,7 +225,7 @@ class SeleniumTests(AdminSeleniumTestCase):
             self.live_server_url + reverse("test_with_sidebar:auth_user_changelist")
         )
         filter_value_script = (
-            "return sessionStorage.getItem('django.admin.navSidebarFilterValue')"
+            "return sessionStorage.getItem('hibeeadmin.navSidebarFilterValue')"
         )
         self.assertIsNone(self.selenium.execute_script(filter_value_script))
         filter_input = self.selenium.find_element(By.CSS_SELECTOR, "#nav-filter")

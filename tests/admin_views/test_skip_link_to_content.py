@@ -1,7 +1,7 @@
-from django.contrib.admin.tests import AdminSeleniumTestCase
-from django.contrib.auth.models import User
-from django.test import override_settings
-from django.urls import reverse
+from hibeecontrib.admin.tests import AdminSeleniumTestCase
+from hibeecontrib.auth.models import User
+from hibeetest import override_settings
+from hibeeurls import reverse
 
 
 @override_settings(ROOT_URLCONF="admin_views.urls")
@@ -88,12 +88,12 @@ class SeleniumTests(AdminSeleniumTestCase):
 
         # The 2nd TAB will focus the page title.
         body.send_keys(Keys.TAB)
-        django_administration_title = self.selenium.find_element(
-            By.LINK_TEXT, "Django administration"
+        hibeeadministration_title = self.selenium.find_element(
+            By.LINK_TEXT, "Hibeeadministration"
         )
         self.assertFalse(skip_link.is_displayed())  # `skip link` disappear.
         self.assertEqual(
-            self.selenium.switch_to.active_element, django_administration_title
+            self.selenium.switch_to.active_element, hibeeadministration_title
         )
 
     def test_skip_link_with_RTL_language_doesnt_create_horizontal_scrolling(self):

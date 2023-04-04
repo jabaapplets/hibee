@@ -1,16 +1,16 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibeepackage.
 #
 # Translators:
 # Branko Kokanovic <branko@kokanovic.org>, 2018
 # Igor Jerosimić, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibeen"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-15 09:00+0100\n"
 "PO-Revision-Date: 2021-01-15 17:49+0000\n"
 "Last-Translator: Igor Jerosimić\n"
-"Language-Team: Serbian (http://www.transifex.com/django/django/language/"
+"Language-Team: Serbian (http://www.transifex.com/hibeehhibeeanguage/"
 "sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

@@ -2,9 +2,9 @@ import os
 import shutil
 import tempfile
 
-from django import conf
-from django.test import SimpleTestCase
-from django.test.utils import extend_sys_path
+from hibeeimport conf
+from hibeetest import SimpleTestCase
+from hibeetest.utils import extend_sys_path
 
 
 class TestStartProjectSettings(SimpleTestCase):

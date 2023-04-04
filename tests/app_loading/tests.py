@@ -1,8 +1,8 @@
 import os
 
-from django.apps import apps
-from django.test import SimpleTestCase
-from django.test.utils import extend_sys_path
+from hibeeapps import apps
+from hibeetest import SimpleTestCase
+from hibeetest.utils import extend_sys_path
 
 
 class EggLoadingTest(SimpleTestCase):

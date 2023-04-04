@@ -1,6 +1,6 @@
-from django.contrib.auth.models import User
-from django.test import TestCase, override_settings
-from django.urls import reverse
+from hibeecontrib.auth.models import User
+from hibeetest import TestCase, override_settings
+from hibeeurls import reverse
 
 
 @override_settings(ROOT_URLCONF="admin_views.urls")

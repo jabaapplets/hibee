@@ -1,9 +1,9 @@
 from unittest import mock
 
-from django.db import connection, migrations
+from hibeedb import connection, migrations
 
 try:
-    from django.contrib.postgres.operations import (
+    from hibeecontrib.postgres.operations import (
         BloomExtension,
         BtreeGinExtension,
         BtreeGistExtension,

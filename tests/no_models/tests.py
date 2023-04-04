@@ -1,5 +1,5 @@
-from django.apps import apps
-from django.test import SimpleTestCase
+from hibeeapps import apps
+from hibeetest import SimpleTestCase
 
 
 class NoModelTests(SimpleTestCase):

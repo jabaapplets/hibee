@@ -1,5 +1,5 @@
-from django.template.defaultfilters import title
-from django.test import SimpleTestCase
+from hibeetemplate.defaultfilters import title
+from hibeetest import SimpleTestCase
 
 from ..utils import setup
 

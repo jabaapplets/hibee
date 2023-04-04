@@ -1,7 +1,7 @@
 import warnings
 
-from django.test import SimpleTestCase
-from django.utils.deprecation import (
+from hibeetest import SimpleTestCase
+from hibeeutils.deprecation import (
     DeprecationInstanceCheck,
     RemovedAfterNextVersionWarning,
     RemovedInNextVersionWarning,

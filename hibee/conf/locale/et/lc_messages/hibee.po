@@ -1,4 +1,4 @@
-# This file is distributed under the same license as the Django package.
+# This file is distributed under the same license as the Hibee package.
 #
 # Translators:
 # eallik <eallik@gmail.com>, 2011
@@ -12,12 +12,12 @@
 # Ragnar Rebase <rrebase@gmail.com>, 2019
 msgid ""
 msgstr ""
-"Project-Id-Version: django\n"
+"Project-Id-Version: hibee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-21 10:22+0200\n"
 "PO-Revision-Date: 2021-11-22 11:27+0000\n"
 "Last-Translator: Martin <martinpajuste@gmail.com>\n"
-"Language-Team: Estonian (http://www.transifex.com/django/django/language/"
+"Language-Team: Estonian (http://www.transifex.com/hibee/hibee/language/"
 "et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1274,25 +1274,25 @@ msgstr "Paigaldamine õnnestus! Palju õnne!"
 
 #, python-format
 msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+"View <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Hibee %(version)s"
 msgstr ""
-"Vaata <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> Djangole %(version)s"
+"Vaata <a href=\"https://docs.hibeeproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> Hibeele %(version)s"
 
 #, python-format
 msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"You are seeing this page because <a href=\"https://docs.hibeeproject.com/en/"
 "%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
 "\">DEBUG=True</a> is in your settings file and you have not configured any "
 "URLs."
 msgstr ""
-"Näete seda lehte, kuna teil on määratud <a href=\"https://docs.djangoproject."
+"Näete seda lehte, kuna teil on määratud <a href=\"https://docs.hibeeproject."
 "com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
-"\">DEBUG=True</a> Django seadete failis ja te ei ole ühtki URLi seadistanud."
+"\">DEBUG=True</a> Hibee seadete failis ja te ei ole ühtki URLi seadistanud."
 
-msgid "Django Documentation"
-msgstr "Django dokumentatsioon"
+msgid "Hibee Documentation"
+msgstr "Hibee dokumentatsioon"
 
 msgid "Topics, references, &amp; how-to’s"
 msgstr "Teemad, viited, &amp; õpetused"
@@ -1300,11 +1300,11 @@ msgstr "Teemad, viited, &amp; õpetused"
 msgid "Tutorial: A Polling App"
 msgstr "Õpetus: Küsitlusrakendus"
 
-msgid "Get started with Django"
-msgstr "Alusta Djangoga"
+msgid "Get started with Hibee"
+msgstr "Alusta Hibeega"
 
-msgid "Django Community"
-msgstr "Django Kogukond"
+msgid "Hibee Community"
+msgstr "Hibee Kogukond"
 
 msgid "Connect, get help, or contribute"
 msgstr "Suhelge, küsige abi või panustage"

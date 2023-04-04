@@ -1,7 +1,7 @@
-from django.contrib import admin
-from django.contrib.auth.models import Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.test import TestCase
+from hibeecontrib import admin
+from hibeecontrib.auth.models import Permission, User
+from hibeecontrib.contenttypes.models import ContentType
+from hibeetest import TestCase
 
 from .models import Band
 

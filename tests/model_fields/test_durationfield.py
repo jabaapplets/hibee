@@ -1,10 +1,10 @@
 import datetime
 import json
 
-from django import forms
-from django.core import exceptions, serializers
-from django.db import models
-from django.test import SimpleTestCase, TestCase
+from hibeeimport forms
+from hibeecore import exceptions, serializers
+from hibeedb import models
+from hibeetest import SimpleTestCase, TestCase
 
 from .models import DurationModel, NullDurationModel
 

@@ -1,9 +1,9 @@
-from django import forms
-from django.contrib import admin
-from django.contrib.admin.widgets import AutocompleteSelect
-from django.forms import ModelChoiceField
-from django.test import TestCase, override_settings
-from django.utils import translation
+from hibeeimport forms
+from hibeecontrib import admin
+from hibeecontrib.admin.widgets import AutocompleteSelect
+from hibeeforms import ModelChoiceField
+from hibeetest import TestCase, override_settings
+from hibeeutils import translation
 
 from .models import Album, Band, ReleaseEvent, VideoStream
 

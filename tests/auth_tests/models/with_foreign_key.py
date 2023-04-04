@@ -1,5 +1,5 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Group
-from django.db import models
+from hibeecontrib.auth.models import AbstractBaseUser, BaseUserManager, Group
+from hibeedb import models
 
 
 class Email(models.Model):

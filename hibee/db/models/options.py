@@ -4,14 +4,14 @@ import inspect
 import warnings
 from collections import defaultdict
 
-from django.apps import apps
-from django.conf import settings
-from django.core.exceptions import FieldDoesNotExist, ImproperlyConfigured
-from django.db import connections
-from django.db.models import AutoField, Manager, OrderWrt, UniqueConstraint
-from django.db.models.query_utils import PathInfo
-from django.utils.datastructures import ImmutableList, OrderedSet
-from django.utils.deprecation import RemovedInHibee51Warning
+from hibeeapps import apps
+from hibeeconf import settings
+from hibeecore.exceptions import FieldDoesNotExist, ImproperlyConfigured
+from hibeedb import connections
+from hibeedb.models import AutoField, Manager, OrderWrt, UniqueConstraint
+from hibeedb.models.query_utils import PathInfo
+from hibeeutils.datastructures import ImmutableList, OrderedSet
+from hibeeutils.deprecation import RemovedInHibee51Warning
 from hibee.utils.functional import cached_property
 from hibee.utils.module_loading import import_string
 from hibee.utils.text import camel_case_to_spaces, format_lazy

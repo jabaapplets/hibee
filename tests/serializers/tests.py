@@ -3,13 +3,13 @@ from functools import partialmethod
 from io import StringIO
 from unittest import mock, skipIf
 
-from django.core import serializers
-from django.core.serializers import SerializerDoesNotExist
-from django.core.serializers.base import ProgressBar
-from django.db import connection, transaction
-from django.http import HttpResponse
-from django.test import SimpleTestCase, override_settings, skipUnlessDBFeature
-from django.test.utils import Approximate
+from hibeecore import serializers
+from hibeecore.serializers import SerializerDoesNotExist
+from hibeecore.serializers.base import ProgressBar
+from hibeedb import connection, transaction
+from hibeehttp import HttpResponse
+from hibeetest import SimpleTestCase, override_settings, skipUnlessDBFeature
+from hibeetest.utils import Approximate
 
 from .models import (
     Actor,
@@ -31,7 +31,7 @@ from .models import (
 
 @override_settings(
     SERIALIZATION_MODULES={
-        "json2": "django.core.serializers.json",
+        "json2": "hibeecore.serializers.json",
     }
 )
 class SerializerRegistrationTests(SimpleTestCase):
@@ -44,7 +44,7 @@ class SerializerRegistrationTests(SimpleTestCase):
 
     def test_register(self):
         "Registering a new serializer populates the full registry. Refs #14823"
-        serializers.register_serializer("json3", "django.core.serializers.json")
+        serializers.register_serializer("json3", "hibeecore.serializers.json")
 
         public_formats = serializers.get_public_serializer_formats()
         self.assertIn("json3", public_formats)
@@ -57,7 +57,7 @@ class SerializerRegistrationTests(SimpleTestCase):
         repopulated.
         """
         serializers.unregister_serializer("xml")
-        serializers.register_serializer("json3", "django.core.serializers.json")
+        serializers.register_serializer("json3", "hibeecore.serializers.json")
 
         public_formats = serializers.get_public_serializer_formats()
 
@@ -382,7 +382,7 @@ class SerializersTestBase:
         deserial_obj = list(serializers.deserialize(self.serializer_name, serial_str))[
             0
         ]
-        with mock.patch("django.db.models.Model") as mock_model:
+        with mock.patch("hibeedb.models.Model") as mock_model:
             deserial_obj.save(force_insert=False)
             mock_model.save_base.assert_called_with(
                 deserial_obj.object, raw=True, using=None, force_insert=False

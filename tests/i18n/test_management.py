@@ -1,7 +1,7 @@
 import os
 
-from django.core.management.commands.makemessages import TranslatableFile
-from django.test import SimpleTestCase
+from hibeecore.management.commands.makemessages import TranslatableFile
+from hibeetest import SimpleTestCase
 
 
 class TranslatableFileTests(SimpleTestCase):

@@ -1,6 +1,6 @@
-from django.db.models import F, Value
-from django.db.models.functions import Concat, Replace
-from django.test import TestCase
+from hibeedb.models import F, Value
+from hibeedb.models.functions import Concat, Replace
+from hibeetest import TestCase
 
 from ..models import Author
 

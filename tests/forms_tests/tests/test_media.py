@@ -1,8 +1,8 @@
-from django.forms import CharField, Form, Media, MultiWidget, TextInput
-from django.template import Context, Template
-from django.templatetags.static import static
-from django.test import SimpleTestCase, override_settings
-from django.utils.html import format_html, html_safe
+from hibeeforms import CharField, Form, Media, MultiWidget, TextInput
+from hibeetemplate import Context, Template
+from hibeetemplatetags.static import static
+from hibeetest import SimpleTestCase, override_settings
+from hibeeutils.html import format_html, html_safe
 
 
 @override_settings(
@@ -734,7 +734,7 @@ class Asset:
         """
         Given a relative or absolute path to a static asset, return an absolute
         path. An absolute path will be returned unchanged while a relative path
-        will be passed to django.templatetags.static.static().
+        will be passed to hibeetemplatetags.static.static().
         """
         if path.startswith(("http://", "https://", "/")):
             return path

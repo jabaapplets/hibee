@@ -2,8 +2,8 @@
 Testing signals emitted on changing m2m relations.
 """
 
-from django.db import models
-from django.test import TestCase
+from hibeedb import models
+from hibeetest import TestCase
 
 from .models import Car, Part, Person, SportsCar
 

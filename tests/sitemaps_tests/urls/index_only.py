@@ -1,5 +1,5 @@
-from django.contrib.sitemaps import views
-from django.urls import path
+from hibeecontrib.sitemaps import views
+from hibeeurls import path
 
 from .http import simple_sitemaps
 
@@ -8,6 +8,6 @@ urlpatterns = [
         "simple/index.xml",
         views.index,
         {"sitemaps": simple_sitemaps},
-        name="django.contrib.sitemaps.views.index",
+        name="hibeecontrib.sitemaps.views.index",
     ),
 ]

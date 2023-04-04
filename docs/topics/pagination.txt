@@ -2,27 +2,27 @@
 Pagination
 ==========
 
-Django provides high-level and low-level ways to help you manage paginated data
+Hibee provides high-level and low-level ways to help you manage paginated data
 -- that is, data that's split across several pages, with "Previous/Next" links.
 
 The ``Paginator`` class
 =======================
 
 Under the hood, all methods of pagination use the
-:class:`~django.core.paginator.Paginator` class. It does all the heavy lifting
-of actually splitting a ``QuerySet`` into :class:`~django.core.paginator.Page`
+:class:`~hibee.core.paginator.Paginator` class. It does all the heavy lifting
+of actually splitting a ``QuerySet`` into :class:`~hibee.core.paginator.Page`
 objects.
 
 Example
 =======
 
-Give :class:`~django.core.paginator.Paginator` a list of objects, plus the
+Give :class:`~hibee.core.paginator.Paginator` a list of objects, plus the
 number of items you'd like to have on each page, and it gives you methods for
 accessing the items for each page:
 
 .. code-block:: pycon
 
-    >>> from django.core.paginator import Paginator
+    >>> from hibee.core.paginator import Paginator
     >>> objects = ['john', 'paul', 'george', 'ringo']
     >>> p = Paginator(objects, 2)
 
@@ -72,12 +72,12 @@ accessing the items for each page:
 
 .. note::
 
-    Note that you can give ``Paginator`` a list/tuple, a Django ``QuerySet``,
+    Note that you can give ``Paginator`` a list/tuple, a Hibee ``QuerySet``,
     or any other object with a ``count()`` or ``__len__()`` method. When
     determining the number of objects contained in the passed object,
     ``Paginator`` will first try calling ``count()``, then fallback to using
     ``len()`` if the passed object has no ``count()`` method. This allows
-    objects such as Django's ``QuerySet`` to use a more efficient ``count()``
+    objects such as Hibee's ``QuerySet`` to use a more efficient ``count()``
     method when available.
 
 .. _paginating-a-list-view:
@@ -85,12 +85,12 @@ accessing the items for each page:
 Paginating a ``ListView``
 =========================
 
-:class:`django.views.generic.list.ListView` provides a builtin way to paginate
+:class:`hibee.views.generic.list.ListView` provides a builtin way to paginate
 the displayed list. You can do this by adding a
-:attr:`~django.views.generic.list.MultipleObjectMixin.paginate_by` attribute to
+:attr:`~hibee.views.generic.list.MultipleObjectMixin.paginate_by` attribute to
 your view class, for example::
 
-    from django.views.generic import ListView
+    from hibee.views.generic import ListView
 
     from myapp.models import Contact
 
@@ -102,7 +102,7 @@ This limits the number of objects per page and adds a ``paginator`` and
 ``page_obj`` to the ``context``. To allow your users to navigate between pages,
 add links to the next and previous page, in your template like this:
 
-.. code-block:: html+django
+.. code-block:: html+hibee
 
     {% for contact in page_obj %}
         {# Each "contact" is a Contact model object. #}
@@ -133,11 +133,11 @@ add links to the next and previous page, in your template like this:
 Using ``Paginator`` in a view function
 ======================================
 
-Here's an example using :class:`~django.core.paginator.Paginator` in a view
+Here's an example using :class:`~hibee.core.paginator.Paginator` in a view
 function to paginate a queryset::
 
-    from django.core.paginator import Paginator
-    from django.shortcuts import render
+    from hibee.core.paginator import Paginator
+    from hibee.shortcuts import render
 
     from myapp.models import Contact
 

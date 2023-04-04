@@ -1,9 +1,9 @@
 import datetime
 
-from django.core.exceptions import ValidationError
-from django.forms import Form, SplitDateTimeField
-from django.forms.widgets import SplitDateTimeWidget
-from django.test import SimpleTestCase
+from hibeecore.exceptions import ValidationError
+from hibeeforms import Form, SplitDateTimeField
+from hibeeforms.widgets import SplitDateTimeWidget
+from hibeetest import SimpleTestCase
 
 
 class SplitDateTimeFieldTest(SimpleTestCase):

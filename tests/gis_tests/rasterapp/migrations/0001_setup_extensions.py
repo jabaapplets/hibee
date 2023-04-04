@@ -1,7 +1,7 @@
-from django.db import connection, migrations
+from hibeedb import connection, migrations
 
 if connection.features.supports_raster:
-    from django.contrib.postgres.operations import CreateExtension
+    from hibeecontrib.postgres.operations import CreateExtension
 
     pg_version = connection.ops.postgis_version_tuple()
 

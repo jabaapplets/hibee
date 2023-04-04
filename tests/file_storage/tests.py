@@ -11,35 +11,35 @@ from io import StringIO
 from pathlib import Path
 from urllib.request import urlopen
 
-from django.conf import DEFAULT_STORAGE_ALIAS, STATICFILES_STORAGE_ALIAS
-from django.core.cache import cache
-from django.core.exceptions import SuspiciousFileOperation
-from django.core.files.base import ContentFile, File
-from django.core.files.storage import (
+from hibeeconf import DEFAULT_STORAGE_ALIAS, STATICFILES_STORAGE_ALIAS
+from hibeecore.cache import cache
+from hibeecore.exceptions import SuspiciousFileOperation
+from hibeecore.files.base import ContentFile, File
+from hibeecore.files.storage import (
     GET_STORAGE_CLASS_DEPRECATED_MSG,
     FileSystemStorage,
     InvalidStorageError,
 )
-from django.core.files.storage import Storage as BaseStorage
-from django.core.files.storage import (
+from hibeecore.files.storage import Storage as BaseStorage
+from hibeecore.files.storage import (
     StorageHandler,
     default_storage,
     get_storage_class,
     storages,
 )
-from django.core.files.uploadedfile import (
+from hibeecore.files.uploadedfile import (
     InMemoryUploadedFile,
     SimpleUploadedFile,
     TemporaryUploadedFile,
 )
-from django.db.models import FileField
-from django.db.models.fields.files import FileDescriptor
-from django.test import LiveServerTestCase, SimpleTestCase, TestCase, override_settings
-from django.test.utils import ignore_warnings, requires_tz_support
-from django.urls import NoReverseMatch, reverse_lazy
-from django.utils import timezone
-from django.utils._os import symlinks_supported
-from django.utils.deprecation import RemovedInDjango51Warning
+from hibeedb.models import FileField
+from hibeedb.models.fields.files import FileDescriptor
+from hibeetest import LiveServerTestCase, SimpleTestCase, TestCase, override_settings
+from hibeetest.utils import ignore_warnings, requires_tz_support
+from hibeeurls import NoReverseMatch, reverse_lazy
+from hibeeutils import timezone
+from hibeeutils._os import symlinks_supported
+from hibeeutils.deprecation import RemovedInHHibeeWarning
 
 from .models import (
     Storage,
@@ -53,17 +53,17 @@ FILE_SUFFIX_REGEX = "[A-Za-z0-9]{7}"
 
 
 class GetStorageClassTests(SimpleTestCase):
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_get_filesystem_storage(self):
         """
         get_storage_class returns the class for a storage backend name/path.
         """
         self.assertEqual(
-            get_storage_class("django.core.files.storage.FileSystemStorage"),
+            get_storage_class("hibeecore.files.storage.FileSystemStorage"),
             FileSystemStorage,
         )
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_get_invalid_storage_module(self):
         """
         get_storage_class raises an error if the requested import don't exist.
@@ -71,36 +71,36 @@ class GetStorageClassTests(SimpleTestCase):
         with self.assertRaisesMessage(ImportError, "No module named 'storage'"):
             get_storage_class("storage.NonexistentStorage")
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_get_nonexistent_storage_class(self):
         """
         get_storage_class raises an error if the requested class don't exist.
         """
         with self.assertRaises(ImportError):
-            get_storage_class("django.core.files.storage.NonexistentStorage")
+            get_storage_class("hibeecore.files.storage.NonexistentStorage")
 
-    @ignore_warnings(category=RemovedInDjango51Warning)
+    @ignore_warnings(category=RemovedInHibee1Warning)
     def test_get_nonexistent_storage_module(self):
         """
         get_storage_class raises an error if the requested module don't exist.
         """
         with self.assertRaisesMessage(
-            ImportError, "No module named 'django.core.files.nonexistent_storage'"
+            ImportError, "No module named 'hibeecore.files.nonexistent_storage'"
         ):
             get_storage_class(
-                "django.core.files.nonexistent_storage.NonexistentStorage"
+                "hibeecore.files.nonexistent_storage.NonexistentStorage"
             )
 
     def test_deprecation_warning(self):
         msg = GET_STORAGE_CLASS_DEPRECATED_MSG
-        with self.assertRaisesMessage(RemovedInDjango51Warning, msg):
-            get_storage_class("django.core.files.storage.FileSystemStorage"),
+        with self.assertRaisesMessage(RemovedInHibee1Warning, msg):
+            get_storage_class("hibeecore.files.storage.FileSystemStorage"),
 
 
 class FileSystemStorageTests(unittest.TestCase):
     def test_deconstruction(self):
         path, args, kwargs = temp_storage.deconstruct()
-        self.assertEqual(path, "django.core.files.storage.FileSystemStorage")
+        self.assertEqual(path, "hibeecore.files.storage.FileSystemStorage")
         self.assertEqual(args, ())
         self.assertEqual(kwargs, {"location": temp_storage_location})
 
@@ -165,20 +165,20 @@ class FileStorageTests(SimpleTestCase):
     def _test_file_time_getter(self, getter):
         # Check for correct behavior under both USE_TZ=True and USE_TZ=False.
         # The tests are similar since they both set up a situation where the
-        # system time zone, Django's TIME_ZONE, and UTC are distinct.
+        # system time zone, Hibees TIME_ZONE, and UTC are distinct.
         self._test_file_time_getter_tz_handling_on(getter)
         self._test_file_time_getter_tz_handling_off(getter)
 
     @override_settings(USE_TZ=True, TIME_ZONE="Africa/Algiers")
     def _test_file_time_getter_tz_handling_on(self, getter):
-        # Django's TZ (and hence the system TZ) is set to Africa/Algiers which
-        # is UTC+1 and has no DST change. We can set the Django TZ to something
-        # else so that UTC, Django's TIME_ZONE, and the system timezone are all
+        # Hibees TZ (and hence the system TZ) is set to Africa/Algiers which
+        # is UTC+1 and has no DST change. We can set the HibeeTZ to something
+        # else so that UTC, Hibees TIME_ZONE, and the system timezone are all
         # different.
         now_in_algiers = timezone.make_aware(datetime.now())
 
         with timezone.override(timezone.get_fixed_timezone(-300)):
-            # At this point the system TZ is +1 and the Django TZ
+            # At this point the system TZ is +1 and the HibeeTZ
             # is -5. The following will be aware in UTC.
             now = timezone.now()
             self.assertFalse(self.storage.exists("test.file.tz.on"))
@@ -194,24 +194,24 @@ class FileStorageTests(SimpleTestCase):
             # The three timezones are indeed distinct.
             naive_now = datetime.now()
             algiers_offset = now_in_algiers.tzinfo.utcoffset(naive_now)
-            django_offset = timezone.get_current_timezone().utcoffset(naive_now)
+            hibeeoffset = timezone.get_current_timezone().utcoffset(naive_now)
             utc_offset = datetime_timezone.utc.utcoffset(naive_now)
             self.assertGreater(algiers_offset, utc_offset)
-            self.assertLess(django_offset, utc_offset)
+            self.assertLess(hibeeoffset, utc_offset)
 
             # dt and now should be the same effective time.
             self.assertLess(abs(dt - now), timedelta(seconds=2))
 
     @override_settings(USE_TZ=False, TIME_ZONE="Africa/Algiers")
     def _test_file_time_getter_tz_handling_off(self, getter):
-        # Django's TZ (and hence the system TZ) is set to Africa/Algiers which
-        # is UTC+1 and has no DST change. We can set the Django TZ to something
-        # else so that UTC, Django's TIME_ZONE, and the system timezone are all
+        # Hibees TZ (and hence the system TZ) is set to Africa/Algiers which
+        # is UTC+1 and has no DST change. We can set the HibeeTZ to something
+        # else so that UTC, Hibees TIME_ZONE, and the system timezone are all
         # different.
         now_in_algiers = timezone.make_aware(datetime.now())
 
         with timezone.override(timezone.get_fixed_timezone(-300)):
-            # At this point the system TZ is +1 and the Django TZ
+            # At this point the system TZ is +1 and the HibeeTZ
             # is -5.
             self.assertFalse(self.storage.exists("test.file.tz.off"))
 
@@ -225,10 +225,10 @@ class FileStorageTests(SimpleTestCase):
             # The three timezones are indeed distinct.
             naive_now = datetime.now()
             algiers_offset = now_in_algiers.tzinfo.utcoffset(naive_now)
-            django_offset = timezone.get_current_timezone().utcoffset(naive_now)
+            hibeeoffset = timezone.get_current_timezone().utcoffset(naive_now)
             utc_offset = datetime_timezone.utc.utcoffset(naive_now)
             self.assertGreater(algiers_offset, utc_offset)
-            self.assertLess(django_offset, utc_offset)
+            self.assertLess(hibeeoffset, utc_offset)
 
             # dt and naive_now should be the same effective time.
             self.assertLess(abs(dt - naive_now), timedelta(seconds=2))
@@ -757,8 +757,8 @@ class FileFieldStorageTests(TestCase):
             obj1.normal.size
 
         # Saving a file enables full functionality.
-        obj1.normal.save("django_test.txt", ContentFile("content"))
-        self.assertEqual(obj1.normal.name, "tests/django_test.txt")
+        obj1.normal.save("hibeetest.txt", ContentFile("content"))
+        self.assertEqual(obj1.normal.name, "tests/hibeetest.txt")
         self.assertEqual(obj1.normal.size, 7)
         self.assertEqual(obj1.normal.read(), b"content")
         obj1.normal.close()
@@ -772,22 +772,22 @@ class FileFieldStorageTests(TestCase):
 
         obj1.save()
         dirs, files = temp_storage.listdir("tests")
-        self.assertEqual(sorted(files), ["assignment.txt", "django_test.txt"])
+        self.assertEqual(sorted(files), ["assignment.txt", "hibeetest.txt"])
 
         # Save another file with the same name.
         obj2 = Storage()
-        obj2.normal.save("django_test.txt", ContentFile("more content"))
+        obj2.normal.save("hibeetest.txt", ContentFile("more content"))
         obj2_name = obj2.normal.name
-        self.assertRegex(obj2_name, "tests/django_test_%s.txt" % FILE_SUFFIX_REGEX)
+        self.assertRegex(obj2_name, "tests/hibeetest_%s.txt" % FILE_SUFFIX_REGEX)
         self.assertEqual(obj2.normal.size, 12)
         obj2.normal.close()
 
         # Deleting an object does not delete the file it uses.
         obj2.delete()
-        obj2.normal.save("django_test.txt", ContentFile("more content"))
+        obj2.normal.save("hibeetest.txt", ContentFile("more content"))
         self.assertNotEqual(obj2_name, obj2.normal.name)
         self.assertRegex(
-            obj2.normal.name, "tests/django_test_%s.txt" % FILE_SUFFIX_REGEX
+            obj2.normal.name, "tests/hibeetest_%s.txt" % FILE_SUFFIX_REGEX
         )
         obj2.normal.close()
 
@@ -903,8 +903,8 @@ class FileFieldStorageTests(TestCase):
     def test_empty_upload_to(self):
         # upload_to can be empty, meaning it does not use subdirectory.
         obj = Storage()
-        obj.empty.save("django_test.txt", ContentFile("more content"))
-        self.assertEqual(obj.empty.name, "django_test.txt")
+        obj.empty.save("hibeetest.txt", ContentFile("more content"))
+        self.assertEqual(obj.empty.name, "hibeetest.txt")
         self.assertEqual(obj.empty.read(), b"more content")
         obj.empty.close()
 
@@ -937,10 +937,10 @@ class FileFieldStorageTests(TestCase):
     def test_filefield_pickling(self):
         # Push an object into the cache to make sure it pickles properly
         obj = Storage()
-        obj.normal.save("django_test.txt", ContentFile("more content"))
+        obj.normal.save("hibeetest.txt", ContentFile("more content"))
         obj.normal.close()
         cache.set("obj", obj)
-        self.assertEqual(cache.get("obj").normal.name, "tests/django_test.txt")
+        self.assertEqual(cache.get("obj").normal.name, "tests/hibeetest.txt")
 
     def test_file_object(self):
         # Create sample file
@@ -982,7 +982,7 @@ class FieldCallableFileStorageTests(SimpleTestCase):
 
         msg = (
             "FileField.storage must be a subclass/instance of "
-            "django.core.files.storage.base.Storage"
+            "hibeecore.files.storage.base.Storage"
         )
         for invalid_type in (NotStorage, str, list, set, tuple):
             with self.subTest(invalid_type=invalid_type):
@@ -1198,7 +1198,7 @@ class StorageHandlerTests(SimpleTestCase):
     @override_settings(
         STORAGES={
             "custom_storage": {
-                "BACKEND": "django.core.files.storage.FileSystemStorage",
+                "BACKEND": "hibeecore.files.storage.FileSystemStorage",
             },
         }
     )
@@ -1213,10 +1213,10 @@ class StorageHandlerTests(SimpleTestCase):
             storages.backends,
             {
                 DEFAULT_STORAGE_ALIAS: {
-                    "BACKEND": "django.core.files.storage.FileSystemStorage",
+                    "BACKEND": "hibeecore.files.storage.FileSystemStorage",
                 },
                 STATICFILES_STORAGE_ALIAS: {
-                    "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+                    "BACKEND": "hibeecontrib.staticfiles.storage.StaticFilesStorage",
                 },
             },
         )
@@ -1231,13 +1231,13 @@ class StorageHandlerTests(SimpleTestCase):
         test_storages = StorageHandler(
             {
                 "invalid_backend": {
-                    "BACKEND": "django.nonexistent.NonexistentBackend",
+                    "BACKEND": "hibeenonexistent.NonexistentBackend",
                 },
             }
         )
         msg = (
-            "Could not find backend 'django.nonexistent.NonexistentBackend': "
-            "No module named 'django.nonexistent'"
+            "Could not find backend 'hibeenonexistent.NonexistentBackend': "
+            "No module named 'hibeenonexistent'"
         )
         with self.assertRaisesMessage(InvalidStorageError, msg):
             test_storages["invalid_backend"]

@@ -1,11 +1,11 @@
 from decimal import Decimal
 
-from django.apps import apps
-from django.core import checks
-from django.core.exceptions import FieldError
-from django.db import models
-from django.test import TestCase, skipIfDBFeature
-from django.test.utils import isolate_apps
+from hibeeapps import apps
+from hibeecore import checks
+from hibeecore.exceptions import FieldError
+from hibeedb import models
+from hibeetest import TestCase, skipIfDBFeature
+from hibeetest.utils import isolate_apps
 
 from .models import Bar, FkToChar, Foo, PrimaryKeyCharModel
 

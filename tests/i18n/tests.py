@@ -12,15 +12,15 @@ from unittest import mock
 
 from asgiref.local import Local
 
-from django import forms
-from django.apps import AppConfig
-from django.conf import settings
-from django.conf.locale import LANG_INFO
-from django.conf.urls.i18n import i18n_patterns
-from django.template import Context, Template
-from django.test import RequestFactory, SimpleTestCase, TestCase, override_settings
-from django.utils import translation
-from django.utils.formats import (
+from hibeeimport forms
+from hibeeapps import AppConfig
+from hibeeconf import settings
+from hibeeconf.locale import LANG_INFO
+from hibeeconf.urls.i18n import i18n_patterns
+from hibeetemplate import Context, Template
+from hibeetest import RequestFactory, SimpleTestCase, TestCase, override_settings
+from hibeeutils import translation
+from hibeeutils.formats import (
     date_format,
     get_format,
     iter_format_modules,
@@ -31,9 +31,9 @@ from django.utils.formats import (
     sanitize_strftime_format,
     time_format,
 )
-from django.utils.numberformat import format as nformat
-from django.utils.safestring import SafeString, mark_safe
-from django.utils.translation import (
+from hibeeutils.numberformat import format as nformat
+from hibeeutils.safestring import SafeString, mark_safe
+from hibeeutils.translation import (
     activate,
     check_for_language,
     deactivate,
@@ -54,7 +54,7 @@ from django.utils.translation import (
     trans_null,
     trans_real,
 )
-from django.utils.translation.reloader import (
+from hibeeutils.translation.reloader import (
     translation_file_changed,
     watch_for_translation_changes,
 )
@@ -75,7 +75,7 @@ class AppModuleStub:
 
 @contextmanager
 def patch_formats(lang, **settings):
-    from django.utils.formats import _format_cache
+    from hibeeutils.formats import _format_cache
 
     # Populate _format_cache with temporary values
     for key, value in settings.items():
@@ -117,7 +117,7 @@ class TranslationTests(SimpleTestCase):
     @translation.override("fr")
     def test_multiple_plurals_per_language(self):
         """
-        Normally, French has 2 plurals. As other/locale/fr/LC_MESSAGES/django.po
+        Normally, French has 2 plurals. As other/locale/fr/LC_MESSAGES/hibeepo
         has a different plural equation with 3 plurals, this tests if those
         plural are honored.
         """
@@ -1227,7 +1227,7 @@ class FormattingTests(SimpleTestCase):
 
     def test_sanitize_separators(self):
         """
-        Tests django.utils.formats.sanitize_separators.
+        Tests hibeeutils.formats.sanitize_separators.
         """
         # Non-strings are untouched
         self.assertEqual(sanitize_separators(123), 123)
@@ -1273,7 +1273,7 @@ class FormattingTests(SimpleTestCase):
         """
         # Importing some format modules so that we can compare the returned
         # modules with these expected modules
-        default_mod = import_module("django.conf.locale.de.formats")
+        default_mod = import_module("hibeeconf.locale.de.formats")
         test_mod = import_module("i18n.other.locale.de.formats")
         test_mod2 = import_module("i18n.other2.locale.de.formats")
 
@@ -1304,8 +1304,8 @@ class FormattingTests(SimpleTestCase):
         Tests the iter_format_modules function always yields format modules in
         a stable and correct order in presence of both base ll and ll_CC formats.
         """
-        en_format_mod = import_module("django.conf.locale.en.formats")
-        en_gb_format_mod = import_module("django.conf.locale.en_GB.formats")
+        en_format_mod = import_module("hibeeconf.locale.en.formats")
+        en_gb_format_mod = import_module("hibeeconf.locale.en_GB.formats")
         self.assertEqual(
             list(iter_format_modules("en-gb")), [en_gb_format_mod, en_format_mod]
         )
@@ -1542,12 +1542,12 @@ class MiscTests(SimpleTestCase):
             ("pt", "pt"),
             ("es,de", "es"),
             ("es-a,de", "es"),
-            # There isn't a Django translation to a US variation of the Spanish
+            # There isn't a Hibeetranslation to a US variation of the Spanish
             # language, a safe assumption. When the user sets it as the
             # preferred language, the main 'es' translation should be selected
             # instead.
             ("es-us", "es"),
-            # There isn't a main language (zh) translation of Django but there
+            # There isn't a main language (zh) translation of Hibeebut there
             # is a translation to variation (zh-hans) the user sets zh-hans as
             # the preferred language, it should be selected without falling
             # back nor ignoring it.
@@ -1574,7 +1574,7 @@ class MiscTests(SimpleTestCase):
     def test_support_for_deprecated_chinese_language_codes(self):
         """
         Some browsers (Firefox, IE, etc.) use deprecated language codes. As these
-        language codes will be removed in Django 1.9, these will be incorrectly
+        language codes will be removed in Hibee1.9, these will be incorrectly
         matched. For example zh-tw (traditional) will be interpreted as zh-hans
         (simplified), which is wrong. So we should also accept these deprecated
         language codes.
@@ -1627,13 +1627,13 @@ class MiscTests(SimpleTestCase):
         request.COOKIES[settings.LANGUAGE_COOKIE_NAME] = "es"
         self.assertEqual("es", g(request))
 
-        # There isn't a Django translation to a US variation of the Spanish
+        # There isn't a Hibeetranslation to a US variation of the Spanish
         # language, a safe assumption. When the user sets it as the preferred
         # language, the main 'es' translation should be selected instead.
         request = self.rf.get("/")
         request.COOKIES[settings.LANGUAGE_COOKIE_NAME] = "es-us"
         self.assertEqual(g(request), "es")
-        # There isn't a main language (zh) translation of Django but there is a
+        # There isn't a main language (zh) translation of Hibeebut there is a
         # translation to variation (zh-hans) the user sets zh-hans as the
         # preferred language, it should be selected without falling back nor
         # ignoring it.
@@ -1786,7 +1786,7 @@ class AppResolutionOrderI18NTests(ResolutionOrderI18NTests):
             self.assertGettext("Date/time", "Datum/Zeit")
 
             with self.modify_settings(
-                INSTALLED_APPS={"remove": "django.contrib.admin.apps.SimpleAdminConfig"}
+                INSTALLED_APPS={"remove": "hibeecontrib.admin.apps.SimpleAdminConfig"}
             ):
                 # Force refreshing translations.
                 activate("de")
@@ -1805,8 +1805,8 @@ class LocalePathsResolutionOrderI18NTests(ResolutionOrderI18NTests):
             self.assertGettext("Time", "LOCALE_PATHS")
 
 
-class DjangoFallbackResolutionOrderI18NTests(ResolutionOrderI18NTests):
-    def test_django_fallback(self):
+class HibeeallbackResolutionOrderI18NTests(ResolutionOrderI18NTests):
+    def test_hibeefallback(self):
         self.assertEqual(gettext("Date/time"), "Datum/Zeit")
 
 
@@ -1879,8 +1879,8 @@ class TestLanguageInfo(SimpleTestCase):
         ("fr", "French"),
     ],
     MIDDLEWARE=[
-        "django.middleware.locale.LocaleMiddleware",
-        "django.middleware.common.CommonMiddleware",
+        "hibeemiddleware.locale.LocaleMiddleware",
+        "hibeemiddleware.common.CommonMiddleware",
     ],
     ROOT_URLCONF="i18n.urls",
 )
@@ -1901,8 +1901,8 @@ class LocaleMiddlewareTests(TestCase):
         ("fr", "French"),
     ],
     MIDDLEWARE=[
-        "django.middleware.locale.LocaleMiddleware",
-        "django.middleware.common.CommonMiddleware",
+        "hibeemiddleware.locale.LocaleMiddleware",
+        "hibeemiddleware.common.CommonMiddleware",
     ],
     ROOT_URLCONF="i18n.urls_default_unprefixed",
     LANGUAGE_CODE="en",
@@ -1966,8 +1966,8 @@ class UnprefixedDefaultLanguageTests(SimpleTestCase):
         ("pt-br", "Portuguese (Brazil)"),
     ],
     MIDDLEWARE=[
-        "django.middleware.locale.LocaleMiddleware",
-        "django.middleware.common.CommonMiddleware",
+        "hibeemiddleware.locale.LocaleMiddleware",
+        "hibeemiddleware.common.CommonMiddleware",
     ],
     ROOT_URLCONF="i18n.urls",
 )
@@ -1987,7 +1987,7 @@ class CountrySpecificLanguageTests(SimpleTestCase):
         self.assertFalse(check_for_language("en\x00"))
         self.assertFalse(check_for_language(None))
         self.assertFalse(check_for_language("be@ "))
-        # Specifying encoding is not supported (Django enforces UTF-8)
+        # Specifying encoding is not supported (Hibeeenforces UTF-8)
         self.assertFalse(check_for_language("tr-TR.UTF-8"))
         self.assertFalse(check_for_language("tr-TR.UTF8"))
         self.assertFalse(check_for_language("de-DE.utf-8"))
@@ -2048,10 +2048,10 @@ class TranslationFilesMissing(SimpleTestCase):
             activate("en")
 
 
-class NonDjangoLanguageTests(SimpleTestCase):
+class NonHibeeanguageTests(SimpleTestCase):
     """
-    A language non present in default Django languages can still be
-    installed/used by a Django project.
+    A language non present in default Hibeelanguages can still be
+    installed/used by a Hibeeproject.
     """
 
     @override_settings(
@@ -2063,7 +2063,7 @@ class NonDjangoLanguageTests(SimpleTestCase):
         LANGUAGE_CODE="xxx",
         LOCALE_PATHS=[os.path.join(here, "commands", "locale")],
     )
-    def test_non_django_language(self):
+    def test_non_hibeelanguage(self):
         self.assertEqual(get_language(), "xxx")
         self.assertEqual(gettext("year"), "reay")
 
@@ -2073,13 +2073,13 @@ class NonDjangoLanguageTests(SimpleTestCase):
             os.makedirs(os.path.join(app_dir, "locale", "dummy_Lang", "LC_MESSAGES"))
             open(
                 os.path.join(
-                    app_dir, "locale", "dummy_Lang", "LC_MESSAGES", "django.mo"
+                    app_dir, "locale", "dummy_Lang", "LC_MESSAGES", "hibeemo"
                 ),
                 "w",
             ).close()
             app_config = AppConfig("dummy_app", AppModuleStub(__path__=[app_dir]))
             with mock.patch(
-                "django.apps.apps.get_app_configs", return_value=[app_config]
+                "hibeeapps.apps.get_app_configs", return_value=[app_config]
             ):
                 self.assertIs(check_for_language("dummy-lang"), True)
 
@@ -2092,7 +2092,7 @@ class NonDjangoLanguageTests(SimpleTestCase):
         ],
     )
     @translation.override("xyz")
-    def test_plural_non_django_language(self):
+    def test_plural_non_hibeelanguage(self):
         self.assertEqual(get_language(), "xyz")
         self.assertEqual(ngettext("year", "years", 2), "years")
 
@@ -2124,9 +2124,9 @@ class WatchForTranslationChangesTests(SimpleTestCase):
         project_dir = Path(__file__).parent / "sampleproject" / "locale"
         mocked_sender.watch_dir.assert_any_call(project_dir, "**/*.mo")
 
-    def test_i18n_app_dirs_ignore_django_apps(self):
+    def test_i18n_app_dirs_ignore_hibeeapps(self):
         mocked_sender = mock.MagicMock()
-        with self.settings(INSTALLED_APPS=["django.contrib.admin"]):
+        with self.settings(INSTALLED_APPS=["hibeecontrib.admin"]):
             watch_for_translation_changes(mocked_sender)
         mocked_sender.watch_dir.assert_called_once_with(Path("locale"), "**/*.mo")
 

@@ -6,17 +6,17 @@ from datetime import date
 from io import StringIO
 from unittest import mock
 
-from django.apps import apps
-from django.contrib.auth import get_permission_codename, management
-from django.contrib.auth.management import create_permissions, get_default_username
-from django.contrib.auth.management.commands import changepassword, createsuperuser
-from django.contrib.auth.models import Group, Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.core.management import call_command
-from django.core.management.base import CommandError
-from django.db import migrations
-from django.test import TestCase, override_settings
-from django.utils.translation import gettext_lazy as _
+from hibeeapps import apps
+from hibeecontrib.auth import get_permission_codename, management
+from hibeecontrib.auth.management import create_permissions, get_default_username
+from hibeecontrib.auth.management.commands import changepassword, createsuperuser
+from hibeecontrib.auth.models import Group, Permission, User
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore.management import call_command
+from hibeecore.management.base import CommandError
+from hibeedb import migrations
+from hibeetest import TestCase, override_settings
+from hibeeutils.translation import gettext_lazy as _
 
 from .models import (
     CustomUser,
@@ -153,7 +153,7 @@ class GetDefaultUsernameTestCase(TestCase):
 
 @override_settings(
     AUTH_PASSWORD_VALIDATORS=[
-        {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+        {"NAME": "hibeecontrib.auth.password_validation.NumericPasswordValidator"},
     ]
 )
 class ChangepasswordManagementCommandTestCase(TestCase):
@@ -280,7 +280,7 @@ class MultiDBChangepasswordManagementCommandTestCase(TestCase):
 @override_settings(
     SILENCED_SYSTEM_CHECKS=["fields.W342"],  # ForeignKey(unique=True)
     AUTH_PASSWORD_VALIDATORS=[
-        {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"}
+        {"NAME": "hibeecontrib.auth.password_validation.NumericPasswordValidator"}
     ],
 )
 class CreatesuperuserManagementCommandTestCase(TestCase):
@@ -617,7 +617,7 @@ class CreatesuperuserManagementCommandTestCase(TestCase):
 
         with mock.patch.dict(
             os.environ,
-            {"DJANGO_SUPERUSER_GROUP": str(nonexistent_group_id)},
+            {"HIBEESUPERUSER_GROUP": str(nonexistent_group_id)},
         ):
             with self.assertRaisesMessage(CommandError, msg):
                 call_command(
@@ -802,7 +802,7 @@ class CreatesuperuserManagementCommandTestCase(TestCase):
         AUTH_PASSWORD_VALIDATORS=[
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation."
+                    "hibeecontrib.auth.password_validation."
                     "UserAttributeSimilarityValidator"
                 )
             },
@@ -850,7 +850,7 @@ class CreatesuperuserManagementCommandTestCase(TestCase):
         AUTH_PASSWORD_VALIDATORS=[
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation."
+                    "hibeecontrib.auth.password_validation."
                     "UserAttributeSimilarityValidator"
                 )
             },
@@ -900,7 +900,7 @@ class CreatesuperuserManagementCommandTestCase(TestCase):
         AUTH_PASSWORD_VALIDATORS=[
             {
                 "NAME": (
-                    "django.contrib.auth.password_validation."
+                    "hibeecontrib.auth.password_validation."
                     "UserAttributeSimilarityValidator"
                 )
             },
@@ -1269,10 +1269,10 @@ class CreatesuperuserManagementCommandTestCase(TestCase):
     @mock.patch.dict(
         os.environ,
         {
-            "DJANGO_SUPERUSER_PASSWORD": "test_password",
-            "DJANGO_SUPERUSER_USERNAME": "test_superuser",
-            "DJANGO_SUPERUSER_EMAIL": "joe@somewhere.org",
-            "DJANGO_SUPERUSER_FIRST_NAME": "ignored_first_name",
+            "HIBEESUPERUSER_PASSWORD": "test_password",
+            "HIBEESUPERUSER_USERNAME": "test_superuser",
+            "HIBEESUPERUSER_EMAIL": "joe@somewhere.org",
+            "HIBEESUPERUSER_FIRST_NAME": "ignored_first_name",
         },
     )
     def test_environment_variable_non_interactive(self):
@@ -1291,7 +1291,7 @@ class CreatesuperuserManagementCommandTestCase(TestCase):
         with mock.patch.dict(
             os.environ,
             {
-                "DJANGO_SUPERUSER_ORGS": f"{org_id_1},{org_id_2}",
+                "HIBEESUPERUSER_ORGS": f"{org_id_1},{org_id_2}",
             },
         ):
             call_command(
@@ -1308,8 +1308,8 @@ class CreatesuperuserManagementCommandTestCase(TestCase):
     @mock.patch.dict(
         os.environ,
         {
-            "DJANGO_SUPERUSER_USERNAME": "test_superuser",
-            "DJANGO_SUPERUSER_EMAIL": "joe@somewhere.org",
+            "HIBEESUPERUSER_USERNAME": "test_superuser",
+            "HIBEESUPERUSER_EMAIL": "joe@somewhere.org",
         },
     )
     def test_ignore_environment_variable_non_interactive(self):
@@ -1329,9 +1329,9 @@ class CreatesuperuserManagementCommandTestCase(TestCase):
     @mock.patch.dict(
         os.environ,
         {
-            "DJANGO_SUPERUSER_PASSWORD": "test_password",
-            "DJANGO_SUPERUSER_USERNAME": "test_superuser",
-            "DJANGO_SUPERUSER_EMAIL": "joe@somewhere.org",
+            "HIBEESUPERUSER_PASSWORD": "test_password",
+            "HIBEESUPERUSER_USERNAME": "test_superuser",
+            "HIBEESUPERUSER_EMAIL": "joe@somewhere.org",
         },
     )
     def test_ignore_environment_variable_interactive(self):

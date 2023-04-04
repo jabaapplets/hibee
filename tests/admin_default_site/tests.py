@@ -1,6 +1,6 @@
-from django.contrib import admin
-from django.contrib.admin import sites
-from django.test import SimpleTestCase, override_settings
+from hibeecontrib import admin
+from hibeecontrib.admin import sites
+from hibeetest import SimpleTestCase, override_settings
 
 from .sites import CustomAdminSite
 
@@ -8,11 +8,11 @@ from .sites import CustomAdminSite
 @override_settings(
     INSTALLED_APPS=[
         "admin_default_site.apps.MyCustomAdminConfig",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.sessions",
-        "django.contrib.messages",
-        "django.contrib.staticfiles",
+        "hibeecontrib.auth",
+        "hibeecontrib.contenttypes",
+        "hibeecontrib.sessions",
+        "hibeecontrib.messages",
+        "hibeecontrib.staticfiles",
     ]
 )
 class CustomAdminSiteTests(SimpleTestCase):

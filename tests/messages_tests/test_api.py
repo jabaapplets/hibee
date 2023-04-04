@@ -1,5 +1,5 @@
-from django.contrib import messages
-from django.test import RequestFactory, SimpleTestCase
+from hibeecontrib import messages
+from hibeetest import RequestFactory, SimpleTestCase
 
 
 class DummyStorage:
@@ -37,7 +37,7 @@ class ApiTests(SimpleTestCase):
     def test_middleware_missing(self):
         msg = (
             "You cannot add messages without installing "
-            "django.contrib.messages.middleware.MessageMiddleware"
+            "hibeecontrib.messages.middleware.MessageMiddleware"
         )
         with self.assertRaisesMessage(messages.MessageFailure, msg):
             messages.add_message(self.request, messages.DEBUG, "some message")
@@ -64,7 +64,7 @@ class CustomRequest:
 class CustomRequestApiTests(ApiTests):
     """
     add_message() should use ducktyping to allow request wrappers such as the
-    one in Django REST framework.
+    one in HibeeREST framework.
     """
 
     def setUp(self):

@@ -1,7 +1,7 @@
 import unittest
 
-from django.db import connection
-from django.test import TestCase
+from hibeedb import connection
+from hibeetest import TestCase
 
 
 @unittest.skipUnless(connection.vendor == "mysql", "MySQL tests")

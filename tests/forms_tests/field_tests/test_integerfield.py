@@ -1,6 +1,6 @@
-from django.core.exceptions import ValidationError
-from django.forms import IntegerField, Textarea
-from django.test import SimpleTestCase
+from hibeecore.exceptions import ValidationError
+from hibeeforms import IntegerField, Textarea
+from hibeetest import SimpleTestCase
 
 from . import FormFieldAssertionsMixin
 

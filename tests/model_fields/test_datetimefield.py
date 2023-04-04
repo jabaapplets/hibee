@@ -1,9 +1,9 @@
 import datetime
 
-from django.db import models
-from django.test import SimpleTestCase, TestCase, override_settings, skipUnlessDBFeature
-from django.test.utils import requires_tz_support
-from django.utils import timezone
+from hibeedb import models
+from hibeetest import SimpleTestCase, TestCase, override_settings, skipUnlessDBFeature
+from hibeetest.utils import requires_tz_support
+from hibeeutils import timezone
 
 from .models import DateTimeModel
 

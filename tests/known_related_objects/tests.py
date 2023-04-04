@@ -1,5 +1,5 @@
-from django.db.models import FilteredRelation
-from django.test import TestCase
+from hibeedb.models import FilteredRelation
+from hibeetest import TestCase
 
 from .models import Organiser, Pool, PoolStyle, Tournament
 

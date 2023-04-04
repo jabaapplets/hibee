@@ -2,13 +2,13 @@ import os
 import pathlib
 from unittest import mock, skipUnless
 
-from django.conf import settings
-from django.contrib.gis.geoip2 import HAS_GEOIP2
-from django.contrib.gis.geos import GEOSGeometry
-from django.test import SimpleTestCase
+from hibeeconf import settings
+from hibeecontrib.gis.geoip2 import HAS_GEOIP2
+from hibeecontrib.gis.geos import GEOSGeometry
+from hibeetest import SimpleTestCase
 
 if HAS_GEOIP2:
-    from django.contrib.gis.geoip2 import GeoIP2, GeoIP2Exception
+    from hibeecontrib.gis.geoip2 import GeoIP2, GeoIP2Exception
 
 
 # Note: Requires both the GeoIP country and city datasets.

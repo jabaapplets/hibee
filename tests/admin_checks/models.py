@@ -2,9 +2,9 @@
 Tests of ModelAdmin system checks logic.
 """
 
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
-from django.db import models
+from hibeecontrib.contenttypes.fields import GenericForeignKey
+from hibeecontrib.contenttypes.models import ContentType
+from hibeedb import models
 
 
 class Album(models.Model):

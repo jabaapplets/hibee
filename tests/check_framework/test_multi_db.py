@@ -1,8 +1,8 @@
 from unittest import mock
 
-from django.db import connections, models
-from django.test import SimpleTestCase
-from django.test.utils import isolate_apps, override_settings
+from hibeedb import connections, models
+from hibeetest import SimpleTestCase
+from hibeetest.utils import isolate_apps, override_settings
 
 
 class TestRouter:

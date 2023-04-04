@@ -1,10 +1,10 @@
-from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
-from django.contrib.contenttypes.models import ContentType
-from django.core.checks import Error
-from django.core.exceptions import FieldDoesNotExist, FieldError
-from django.db import models
-from django.test import SimpleTestCase
-from django.test.utils import isolate_apps
+from hibeecontrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore.checks import Error
+from hibeecore.exceptions import FieldDoesNotExist, FieldError
+from hibeedb import models
+from hibeetest import SimpleTestCase
+from hibeetest.utils import isolate_apps
 
 
 @isolate_apps("model_inheritance")

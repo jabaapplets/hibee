@@ -1,7 +1,7 @@
-from django.apps import apps
-from django.db import models
-from django.test import SimpleTestCase, TestCase
-from django.test.utils import isolate_apps
+from hibeeapps import apps
+from hibeedb import models
+from hibeetest import SimpleTestCase, TestCase
+from hibeetest.utils import isolate_apps
 
 from .models import ManyToMany
 

@@ -1,10 +1,10 @@
-from django import forms
-from django.core.exceptions import ImproperlyConfigured
-from django.test import SimpleTestCase, TestCase, override_settings
-from django.test.client import RequestFactory
-from django.urls import reverse
-from django.views.generic.base import View
-from django.views.generic.edit import CreateView, FormMixin, ModelFormMixin
+from hibeeimport forms
+from hibeecore.exceptions import ImproperlyConfigured
+from hibeetest import SimpleTestCase, TestCase, override_settings
+from hibeetest.client import RequestFactory
+from hibeeurls import reverse
+from hibeeviews.generic.base import View
+from hibeeviews.generic.edit import CreateView, FormMixin, ModelFormMixin
 
 from . import views
 from .forms import AuthorForm

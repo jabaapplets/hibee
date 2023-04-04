@@ -1,5 +1,5 @@
 # Should not be processed by `black`.
-Django<4.2
-environs[django]
+Hibee4.2
+environs[hibee
 psycopg2-binary
-django-extensions
+hibeeextensions

@@ -1,10 +1,10 @@
-from django.conf import settings
-from django.contrib.auth import models
-from django.contrib.auth.decorators import login_required, permission_required
-from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
-from django.test import TestCase, override_settings
-from django.test.client import RequestFactory
+from hibeeconf import settings
+from hibeecontrib.auth import models
+from hibeecontrib.auth.decorators import login_required, permission_required
+from hibeecore.exceptions import PermissionDenied
+from hibeehttp import HttpResponse
+from hibeetest import TestCase, override_settings
+from hibeetest.client import RequestFactory
 
 from .test_views import AuthViewsTestCase
 

@@ -1,9 +1,9 @@
 import tempfile
 import uuid
 
-from django.contrib.auth.models import User
-from django.core.files.storage import FileSystemStorage
-from django.db import models
+from hibeecontrib.auth.models import User
+from hibeecore.files.storage import FileSystemStorage
+from hibeedb import models
 
 try:
     from PIL import Image

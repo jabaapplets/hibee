@@ -1,10 +1,10 @@
 from io import StringIO
 
-from django.apps import apps
-from django.core import management
-from django.db import migrations
-from django.db.models import signals
-from django.test import TransactionTestCase, override_settings
+from hibeeapps import apps
+from hibeecore import management
+from hibeedb import migrations
+from hibeedb.models import signals
+from hibeetest import TransactionTestCase, override_settings
 
 APP_CONFIG = apps.get_app_config("migrate_signals")
 SIGNAL_ARGS = [

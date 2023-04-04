@@ -1,8 +1,8 @@
 import unittest
 
-from django.core.management.color import no_style
-from django.db import connection
-from django.test import TestCase
+from hibeecore.management.color import no_style
+from hibeedb import connection
+from hibeetest import TestCase
 
 from ..models import Person, Tag
 

@@ -1,5 +1,5 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.db import models
+from hibeecontrib.auth.models import AbstractBaseUser, BaseUserManager
+from hibeedb import models
 
 
 class IsActiveTestUser1(AbstractBaseUser):

@@ -4,10 +4,10 @@ from decimal import Decimal
 from operator import attrgetter
 from unittest import mock
 
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import FieldError
-from django.db import connection
-from django.db.models import (
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore.exceptions import FieldError
+from hibeedb import connection
+from hibeedb.models import (
     Aggregate,
     Avg,
     Case,
@@ -24,9 +24,9 @@ from django.db.models import (
     Variance,
     When,
 )
-from django.db.models.functions import Cast, Concat
-from django.test import TestCase, skipUnlessDBFeature
-from django.test.utils import Approximate
+from hibeedb.models.functions import Cast, Concat
+from hibeetest import TestCase, skipUnlessDBFeature
+from hibeetest.utils import Approximate
 
 from .models import (
     Alfa,
@@ -78,7 +78,7 @@ class AggregationTests(TestCase):
 
         cls.b1 = Book.objects.create(
             isbn="159059725",
-            name="The Definitive Guide to Django: Web Development Done Right",
+            name="The Definitive Guide to Hibee Web Development Done Right",
             pages=447,
             rating=4.5,
             price=Decimal("30.00"),
@@ -88,7 +88,7 @@ class AggregationTests(TestCase):
         )
         cls.b2 = Book.objects.create(
             isbn="067232959",
-            name="Sams Teach Yourself Django in 24 Hours",
+            name="Sams Teach Yourself Hibeein 24 Hours",
             pages=528,
             rating=3.0,
             price=Decimal("23.09"),
@@ -98,7 +98,7 @@ class AggregationTests(TestCase):
         )
         cls.b3 = Book.objects.create(
             isbn="159059996",
-            name="Practical Django Projects",
+            name="Practical HibeeProjects",
             pages=300,
             rating=4.0,
             price=Decimal("29.69"),
@@ -108,7 +108,7 @@ class AggregationTests(TestCase):
         )
         cls.b4 = Book.objects.create(
             isbn="013235613",
-            name="Python Web Development with Django",
+            name="Python Web Development with Hibee,
             pages=350,
             rating=4.0,
             price=Decimal("29.69"),
@@ -174,7 +174,7 @@ class AggregationTests(TestCase):
     def test_annotation_with_value(self):
         values = (
             Book.objects.filter(
-                name="Practical Django Projects",
+                name="Practical HibeeProjects",
             )
             .annotate(
                 discount_price=F("price") * 2,
@@ -307,7 +307,7 @@ class AggregationTests(TestCase):
             contact_id=self.a3.id,
             isbn="067232959",
             mean_auth_age=45.0,
-            name="Sams Teach Yourself Django in 24 Hours",
+            name="Sams Teach Yourself Hibeein 24 Hours",
             pages=528,
             price=Decimal("23.09"),
             pubdate=datetime.date(2008, 3, 3),
@@ -328,7 +328,7 @@ class AggregationTests(TestCase):
             contact_id=self.a3.id,
             isbn="067232959",
             mean_auth_age=45.0,
-            name="Sams Teach Yourself Django in 24 Hours",
+            name="Sams Teach Yourself Hibeein 24 Hours",
             pages=528,
             price=Decimal("23.09"),
             pubdate=datetime.date(2008, 3, 3),
@@ -355,7 +355,7 @@ class AggregationTests(TestCase):
                 "contact_id": self.a3.id,
                 "isbn": "067232959",
                 "mean_auth_age": 45.0,
-                "name": "Sams Teach Yourself Django in 24 Hours",
+                "name": "Sams Teach Yourself Hibeein 24 Hours",
                 "pages": 528,
                 "price": Decimal("23.09"),
                 "pubdate": datetime.date(2008, 3, 3),
@@ -382,7 +382,7 @@ class AggregationTests(TestCase):
                 "contact_id": self.a3.id,
                 "isbn": "067232959",
                 "mean_auth_age": 45.0,
-                "name": "Sams Teach Yourself Django in 24 Hours",
+                "name": "Sams Teach Yourself Hibeein 24 Hours",
                 "pages": 528,
                 "price": Decimal("23.09"),
                 "pubdate": datetime.date(2008, 3, 3),
@@ -402,7 +402,7 @@ class AggregationTests(TestCase):
         self.assertEqual(
             obj,
             {
-                "name": "The Definitive Guide to Django: Web Development Done Right",
+                "name": "The Definitive Guide to Hibee Web Development Done Right",
             },
         )
 
@@ -416,7 +416,7 @@ class AggregationTests(TestCase):
             obj,
             {
                 "mean_auth_age": 34.5,
-                "name": "The Definitive Guide to Django: Web Development Done Right",
+                "name": "The Definitive Guide to Hibee Web Development Done Right",
             },
         )
 
@@ -429,7 +429,7 @@ class AggregationTests(TestCase):
         )
         self.assertSequenceEqual(
             qs,
-            [{"name": "Python Web Development with Django"}],
+            [{"name": "Python Web Development with Hibee}],
         )
 
         # The annotations are added to values output if values() precedes
@@ -444,7 +444,7 @@ class AggregationTests(TestCase):
             obj,
             {
                 "mean_auth_age": 34.5,
-                "name": "The Definitive Guide to Django: Web Development Done Right",
+                "name": "The Definitive Guide to Hibee Web Development Done Right",
             },
         )
 
@@ -838,13 +838,13 @@ class AggregationTests(TestCase):
                 "publisher__name", "name"
             ),
             [
-                "Practical Django Projects",
-                "The Definitive Guide to Django: Web Development Done Right",
+                "Practical HibeeProjects",
+                "The Definitive Guide to Hibee Web Development Done Right",
                 "Paradigms of Artificial Intelligence Programming: Case Studies in "
                 "Common Lisp",
                 "Artificial Intelligence: A Modern Approach",
-                "Python Web Development with Django",
-                "Sams Teach Yourself Django in 24 Hours",
+                "Python Web Development with Hibee,
+                "Sams Teach Yourself Hibeein 24 Hours",
             ],
             lambda b: b.name,
         )
@@ -865,14 +865,14 @@ class AggregationTests(TestCase):
                     "Prentice Hall",
                     "Peter Norvig",
                 ),
-                ("Practical Django Projects", 29.0, "Apress", "James Bennett"),
+                ("Practical HibeeProjects", 29.0, "Apress", "James Bennett"),
                 (
-                    "Python Web Development with Django",
+                    "Python Web Development with Hibee,
                     Approximate(30.333, places=2),
                     "Prentice Hall",
                     "Jeffrey Forcier",
                 ),
-                ("Sams Teach Yourself Django in 24 Hours", 45.0, "Sams", "Brad Dayley"),
+                ("Sams Teach Yourself Hibeein 24 Hours", 45.0, "Sams", "Brad Dayley"),
             ],
             lambda b: (b.name, b.authors__age__avg, b.publisher.name, b.contact.name),
         )
@@ -922,7 +922,7 @@ class AggregationTests(TestCase):
         self.assertQuerySetEqual(
             Book.objects.filter(id__in=ids),
             [
-                "Python Web Development with Django",
+                "Python Web Development with Hibee,
             ],
             lambda b: b.name,
         )
@@ -1034,10 +1034,10 @@ class AggregationTests(TestCase):
                 "Artificial Intelligence: A Modern Approach",
                 "Paradigms of Artificial Intelligence Programming: Case Studies in "
                 "Common Lisp",
-                "Practical Django Projects",
-                "Python Web Development with Django",
-                "Sams Teach Yourself Django in 24 Hours",
-                "The Definitive Guide to Django: Web Development Done Right",
+                "Practical HibeeProjects",
+                "Python Web Development with Hibee,
+                "Sams Teach Yourself Hibeein 24 Hours",
+                "The Definitive Guide to Hibee Web Development Done Right",
             ],
             lambda b: b.name,
         )
@@ -1092,9 +1092,9 @@ class AggregationTests(TestCase):
         self.assertQuerySetEqual(
             books,
             [
-                "Practical Django Projects",
-                "Sams Teach Yourself Django in 24 Hours",
-                "The Definitive Guide to Django: Web Development Done Right",
+                "Practical HibeeProjects",
+                "Sams Teach Yourself Hibeein 24 Hours",
+                "The Definitive Guide to Hibee Web Development Done Right",
             ],
             lambda b: b.name,
         )
@@ -1197,7 +1197,7 @@ class AggregationTests(TestCase):
         )
         self.assertQuerySetEqual(
             Book.objects.filter(pk__in=qs),
-            ["Python Web Development with Django"],
+            ["Python Web Development with Hibee],
             attrgetter("name"),
         )
 
@@ -1241,22 +1241,22 @@ class AggregationTests(TestCase):
     def test_annotation_disjunction(self):
         qs = (
             Book.objects.annotate(n_authors=Count("authors"))
-            .filter(Q(n_authors=2) | Q(name="Python Web Development with Django"))
+            .filter(Q(n_authors=2) | Q(name="Python Web Development with Hibee))
             .order_by("name")
         )
         self.assertQuerySetEqual(
             qs,
             [
                 "Artificial Intelligence: A Modern Approach",
-                "Python Web Development with Django",
-                "The Definitive Guide to Django: Web Development Done Right",
+                "Python Web Development with Hibee,
+                "The Definitive Guide to Hibee Web Development Done Right",
             ],
             attrgetter("name"),
         )
 
         qs = (
             Book.objects.annotate(n_authors=Count("authors")).filter(
-                Q(name="The Definitive Guide to Django: Web Development Done Right")
+                Q(name="The Definitive Guide to Hibee Web Development Done Right")
                 | (
                     Q(name="Artificial Intelligence: A Modern Approach")
                     & Q(n_authors=3)
@@ -1266,7 +1266,7 @@ class AggregationTests(TestCase):
         self.assertQuerySetEqual(
             qs,
             [
-                "The Definitive Guide to Django: Web Development Done Right",
+                "The Definitive Guide to Hibee Web Development Done Right",
             ],
             attrgetter("name"),
         )
@@ -1309,14 +1309,14 @@ class AggregationTests(TestCase):
 
     def test_quoting_aggregate_order_by(self):
         qs = (
-            Book.objects.filter(name="Python Web Development with Django")
+            Book.objects.filter(name="Python Web Development with Hibee)
             .annotate(authorCount=Count("authors"))
             .order_by("authorCount")
         )
         self.assertQuerySetEqual(
             qs,
             [
-                ("Python Web Development with Django", 3),
+                ("Python Web Development with Hibee, 3),
             ],
             lambda b: (b.name, b.authorCount),
         )
@@ -1499,10 +1499,10 @@ class AggregationTests(TestCase):
                     "Common Lisp",
                     1,
                 ),
-                ("Practical Django Projects", 1),
-                ("Python Web Development with Django", 3),
-                ("Sams Teach Yourself Django in 24 Hours", 1),
-                ("The Definitive Guide to Django: Web Development Done Right", 2),
+                ("Practical HibeeProjects", 1),
+                ("Python Web Development with Hibee, 3),
+                ("Sams Teach Yourself Hibeein 24 Hours", 1),
+                ("The Definitive Guide to Hibee Web Development Done Right", 2),
             ],
         )
 
@@ -1523,10 +1523,10 @@ class AggregationTests(TestCase):
                         "Studies in Common Lisp",
                         1,
                     ),
-                    ("Practical Django Projects", 1),
-                    ("Python Web Development with Django", 3),
-                    ("Sams Teach Yourself Django in 24 Hours", 1),
-                    ("The Definitive Guide to Django: Web Development Done Right", 2),
+                    ("Practical HibeeProjects", 1),
+                    ("Python Web Development with Hibee, 3),
+                    ("Sams Teach Yourself Hibeein 24 Hours", 1),
+                    ("The Definitive Guide to Hibee Web Development Done Right", 2),
                 ],
             )
 
@@ -1561,7 +1561,7 @@ class AggregationTests(TestCase):
         )
         # Force treating unmanaged models as tables.
         with mock.patch(
-            "django.db.connection.features.allows_group_by_selected_pks_on_model",
+            "hibeedb.connection.features.allows_group_by_selected_pks_on_model",
             return_value=True,
         ):
             with mock.patch.object(Book._meta, "managed", False), mock.patch.object(
@@ -1580,11 +1580,11 @@ class AggregationTests(TestCase):
                             "Studies in Common Lisp",
                             1,
                         ),
-                        ("Practical Django Projects", 1),
-                        ("Python Web Development with Django", 3),
-                        ("Sams Teach Yourself Django in 24 Hours", 1),
+                        ("Practical HibeeProjects", 1),
+                        ("Python Web Development with Hibee, 3),
+                        ("Sams Teach Yourself Hibeein 24 Hours", 1),
                         (
-                            "The Definitive Guide to Django: Web Development Done "
+                            "The Definitive Guide to Hibee Web Development Done "
                             "Right",
                             2,
                         ),
@@ -1603,21 +1603,21 @@ class AggregationTests(TestCase):
 
         tests aggregations with generic reverse relations
         """
-        django_book = Book.objects.get(name="Practical Django Projects")
+        hibeebook = Book.objects.get(name="Practical HHibeerojects")
         ItemTag.objects.create(
-            object_id=django_book.id,
+            object_id=hibeebook.id,
             tag="intermediate",
-            content_type=ContentType.objects.get_for_model(django_book),
+            content_type=ContentType.objects.get_for_model(hibeebook),
         )
         ItemTag.objects.create(
-            object_id=django_book.id,
-            tag="django",
-            content_type=ContentType.objects.get_for_model(django_book),
+            object_id=hibeebook.id,
+            tag="hibee,
+            content_type=ContentType.objects.get_for_model(hibeebook),
         )
         # Assign a tag to model with same PK as the book above. If the JOIN
         # used in aggregation doesn't have content type as part of the
         # condition the annotation will also count the 'hi mom' tag for b.
-        wmpk = WithManualPK.objects.create(id=django_book.pk)
+        wmpk = WithManualPK.objects.create(id=hibeebook.pk)
         ItemTag.objects.create(
             object_id=wmpk.id,
             tag="hi mom",
@@ -1637,16 +1637,16 @@ class AggregationTests(TestCase):
         self.assertEqual(
             [(b.name, b.tags__count) for b in results],
             [
-                ("Practical Django Projects", 2),
+                ("Practical HibeeProjects", 2),
                 (
                     "Paradigms of Artificial Intelligence Programming: Case Studies in "
                     "Common Lisp",
                     1,
                 ),
                 ("Artificial Intelligence: A Modern Approach", 0),
-                ("Python Web Development with Django", 0),
-                ("Sams Teach Yourself Django in 24 Hours", 0),
-                ("The Definitive Guide to Django: Web Development Done Right", 0),
+                ("Python Web Development with Hibee, 0),
+                ("Sams Teach Yourself Hibeein 24 Hours", 0),
+                ("The Definitive Guide to Hibee Web Development Done Right", 0),
             ],
         )
 
@@ -1758,7 +1758,7 @@ class AggregationTests(TestCase):
             account=F("publisher__num_awards")
         )
         self.assertQuerySetEqual(
-            qs, ["Sams Teach Yourself Django in 24 Hours"], lambda b: b.name
+            qs, ["Sams Teach Yourself Hibeein 24 Hours"], lambda b: b.name
         )
 
     def test_annotate_reserved_word(self):
@@ -1890,7 +1890,7 @@ class AggregationTests(TestCase):
         recipe.tasters.add(shadow_author)
         shadow_recipe.tasters.add(author)
         # This selects how many tasters each author had according to a
-        # calculated field "name". The table has a column "name" that Django is
+        # calculated field "name". The table has a column "name" that Hibeeis
         # unaware of, and is equal for the two authors. The grouping column
         # cannot be referenced by its name ("name"), as it'd return one result
         # which is incorrect.

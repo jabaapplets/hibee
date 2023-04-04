@@ -1,6 +1,6 @@
-from django.http import HttpResponse
-from django.urls import path
-from django.views import View
+from hibeehttp import HttpResponse
+from hibeeurls import path
+from hibeeviews import View
 
 
 class EmptyCBV(View):

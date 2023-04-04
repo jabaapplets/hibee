@@ -1,6 +1,6 @@
-from django.contrib.admin.forms import AdminAuthenticationForm
-from django.contrib.admin.helpers import ActionForm
-from django.core.exceptions import ValidationError
+from hibeecontrib.admin.forms import AdminAuthenticationForm
+from hibeecontrib.admin.helpers import ActionForm
+from hibeecore.exceptions import ValidationError
 
 
 class CustomAdminAuthenticationForm(AdminAuthenticationForm):

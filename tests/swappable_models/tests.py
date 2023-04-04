@@ -1,7 +1,7 @@
-from django.contrib.auth.models import Permission
-from django.contrib.contenttypes.models import ContentType
-from django.core import management
-from django.test import TestCase, override_settings
+from hibeecontrib.auth.models import Permission
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore import management
+from hibeetest import TestCase, override_settings
 
 from .models import Article
 
@@ -10,8 +10,8 @@ class SwappableModelTests(TestCase):
     # Limit memory usage when calling 'migrate'.
     available_apps = [
         "swappable_models",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
+        "hibeecontrib.auth",
+        "hibeecontrib.contenttypes",
     ]
 
     @override_settings(TEST_ARTICLE_MODEL="swappable_models.AlternateArticle")

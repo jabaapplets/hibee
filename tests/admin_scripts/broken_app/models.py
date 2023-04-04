@@ -1,1 +1,1 @@
-from django.db import modelz  # NOQA
+from hibeedb import modelz  # NOQA

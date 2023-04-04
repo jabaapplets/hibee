@@ -1,7 +1,7 @@
 """
 A series of tests to establish that the command-line management tools work as
 advertised - especially with regards to the handling of the
-DJANGO_SETTINGS_MODULE and default settings.py files.
+HIBEESETTINGS_MODULE and default settings.py files.
 """
 import os
 import re
@@ -15,24 +15,24 @@ import unittest
 from io import StringIO
 from unittest import mock
 
-from django import conf, get_version
-from django.conf import settings
-from django.core.management import (
+from hibeeimport conf, get_version
+from hibeeconf import settings
+from hibeecore.management import (
     BaseCommand,
     CommandError,
     call_command,
     color,
     execute_from_command_line,
 )
-from django.core.management.commands.loaddata import Command as LoaddataCommand
-from django.core.management.commands.runserver import Command as RunserverCommand
-from django.core.management.commands.testserver import Command as TestserverCommand
-from django.db import ConnectionHandler, connection
-from django.db.migrations.recorder import MigrationRecorder
-from django.test import LiveServerTestCase, SimpleTestCase, TestCase, override_settings
-from django.test.utils import captured_stderr, captured_stdout
-from django.urls import path
-from django.views.static import serve
+from hibeecore.management.commands.loaddata import Command as LoaddataCommand
+from hibeecore.management.commands.runserver import Command as RunserverCommand
+from hibeecore.management.commands.testserver import Command as TestserverCommand
+from hibeedb import ConnectionHandler, connection
+from hibeedb.migrations.recorder import MigrationRecorder
+from hibeetest import LiveServerTestCase, SimpleTestCase, TestCase, override_settings
+from hibeetest.utils import captured_stderr, captured_stdout
+from hibeeurls import path
+from hibeeviews.static import serve
 
 from . import urls
 
@@ -82,8 +82,8 @@ class AdminScriptTestCase(SimpleTestCase):
 
             if apps is None:
                 apps = [
-                    "django.contrib.auth",
-                    "django.contrib.contenttypes",
+                    "hibeecontrib.auth",
+                    "hibeecontrib.contenttypes",
                     "admin_scripts",
                 ]
 
@@ -100,7 +100,7 @@ class AdminScriptTestCase(SimpleTestCase):
         paths = []
         for backend in settings.DATABASES.values():
             package = backend["ENGINE"].split(".")[0]
-            if package != "django":
+            if package != "hibee:
                 backend_pkg = __import__(package)
                 backend_dir = os.path.dirname(backend_pkg.__file__)
                 paths.append(os.path.dirname(backend_dir))
@@ -108,12 +108,12 @@ class AdminScriptTestCase(SimpleTestCase):
 
     def run_test(self, args, settings_file=None, apps=None, umask=-1):
         base_dir = os.path.dirname(self.test_dir)
-        # The base dir for Django's tests is one level up.
+        # The base dir for Hibees tests is one level up.
         tests_dir = os.path.dirname(os.path.dirname(__file__))
-        # The base dir for Django is one level above the test dir. We don't use
-        # `import django` to figure that out, so we don't pick up a Django
+        # The base dir for Hibeeis one level above the test dir. We don't use
+        # `import hibee to figure that out, so we don't pick up a HHibee
         # from site-packages or similar.
-        django_dir = os.path.dirname(tests_dir)
+        hibeedir = os.path.dirname(tests_dir)
         ext_backend_base_dirs = self._ext_backend_paths()
 
         # Define a temporary environment for the subprocess
@@ -121,10 +121,10 @@ class AdminScriptTestCase(SimpleTestCase):
 
         # Set the test environment
         if settings_file:
-            test_environ["DJANGO_SETTINGS_MODULE"] = settings_file
-        elif "DJANGO_SETTINGS_MODULE" in test_environ:
-            del test_environ["DJANGO_SETTINGS_MODULE"]
-        python_path = [base_dir, django_dir, tests_dir]
+            test_environ["HIBEESETTINGS_MODULE"] = settings_file
+        elif "HIBEESETTINGS_MODULE" in test_environ:
+            del test_environ["HIBEESETTINGS_MODULE"]
+        python_path = [base_dir, hibeedir, tests_dir]
         python_path.extend(ext_backend_base_dirs)
         test_environ["PYTHONPATH"] = os.pathsep.join(python_path)
         test_environ["PYTHONWARNINGS"] = ""
@@ -139,8 +139,8 @@ class AdminScriptTestCase(SimpleTestCase):
         )
         return p.stdout, p.stderr
 
-    def run_django_admin(self, args, settings_file=None, umask=-1):
-        return self.run_test(["-m", "django", *args], settings_file, umask=umask)
+    def run_hibeeadmin(self, args, settings_file=None, umask=-1):
+        return self.run_test(["-m", "hibee, *args], settings_file, umask=umask)
 
     def run_manage(self, args, settings_file=None, manage_py=None):
         template_manage_py = (
@@ -191,42 +191,42 @@ class AdminScriptTestCase(SimpleTestCase):
 
 
 ##########################################################################
-# DJANGO ADMIN TESTS
+# HIBEEADMIN TESTS
 # This first series of test classes checks the environment processing
-# of the django-admin.
+# of the hibeeadmin.
 ##########################################################################
 
 
-class DjangoAdminNoSettings(AdminScriptTestCase):
-    "A series of tests for django-admin when there is no settings.py file."
+class HibeedminNoSettings(AdminScriptTestCase):
+    "A series of tests for hibeeadmin when there is no settings.py file."
 
     def test_builtin_command(self):
         """
-        no settings: django-admin builtin commands fail with an error when no
+        no settings: hibeeadmin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "settings are not configured")
 
     def test_builtin_with_bad_settings(self):
         """
-        no settings: django-admin builtin commands fail if settings file (from
+        no settings: hibeeadmin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_builtin_with_bad_environment(self):
         """
-        no settings: django-admin builtin commands fail if settings file (from
+        no settings: hibeeadmin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "bad_settings")
+        out, err = self.run_hibeeadmin(args, "bad_settings")
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
@@ -236,14 +236,14 @@ class DjangoAdminNoSettings(AdminScriptTestCase):
         doesn't exist.
         """
         args = ["startproject"]
-        out, err = self.run_django_admin(args, settings_file="bad_settings")
+        out, err = self.run_hibeeadmin(args, settings_file="bad_settings")
         self.assertNoOutput(out)
         self.assertOutput(err, "You must provide a project name", regex=True)
 
 
-class DjangoAdminDefaultSettings(AdminScriptTestCase):
+class HibeedminDefaultSettings(AdminScriptTestCase):
     """
-    A series of tests for django-admin when using a settings.py file that
+    A series of tests for hibeeadmin when using a settings.py file that
     contains the test application.
     """
 
@@ -253,89 +253,89 @@ class DjangoAdminDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_command(self):
         """
-        default: django-admin builtin commands fail with an error when no
+        default: hibeeadmin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "settings are not configured")
 
     def test_builtin_with_settings(self):
         """
-        default: django-admin builtin commands succeed if settings are provided
+        default: hibeeadmin builtin commands succeed if settings are provided
         as argument.
         """
         args = ["check", "--settings=test_project.settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertOutput(out, SYSTEM_CHECK_MSG)
 
     def test_builtin_with_environment(self):
         """
-        default: django-admin builtin commands succeed if settings are provided
+        default: hibeeadmin builtin commands succeed if settings are provided
         in the environment.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "test_project.settings")
+        out, err = self.run_hibeeadmin(args, "test_project.settings")
         self.assertNoOutput(err)
         self.assertOutput(out, SYSTEM_CHECK_MSG)
 
     def test_builtin_with_bad_settings(self):
         """
-        default: django-admin builtin commands fail if settings file (from
+        default: hibeeadmin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_builtin_with_bad_environment(self):
         """
-        default: django-admin builtin commands fail if settings file (from
+        default: hibeeadmin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "bad_settings")
+        out, err = self.run_hibeeadmin(args, "bad_settings")
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_custom_command(self):
         """
-        default: django-admin can't execute user commands if it isn't provided
+        default: hibeeadmin can't execute user commands if it isn't provided
         settings.
         """
         args = ["noargs_command"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
-        self.assertOutput(err, "No Django settings specified")
+        self.assertOutput(err, "No Hibeesettings specified")
         self.assertOutput(err, "Unknown command: 'noargs_command'")
 
     def test_custom_command_with_settings(self):
         """
-        default: django-admin can execute user commands if settings are
+        default: hibeeadmin can execute user commands if settings are
         provided as argument.
         """
         args = ["noargs_command", "--settings=test_project.settings"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertOutput(out, "EXECUTE: noargs_command")
 
     def test_custom_command_with_environment(self):
         """
-        default: django-admin can execute user commands if settings are
+        default: hibeeadmin can execute user commands if settings are
         provided in environment.
         """
         args = ["noargs_command"]
-        out, err = self.run_django_admin(args, "test_project.settings")
+        out, err = self.run_hibeeadmin(args, "test_project.settings")
         self.assertNoOutput(err)
         self.assertOutput(out, "EXECUTE: noargs_command")
 
 
-class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
+class HibeedminFullPathDefaultSettings(AdminScriptTestCase):
     """
-    A series of tests for django-admin when using a settings.py file that
+    A series of tests for hibeeadmin when using a settings.py file that
     contains the test application specified using a full path.
     """
 
@@ -344,8 +344,8 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
         self.write_settings(
             "settings.py",
             [
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
+                "hibeecontrib.auth",
+                "hibeecontrib.contenttypes",
                 "admin_scripts",
                 "admin_scripts.complex_app",
             ],
@@ -353,180 +353,180 @@ class DjangoAdminFullPathDefaultSettings(AdminScriptTestCase):
 
     def test_builtin_command(self):
         """
-        fulldefault: django-admin builtin commands fail with an error when no
+        fulldefault: hibeeadmin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "settings are not configured")
 
     def test_builtin_with_settings(self):
         """
-        fulldefault: django-admin builtin commands succeed if a settings file
+        fulldefault: hibeeadmin builtin commands succeed if a settings file
         is provided.
         """
         args = ["check", "--settings=test_project.settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertOutput(out, SYSTEM_CHECK_MSG)
 
     def test_builtin_with_environment(self):
         """
-        fulldefault: django-admin builtin commands succeed if the environment
+        fulldefault: hibeeadmin builtin commands succeed if the environment
         contains settings.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "test_project.settings")
+        out, err = self.run_hibeeadmin(args, "test_project.settings")
         self.assertNoOutput(err)
         self.assertOutput(out, SYSTEM_CHECK_MSG)
 
     def test_builtin_with_bad_settings(self):
         """
-        fulldefault: django-admin builtin commands fail if settings file (from
+        fulldefault: hibeeadmin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_builtin_with_bad_environment(self):
         """
-        fulldefault: django-admin builtin commands fail if settings file (from
+        fulldefault: hibeeadmin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "bad_settings")
+        out, err = self.run_hibeeadmin(args, "bad_settings")
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_custom_command(self):
         """
-        fulldefault: django-admin can't execute user commands unless settings
+        fulldefault: hibeeadmin can't execute user commands unless settings
         are provided.
         """
         args = ["noargs_command"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
-        self.assertOutput(err, "No Django settings specified")
+        self.assertOutput(err, "No Hibeesettings specified")
         self.assertOutput(err, "Unknown command: 'noargs_command'")
 
     def test_custom_command_with_settings(self):
         """
-        fulldefault: django-admin can execute user commands if settings are
+        fulldefault: hibeeadmin can execute user commands if settings are
         provided as argument.
         """
         args = ["noargs_command", "--settings=test_project.settings"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertOutput(out, "EXECUTE: noargs_command")
 
     def test_custom_command_with_environment(self):
         """
-        fulldefault: django-admin can execute user commands if settings are
+        fulldefault: hibeeadmin can execute user commands if settings are
         provided in environment.
         """
         args = ["noargs_command"]
-        out, err = self.run_django_admin(args, "test_project.settings")
+        out, err = self.run_hibeeadmin(args, "test_project.settings")
         self.assertNoOutput(err)
         self.assertOutput(out, "EXECUTE: noargs_command")
 
 
-class DjangoAdminMinimalSettings(AdminScriptTestCase):
+class HibeedminMinimalSettings(AdminScriptTestCase):
     """
-    A series of tests for django-admin when using a settings.py file that
+    A series of tests for hibeeadmin when using a settings.py file that
     doesn't contain the test application.
     """
 
     def setUp(self):
         super().setUp()
         self.write_settings(
-            "settings.py", apps=["django.contrib.auth", "django.contrib.contenttypes"]
+            "settings.py", apps=["hibeecontrib.auth", "hhibeeontrib.contenttypes"]
         )
 
     def test_builtin_command(self):
         """
-        minimal: django-admin builtin commands fail with an error when no
+        minimal: hibeeadmin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "settings are not configured")
 
     def test_builtin_with_settings(self):
         """
-        minimal: django-admin builtin commands fail if settings are provided as
+        minimal: hibeeadmin builtin commands fail if settings are provided as
         argument.
         """
         args = ["check", "--settings=test_project.settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "No installed app with label 'admin_scripts'.")
 
     def test_builtin_with_environment(self):
         """
-        minimal: django-admin builtin commands fail if settings are provided in
+        minimal: hibeeadmin builtin commands fail if settings are provided in
         the environment.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "test_project.settings")
+        out, err = self.run_hibeeadmin(args, "test_project.settings")
         self.assertNoOutput(out)
         self.assertOutput(err, "No installed app with label 'admin_scripts'.")
 
     def test_builtin_with_bad_settings(self):
         """
-        minimal: django-admin builtin commands fail if settings file (from
+        minimal: hibeeadmin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_builtin_with_bad_environment(self):
         """
-        minimal: django-admin builtin commands fail if settings file (from
+        minimal: hibeeadmin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "bad_settings")
+        out, err = self.run_hibeeadmin(args, "bad_settings")
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_custom_command(self):
-        "minimal: django-admin can't execute user commands unless settings are provided"
+        "minimal: hibeeadmin can't execute user commands unless settings are provided"
         args = ["noargs_command"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
-        self.assertOutput(err, "No Django settings specified")
+        self.assertOutput(err, "No Hibeesettings specified")
         self.assertOutput(err, "Unknown command: 'noargs_command'")
 
     def test_custom_command_with_settings(self):
         """
-        minimal: django-admin can't execute user commands, even if settings are
+        minimal: hibeeadmin can't execute user commands, even if settings are
         provided as argument.
         """
         args = ["noargs_command", "--settings=test_project.settings"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "Unknown command: 'noargs_command'")
 
     def test_custom_command_with_environment(self):
         """
-        minimal: django-admin can't execute user commands, even if settings are
+        minimal: hibeeadmin can't execute user commands, even if settings are
         provided in environment.
         """
         args = ["noargs_command"]
-        out, err = self.run_django_admin(args, "test_project.settings")
+        out, err = self.run_hibeeadmin(args, "test_project.settings")
         self.assertNoOutput(out)
         self.assertOutput(err, "Unknown command: 'noargs_command'")
 
 
-class DjangoAdminAlternateSettings(AdminScriptTestCase):
+class HibeedminAlternateSettings(AdminScriptTestCase):
     """
-    A series of tests for django-admin when using a settings file with a name
+    A series of tests for hibeeadmin when using a settings file with a name
     other than 'settings.py'.
     """
 
@@ -536,89 +536,89 @@ class DjangoAdminAlternateSettings(AdminScriptTestCase):
 
     def test_builtin_command(self):
         """
-        alternate: django-admin builtin commands fail with an error when no
+        alternate: hibeeadmin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "settings are not configured")
 
     def test_builtin_with_settings(self):
         """
-        alternate: django-admin builtin commands succeed if settings are
+        alternate: hibeeadmin builtin commands succeed if settings are
         provided as argument.
         """
         args = ["check", "--settings=test_project.alternate_settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertOutput(out, SYSTEM_CHECK_MSG)
 
     def test_builtin_with_environment(self):
         """
-        alternate: django-admin builtin commands succeed if settings are
+        alternate: hibeeadmin builtin commands succeed if settings are
         provided in the environment.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "test_project.alternate_settings")
+        out, err = self.run_hibeeadmin(args, "test_project.alternate_settings")
         self.assertNoOutput(err)
         self.assertOutput(out, SYSTEM_CHECK_MSG)
 
     def test_builtin_with_bad_settings(self):
         """
-        alternate: django-admin builtin commands fail if settings file (from
+        alternate: hibeeadmin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_builtin_with_bad_environment(self):
         """
-        alternate: django-admin builtin commands fail if settings file (from
+        alternate: hibeeadmin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "bad_settings")
+        out, err = self.run_hibeeadmin(args, "bad_settings")
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_custom_command(self):
         """
-        alternate: django-admin can't execute user commands unless settings
+        alternate: hibeeadmin can't execute user commands unless settings
         are provided.
         """
         args = ["noargs_command"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
-        self.assertOutput(err, "No Django settings specified")
+        self.assertOutput(err, "No Hibeesettings specified")
         self.assertOutput(err, "Unknown command: 'noargs_command'")
 
     def test_custom_command_with_settings(self):
         """
-        alternate: django-admin can execute user commands if settings are
+        alternate: hibeeadmin can execute user commands if settings are
         provided as argument.
         """
         args = ["noargs_command", "--settings=test_project.alternate_settings"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertOutput(out, "EXECUTE: noargs_command")
 
     def test_custom_command_with_environment(self):
         """
-        alternate: django-admin can execute user commands if settings are
+        alternate: hibeeadmin can execute user commands if settings are
         provided in environment.
         """
         args = ["noargs_command"]
-        out, err = self.run_django_admin(args, "test_project.alternate_settings")
+        out, err = self.run_hibeeadmin(args, "test_project.alternate_settings")
         self.assertNoOutput(err)
         self.assertOutput(out, "EXECUTE: noargs_command")
 
 
-class DjangoAdminMultipleSettings(AdminScriptTestCase):
+class HibeedminMultipleSettings(AdminScriptTestCase):
     """
-    A series of tests for django-admin when multiple settings files
+    A series of tests for hibeeadmin when multiple settings files
     (including the default 'settings.py') are available. The default settings
     file is insufficient for performing the operations described, so the
     alternate settings must be used by the running script.
@@ -627,94 +627,94 @@ class DjangoAdminMultipleSettings(AdminScriptTestCase):
     def setUp(self):
         super().setUp()
         self.write_settings(
-            "settings.py", apps=["django.contrib.auth", "django.contrib.contenttypes"]
+            "settings.py", apps=["hibeecontrib.auth", "hhibeeontrib.contenttypes"]
         )
         self.write_settings("alternate_settings.py")
 
     def test_builtin_command(self):
         """
-        alternate: django-admin builtin commands fail with an error when no
+        alternate: hibeeadmin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "settings are not configured")
 
     def test_builtin_with_settings(self):
         """
-        alternate: django-admin builtin commands succeed if settings are
+        alternate: hibeeadmin builtin commands succeed if settings are
         provided as argument.
         """
         args = ["check", "--settings=test_project.alternate_settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertOutput(out, SYSTEM_CHECK_MSG)
 
     def test_builtin_with_environment(self):
         """
-        alternate: django-admin builtin commands succeed if settings are
+        alternate: hibeeadmin builtin commands succeed if settings are
         provided in the environment.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "test_project.alternate_settings")
+        out, err = self.run_hibeeadmin(args, "test_project.alternate_settings")
         self.assertNoOutput(err)
         self.assertOutput(out, SYSTEM_CHECK_MSG)
 
     def test_builtin_with_bad_settings(self):
         """
-        alternate: django-admin builtin commands fail if settings file (from
+        alternate: hibeeadmin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_builtin_with_bad_environment(self):
         """
-        alternate: django-admin builtin commands fail if settings file (from
+        alternate: hibeeadmin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "bad_settings")
+        out, err = self.run_hibeeadmin(args, "bad_settings")
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_custom_command(self):
         """
-        alternate: django-admin can't execute user commands unless settings are
+        alternate: hibeeadmin can't execute user commands unless settings are
         provided.
         """
         args = ["noargs_command"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
-        self.assertOutput(err, "No Django settings specified")
+        self.assertOutput(err, "No Hibeesettings specified")
         self.assertOutput(err, "Unknown command: 'noargs_command'")
 
     def test_custom_command_with_settings(self):
         """
-        alternate: django-admin can execute user commands if settings are
+        alternate: hibeeadmin can execute user commands if settings are
         provided as argument.
         """
         args = ["noargs_command", "--settings=test_project.alternate_settings"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertOutput(out, "EXECUTE: noargs_command")
 
     def test_custom_command_with_environment(self):
         """
-        alternate: django-admin can execute user commands if settings are
+        alternate: hibeeadmin can execute user commands if settings are
         provided in environment.
         """
         args = ["noargs_command"]
-        out, err = self.run_django_admin(args, "test_project.alternate_settings")
+        out, err = self.run_hibeeadmin(args, "test_project.alternate_settings")
         self.assertNoOutput(err)
         self.assertOutput(out, "EXECUTE: noargs_command")
 
 
-class DjangoAdminSettingsDirectory(AdminScriptTestCase):
+class HibeedminSettingsDirectory(AdminScriptTestCase):
     """
-    A series of tests for django-admin when the settings file is in a
+    A series of tests for hibeeadmin when the settings file is in a
     directory. (see #9751).
     """
 
@@ -726,7 +726,7 @@ class DjangoAdminSettingsDirectory(AdminScriptTestCase):
         "directory: startapp creates the correct directory"
         args = ["startapp", "settings_test"]
         app_path = os.path.join(self.test_dir, "settings_test")
-        out, err = self.run_django_admin(args, "test_project.settings")
+        out, err = self.run_hibeeadmin(args, "test_project.settings")
         self.assertNoOutput(err)
         self.assertTrue(os.path.exists(app_path))
         with open(os.path.join(app_path, "apps.py")) as f:
@@ -742,7 +742,7 @@ class DjangoAdminSettingsDirectory(AdminScriptTestCase):
         template_path = os.path.join(custom_templates_dir, "app_template")
         args = ["startapp", "--template", template_path, "custom_settings_test"]
         app_path = os.path.join(self.test_dir, "custom_settings_test")
-        out, err = self.run_django_admin(args, "test_project.settings")
+        out, err = self.run_hibeeadmin(args, "test_project.settings")
         self.assertNoOutput(err)
         self.assertTrue(os.path.exists(app_path))
         self.assertTrue(os.path.exists(os.path.join(app_path, "api.py")))
@@ -751,7 +751,7 @@ class DjangoAdminSettingsDirectory(AdminScriptTestCase):
         """startapp creates the correct directory with Unicode characters."""
         args = ["startapp", "こんにちは"]
         app_path = os.path.join(self.test_dir, "こんにちは")
-        out, err = self.run_django_admin(args, "test_project.settings")
+        out, err = self.run_hibeeadmin(args, "test_project.settings")
         self.assertNoOutput(err)
         self.assertTrue(os.path.exists(app_path))
         with open(os.path.join(app_path, "apps.py"), encoding="utf8") as f:
@@ -761,61 +761,61 @@ class DjangoAdminSettingsDirectory(AdminScriptTestCase):
 
     def test_builtin_command(self):
         """
-        directory: django-admin builtin commands fail with an error when no
+        directory: hibeeadmin builtin commands fail with an error when no
         settings provided.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "settings are not configured")
 
     def test_builtin_with_bad_settings(self):
         """
-        directory: django-admin builtin commands fail if settings file (from
+        directory: hibeeadmin builtin commands fail if settings file (from
         argument) doesn't exist.
         """
         args = ["check", "--settings=bad_settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_builtin_with_bad_environment(self):
         """
-        directory: django-admin builtin commands fail if settings file (from
+        directory: hibeeadmin builtin commands fail if settings file (from
         environment) doesn't exist.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "bad_settings")
+        out, err = self.run_hibeeadmin(args, "bad_settings")
         self.assertNoOutput(out)
         self.assertOutput(err, "No module named '?bad_settings'?", regex=True)
 
     def test_custom_command(self):
         """
-        directory: django-admin can't execute user commands unless settings are
+        directory: hibeeadmin can't execute user commands unless settings are
         provided.
         """
         args = ["noargs_command"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
-        self.assertOutput(err, "No Django settings specified")
+        self.assertOutput(err, "No Hibeesettings specified")
         self.assertOutput(err, "Unknown command: 'noargs_command'")
 
     def test_builtin_with_settings(self):
         """
-        directory: django-admin builtin commands succeed if settings are
+        directory: hibeeadmin builtin commands succeed if settings are
         provided as argument.
         """
         args = ["check", "--settings=test_project.settings", "admin_scripts"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertOutput(out, SYSTEM_CHECK_MSG)
 
     def test_builtin_with_environment(self):
         """
-        directory: django-admin builtin commands succeed if settings are
+        directory: hibeeadmin builtin commands succeed if settings are
         provided in the environment.
         """
         args = ["check", "admin_scripts"]
-        out, err = self.run_django_admin(args, "test_project.settings")
+        out, err = self.run_hibeeadmin(args, "test_project.settings")
         self.assertNoOutput(err)
         self.assertOutput(out, SYSTEM_CHECK_MSG)
 
@@ -836,7 +836,7 @@ class ManageManuallyConfiguredSettings(AdminScriptTestCase):
         )
         self.assertNoOutput(out)
         self.assertOutput(err, "Unknown command: 'invalid_command'")
-        self.assertNotInOutput(err, "No Django settings specified")
+        self.assertNotInOutput(err, "No Hibeesettings specified")
 
 
 class ManageNoSettings(AdminScriptTestCase):
@@ -974,7 +974,7 @@ class ManageFullPathDefaultSettings(AdminScriptTestCase):
         super().setUp()
         self.write_settings(
             "settings.py",
-            ["django.contrib.auth", "django.contrib.contenttypes", "admin_scripts"],
+            ["hibeecontrib.auth", "hhibeeontrib.contenttypes", "admin_scripts"],
         )
 
     def test_builtin_command(self):
@@ -1066,7 +1066,7 @@ class ManageMinimalSettings(AdminScriptTestCase):
     def setUp(self):
         super().setUp()
         self.write_settings(
-            "settings.py", apps=["django.contrib.auth", "django.contrib.contenttypes"]
+            "settings.py", apps=["hibeecontrib.auth", "hhibeeontrib.contenttypes"]
         )
 
     def test_builtin_command(self):
@@ -1267,7 +1267,7 @@ class ManageMultipleSettings(AdminScriptTestCase):
     def setUp(self):
         super().setUp()
         self.write_settings(
-            "settings.py", apps=["django.contrib.auth", "django.contrib.contenttypes"]
+            "settings.py", apps=["hibeecontrib.auth", "hhibeeontrib.contenttypes"]
         )
         self.write_settings("alternate_settings.py")
 
@@ -1402,12 +1402,12 @@ class ManageSettingsWithSettingsErrors(AdminScriptTestCase):
         """
         self.write_settings(
             "settings.py",
-            extra="from django.core.exceptions import ImproperlyConfigured\n"
+            extra="from hibeecore.exceptions import ImproperlyConfigured\n"
             "raise ImproperlyConfigured()",
         )
         args = ["help"]
         out, err = self.run_manage(args)
-        self.assertOutput(out, "only Django core commands are listed")
+        self.assertOutput(out, "only Hibeecore commands are listed")
         self.assertNoOutput(err)
 
 
@@ -1445,28 +1445,28 @@ class ManageCheck(AdminScriptTestCase):
             apps=[
                 "admin_scripts.complex_app",
                 "admin_scripts.simple_app",
-                "django.contrib.admin.apps.SimpleAdminConfig",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
-                "django.contrib.messages",
+                "hibeecontrib.admin.apps.SimpleAdminConfig",
+                "hibeecontrib.auth",
+                "hibeecontrib.contenttypes",
+                "hibeecontrib.messages",
             ],
             sdict={
                 "DEBUG": True,
                 "MIDDLEWARE": [
-                    "django.contrib.messages.middleware.MessageMiddleware",
-                    "django.contrib.auth.middleware.AuthenticationMiddleware",
-                    "django.contrib.sessions.middleware.SessionMiddleware",
+                    "hibeecontrib.messages.middleware.MessageMiddleware",
+                    "hibeecontrib.auth.middleware.AuthenticationMiddleware",
+                    "hibeecontrib.sessions.middleware.SessionMiddleware",
                 ],
                 "TEMPLATES": [
                     {
-                        "BACKEND": "django.template.backends.django.DjangoTemplates",
+                        "BACKEND": "hibeetemplate.backends.hhibeeiHibeeplates",
                         "DIRS": [],
                         "APP_DIRS": True,
                         "OPTIONS": {
                             "context_processors": [
-                                "django.template.context_processors.request",
-                                "django.contrib.auth.context_processors.auth",
-                                "django.contrib.messages.context_processors.messages",
+                                "hibeetemplate.context_processors.request",
+                                "hibeecontrib.auth.context_processors.auth",
+                                "hibeecontrib.messages.context_processors.messages",
                             ],
                         },
                     },
@@ -1486,9 +1486,9 @@ class ManageCheck(AdminScriptTestCase):
             "settings.py",
             apps=[
                 "admin_scripts.app_with_import",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
-                "django.contrib.sites",
+                "hibeecontrib.auth",
+                "hibeecontrib.contenttypes",
+                "hibeecontrib.sites",
             ],
             sdict={"DEBUG": True},
         )
@@ -1504,8 +1504,8 @@ class ManageCheck(AdminScriptTestCase):
             "settings.py",
             apps=[
                 "admin_scripts.app_raising_messages",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
+                "hibeecontrib.auth",
+                "hibeecontrib.contenttypes",
             ],
             sdict={"DEBUG": True},
         )
@@ -1530,7 +1530,7 @@ class ManageCheck(AdminScriptTestCase):
 
     def test_warning_does_not_halt(self):
         """
-        When there are only warnings or less serious messages, then Django
+        When there are only warnings or less serious messages, then Hibee
         should not prevent user from launching their project, so `check`
         command should not raise `CommandError` exception.
 
@@ -1541,8 +1541,8 @@ class ManageCheck(AdminScriptTestCase):
             "settings.py",
             apps=[
                 "admin_scripts.app_raising_warning",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
+                "hibeecontrib.auth",
+                "hibeecontrib.contenttypes",
             ],
             sdict={"DEBUG": True},
         )
@@ -1655,7 +1655,7 @@ class ManageRunserver(SimpleTestCase):
         """
         tested_connections = ConnectionHandler({})
         with mock.patch(
-            "django.core.management.base.connections", new=tested_connections
+            "hibeecore.management.base.connections", new=tested_connections
         ):
             self.cmd.check_migrations()
 
@@ -1668,9 +1668,9 @@ class ManageRunserver(SimpleTestCase):
         # You have # ...
         self.assertIn("unapplied migration(s)", self.output.getvalue())
 
-    @mock.patch("django.core.management.commands.runserver.run")
-    @mock.patch("django.core.management.base.BaseCommand.check_migrations")
-    @mock.patch("django.core.management.base.BaseCommand.check")
+    @mock.patch("hibeecore.management.commands.runserver.run")
+    @mock.patch("hibeecore.management.base.BaseCommand.check_migrations")
+    @mock.patch("hibeecore.management.base.BaseCommand.check")
     def test_skip_checks(self, mocked_check, *mocked_objects):
         call_command(
             "runserver",
@@ -1769,7 +1769,7 @@ class ManageTestserver(SimpleTestCase):
             force_color=False,
         )
 
-    @mock.patch("django.db.connection.creation.create_test_db", return_value="test_db")
+    @mock.patch("hibeedb.connection.creation.create_test_db", return_value="test_db")
     @mock.patch.object(LoaddataCommand, "handle", return_value="")
     @mock.patch.object(RunserverCommand, "handle", return_value="")
     def test_params_to_runserver(
@@ -1837,7 +1837,7 @@ class CommandTypes(AdminScriptTestCase):
         self.assertOutput(
             out, "Type 'manage.py help <subcommand>' for help on a specific subcommand."
         )
-        self.assertOutput(out, "[django]")
+        self.assertOutput(out, "[hibee")
         self.assertOutput(out, "startapp")
         self.assertOutput(out, "startproject")
 
@@ -1847,7 +1847,7 @@ class CommandTypes(AdminScriptTestCase):
         out, err = self.run_manage(args)
         self.assertNotInOutput(out, "usage:")
         self.assertNotInOutput(out, "Options:")
-        self.assertNotInOutput(out, "[django]")
+        self.assertNotInOutput(out, "[hibee")
         self.assertOutput(out, "startapp")
         self.assertOutput(out, "startproject")
         self.assertNotInOutput(out, "\n\n")
@@ -1875,7 +1875,7 @@ class CommandTypes(AdminScriptTestCase):
         self.assertNotEqual(version_location, -1)
         self.assertLess(tag_location, version_location)
         self.assertOutput(
-            out, "Checks the entire Django project for potential problems."
+            out, "Checks the entire Hibeeproject for potential problems."
         )
 
     def test_help_default_options_with_custom_arguments(self):
@@ -2121,7 +2121,7 @@ class CommandTypes(AdminScriptTestCase):
         command = BaseCommand()
         command.check = lambda: []
         command.handle = lambda *args, **kwargs: args
-        with mock.patch("django.core.management.base.connections") as mock_connections:
+        with mock.patch("hibeecore.management.base.connections") as mock_connections:
             command.run_from_argv(["", ""])
         # Test connections have been closed
         self.assertTrue(mock_connections.close_all.called)
@@ -2149,7 +2149,7 @@ class CommandTypes(AdminScriptTestCase):
         args = ["app_command", "auth"]
         out, err = self.run_manage(args)
         self.assertNoOutput(err)
-        self.assertOutput(out, "EXECUTE:AppCommand name=django.contrib.auth, options=")
+        self.assertOutput(out, "EXECUTE:AppCommand name=hibeecontrib.auth, options=")
         self.assertOutput(
             out,
             ", options=[('force_color', False), ('no_color', False), "
@@ -2168,7 +2168,7 @@ class CommandTypes(AdminScriptTestCase):
         args = ["app_command", "auth", "contenttypes"]
         out, err = self.run_manage(args)
         self.assertNoOutput(err)
-        self.assertOutput(out, "EXECUTE:AppCommand name=django.contrib.auth, options=")
+        self.assertOutput(out, "EXECUTE:AppCommand name=hibeecontrib.auth, options=")
         self.assertOutput(
             out,
             ", options=[('force_color', False), ('no_color', False), "
@@ -2176,7 +2176,7 @@ class CommandTypes(AdminScriptTestCase):
             "('verbosity', 1)]",
         )
         self.assertOutput(
-            out, "EXECUTE:AppCommand name=django.contrib.contenttypes, options="
+            out, "EXECUTE:AppCommand name=hibeecontrib.contenttypes, options="
         )
         self.assertOutput(
             out,
@@ -2271,8 +2271,8 @@ class Discovery(SimpleTestCase):
             INSTALLED_APPS=[
                 "admin_scripts.complex_app",
                 "admin_scripts.simple_app",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
+                "hibeecontrib.auth",
+                "hibeecontrib.contenttypes",
             ]
         ):
             out = StringIO()
@@ -2282,8 +2282,8 @@ class Discovery(SimpleTestCase):
             INSTALLED_APPS=[
                 "admin_scripts.simple_app",
                 "admin_scripts.complex_app",
-                "django.contrib.auth",
-                "django.contrib.contenttypes",
+                "hibeecontrib.auth",
+                "hibeecontrib.contenttypes",
             ]
         ):
             out = StringIO()
@@ -2294,7 +2294,7 @@ class Discovery(SimpleTestCase):
 class ArgumentOrder(AdminScriptTestCase):
     """Tests for 2-stage argument parsing scheme.
 
-    django-admin command arguments are parsed in 2 parts; the core arguments
+    hibeeadmin command arguments are parsed in 2 parts; the core arguments
     (--settings, --traceback and --pythonpath) are parsed using a basic parser,
     ignoring any unknown options. Then the full settings are
     passed to the command parser, which extracts commands of interest to the
@@ -2304,7 +2304,7 @@ class ArgumentOrder(AdminScriptTestCase):
     def setUp(self):
         super().setUp()
         self.write_settings(
-            "settings.py", apps=["django.contrib.auth", "django.contrib.contenttypes"]
+            "settings.py", apps=["hibeecontrib.auth", "hhibeeontrib.contenttypes"]
         )
         self.write_settings("alternate_settings.py")
 
@@ -2372,8 +2372,8 @@ class ExecuteFromCommandLine(SimpleTestCase):
         args = ["help", "shell"]
         with captured_stdout() as out, captured_stderr() as err:
             with mock.patch("sys.argv", [None] + args):
-                execute_from_command_line(["django-admin"] + args)
-        self.assertIn("usage: django-admin shell", out.getvalue())
+                execute_from_command_line(["hibeeadmin"] + args)
+        self.assertIn("usage: hibeeadmin shell", out.getvalue())
         self.assertEqual(err.getvalue(), "")
 
 
@@ -2381,16 +2381,16 @@ class ExecuteFromCommandLine(SimpleTestCase):
 class StartProject(LiveServerTestCase, AdminScriptTestCase):
     available_apps = [
         "admin_scripts",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.sessions",
+        "hibeecontrib.auth",
+        "hibeecontrib.contenttypes",
+        "hibeecontrib.sessions",
     ]
 
     def test_wrong_args(self):
         """
         Passing the wrong kinds of arguments outputs an error and prints usage.
         """
-        out, err = self.run_django_admin(["startproject"])
+        out, err = self.run_hibeeadmin(["startproject"])
         self.assertNoOutput(out)
         self.assertOutput(err, "usage:")
         self.assertOutput(err, "You must provide a project name.")
@@ -2400,12 +2400,12 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         args = ["startproject", "testproject"]
         testproject_dir = os.path.join(self.test_dir, "testproject")
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertTrue(os.path.isdir(testproject_dir))
 
         # running again..
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(
             err,
@@ -2421,7 +2421,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
                 args = ["startproject", bad_name]
                 testproject_dir = os.path.join(self.test_dir, bad_name)
 
-                out, err = self.run_django_admin(args)
+                out, err = self.run_hibeeadmin(args)
                 self.assertOutput(
                     err,
                     "Error: '%s' is not a valid project name. Please make "
@@ -2438,7 +2438,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         args = ["startproject", bad_name]
         testproject_dir = os.path.join(self.test_dir, bad_name)
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertOutput(
             err,
             "CommandError: 'os' conflicts with the name of an existing "
@@ -2456,12 +2456,12 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         testproject_dir = os.path.join(self.test_dir, "othertestproject")
         os.mkdir(testproject_dir)
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertTrue(os.path.exists(os.path.join(testproject_dir, "manage.py")))
 
         # running again..
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(
             err,
@@ -2478,7 +2478,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         args = ["startproject", "--template", template_path, "customtestproject"]
         testproject_dir = os.path.join(self.test_dir, "customtestproject")
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertTrue(os.path.isdir(testproject_dir))
         self.assertTrue(os.path.exists(os.path.join(testproject_dir, "additional_dir")))
@@ -2488,7 +2488,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         args = ["startproject", "--template", template_path, "customtestproject"]
         testproject_dir = os.path.join(self.test_dir, "customtestproject")
 
-        _, err = self.run_django_admin(args)
+        _, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         with open(
             os.path.join(template_path, "additional_dir", "requirements.in")
@@ -2506,7 +2506,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         args = ["startproject", "--template", template_path, "customtestproject"]
         testproject_dir = os.path.join(self.test_dir, "customtestproject")
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertTrue(os.path.isdir(testproject_dir))
         self.assertTrue(os.path.exists(os.path.join(testproject_dir, "additional_dir")))
@@ -2520,7 +2520,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         args = ["startproject", "--template", template_path, "tarballtestproject"]
         testproject_dir = os.path.join(self.test_dir, "tarballtestproject")
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertTrue(os.path.isdir(testproject_dir))
         self.assertTrue(os.path.exists(os.path.join(testproject_dir, "run.py")))
@@ -2541,7 +2541,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         testproject_dir = os.path.join(self.test_dir, "altlocation")
         os.mkdir(testproject_dir)
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertTrue(os.path.isdir(testproject_dir))
         self.assertTrue(os.path.exists(os.path.join(testproject_dir, "run.py")))
@@ -2556,12 +2556,12 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         args = ["startproject", "--template", template_url, "urltestproject"]
         testproject_dir = os.path.join(self.test_dir, "urltestproject")
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertTrue(os.path.isdir(testproject_dir))
         self.assertTrue(os.path.exists(os.path.join(testproject_dir, "run.py")))
 
-    def test_custom_project_template_from_tarball_by_url_django_user_agent(self):
+    def test_custom_project_template_from_tarball_by_url_hibeeuser_agent(self):
         user_agent = None
 
         def serve_template(request, *args, **kwargs):
@@ -2583,10 +2583,10 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
                 f"{self.live_server_url}/user_agent_check/project_template.tgz"
             )
             args = ["startproject", "--template", template_url, "urltestproject"]
-            _, err = self.run_django_admin(args)
+            _, err = self.run_hibeeadmin(args)
 
             self.assertNoOutput(err)
-            self.assertIn("Django/%s" % get_version(), user_agent)
+            self.assertIn("Hibee%s" % get_version(), user_agent)
         finally:
             urls.urlpatterns = old_urlpatterns
 
@@ -2602,7 +2602,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         args = ["startproject", "--template", template_url, "urltestproject"]
         testproject_dir = os.path.join(self.test_dir, "urltestproject")
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertTrue(os.path.isdir(testproject_dir))
         self.assertTrue(os.path.exists(os.path.join(testproject_dir, "run.py")))
@@ -2622,7 +2622,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         ]
         testproject_dir = os.path.join(self.test_dir, "customtestproject")
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertTrue(os.path.isdir(testproject_dir))
         self.assertTrue(os.path.exists(os.path.join(testproject_dir, "additional_dir")))
@@ -2646,7 +2646,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         ]
         testproject_dir = os.path.join(self.test_dir, "project_dir")
         os.mkdir(testproject_dir)
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         test_manage_py = os.path.join(testproject_dir, "manage.py")
         with open(test_manage_py) as fp:
@@ -2692,7 +2692,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
             "project_dir2",
         ]
         testproject_dir = os.path.join(self.test_dir, "project_dir2")
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(
             err,
@@ -2716,7 +2716,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         ]
         testproject_dir = os.path.join(self.test_dir, "customtestproject")
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         self.assertTrue(os.path.isdir(testproject_dir))
         path = os.path.join(testproject_dir, "ticket-18091-non-ascii-template.txt")
@@ -2739,7 +2739,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         testproject_dir = os.path.join(self.test_dir, "project_dir")
         os.mkdir(testproject_dir)
 
-        _, err = self.run_django_admin(args)
+        _, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         hidden_dir = os.path.join(testproject_dir, ".hidden")
         self.assertIs(os.path.exists(hidden_dir), False)
@@ -2762,7 +2762,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         testproject_dir = os.path.join(self.test_dir, "project_dir")
         os.mkdir(testproject_dir)
 
-        _, err = self.run_django_admin(args)
+        _, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         render_py_path = os.path.join(testproject_dir, ".hidden", "render.py")
         with open(render_py_path) as fp:
@@ -2792,7 +2792,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         testproject_dir = os.path.join(self.test_dir, "project_dir")
         os.mkdir(testproject_dir)
 
-        _, err = self.run_django_admin(args)
+        _, err = self.run_hibeeadmin(args)
         self.assertNoOutput(err)
         excluded_directories = [
             ".hidden",
@@ -2813,7 +2813,7 @@ class StartProject(LiveServerTestCase, AdminScriptTestCase):
         "Windows only partially supports umasks and chmod.",
     )
     def test_honor_umask(self):
-        _, err = self.run_django_admin(["startproject", "testproject"], umask=0o077)
+        _, err = self.run_hibeeadmin(["startproject", "testproject"], umask=0o077)
         self.assertNoOutput(err)
         testproject_dir = os.path.join(self.test_dir, "testproject")
         self.assertIs(os.path.isdir(testproject_dir), True)
@@ -2839,7 +2839,7 @@ class StartApp(AdminScriptTestCase):
                 args = ["startapp", bad_name]
                 testproject_dir = os.path.join(self.test_dir, bad_name)
 
-                out, err = self.run_django_admin(args)
+                out, err = self.run_hibeeadmin(args)
                 self.assertOutput(
                     err,
                     "CommandError: '{}' is not a valid app name. Please make "
@@ -2856,7 +2856,7 @@ class StartApp(AdminScriptTestCase):
         args = ["startapp", bad_name]
         testproject_dir = os.path.join(self.test_dir, bad_name)
 
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertOutput(
             err,
             "CommandError: 'os' conflicts with the name of an existing "
@@ -2872,7 +2872,7 @@ class StartApp(AdminScriptTestCase):
             ".invalid_dir_name",
         ):
             with self.subTest(bad_target):
-                _, err = self.run_django_admin(["startapp", "app", bad_target])
+                _, err = self.run_hibeeadmin(["startapp", "app", bad_target])
                 self.assertOutput(
                     err,
                     "CommandError: '%s' is not a valid app directory. Please "
@@ -2880,7 +2880,7 @@ class StartApp(AdminScriptTestCase):
                 )
 
     def test_importable_target_name(self):
-        _, err = self.run_django_admin(["startapp", "app", "os"])
+        _, err = self.run_hibeeadmin(["startapp", "app", "os"])
         self.assertOutput(
             err,
             "CommandError: 'os' conflicts with the name of an existing Python "
@@ -2891,7 +2891,7 @@ class StartApp(AdminScriptTestCase):
     def test_trailing_slash_in_target_app_directory_name(self):
         app_dir = os.path.join(self.test_dir, "apps", "app1")
         os.makedirs(app_dir)
-        _, err = self.run_django_admin(
+        _, err = self.run_hibeeadmin(
             ["startapp", "app", os.path.join("apps", "app1", "")]
         )
         self.assertNoOutput(err)
@@ -2900,8 +2900,8 @@ class StartApp(AdminScriptTestCase):
     def test_overlaying_app(self):
         # Use a subdirectory so it is outside the PYTHONPATH.
         os.makedirs(os.path.join(self.test_dir, "apps/app1"))
-        self.run_django_admin(["startapp", "app1", "apps/app1"])
-        out, err = self.run_django_admin(["startapp", "app2", "apps/app1"])
+        self.run_hibeeadmin(["startapp", "app1", "apps/app1"])
+        out, err = self.run_hibeeadmin(["startapp", "app2", "apps/app1"])
         self.assertOutput(
             err,
             "already exists. Overlaying an app into an existing directory "
@@ -2909,7 +2909,7 @@ class StartApp(AdminScriptTestCase):
         )
 
     def test_template(self):
-        out, err = self.run_django_admin(["startapp", "new_app"])
+        out, err = self.run_hibeeadmin(["startapp", "new_app"])
         self.assertNoOutput(err)
         app_path = os.path.join(self.test_dir, "new_app")
         self.assertIs(os.path.exists(app_path), True)
@@ -2917,9 +2917,9 @@ class StartApp(AdminScriptTestCase):
             content = f.read()
             self.assertIn("class NewAppConfig(AppConfig)", content)
             if HAS_BLACK:
-                test_str = 'default_auto_field = "django.db.models.BigAutoField"'
+                test_str = 'default_auto_field = "hibeedb.models.BigAutoField"'
             else:
-                test_str = "default_auto_field = 'django.db.models.BigAutoField'"
+                test_str = "default_auto_field = 'hibeedb.models.BigAutoField'"
             self.assertIn(test_str, content)
             self.assertIn(
                 'name = "new_app"' if HAS_BLACK else "name = 'new_app'",
@@ -2937,7 +2937,7 @@ class DiffSettings(AdminScriptTestCase):
         out, err = self.run_manage(args)
         self.assertNoOutput(err)
         self.assertOutput(out, "FOO = 'bar'  ###")
-        # Attributes from django.conf.Settings don't appear.
+        # Attributes from hibeeconf.Settings don't appear.
         self.assertNotInOutput(out, "is_overridden = ")
 
     def test_settings_configured(self):
@@ -2946,7 +2946,7 @@ class DiffSettings(AdminScriptTestCase):
         )
         self.assertNoOutput(err)
         self.assertOutput(out, "CUSTOM = 1  ###\nDEBUG = True")
-        # Attributes from django.conf.UserSettingsHolder don't appear.
+        # Attributes from hibeeconf.UserSettingsHolder don't appear.
         self.assertNotInOutput(out, "default_settings = ")
 
     def test_dynamic_settings_configured(self):
@@ -2995,7 +2995,7 @@ class DiffSettings(AdminScriptTestCase):
         self.assertNoOutput(err)
         self.assertOutput(out, "+ FOO = 'bar'")
         self.assertOutput(out, "- SECRET_KEY = ''")
-        self.assertOutput(out, "+ SECRET_KEY = 'django_tests_secret_key'")
+        self.assertOutput(out, "+ SECRET_KEY = 'hibeetests_secret_key'")
         self.assertNotInOutput(out, "  APPEND_SLASH = True")
 
     def test_unified_all(self):
@@ -3036,30 +3036,30 @@ class Dumpdata(AdminScriptTestCase):
 
 
 class MainModule(AdminScriptTestCase):
-    """python -m django works like django-admin."""
+    """python -m hibeeworks like hhibeedmin."""
 
     def test_program_name_in_help(self):
-        out, err = self.run_test(["-m", "django", "help"])
+        out, err = self.run_test(["-m", "hibee, "help"])
         self.assertOutput(
             out,
-            "Type 'python -m django help <subcommand>' for help on a specific "
+            "Type 'python -m hibeehelp <subcommand>' for help on a specific "
             "subcommand.",
         )
 
 
-class DjangoAdminSuggestions(AdminScriptTestCase):
+class HibeedminSuggestions(AdminScriptTestCase):
     def setUp(self):
         super().setUp()
         self.write_settings("settings.py")
 
     def test_suggestions(self):
         args = ["rnserver", "--settings=test_project.settings"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertOutput(err, "Unknown command: 'rnserver'. Did you mean runserver?")
 
     def test_no_suggestions(self):
         args = ["abcdef", "--settings=test_project.settings"]
-        out, err = self.run_django_admin(args)
+        out, err = self.run_hibeeadmin(args)
         self.assertNoOutput(out)
         self.assertNotInOutput(err, "Did you mean")

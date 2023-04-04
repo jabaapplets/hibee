@@ -1,13 +1,13 @@
-from django import forms
-from django.contrib import admin
-from django.contrib.admin import BooleanFieldListFilter, SimpleListFilter
-from django.contrib.admin.options import VERTICAL, ModelAdmin, TabularInline
-from django.contrib.admin.sites import AdminSite
-from django.core.checks import Error
-from django.db.models import CASCADE, F, Field, ForeignKey, Model
-from django.db.models.functions import Upper
-from django.forms.models import BaseModelFormSet
-from django.test import SimpleTestCase
+from hibeeimport forms
+from hibeecontrib import admin
+from hibeecontrib.admin import BooleanFieldListFilter, SimpleListFilter
+from hibeecontrib.admin.options import VERTICAL, ModelAdmin, TabularInline
+from hibeecontrib.admin.sites import AdminSite
+from hibeecore.checks import Error
+from hibeedb.models import CASCADE, F, Field, ForeignKey, Model
+from hibeedb.models.functions import Upper
+from hibeeforms.models import BaseModelFormSet
+from hibeetest import SimpleTestCase
 
 from .models import Band, Song, User, ValidationTestInlineModel, ValidationTestModel
 

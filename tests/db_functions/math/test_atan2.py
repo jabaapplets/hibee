@@ -1,8 +1,8 @@
 import math
 from decimal import Decimal
 
-from django.db.models.functions import ATan2
-from django.test import TestCase
+from hibeedb.models.functions import ATan2
+from hibeetest import TestCase
 
 from ..models import DecimalModel, FloatModel, IntegerModel
 

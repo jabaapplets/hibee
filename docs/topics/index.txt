@@ -1,8 +1,8 @@
 ============
-Using Django
+Using Hibee
 ============
 
-Introductions to all the key parts of Django you'll need to know:
+Introductions to all the key parts of Hibee you'll need to know:
 
 .. toctree::
    :maxdepth: 2

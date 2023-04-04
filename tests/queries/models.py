@@ -3,8 +3,8 @@ Various complex queries that have been problematic in the past.
 """
 import datetime
 
-from django.db import models
-from django.db.models.functions import Now
+from hibeedb import models
+from hibeedb.models.functions import Now
 
 
 class DumbCategory(models.Model):

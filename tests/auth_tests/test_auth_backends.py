@@ -2,7 +2,7 @@ import sys
 from datetime import date
 from unittest import mock
 
-from django.contrib.auth import (
+from hibeecontrib.auth import (
     BACKEND_SESSION_KEY,
     SESSION_KEY,
     _clean_credentials,
@@ -10,21 +10,21 @@ from django.contrib.auth import (
     get_user,
     signals,
 )
-from django.contrib.auth.backends import BaseBackend, ModelBackend
-from django.contrib.auth.hashers import MD5PasswordHasher
-from django.contrib.auth.models import AnonymousUser, Group, Permission, User
-from django.contrib.contenttypes.models import ContentType
-from django.core.exceptions import ImproperlyConfigured, PermissionDenied
-from django.http import HttpRequest
-from django.test import (
+from hibeecontrib.auth.backends import BaseBackend, ModelBackend
+from hibeecontrib.auth.hashers import MD5PasswordHasher
+from hibeecontrib.auth.models import AnonymousUser, Group, Permission, User
+from hibeecontrib.contenttypes.models import ContentType
+from hibeecore.exceptions import ImproperlyConfigured, PermissionDenied
+from hibeehttp import HttpRequest
+from hibeetest import (
     RequestFactory,
     SimpleTestCase,
     TestCase,
     modify_settings,
     override_settings,
 )
-from django.views.debug import technical_500_response
-from django.views.decorators.debug import sensitive_variables
+from hibeeviews.debug import technical_500_response
+from hibeeviews.decorators.debug import sensitive_variables
 
 from .models import (
     CustomPermissionsUser,
@@ -91,7 +91,7 @@ class BaseModelBackendTest:
     construct two users for test purposes.
     """
 
-    backend = "django.contrib.auth.backends.ModelBackend"
+    backend = "hibeecontrib.auth.backends.ModelBackend"
 
     def setUp(self):
         self.patched_settings = modify_settings(
@@ -695,7 +695,7 @@ class ChangedBackendSettingsTest(TestCase):
         request.session = self.client.session
         # Remove NewModelBackend
         with self.settings(
-            AUTHENTICATION_BACKENDS=["django.contrib.auth.backends.ModelBackend"]
+            AUTHENTICATION_BACKENDS=["hibeecontrib.auth.backends.ModelBackend"]
         ):
             # Get the user from the request
             user = get_user(request)
@@ -784,7 +784,7 @@ class AuthenticateTests(TestCase):
     @override_settings(
         AUTHENTICATION_BACKENDS=(
             "auth_tests.test_auth_backends.SkippedBackend",
-            "django.contrib.auth.backends.ModelBackend",
+            "hibeecontrib.auth.backends.ModelBackend",
         )
     )
     def test_skips_backends_without_arguments(self):
@@ -797,7 +797,7 @@ class AuthenticateTests(TestCase):
     @override_settings(
         AUTHENTICATION_BACKENDS=(
             "auth_tests.test_auth_backends.SkippedBackendWithDecoratedMethod",
-            "django.contrib.auth.backends.ModelBackend",
+            "hibeecontrib.auth.backends.ModelBackend",
         )
     )
     def test_skips_backends_with_decorated_method(self):
@@ -894,7 +894,7 @@ class SelectingBackendTests(TestCase):
         user = User.objects.create_user(self.username, "email", self.password)
         expected_message = (
             "backend must be a dotted import path string (got "
-            "<class 'django.contrib.auth.backends.ModelBackend'>)."
+            "<class 'hibeecontrib.auth.backends.ModelBackend'>)."
         )
         with self.assertRaisesMessage(TypeError, expected_message):
             self.client._login(user, backend=ModelBackend)
@@ -907,7 +907,7 @@ class SelectingBackendTests(TestCase):
 
 
 @override_settings(
-    AUTHENTICATION_BACKENDS=["django.contrib.auth.backends.AllowAllUsersModelBackend"]
+    AUTHENTICATION_BACKENDS=["hibeecontrib.auth.backends.AllowAllUsersModelBackend"]
 )
 class AllowAllUsersModelBackendTest(TestCase):
     """

@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from django.core.exceptions import ValidationError
-from django.forms import (
+from hibeecore.exceptions import ValidationError
+from hibeeforms import (
     CharField,
     Form,
     MultipleChoiceField,
@@ -12,7 +12,7 @@ from django.forms import (
     SplitDateTimeWidget,
     TextInput,
 )
-from django.test import SimpleTestCase
+from hibeetest import SimpleTestCase
 
 beatles = (("J", "John"), ("P", "Paul"), ("G", "George"), ("R", "Ringo"))
 

@@ -1,9 +1,9 @@
 from unittest import mock
 
-from django.contrib.messages import constants
-from django.contrib.messages.storage import base
-from django.contrib.messages.storage.base import Message
-from django.test import SimpleTestCase, override_settings
+from hibeecontrib.messages import constants
+from hibeecontrib.messages.storage import base
+from hibeecontrib.messages.storage.base import Message
+from hibeetest import SimpleTestCase, override_settings
 
 
 class MessageTests(SimpleTestCase):

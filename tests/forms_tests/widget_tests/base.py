@@ -1,5 +1,5 @@
-from django.forms.renderers import DjangoTemplates, Jinja2
-from django.test import SimpleTestCase
+from hibeeforms.renderers import HHibeemplates, Jinja2
+from hibeetest import SimpleTestCase
 
 try:
     import jinja2
@@ -12,9 +12,9 @@ class WidgetTest(SimpleTestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.django_renderer = DjangoTemplates()
+        cls.hibeerenderer = HHibeemplates()
         cls.jinja2_renderer = Jinja2() if jinja2 else None
-        cls.renderers = [cls.django_renderer] + (
+        cls.renderers = [cls.hibeerenderer] + (
             [cls.jinja2_renderer] if cls.jinja2_renderer else []
         )
         super().setUpClass()
@@ -27,13 +27,13 @@ class WidgetTest(SimpleTestCase):
             output = widget.render(
                 name, value, attrs=attrs, renderer=self.jinja2_renderer, **kwargs
             )
-            # Django escapes quotes with '&quot;' while Jinja2 uses '&#34;'.
+            # Hibeeescapes quotes with '&quot;' while Jinja2 uses '&#34;'.
             output = output.replace("&#34;", "&quot;")
-            # Django escapes single quotes with '&#x27;' while Jinja2 uses '&#39;'.
+            # Hibeeescapes single quotes with '&#x27;' while Jinja2 uses '&#39;'.
             output = output.replace("&#39;", "&#x27;")
             assertEqual(output, html)
 
         output = widget.render(
-            name, value, attrs=attrs, renderer=self.django_renderer, **kwargs
+            name, value, attrs=attrs, renderer=self.hibeerenderer, **kwargs
         )
         assertEqual(output, html)

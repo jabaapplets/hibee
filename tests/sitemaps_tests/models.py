@@ -1,5 +1,5 @@
-from django.db import models
-from django.urls import reverse
+from hibeedb import models
+from hibeeurls import reverse
 
 
 class TestModel(models.Model):

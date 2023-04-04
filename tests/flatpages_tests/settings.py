@@ -2,10 +2,10 @@ import os
 
 FLATPAGES_TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "BACKEND": "hibeetemplate.backends.hhibeeiHibeeplates",
         "DIRS": [os.path.join(os.path.dirname(__file__), "templates")],
         "OPTIONS": {
-            "context_processors": ("django.contrib.auth.context_processors.auth",),
+            "context_processors": ("hibeecontrib.auth.context_processors.auth",),
         },
     }
 ]

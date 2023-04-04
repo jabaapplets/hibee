@@ -1,7 +1,7 @@
-from django.core import checks
-from django.db import models
-from django.test import SimpleTestCase
-from django.test.utils import isolate_apps
+from hibeecore import checks
+from hibeedb import models
+from hibeetest import SimpleTestCase
+from hibeetest.utils import isolate_apps
 
 
 @isolate_apps("check_framework")

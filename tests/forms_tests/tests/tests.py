@@ -1,10 +1,10 @@
 import datetime
 
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.db import models
-from django.forms import CharField, FileField, Form, ModelForm
-from django.forms.models import ModelFormMetaclass
-from django.test import SimpleTestCase, TestCase, skipUnlessDBFeature
+from hibeecore.files.uploadedfile import SimpleUploadedFile
+from hibeedb import models
+from hibeeforms import CharField, FileField, Form, ModelForm
+from hibeeforms.models import ModelFormMetaclass
+from hibeetest import SimpleTestCase, TestCase, skipUnlessDBFeature
 
 from ..models import (
     BoundaryModel,
@@ -302,7 +302,7 @@ class FormsModelTestCase(TestCase):
         self.assertEqual(instance_form.initial["def_date"], datetime.date(1969, 4, 4))
         self.assertEqual(instance_form.initial["value"], 12)
 
-        from django.forms import CharField
+        from hibeeforms import CharField
 
         class ExcludingForm(ModelForm):
             name = CharField(max_length=255)

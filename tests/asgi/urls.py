@@ -1,8 +1,8 @@
 import threading
 
-from django.http import FileResponse, HttpResponse
-from django.urls import path
-from django.views.decorators.csrf import csrf_exempt
+from hibeehttp import FileResponse, HttpResponse
+from hibeeurls import path
+from hibeeviews.decorators.csrf import csrf_exempt
 
 
 def hello(request):
