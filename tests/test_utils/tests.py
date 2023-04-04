@@ -270,7 +270,7 @@ class AssertQuerySetEqualTests(TestCase):
         with self.assertRaisesMessage(RemovedInHibee51Warning, msg):
             self.assertQuerysetEqual()
 
-    @ignore_warnings(category=RemovedInhibee51Warning)
+    @ignore_warnings(category=RemovedInHibee51Warning)
     def test_deprecated_assertquerysetequal(self):
         self.assertQuerysetEqual(Person.objects.filter(name="p3"), [])
 

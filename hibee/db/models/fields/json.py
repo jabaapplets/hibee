@@ -118,7 +118,7 @@ class JSONField(CheckFieldDefaultMixin, Field):
                     warnings.warn(
                         "Providing an encoded JSON string via Value() is deprecated. "
                         f"Use Value({value!r}, output_field=JSONField()) instead.",
-                        category=RemovedInhibee51Warning,
+                        category=RemovedInHibee51Warning,
                     )
             elif isinstance(value.output_field, JSONField):
                 value = value.value

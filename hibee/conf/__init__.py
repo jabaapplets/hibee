@@ -16,7 +16,7 @@ from pathlib import Path
 import hibee
 from hibee.conf import global_settings
 from hibee.core.exceptions import ImproperlyConfigured
-from hibee.utils.deprecation import RemovedInhibee51Warning
+from hibee.utils.deprecation import RemovedInHibee51Warning
 from hibee.utils.functional import LazyObject, empty
 
 ENVIRONMENT_VARIABLE = "HIBEE_SETTINGS_MODULE"

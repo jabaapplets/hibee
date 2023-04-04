@@ -20,8 +20,8 @@ class BaseGeometryWidget(Widget):
 
     geom_type = "GEOMETRY"
     map_srid = 4326
-    map_width = 600  # RemovedInhibee51Warning
-    map_height = 400  # RemovedInhibee51Warning
+    map_width = 600  # RemovedInHibee51Warning
+    map_height = 400  # RemovedInHibee51Warning
     display_raw = False
 
     supports_3d = False
