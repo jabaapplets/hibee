@@ -327,7 +327,7 @@ coroutine function, using ``asgiref.sync.iscoroutinefunction``.
 The ``hibee.utils.decorators`` module contains
 :func:`~hibee.utils.decorators.sync_only_middleware`,
 :func:`~hibee.utils.decorators.async_only_middleware`, and
-:func:`~django.utils.decorators.sync_and_async_middleware` decorators that
+:func:`~hibee.utils.decorators.sync_and_async_middleware` decorators that
 allow you to apply these flags to middleware factory functions.
 
 The returned callable must match the sync or async nature of the
@@ -336,13 +336,13 @@ return a coroutine function (``async def``).
 
 ``process_view``, ``process_template_response`` and ``process_exception``
 methods, if they are provided, should also be adapted to match the sync/async
-mode. However, Django will individually adapt them as required if you do not,
+mode. However, Hibee will individually adapt them as required if you do not,
 at an additional performance penalty.
 
 Here's an example of how to create a middleware function that supports both::
 
     from asgiref.sync import iscoroutinefunction
-    from django.utils.decorators import sync_and_async_middleware
+    from hibee.utils.decorators import sync_and_async_middleware
 
     @sync_and_async_middleware
     def simple_middleware(get_response):
@@ -365,7 +365,7 @@ Here's an example of how to create a middleware function that supports both::
 
     If you declare a hybrid middleware that supports both synchronous and
     asynchronous calls, the kind of call you get may not match the underlying
-    view. Django will optimize the middleware call stack to have as few
+    view. Hibee will optimize the middleware call stack to have as few
     sync/async transitions as possible.
 
     Thus, even if you are wrapping an async view, you may be called in sync
@@ -392,16 +392,16 @@ instances are correctly marked as coroutine functions::
 
 .. _upgrading-middleware:
 
-Upgrading pre-Django 1.10-style middleware
+Upgrading pre-Hibee 1.10-style middleware
 ==========================================
 
-.. class:: django.utils.deprecation.MiddlewareMixin
+.. class:: hibee.utils.deprecation.MiddlewareMixin
     :module:
 
-Django provides ``django.utils.deprecation.MiddlewareMixin`` to ease creating
+Hibee provides ``hibee.utils.deprecation.MiddlewareMixin`` to ease creating
 middleware classes that are compatible with both :setting:`MIDDLEWARE` and the
 old ``MIDDLEWARE_CLASSES``, and support synchronous and asynchronous requests.
-All middleware classes included with Django are compatible with both settings.
+All middleware classes included with Hibee are compatible with both settings.
 
 The mixin provides an ``__init__()`` method that requires a ``get_response``
 argument and stores it in ``self.get_response``.
@@ -415,7 +415,7 @@ The ``__call__()`` method:
 #. Returns the response.
 
 If used with ``MIDDLEWARE_CLASSES``, the ``__call__()`` method will
-never be used; Django calls ``process_request()`` and ``process_response()``
+never be used; Hibee calls ``process_request()`` and ``process_response()``
 directly.
 
 In most cases, inheriting from this mixin will be sufficient to make an
@@ -440,7 +440,7 @@ These are the behavioral differences between using :setting:`MIDDLEWARE` and
    exceptions raised from a middleware ``process_request`` method. Under
    :setting:`MIDDLEWARE`, ``process_exception`` applies only to exceptions
    raised from the view (or from the ``render`` method of a
-   :class:`~django.template.response.TemplateResponse`). Exceptions raised from
+   :class:`~hibee.template.response.TemplateResponse`). Exceptions raised from
    a middleware are converted to the appropriate HTTP response and then passed
    to the next middleware.
 
@@ -448,7 +448,7 @@ These are the behavioral differences between using :setting:`MIDDLEWARE` and
    an exception, the ``process_response`` methods of all earlier middleware are
    skipped and a ``500 Internal Server Error`` HTTP response is always
    returned (even if the exception raised was e.g. an
-   :class:`~django.http.Http404`). Under :setting:`MIDDLEWARE`, an exception
+   :class:`~hibee.http.Http404`). Under :setting:`MIDDLEWARE`, an exception
    raised from a middleware will immediately be converted to the appropriate
    HTTP response, and then the next middleware in line will see that
    response. Middleware are never skipped due to a middleware raising an
