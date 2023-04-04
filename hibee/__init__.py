@@ -1,6 +1,6 @@
 from hibee.utils.version import get_version
 
-VERSION = (5, 0, 0, "alpha", 0)
+VERSION = (8, 3, 0, "alpha", 0)
 
 __version__ = get_version(VERSION)
 
